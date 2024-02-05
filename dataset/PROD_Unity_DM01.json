@@ -1,0 +1,194 @@
+{
+	"name": "PROD_Unity_DM01",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashprod101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "PERIOD",
+				"type": "varchar"
+			},
+			{
+				"name": "PROVIDER_PARENT_ORG_CODE",
+				"type": "varchar"
+			},
+			{
+				"name": "PROVIDER_PARENT_NAME",
+				"type": "varchar"
+			},
+			{
+				"name": "PROVIDER_ORG_CODE",
+				"type": "varchar"
+			},
+			{
+				"name": "PROVIDER_ORG_NAME",
+				"type": "varchar"
+			},
+			{
+				"name": "COMMISSIONER_PARENT_ORG_CODE",
+				"type": "varchar"
+			},
+			{
+				"name": "COMMISSIONER_PARENT_NAME",
+				"type": "varchar"
+			},
+			{
+				"name": "COMMISSIONER_ORG_CODE",
+				"type": "varchar"
+			},
+			{
+				"name": "COMMISSIONER_ORG_NAME",
+				"type": "varchar"
+			},
+			{
+				"name": "DIAGNOSTIC_TESTS_SORT_ORDER",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DIAGNOSTIC_TESTS",
+				"type": "varchar"
+			},
+			{
+				"name": "WEEK_0_LESSTHAN_1",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "WEEK_1_LESSTHAN_2",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "WEEK_2_LESSTHAN_3",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "WEEK_3_LESSTHAN_4",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "WEEK_4_LESSTHAN_5",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "WEEK_5_LESSTHAN_6",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "WEEK_6_LESSTHAN_7",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "WEEK_7_LESSTHAN_8",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "WEEK_8_LESSTHAN_9",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "WEEK_9_LESSTHAN_10",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "WEEK_10_LESSTHAN_11",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "WEEK_11_LESSTHAN_12",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "WEEK_12_LESSTHAN_13",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "WEEKS_13PLUS",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TOTAL_WL",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "WAITING_LIST_ACTIVITY",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "PLANNED_ACTIVITY",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "UNSCHEDULED_ACTIVITY",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "TOTAL_ACTIVITY",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Z_SNAPSHOT_MONTH",
+				"type": "varchar"
+			},
+			{
+				"name": "Z_SNAPSHOT_YEAR",
+				"type": "varchar"
+			},
+			{
+				"name": "Z_SNAPSHOT_FISCAL_MONTH",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Z_SNAPSHOT_FISCAL_YEAR",
+				"type": "varchar"
+			},
+			{
+				"name": "Z_LATEST_SNAPSHOT",
+				"type": "varchar"
+			},
+			{
+				"name": "X_SEQNO",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "z_load_date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "z_snapshot_filename",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "Unify",
+			"table": "NAT_DM01"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

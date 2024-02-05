@@ -1,0 +1,603 @@
+{
+	"name": "dataflow2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "AzureSql_CORE_V2_Staging",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSql_PTL",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Tat_Type",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				},
+				{
+					"dataset": {
+						"referenceName": "Trust",
+						"type": "DatasetReference"
+					},
+					"name": "sink3"
+				},
+				{
+					"dataset": {
+						"referenceName": "Exam_Site",
+						"type": "DatasetReference"
+					},
+					"name": "sink4"
+				},
+				{
+					"dataset": {
+						"referenceName": "Modality",
+						"type": "DatasetReference"
+					},
+					"name": "sink5"
+				},
+				{
+					"dataset": {
+						"referenceName": "Status",
+						"type": "DatasetReference"
+					},
+					"name": "sink6"
+				},
+				{
+					"dataset": {
+						"referenceName": "Exam",
+						"type": "DatasetReference"
+					},
+					"name": "sink7"
+				},
+				{
+					"dataset": {
+						"referenceName": "Patient_Type",
+						"type": "DatasetReference"
+					},
+					"name": "sink8"
+				},
+				{
+					"dataset": {
+						"referenceName": "Referral_Source",
+						"type": "DatasetReference"
+					},
+					"name": "sink9"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "rank1"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "select3"
+				},
+				{
+					"name": "aggregate2"
+				},
+				{
+					"name": "select4"
+				},
+				{
+					"name": "rank2"
+				},
+				{
+					"name": "derivedColumn3"
+				},
+				{
+					"name": "select5"
+				},
+				{
+					"name": "aggregate3"
+				},
+				{
+					"name": "select6"
+				},
+				{
+					"name": "derivedColumn4"
+				},
+				{
+					"name": "rank3"
+				},
+				{
+					"name": "select7"
+				},
+				{
+					"name": "aggregate4"
+				},
+				{
+					"name": "select8"
+				},
+				{
+					"name": "rank4"
+				},
+				{
+					"name": "select9"
+				},
+				{
+					"name": "aggregate5"
+				},
+				{
+					"name": "select10"
+				},
+				{
+					"name": "rank5"
+				},
+				{
+					"name": "derivedColumn5"
+				},
+				{
+					"name": "select11"
+				},
+				{
+					"name": "aggregate6"
+				},
+				{
+					"name": "select12"
+				},
+				{
+					"name": "rank6"
+				},
+				{
+					"name": "select13"
+				},
+				{
+					"name": "aggregate7"
+				},
+				{
+					"name": "select14"
+				},
+				{
+					"name": "rank7"
+				},
+				{
+					"name": "select15"
+				},
+				{
+					"name": "aggregate8"
+				},
+				{
+					"name": "select16"
+				},
+				{
+					"name": "rank8"
+				},
+				{
+					"name": "sort1"
+				},
+				{
+					"name": "sort2"
+				},
+				{
+					"name": "sort3"
+				},
+				{
+					"name": "sort4"
+				},
+				{
+					"name": "sort5"
+				},
+				{
+					"name": "sort6"
+				},
+				{
+					"name": "sort7"
+				},
+				{
+					"name": "sort8"
+				},
+				{
+					"name": "select17"
+				},
+				{
+					"name": "union1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {CRIS No} as integer,",
+				"          Accession as string,",
+				"          {Ref Src} as string,",
+				"          Site as string,",
+				"          {Request Date} as timestamp,",
+				"          {Event Date} as timestamp,",
+				"          {Event Time} as string,",
+				"          {On Call} as string,",
+				"          PT as string,",
+				"          Examination as string,",
+				"          {Exam Name} as string,",
+				"          Room as string,",
+				"          {ExamSite Code} as string,",
+				"          {Start Time} as string,",
+				"          {End Time} as string,",
+				"          {Exam Key} as integer,",
+				"          {Event Key} as integer,",
+				"          {Status Code} as string,",
+				"          {Booked Date} as timestamp,",
+				"          {Booked Time} as string,",
+				"          {Creation Date} as timestamp,",
+				"          Attended as string,",
+				"          Urg as string,",
+				"          Modality as string,",
+				"          {No of Proc} as integer,",
+				"          {Planned Appointment Date} as timestamp,",
+				"          {Date First Verified} as timestamp,",
+				"          {Time First Verified} as string,",
+				"          {Was Planned} as string,",
+				"          {Was Scheduled} as string,",
+				"          {Was Waiting} as string,",
+				"          {Stat Date} as timestamp,",
+				"          {Status Date} as timestamp,",
+				"          {Status Time} as integer,",
+				"          Modality2 as string,",
+				"          {Trust Name} as string,",
+				"          Patient_Type as string,",
+				"          {Tat Type} as string,",
+				"          Activity as integer,",
+				"          {Count of Activty_Demand for Activity} as integer,",
+				"          {Status Code2} as string,",
+				"          {Status Time2} as string,",
+				"          {Patient Type ID} as integer,",
+				"          {Modality ID} as integer,",
+				"          {Status ID} as integer,",
+				"          {Status Category} as string,",
+				"          {Exam Code} as string,",
+				"          {Exam ID} as integer,",
+				"          {Exam Site} as string,",
+				"          {Exam Room} as string,",
+				"          {Exam Site Code} as string,",
+				"          {Exam Room ID} as integer,",
+				"          {Trust ID} as integer,",
+				"          {Trust Name Group} as string,",
+				"          {Trust Name Group2} as string,",
+				"          {Trust Name Group3} as string,",
+				"          {Referral Source} as string,",
+				"          {Referral Source ID} as integer,",
+				"          {Tat Type ID} as integer,",
+				"          Target as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source(output(",
+				"          {Event Key} as integer,",
+				"          {Exam Key} as integer,",
+				"          {CRIS Number} as integer,",
+				"          {Status Category} as string,",
+				"          Referrer as string,",
+				"          {Ref Src} as string,",
+				"          {Referring Location} as string,",
+				"          Examination as string,",
+				"          Site as string,",
+				"          {Request Date} as timestamp,",
+				"          {Event Date} as timestamp,",
+				"          {Booked Time} as string,",
+				"          {Booked Date} as timestamp,",
+				"          {Ref Src2} as string,",
+				"          {Postcode L} as string,",
+				"          {Postcode R} as string,",
+				"          {Creation Date} as timestamp,",
+				"          {Event Key2} as integer,",
+				"          Attended as string,",
+				"          Modality as string,",
+				"          Room as string,",
+				"          RC as string,",
+				"          Urg as integer,",
+				"          {Referrer Name} as string,",
+				"          {Exam Name} as string,",
+				"          {Event Date2} as timestamp,",
+				"          {Days Waiting} as integer,",
+				"          {Predicted Reset Date} as timestamp,",
+				"          {Waiting Time Reset Date} as timestamp,",
+				"          {Weeks Waiting} as integer,",
+				"          {Planned Appointment Date} as timestamp,",
+				"          {Waiting Breach Date} as timestamp,",
+				"          {Was Planned} as string,",
+				"          {Was Scheduled} as string,",
+				"          {Was Waiting} as string,",
+				"          CCG as string,",
+				"          {D Status} as string,",
+				"          {Stat Date} as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source2",
+				"source1 select(mapColumn(",
+				"          {Tat Type}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 aggregate(groupBy({Tat Type}),",
+				"     First = first({Tat Type})) ~> aggregate1",
+				"select2 rank(asc({Tat Type}, true),",
+				"     output({Tat Type ID} as long),",
+				"     dense: true) ~> rank1",
+				"aggregate1 select(mapColumn(",
+				"          {Tat Type}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"rank1 derive(Target = iif({Tat Type} == \"Urgent Inpatients\",\"12 hours\",iif({Tat Type} == \"Non-Urgent Inpatients\", \"24 hours\",iif({Tat Type} == \"Outpatient Faster Diagnosis Standard Cancer Pathway\", \"3 days\",iif({Tat Type} == \"Urgent GP and Outpatients\", \"7 days\",iif({Tat Type} == \"All Other Routine Outpatient and GP Studies\", \"28 days\",iif({Tat Type} == \"Acutely Unwell/ED Patients\", \"12 hours\",iif({Tat Type} == \"Other Inpatients\" , \"7 days\",iif({Tat Type} == \"Urgent GP/Urgent Outpatients\", \"7 days\",iif({Tat Type} == \"Routine GP and outpatients\", \"28 days\",iif({Tat Type} == \"Ultrasound and interventional Radiology\", \"3 hours\",\"0\"))))))))))) ~> derivedColumn2",
+				"source1 select(mapColumn(",
+				"          {Trust Name}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select3",
+				"select3 aggregate(groupBy({Trust Name}),",
+				"     First = first({Trust Name})) ~> aggregate2",
+				"aggregate2 select(mapColumn(",
+				"          {Trust Name}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select4",
+				"select4 rank(asc({Trust Name}, true),",
+				"     output({Trust ID} as long),",
+				"     dense: true) ~> rank2",
+				"rank2 derive({Trust Name Group} = iif( {Trust Name} == \"Womens\", \"REP\", iif( {Trust Name} == \"LUHFT\", \"REM\", iif( {Trust Name} == \"WUTH\", \"RBL\", iif( {Trust Name} == \"STHK\", \"RBN\", iif( {Trust Name} == \"S&O\", \"RVY\", iif( {Trust Name} == \"LHCH\", \"RBQ\", iif( {Trust Name} == \"Alder Hey\", \"RBS\", iif( {Trust Name} == \"MCH\", \"RBT\", iif( {Trust Name} == \"CCC\", \"REN\", iif( {Trust Name} == \"TWC\", \"RET\", iif( {Trust Name} == \"COCH\", \"RJR\", iif( {Trust Name} == \"WHH\", \"RWW\", iif( {Trust Name} == \"5M501\", \"REM\", iif( {Trust Name} == \"NTD05\", \"REM\", \"Other\")))))))))))))),",
+				"          {Trust Name Group2} = iif( {Trust Name} == \"Womens\", \"Womens\", iif( {Trust Name} == \"LUHFT\", \"LUHFT\", iif( {Trust Name} == \"WUTH\", \"WUTH\", iif( {Trust Name} == \"STHK\", \"STHK\", iif( {Trust Name} == \"S&O\", \"S&O\", iif( {Trust Name} == \"LHCH\", \"LHCH\", iif( {Trust Name} == \"Alder Hey\", \"Alder Hey\", iif( {Trust Name} == \"MCH\", \"MCH\", iif( {Trust Name} == \"CCC\", \"CCC\", iif( {Trust Name} == \"TWC\", \"TWC\", iif( {Trust Name} == \"COCH\", \"COCH\", iif( {Trust Name} == \"WHH\", \"WHH\", iif( {Trust Name} == \"5M501\", \"LUHFT\", iif( {Trust Name} == \"NTD05\", \"LUHFT\", \"Other\")))))))))))))),",
+				"          {Trust Name Group3} = iif( {Trust Name} == \"Womens\", \"REP\", iif( {Trust Name} == \"LUHFT\", \"REM\", iif( {Trust Name} == \"WUTH\", \"WUTH\", iif( {Trust Name} == \"STHK\", \"RBN\", iif( {Trust Name} == \"S&O\", \"RVY\", iif( {Trust Name} == \"LHCH\", \"RBQ\", iif( {Trust Name} == \"Alder Hey\", \"RBS\", iif( {Trust Name} == \"MCH\", \"RBT\", iif( {Trust Name} == \"CCC\", \"REN\", iif( {Trust Name} == \"TWC\", \"RET\", iif( {Trust Name} == \"COCH\", \"COCH\", iif( {Trust Name} == \"WHH\", \"RWW\", \"Other\"))))))))))))) ~> derivedColumn3",
+				"source1 select(mapColumn(",
+				"          {Exam Site} = Site,",
+				"          {Exam Room} = Room",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select5",
+				"union1 aggregate(groupBy({Exam Site},",
+				"          {Exam Room}),",
+				"     First = first({Exam Room})) ~> aggregate3",
+				"aggregate3 select(mapColumn(",
+				"          {Exam Site},",
+				"          {Exam Room}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select6",
+				"select6 derive({ExamSite Code} = iifNull({Exam Site},'\\n',{Exam Site})+iifNull({Exam Room},'\\n',{Exam Room})) ~> derivedColumn4",
+				"derivedColumn4 rank(asc({ExamSite Code}, true),",
+				"     output({Exam Room ID} as long)) ~> rank3",
+				"source1 select(mapColumn(",
+				"          Modality2",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select7",
+				"select7 aggregate(groupBy(Modality2),",
+				"     First = first({Modality2})) ~> aggregate4",
+				"aggregate4 select(mapColumn(",
+				"          Modality2",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select8",
+				"select8 rank(asc(Modality2, true),",
+				"     output({Modality ID} as long)) ~> rank4",
+				"source1 select(mapColumn(",
+				"          {Status Code}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select9",
+				"select9 aggregate(groupBy({Status Code}),",
+				"     First = first({Status Code})) ~> aggregate5",
+				"aggregate5 select(mapColumn(",
+				"          {Status Code}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select10",
+				"select10 rank(asc({Status Code}, true),",
+				"     output({Status ID} as long)) ~> rank5",
+				"rank5 derive({Status Category} = iif(startsWith({Status Code}, \"AP\"), \"AP\", iif(startsWith({Status Code}, \"AS\"), \"AS\", iif(startsWith({Status Code}, \"AT\"), \"AT\", iif(startsWith({Status Code}, \"C\"), \"C\", iif(startsWith({Status Code}, \"D\"), \"D\", iif(startsWith({Status Code}, \"E\"), \"E\", iif(startsWith({Status Code}, \"P\"), \"P\", iif(startsWith({Status Code}, \"R\"), \"R\", iif(startsWith({Status Code}, \"V\"), \"V\", iif(startsWith({Status Code}, \"W\"), \"W\", iif({Status Code} == \"BHSRAI\", \"ST\", iif({Status Code} == \"ACNCLI\", \"W\", iif({Status Code} == \"SRREPC\", \"ST\", \"0\")))))))))))))) ~> derivedColumn5",
+				"source1 select(mapColumn(",
+				"          {Exam Code} = Examination,",
+				"          {Exam Name}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select11",
+				"select11 aggregate(groupBy({Exam Code},",
+				"          {Exam Name}),",
+				"     first = first({Exam Code})) ~> aggregate6",
+				"aggregate6 select(mapColumn(",
+				"          {Exam Code},",
+				"          {Exam Name}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select12",
+				"select12 rank(asc({Exam Code}, true),",
+				"     output({Exam ID} as long)) ~> rank6",
+				"source1 select(mapColumn(",
+				"          Patient_Type",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select13",
+				"select13 aggregate(groupBy(Patient_Type),",
+				"     first = first({Patient_Type})) ~> aggregate7",
+				"aggregate7 select(mapColumn(",
+				"          Patient_Type",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select14",
+				"select14 rank(asc(Patient_Type, true),",
+				"     output({Patient Type ID} as long)) ~> rank7",
+				"source1 select(mapColumn(",
+				"          {Referral Source} = {Ref Src}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select15",
+				"select15 aggregate(groupBy({Referral Source}),",
+				"     first = first({Referral Source})) ~> aggregate8",
+				"aggregate8 select(mapColumn(",
+				"          {Referral Source}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select16",
+				"select16 rank(asc({Referral Source}, true),",
+				"     output({Referral Source ID} as long)) ~> rank8",
+				"rank8 sort(asc({Referral Source ID}, true)) ~> sort1",
+				"rank7 sort(asc({Patient Type ID}, true)) ~> sort2",
+				"rank6 sort(asc({Exam ID}, true)) ~> sort3",
+				"derivedColumn5 sort(asc({Status ID}, true)) ~> sort4",
+				"rank4 sort(asc({Modality ID}, true)) ~> sort5",
+				"rank3 sort(asc({Exam Room ID}, true)) ~> sort6",
+				"derivedColumn3 sort(asc({Trust ID}, true)) ~> sort7",
+				"derivedColumn2 sort(asc({Tat Type ID}, true)) ~> sort8",
+				"source2 select(mapColumn(",
+				"          {Exam Site} = Site,",
+				"          {Exam Room} = Room",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select17",
+				"select5, select17 union(byName: true)~> union1",
+				"sort8 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          {Tat Type} as string,",
+				"          {Tat Type ID} as integer,",
+				"          Target as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     recreate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink2",
+				"sort7 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          {Trust Name} as string,",
+				"          {Trust ID} as integer,",
+				"          {Trust Name Group} as string,",
+				"          {Trust Name Group2} as string,",
+				"          {Trust Name Group3} as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     recreate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink3",
+				"sort6 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          {Exam Site} as string,",
+				"          {Exam Room} as string,",
+				"          {Exam Site Code} as string,",
+				"          {Exam Room ID} as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     recreate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink4",
+				"sort5 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Modality2 as string,",
+				"          {Modality ID} as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     recreate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink5",
+				"sort4 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          {Status Code} as string,",
+				"          {Status ID} as integer,",
+				"          {Status Category} as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     recreate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink6",
+				"sort3 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          {Exam Name} as string,",
+				"          {Exam Code} as string,",
+				"          {Exam ID} as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     recreate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink7",
+				"sort2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          Patient_Type as string,",
+				"          Patient_Type_ID as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     recreate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink8",
+				"sort1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          {Referral Source} as string,",
+				"          {Referral Source ID} as integer",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     recreate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink9"
+			]
+		}
+	}
+}

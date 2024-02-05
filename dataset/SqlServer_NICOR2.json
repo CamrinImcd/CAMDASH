@@ -1,0 +1,85 @@
+{
+	"name": "SqlServer_NICOR2",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RADFYF01_CRIS_PostgreSQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "CRIS No",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Exam Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Event Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Site",
+				"type": "varchar"
+			},
+			{
+				"name": "Event Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Examination",
+				"type": "varchar"
+			},
+			{
+				"name": "Room",
+				"type": "varchar"
+			},
+			{
+				"name": "Dosage",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Dosage typ",
+				"type": "varchar"
+			},
+			{
+				"name": "Screening time",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Height",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Weight",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Exam Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Stat Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "FYF_ODBC_NICOR"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

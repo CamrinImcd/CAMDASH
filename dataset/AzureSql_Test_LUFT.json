@@ -1,0 +1,49 @@
+{
+	"name": "AzureSql_Test_LUFT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "CRIS No",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Creation Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Mutation Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Surname",
+				"type": "varchar"
+			},
+			{
+				"name": "Forename",
+				"type": "varchar"
+			},
+			{
+				"name": "Stat Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "luft",
+			"table": "FYF_ODBC_TEST_Patients"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

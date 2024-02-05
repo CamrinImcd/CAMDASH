@@ -1,0 +1,39 @@
+{
+	"name": "Excel_NIDC_Workforce_22_OutsourceProv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Test_AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "OutsourceProv",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "NIDC_Workforce.xlsx",
+				"container": "nidc-workforce-22"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Trust",
+				"type": "String"
+			},
+			{
+				"name": "Modality",
+				"type": "String"
+			},
+			{
+				"name": "Provider",
+				"type": "String"
+			},
+			{
+				"name": "Count",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

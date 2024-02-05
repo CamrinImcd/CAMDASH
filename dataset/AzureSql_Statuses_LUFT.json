@@ -1,0 +1,101 @@
+{
+	"name": "AzureSql_Statuses_LUFT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Exam Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Event Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Accession",
+				"type": "varchar"
+			},
+			{
+				"name": "Referrer",
+				"type": "varchar"
+			},
+			{
+				"name": "Referral Location",
+				"type": "varchar"
+			},
+			{
+				"name": "Referral Source",
+				"type": "varchar"
+			},
+			{
+				"name": "Urg",
+				"type": "varchar"
+			},
+			{
+				"name": "Site",
+				"type": "varchar"
+			},
+			{
+				"name": "Status Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Status Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Status Time",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Referral Location Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Referral Source Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Referral Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Examination Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Modality",
+				"type": "varchar"
+			},
+			{
+				"name": "Status Code at State Date",
+				"type": "varchar"
+			},
+			{
+				"name": "Stat Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "D Status",
+				"type": "varchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "luft",
+			"table": "FYF_ODBC_STATUSES"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

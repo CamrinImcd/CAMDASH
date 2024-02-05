@@ -1,0 +1,51 @@
+{
+	"name": "Excel_NIDC_Workforce_22_AgencyExternal",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Test_AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "AgencyExternal",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "NIDC_Workforce.xlsx",
+				"container": "nidc-workforce-22"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Trust",
+				"type": "String"
+			},
+			{
+				"name": "Staff Group",
+				"type": "String"
+			},
+			{
+				"name": "Staff Type",
+				"type": "String"
+			},
+			{
+				"name": "Unit Of Payment",
+				"type": "String"
+			},
+			{
+				"name": "Band",
+				"type": "String"
+			},
+			{
+				"name": "Count",
+				"type": "String"
+			},
+			{
+				"name": "Cost",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

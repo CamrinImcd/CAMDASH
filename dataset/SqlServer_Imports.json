@@ -1,0 +1,36 @@
+{
+	"name": "SqlServer_Imports",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RADFYF01_CRIS_PostgreSQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "Site",
+				"type": "varchar"
+			},
+			{
+				"name": "Room",
+				"type": "varchar"
+			},
+			{
+				"name": "Room Description",
+				"type": "varchar"
+			},
+			{
+				"name": "Stat Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "FYF_ODBC_IMPORTS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

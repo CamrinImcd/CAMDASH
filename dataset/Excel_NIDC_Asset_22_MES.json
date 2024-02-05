@@ -1,0 +1,107 @@
+{
+	"name": "Excel_NIDC_Asset_22_MES",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Test_AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "MESCon",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "NIDC_Asset_file.xlsx",
+				"container": "nicd-asset-22"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Trust",
+				"type": "String"
+			},
+			{
+				"name": "Managed_Equipment_Service_Contract ",
+				"type": "String"
+			},
+			{
+				"name": "MES1_Contract_Number",
+				"type": "String"
+			},
+			{
+				"name": "MES1_Supplier",
+				"type": "String"
+			},
+			{
+				"name": "MES1_Contract_Start_Date",
+				"type": "String"
+			},
+			{
+				"name": "MES1_Contract_End_Date",
+				"type": "String"
+			},
+			{
+				"name": "MES1_Initial_Cost",
+				"type": "String"
+			},
+			{
+				"name": "MES1_Interest_Rate (%)",
+				"type": "String"
+			},
+			{
+				"name": "MES1_Consumables_included?",
+				"type": "String"
+			},
+			{
+				"name": "MES1_Accessories Included? ",
+				"type": "String"
+			},
+			{
+				"name": "MES1_Maintenance_Included?",
+				"type": "String"
+			},
+			{
+				"name": "Plain_X-Ray_Depreciation",
+				"type": "String"
+			},
+			{
+				"name": "CT_Depreciation",
+				"type": "String"
+			},
+			{
+				"name": "MRI_Depreciation",
+				"type": "String"
+			},
+			{
+				"name": "Ultrasound_Depreciation",
+				"type": "String"
+			},
+			{
+				"name": "DEXA_Depreciation",
+				"type": "String"
+			},
+			{
+				"name": "Nuclear_Medicine_Depreciation",
+				"type": "String"
+			},
+			{
+				"name": "Fluoroscopy_Depreciation",
+				"type": "String"
+			},
+			{
+				"name": "Interventional_Radiology_Depreciation",
+				"type": "String"
+			},
+			{
+				"name": "Mammography_Depreciation",
+				"type": "String"
+			},
+			{
+				"name": "Catheter_Laboratory_Depreciation",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

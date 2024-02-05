@@ -1,0 +1,69 @@
+{
+	"name": "APDNA",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RADFYF01_CRIS_PostgreSQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "Event Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Accession",
+				"type": "varchar"
+			},
+			{
+				"name": "Event Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Booked Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Referring Locat",
+				"type": "varchar"
+			},
+			{
+				"name": "Examination",
+				"type": "varchar"
+			},
+			{
+				"name": "Room",
+				"type": "varchar"
+			},
+			{
+				"name": "Status Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Lead Clincian ",
+				"type": "varchar"
+			},
+			{
+				"name": "Examination Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Stat Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "FYF_ODBC_APDNA"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

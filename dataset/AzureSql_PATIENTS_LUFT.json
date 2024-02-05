@@ -1,0 +1,114 @@
+{
+	"name": "AzureSql_PATIENTS_LUFT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "CRIS No",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Creation Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Mutation Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "DOB",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Event Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "DOD",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Ethnic Origin",
+				"type": "varchar"
+			},
+			{
+				"name": "GP",
+				"type": "varchar"
+			},
+			{
+				"name": "No of Attends",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "No of Events",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Ref Src",
+				"type": "varchar"
+			},
+			{
+				"name": "Postcode L",
+				"type": "varchar"
+			},
+			{
+				"name": "Postcode R",
+				"type": "varchar"
+			},
+			{
+				"name": "Gender",
+				"type": "varchar"
+			},
+			{
+				"name": "Referrer Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Age at Event",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "HIS ID",
+				"type": "varchar"
+			},
+			{
+				"name": "CCG",
+				"type": "varchar"
+			},
+			{
+				"name": "Postcode",
+				"type": "varchar"
+			},
+			{
+				"name": "Stat Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "luft",
+			"table": "FYF_ODBC_PATIENTS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

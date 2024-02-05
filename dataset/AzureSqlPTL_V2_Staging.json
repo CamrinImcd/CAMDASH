@@ -1,0 +1,197 @@
+{
+	"name": "AzureSqlPTL_V2_Staging",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Event Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Exam Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CRIS Number",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Status Category",
+				"type": "varchar"
+			},
+			{
+				"name": "Referrer",
+				"type": "varchar"
+			},
+			{
+				"name": "Ref Src",
+				"type": "varchar"
+			},
+			{
+				"name": "Referring Location",
+				"type": "varchar"
+			},
+			{
+				"name": "Examination",
+				"type": "varchar"
+			},
+			{
+				"name": "Site",
+				"type": "varchar"
+			},
+			{
+				"name": "Request Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Event Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Booked Time",
+				"type": "varchar"
+			},
+			{
+				"name": "Booked Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Ref Src2",
+				"type": "varchar"
+			},
+			{
+				"name": "Postcode L",
+				"type": "varchar"
+			},
+			{
+				"name": "Postcode R",
+				"type": "varchar"
+			},
+			{
+				"name": "Creation Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Event Key2",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Attended",
+				"type": "varchar"
+			},
+			{
+				"name": "Modality",
+				"type": "varchar"
+			},
+			{
+				"name": "Room",
+				"type": "varchar"
+			},
+			{
+				"name": "RC",
+				"type": "varchar"
+			},
+			{
+				"name": "Urg",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Referrer Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Exam Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Event Date2",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Days Waiting",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Predicted Reset Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Waiting Time Reset Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Weeks Waiting",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Planned Appointment Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Waiting Breach Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Was Planned",
+				"type": "varchar"
+			},
+			{
+				"name": "Was Scheduled",
+				"type": "varchar"
+			},
+			{
+				"name": "Was Waiting",
+				"type": "varchar"
+			},
+			{
+				"name": "CCG",
+				"type": "varchar"
+			},
+			{
+				"name": "D Status",
+				"type": "varchar"
+			},
+			{
+				"name": "Stat Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dev",
+			"table": "FYF_ODBC_PTL_v2_Staging"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

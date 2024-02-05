@@ -1,0 +1,15 @@
+{
+	"name": "camdashdevtest101",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=camrinsql101.database.windows.net;Initial Catalog=camdashdevtest101"
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveAzureIR",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

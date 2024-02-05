@@ -1,0 +1,49 @@
+{
+	"name": "SqlServer_TEST_PAT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RADFYF01_CRIS_PostgreSQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "CRIS No",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Creation Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Mutation Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Surname",
+				"type": "varchar"
+			},
+			{
+				"name": "Forename",
+				"type": "varchar"
+			},
+			{
+				"name": "Stat Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "FYF_ODBC_TEST_Patients"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

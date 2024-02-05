@@ -1,0 +1,47 @@
+{
+	"name": "Excel_NIDC_Workforce_22_ActivityPathway",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Test_AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "ActivityPathway",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "NIDC_Workforce.xlsx",
+				"container": "nidc-workforce-22"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Trust",
+				"type": "String"
+			},
+			{
+				"name": "Multiparametric Prostate MRI",
+				"type": "String"
+			},
+			{
+				"name": "Cauda Equina MRI ",
+				"type": "String"
+			},
+			{
+				"name": "CE_Operational Hours",
+				"type": "String"
+			},
+			{
+				"name": "Mechanical Thrombectomy procedures ",
+				"type": "String"
+			},
+			{
+				"name": "MT_Operational Hours",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

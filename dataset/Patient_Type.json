@@ -1,0 +1,27 @@
+{
+	"name": "Patient_Type",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Patient_Type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Patient_Type_ID",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dev",
+			"table": "Patient Type"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

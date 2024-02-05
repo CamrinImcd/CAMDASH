@@ -1,0 +1,17 @@
+{
+	"name": "RADFYF01_CRIS_PostgreSQL",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=True;data source=LHCH-RADFYF01;initial catalog=_CRIS_PostgreSQL",
+			"userName": "Ctc\\radfyf.sql",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiIzNDRmMmY2Ny00OTkwLTQyNTktODJmYy1kM2ZhNzEyNGMzYjgiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "LHCH-IR",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

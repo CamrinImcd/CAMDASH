@@ -1,0 +1,55 @@
+{
+	"name": "Excel_NIDC_Workforce_22_ActivitySpecialRep",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Test_AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "ActivitySpecialRep",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "NIDC_Workforce.xlsx",
+				"container": "nidc-workforce-22"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Trust",
+				"type": "String"
+			},
+			{
+				"name": "Reporter type",
+				"type": "String"
+			},
+			{
+				"name": "Chest X-ray",
+				"type": "String"
+			},
+			{
+				"name": "CT Head",
+				"type": "String"
+			},
+			{
+				"name": "CT Colonography",
+				"type": "String"
+			},
+			{
+				"name": "MRI SPINES",
+				"type": "String"
+			},
+			{
+				"name": "MRI KNEES",
+				"type": "String"
+			},
+			{
+				"name": "MRI HEAD",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

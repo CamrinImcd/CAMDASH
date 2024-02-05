@@ -1,0 +1,218 @@
+{
+	"name": "SqlServer_REPO_TAT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RADFYF01_CRIS_PostgreSQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "Accession",
+				"type": "varchar"
+			},
+			{
+				"name": "Event Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Exam Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Report Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Request Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Event Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Event Time",
+				"type": "varchar"
+			},
+			{
+				"name": "Lead Clinician",
+				"type": "varchar"
+			},
+			{
+				"name": "Referrer",
+				"type": "varchar"
+			},
+			{
+				"name": "Referring Locat",
+				"type": "varchar"
+			},
+			{
+				"name": "Site",
+				"type": "varchar"
+			},
+			{
+				"name": "Examination",
+				"type": "varchar"
+			},
+			{
+				"name": "Exam Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Event Key2",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Status Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Intended Radiologist",
+				"type": "varchar"
+			},
+			{
+				"name": "Ref Src",
+				"type": "varchar"
+			},
+			{
+				"name": "Modality",
+				"type": "varchar"
+			},
+			{
+				"name": "Date First Addended",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Date First Verified",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Date Last Addended",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Date LAst Verified",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Date Reported",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Date Typed",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "First Addended By",
+				"type": "varchar"
+			},
+			{
+				"name": "First Addended by Name",
+				"type": "varchar"
+			},
+			{
+				"name": "First Verified By",
+				"type": "varchar"
+			},
+			{
+				"name": "First Verified By Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Last Addended By",
+				"type": "varchar"
+			},
+			{
+				"name": "Last Addended By Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Last Verified By",
+				"type": "varchar"
+			},
+			{
+				"name": "Last Verified By Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Reported By",
+				"type": "varchar"
+			},
+			{
+				"name": "Reported By2",
+				"type": "varchar"
+			},
+			{
+				"name": "Reported By Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Reported By2 Name",
+				"type": "varchar"
+			},
+			{
+				"name": "First Verified Time",
+				"type": "varchar"
+			},
+			{
+				"name": "Last Verified Time",
+				"type": "varchar"
+			},
+			{
+				"name": "Time Reported",
+				"type": "varchar"
+			},
+			{
+				"name": "Time Typed",
+				"type": "varchar"
+			},
+			{
+				"name": "Typed By",
+				"type": "varchar"
+			},
+			{
+				"name": "Attend to First Verified Days",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Attend to Reported Days",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Stat Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "FYF_ODBC_REPORTING_TAT"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

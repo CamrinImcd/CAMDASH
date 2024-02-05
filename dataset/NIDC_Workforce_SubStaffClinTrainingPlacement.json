@@ -1,0 +1,17 @@
+{
+	"name": "NIDC_Workforce_SubStaffClinTrainingPlacement",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "NIDC_Workforce_SubStaffClinTrainingPlacement"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

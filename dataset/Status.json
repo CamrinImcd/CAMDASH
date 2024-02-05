@@ -1,0 +1,31 @@
+{
+	"name": "Status",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Status Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Status ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Status Category",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dev",
+			"table": "Status"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

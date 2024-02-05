@@ -1,0 +1,31 @@
+{
+	"name": "Tat_Type",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Tat Type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Tat Type ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Target",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dev",
+			"table": "Tat Type"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

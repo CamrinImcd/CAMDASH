@@ -1,0 +1,355 @@
+{
+	"name": "Excel_NIDC_Asset_22_IT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Test_AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "IT_Infrastructure",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "NIDC_Asset_file.xlsx",
+				"container": "nicd-asset-22"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Trust",
+				"type": "String"
+			},
+			{
+				"name": "PACS_Upgrade",
+				"type": "String"
+			},
+			{
+				"name": "PACS1_Site_Code",
+				"type": "String"
+			},
+			{
+				"name": "PACS1_Manufacturer",
+				"type": "String"
+			},
+			{
+				"name": "PACS1_Version",
+				"type": "String"
+			},
+			{
+				"name": "PACS1_Implementation_Date",
+				"type": "String"
+			},
+			{
+				"name": "PACS1_Renewal_Date",
+				"type": "String"
+			},
+			{
+				"name": "PACS2_Site_Code",
+				"type": "String"
+			},
+			{
+				"name": "PACS2_Manufacturer",
+				"type": "String"
+			},
+			{
+				"name": "PACS2_Version",
+				"type": "String"
+			},
+			{
+				"name": "PACS2_Implementation_Date",
+				"type": "String"
+			},
+			{
+				"name": "PACS2_Renewal_Date",
+				"type": "String"
+			},
+			{
+				"name": "RIS_Upgrade",
+				"type": "String"
+			},
+			{
+				"name": "RIS1_Site_Code",
+				"type": "String"
+			},
+			{
+				"name": "RIS1_Manufacturer",
+				"type": "String"
+			},
+			{
+				"name": "RIS1_Version",
+				"type": "String"
+			},
+			{
+				"name": "RIS1_Implementation_Date",
+				"type": "String"
+			},
+			{
+				"name": "RIS1_Renewal_Date",
+				"type": "String"
+			},
+			{
+				"name": "RIS2_Site_Code",
+				"type": "String"
+			},
+			{
+				"name": "RIS2_Manufacturer",
+				"type": "String"
+			},
+			{
+				"name": "RIS2_Version",
+				"type": "String"
+			},
+			{
+				"name": "RIS2_Implementation_Date",
+				"type": "String"
+			},
+			{
+				"name": "RIS2_Renewal_Date",
+				"type": "String"
+			},
+			{
+				"name": "RIS3_Site_Code",
+				"type": "String"
+			},
+			{
+				"name": "RIS3_Manufacturer",
+				"type": "String"
+			},
+			{
+				"name": "RIS3_Version",
+				"type": "String"
+			},
+			{
+				"name": "RIS3_Implementation_Date",
+				"type": "String"
+			},
+			{
+				"name": "RIS3_Renewal_Date",
+				"type": "String"
+			},
+			{
+				"name": "RIS4_Site_Code",
+				"type": "String"
+			},
+			{
+				"name": "RIS4_Manufacturer",
+				"type": "String"
+			},
+			{
+				"name": "RIS4_Version",
+				"type": "String"
+			},
+			{
+				"name": "RIS4_Implementation_Date",
+				"type": "String"
+			},
+			{
+				"name": "RIS4_Renewal_Date",
+				"type": "String"
+			},
+			{
+				"name": "OC_Upgrade",
+				"type": "String"
+			},
+			{
+				"name": "OC1_Site_Code",
+				"type": "String"
+			},
+			{
+				"name": "OC1_Manufacturer",
+				"type": "String"
+			},
+			{
+				"name": "OC1_Version",
+				"type": "String"
+			},
+			{
+				"name": "OC1_Implementation_Date",
+				"type": "String"
+			},
+			{
+				"name": "OC1_Renewal_Date",
+				"type": "String"
+			},
+			{
+				"name": "OC2_Site_Code",
+				"type": "String"
+			},
+			{
+				"name": "OC2_Manufacturer",
+				"type": "String"
+			},
+			{
+				"name": "OC2_Version",
+				"type": "String"
+			},
+			{
+				"name": "OC2_Implementation_Date",
+				"type": "String"
+			},
+			{
+				"name": "OC2_Renewal_Date",
+				"type": "String"
+			},
+			{
+				"name": "AI_DS_System",
+				"type": "String"
+			},
+			{
+				"name": "AI_DS_System_Used_1",
+				"type": "String"
+			},
+			{
+				"name": "AI_DS_System_Used_Freetext_1",
+				"type": "String"
+			},
+			{
+				"name": "Trialing_AI",
+				"type": "String"
+			},
+			{
+				"name": "Trialing_AI_Used",
+				"type": "String"
+			},
+			{
+				"name": "CDS_Referrers",
+				"type": "String"
+			},
+			{
+				"name": "Percent_Paper_Requests",
+				"type": "String"
+			},
+			{
+				"name": "Online_Appointment_Access",
+				"type": "String"
+			},
+			{
+				"name": "Online_Results_Access",
+				"type": "String"
+			},
+			{
+				"name": "All_Referrers_Elec_Results",
+				"type": "String"
+			},
+			{
+				"name": "Joint_Procurement",
+				"type": "String"
+			},
+			{
+				"name": "Out_of_Hours_Rep",
+				"type": "String"
+			},
+			{
+				"name": "Specialist_Reporting",
+				"type": "String"
+			},
+			{
+				"name": "Backlog_Reporting",
+				"type": "String"
+			},
+			{
+				"name": "Shared_booking_/_Workload_Leveling",
+				"type": "String"
+			},
+			{
+				"name": "Interventional_Radiology",
+				"type": "String"
+			},
+			{
+				"name": "Out_of_hours_on_call_Scanning",
+				"type": "String"
+			},
+			{
+				"name": "Home_Reporting_Workstations",
+				"type": "String"
+			},
+			{
+				"name": "Reporting_workstations_on_Trust_premises",
+				"type": "String"
+			},
+			{
+				"name": "Nuclear_Medicine_Workstation",
+				"type": "String"
+			},
+			{
+				"name": "Total_Number_of_Workstations",
+				"type": "String"
+			},
+			{
+				"name": "Number_of_workstations_at_CDC",
+				"type": "String"
+			},
+			{
+				"name": "_Image_Exchange_Portal_Use?",
+				"type": "String"
+			},
+			{
+				"name": "Share_Within_Network",
+				"type": "String"
+			},
+			{
+				"name": "Share_Patient_History_network",
+				"type": "String"
+			},
+			{
+				"name": "share_images_within_network",
+				"type": "String"
+			},
+			{
+				"name": "share_reports_with_network",
+				"type": "String"
+			},
+			{
+				"name": "report_for_any_trust_network",
+				"type": "String"
+			},
+			{
+				"name": "use_ERostering",
+				"type": "String"
+			},
+			{
+				"name": "ERostering_staff_Groups",
+				"type": "String"
+			},
+			{
+				"name": "Admin_and_clerical",
+				"type": "String"
+			},
+			{
+				"name": "Managerial_and_IT/PACS_team",
+				"type": "String"
+			},
+			{
+				"name": "Imaging_practitioners",
+				"type": "String"
+			},
+			{
+				"name": "Clinical_Support_staff",
+				"type": "String"
+			},
+			{
+				"name": "Nursing_Staff",
+				"type": "String"
+			},
+			{
+				"name": "Medical_Staff",
+				"type": "String"
+			},
+			{
+				"name": "Medical_physics_staff",
+				"type": "String"
+			},
+			{
+				"name": "other_staff_group",
+				"type": "String"
+			},
+			{
+				"name": "level_of_attainment",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

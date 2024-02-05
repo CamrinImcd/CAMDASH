@@ -1,0 +1,103 @@
+{
+	"name": "Excel_NIDC_Workforce_22_ActivityHDRep",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Test_AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "ActivityHDRep",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "NIDC_Workforce.xlsx",
+				"container": "nidc-workforce-22"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Trust",
+				"type": "String"
+			},
+			{
+				"name": "Radiographers Job Plan Home Report",
+				"type": "String"
+			},
+			{
+				"name": "Radiologist Job Plan Home Report",
+				"type": "String"
+			},
+			{
+				"name": "Home Report Annual Pas",
+				"type": "String"
+			},
+			{
+				"name": "Average Radiographer Rostered Home Report Hours",
+				"type": "String"
+			},
+			{
+				"name": "Orthopaedic review of images in fracture clinic?",
+				"type": "String"
+			},
+			{
+				"name": "ICU Review - Chest X-ray for line position and changes in lung pathology?",
+				"type": "String"
+			},
+			{
+				"name": "Dental review - Orthopantomogram (OPG)?",
+				"type": "String"
+			},
+			{
+				"name": "Acute Medicine doctor performing and reporting a point of care ultrasound",
+				"type": "String"
+			},
+			{
+				"name": "Cardiologist reporting MRI / CT Cardiac Images?",
+				"type": "String"
+			},
+			{
+				"name": "Orthopaedic Theatre Fluoro Images?",
+				"type": "String"
+			},
+			{
+				"name": "Rheumatology follow up images?",
+				"type": "String"
+			},
+			{
+				"name": "ERCP",
+				"type": "String"
+			},
+			{
+				"name": "Speech and Language Therapists report Video Swallows",
+				"type": "String"
+			},
+			{
+				"name": "Imported images for review",
+				"type": "String"
+			},
+			{
+				"name": "Cardiac Pacemaker insertions",
+				"type": "String"
+			},
+			{
+				"name": "Deceased patient studies",
+				"type": "String"
+			},
+			{
+				"name": "Urology Reporting",
+				"type": "String"
+			},
+			{
+				"name": "Neonatal Ultrasound",
+				"type": "String"
+			},
+			{
+				"name": "Other",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

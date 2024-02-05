@@ -1,0 +1,17 @@
+{
+	"name": "NIDC_Workforce_ActivityRequests",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "NIDC_Workforce_ActivityRequests"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

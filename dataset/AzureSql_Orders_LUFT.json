@@ -1,0 +1,89 @@
+{
+	"name": "AzureSql_Orders_LUFT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "CRIS No",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Exam Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Order Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Creation Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Ref Src",
+				"type": "varchar"
+			},
+			{
+				"name": "Referrer",
+				"type": "varchar"
+			},
+			{
+				"name": "Lead Clinician",
+				"type": "varchar"
+			},
+			{
+				"name": "Required Date",
+				"type": "varchar"
+			},
+			{
+				"name": "Required Time",
+				"type": "varchar"
+			},
+			{
+				"name": "Order Id",
+				"type": "varchar"
+			},
+			{
+				"name": "Order Source",
+				"type": "varchar"
+			},
+			{
+				"name": "Episode No",
+				"type": "varchar"
+			},
+			{
+				"name": "Order Type",
+				"type": "varchar"
+			},
+			{
+				"name": "Examination",
+				"type": "varchar"
+			},
+			{
+				"name": "Urg",
+				"type": "varchar"
+			},
+			{
+				"name": "Stat Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "luft",
+			"table": "FYF_ODBC_ORDERS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

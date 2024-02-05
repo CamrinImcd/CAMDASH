@@ -1,0 +1,55 @@
+{
+	"name": "Excel_NIDC_Workforce_22_SubStaffClinTrainingPlacement",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Test_AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "SubStaffClinTrainingPlacement",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "NIDC_Workforce.xlsx",
+				"container": "nidc-workforce-22"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Trust",
+				"type": "String"
+			},
+			{
+				"name": "Staff Type",
+				"type": "String"
+			},
+			{
+				"name": "Year 1 Students Annual Headcount",
+				"type": "String"
+			},
+			{
+				"name": "Year 2 Students Annual Headcount",
+				"type": "String"
+			},
+			{
+				"name": "Year 3 Students Annual Headcount",
+				"type": "String"
+			},
+			{
+				"name": "Year 4 Students Annual Headcount",
+				"type": "String"
+			},
+			{
+				"name": "Year 5 Students Annual Headcount",
+				"type": "String"
+			},
+			{
+				"name": "Year 6 Students Annual Headcount",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

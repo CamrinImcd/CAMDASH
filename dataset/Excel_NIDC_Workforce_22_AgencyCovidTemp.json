@@ -1,0 +1,47 @@
+{
+	"name": "Excel_NIDC_Workforce_22_AgencyCovidTemp",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Test_AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "AgencyCovidTemp",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "NIDC_Workforce.xlsx",
+				"container": "nidc-workforce-22"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Trust",
+				"type": "String"
+			},
+			{
+				"name": "Band",
+				"type": "String"
+			},
+			{
+				"name": "COVID Agency/ locum Head Count",
+				"type": "String"
+			},
+			{
+				"name": "COVID Bank External Headcount",
+				"type": "String"
+			},
+			{
+				"name": "COVID Bank Internal Headcount",
+				"type": "String"
+			},
+			{
+				"name": "Total temporary pay costs for COVID temporary Staffing (£)",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

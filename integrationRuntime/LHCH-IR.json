@@ -1,0 +1,7 @@
+{
+	"name": "LHCH-IR",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "SHIR at LHCH for initial config"
+	}
+}

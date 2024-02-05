@@ -1,0 +1,247 @@
+{
+	"name": "Excel_NIDC_Workforce_22_NPC",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Test_AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "NPC",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "NIDC_Workforce.xlsx",
+				"container": "nidc-workforce-22"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Trust",
+				"type": "String"
+			},
+			{
+				"name": "Interventional Consumables spend?",
+				"type": "String"
+			},
+			{
+				"name": "separate Interventional consumables spend?",
+				"type": "String"
+			},
+			{
+				"name": "Equipment and Maintenance",
+				"type": "String"
+			},
+			{
+				"name": "Contrast Media",
+				"type": "String"
+			},
+			{
+				"name": "Isotopes",
+				"type": "String"
+			},
+			{
+				"name": "Medicines",
+				"type": "String"
+			},
+			{
+				"name": "Consumables",
+				"type": "String"
+			},
+			{
+				"name": "Interventional Radiology Consumables",
+				"type": "String"
+			},
+			{
+				"name": "Logistics",
+				"type": "String"
+			},
+			{
+				"name": "Estates",
+				"type": "String"
+			},
+			{
+				"name": "PbR Excluded Device / PbR Drugs",
+				"type": "String"
+			},
+			{
+				"name": "Training",
+				"type": "String"
+			},
+			{
+				"name": "Radiology Academy Costs",
+				"type": "String"
+			},
+			{
+				"name": "IT / PACS / RIS",
+				"type": "String"
+			},
+			{
+				"name": "Exams / patients referred out to other NHS trusts",
+				"type": "String"
+			},
+			{
+				"name": "Medical physics services",
+				"type": "String"
+			},
+			{
+				"name": "Other / Not known",
+				"type": "String"
+			},
+			{
+				"name": "Community Diagnostic Centre Non Pay Costs",
+				"type": "String"
+			},
+			{
+				"name": "TA Ionising Radiation",
+				"type": "String"
+			},
+			{
+				"name": "TA MRI",
+				"type": "String"
+			},
+			{
+				"name": "TA Mammography",
+				"type": "String"
+			},
+			{
+				"name": "TA Ultrasound",
+				"type": "String"
+			},
+			{
+				"name": "TA Nuclear Medicine",
+				"type": "String"
+			},
+			{
+				"name": "TA Lasers and UV ",
+				"type": "String"
+			},
+			{
+				"name": "TA PACS Reporting Workstations ",
+				"type": "String"
+			},
+			{
+				"name": "TA Other",
+				"type": "String"
+			},
+			{
+				"name": "CDC Ionising Radiation",
+				"type": "String"
+			},
+			{
+				"name": "CDC MRI",
+				"type": "String"
+			},
+			{
+				"name": "CDC Mammography",
+				"type": "String"
+			},
+			{
+				"name": "CDC Ultrasound",
+				"type": "String"
+			},
+			{
+				"name": "CDC Nuclear Medicine",
+				"type": "String"
+			},
+			{
+				"name": "CDC Lasers and UV ",
+				"type": "String"
+			},
+			{
+				"name": "CDC PACS Reporting Workstations ",
+				"type": "String"
+			},
+			{
+				"name": "CDC Other",
+				"type": "String"
+			},
+			{
+				"name": "TA Radiation Protection Adviser",
+				"type": "String"
+			},
+			{
+				"name": "TA Radioactive Waste Adviser",
+				"type": "String"
+			},
+			{
+				"name": "TA Laser Protection Adviser",
+				"type": "String"
+			},
+			{
+				"name": "TA Medical Physics Expert",
+				"type": "String"
+			},
+			{
+				"name": "TA MR Safety Expert",
+				"type": "String"
+			},
+			{
+				"name": "CDC Radiation Protection Adviser",
+				"type": "String"
+			},
+			{
+				"name": "CDC Radioactive Waste Adviser",
+				"type": "String"
+			},
+			{
+				"name": "CDC Laser Protection Adviser",
+				"type": "String"
+			},
+			{
+				"name": "CDC Medical Physics Expert",
+				"type": "String"
+			},
+			{
+				"name": "CDC MR Safety Expert",
+				"type": "String"
+			},
+			{
+				"name": "PbR Excluded Device / Drugs",
+				"type": "String"
+			},
+			{
+				"name": "Diagnostic Imaging - Outpatient Income (Block Contract)",
+				"type": "String"
+			},
+			{
+				"name": "Diagnostic Imaging - Outpatient Income (Tariff)",
+				"type": "String"
+			},
+			{
+				"name": "Diagnostic Imaging - Direct Access Activity (Block Contract)",
+				"type": "String"
+			},
+			{
+				"name": "Diagnostic Imaging - Direct Access Activity (Tariff)",
+				"type": "String"
+			},
+			{
+				"name": "Diagnostic Imaging - Inpatient Activity Income",
+				"type": "String"
+			},
+			{
+				"name": "Referrals from other NHS Providers",
+				"type": "String"
+			},
+			{
+				"name": "Income from Non-NHS organisations",
+				"type": "String"
+			},
+			{
+				"name": "Income for Clinical Trainee Placements",
+				"type": "String"
+			},
+			{
+				"name": "Income for Training of Substantive Staff",
+				"type": "String"
+			},
+			{
+				"name": "Other Income",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

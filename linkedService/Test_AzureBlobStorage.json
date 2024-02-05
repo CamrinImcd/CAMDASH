@@ -1,0 +1,16 @@
+{
+	"name": "Test_AzureBlobStorage",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"serviceEndpoint": "https://camdashdatalake.blob.core.windows.net/",
+			"accountKind": "StorageV2"
+		},
+		"connectVia": {
+			"referenceName": "AutoResolveAzureIR",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

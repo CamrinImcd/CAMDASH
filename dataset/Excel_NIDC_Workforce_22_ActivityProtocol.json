@@ -1,0 +1,71 @@
+{
+	"name": "Excel_NIDC_Workforce_22_ActivityProtocol",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Test_AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "ActivityProtocol",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "NIDC_Workforce.xlsx",
+				"container": "nidc-workforce-22"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Trust",
+				"type": "String"
+			},
+			{
+				"name": "Musculoskeletal (MSK) MRI imaging",
+				"type": "String"
+			},
+			{
+				"name": "Neuro MRI imaging",
+				"type": "String"
+			},
+			{
+				"name": "Breast MRI imaging",
+				"type": "String"
+			},
+			{
+				"name": "CT Colonography imaging",
+				"type": "String"
+			},
+			{
+				"name": "Ultrasound Vetting processes and appointment times ",
+				"type": "String"
+			},
+			{
+				"name": "Other Protocol 1",
+				"type": "String"
+			},
+			{
+				"name": "Service Delivered 1",
+				"type": "String"
+			},
+			{
+				"name": "Other Protocol 2",
+				"type": "String"
+			},
+			{
+				"name": "Service Delivered 2",
+				"type": "String"
+			},
+			{
+				"name": "Other Protocol 3",
+				"type": "String"
+			},
+			{
+				"name": "Service Delivered 3",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

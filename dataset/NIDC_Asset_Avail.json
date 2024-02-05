@@ -1,0 +1,17 @@
+{
+	"name": "NIDC_Asset_Avail",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "NIDC_Asset_Avail"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

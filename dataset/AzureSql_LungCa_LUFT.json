@@ -1,0 +1,78 @@
+{
+	"name": "AzureSql_LungCa_LUFT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Event key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Exam key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Site",
+				"type": "varchar"
+			},
+			{
+				"name": "Event Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Examination",
+				"type": "varchar"
+			},
+			{
+				"name": "Date Verified",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Date Last Verified",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Reported by",
+				"type": "varchar"
+			},
+			{
+				"name": "Referral Source",
+				"type": "varchar"
+			},
+			{
+				"name": "Referring Location",
+				"type": "varchar"
+			},
+			{
+				"name": "Date Reported",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "Stat Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "luft",
+			"table": "FYF_ODBC_LUNG_Ca_ALERTS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

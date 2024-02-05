@@ -1,0 +1,10 @@
+{
+	"name": "camdashprod101_mpep",
+	"properties": {
+		"privateLinkResourceId": "/subscriptions/7f24a222-ee8f-45d1-9d9e-71193702a08a/resourceGroups/CAMRIN-CAMDASH-UKS-SQL-RG/providers/Microsoft.Sql/servers/camrinsql101",
+		"groupId": "sqlServer",
+		"fqdns": [
+			"camrinsql101.database.windows.net"
+		]
+	}
+}

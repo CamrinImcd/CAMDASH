@@ -1,0 +1,51 @@
+{
+	"name": "Excel_NIDC_Workforce_22_ActivityKPI",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Test_AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "ActivityKPI",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "NIDC_Workforce.xlsx",
+				"container": "nidc-workforce-22"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Trust",
+				"type": "String"
+			},
+			{
+				"name": "Modality",
+				"type": "String"
+			},
+			{
+				"name": "95th Percentile Request to Report Issued",
+				"type": "String"
+			},
+			{
+				"name": "95th Percentile Exam to Report Issued",
+				"type": "String"
+			},
+			{
+				"name": "Report outstanding > 10 days",
+				"type": "String"
+			},
+			{
+				"name": "Report outstanding > 30 days",
+				"type": "String"
+			},
+			{
+				"name": "Percentage of appointments not attended by patient",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

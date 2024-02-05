@@ -1,0 +1,36 @@
+{
+	"name": "AzureSql_Imports_LUFT",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Site",
+				"type": "varchar"
+			},
+			{
+				"name": "Room",
+				"type": "varchar"
+			},
+			{
+				"name": "Room Description",
+				"type": "varchar"
+			},
+			{
+				"name": "Stat Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "luft",
+			"table": "FYF_ODBC_IMPORTS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

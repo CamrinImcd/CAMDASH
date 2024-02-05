@@ -1,0 +1,9 @@
+{
+	"name": "CAMRIN-CAMDASH-ADF-01",
+	"location": "uksouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "62fe3bc6-4d78-4180-8a91-436db8bc41d5",
+		"tenantId": "eae2146b-01ed-4b70-8a27-caa5804ab9ca"
+	}
+}

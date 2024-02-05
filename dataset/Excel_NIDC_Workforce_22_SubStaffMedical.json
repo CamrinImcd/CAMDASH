@@ -1,0 +1,75 @@
+{
+	"name": "Excel_NIDC_Workforce_22_SubStaffMedical",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Test_AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "SubStaffMedical",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "NIDC_Workforce.xlsx",
+				"container": "nidc-workforce-22"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Trust",
+				"type": "String"
+			},
+			{
+				"name": "Staff Type",
+				"type": "String"
+			},
+			{
+				"name": "Headcount",
+				"type": "String"
+			},
+			{
+				"name": "FTE",
+				"type": "String"
+			},
+			{
+				"name": "Pay Costs (£)",
+				"type": "String"
+			},
+			{
+				"name": "Vacancy",
+				"type": "String"
+			},
+			{
+				"name": "DCC - Reporting",
+				"type": "String"
+			},
+			{
+				"name": "DCC - MDT",
+				"type": "String"
+			},
+			{
+				"name": "DCC - Other Clinical Activities",
+				"type": "String"
+			},
+			{
+				"name": "SPA",
+				"type": "String"
+			},
+			{
+				"name": "SPA - Imaging Network",
+				"type": "String"
+			},
+			{
+				"name": "REALM / Governance",
+				"type": "String"
+			},
+			{
+				"name": "Other",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

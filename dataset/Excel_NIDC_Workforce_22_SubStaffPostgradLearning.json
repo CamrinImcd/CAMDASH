@@ -1,0 +1,39 @@
+{
+	"name": "Excel_NIDC_Workforce_22_SubStaffPostgradLearning",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Test_AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "SubStaffPostgradLearning",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "NIDC_Workforce.xlsx",
+				"container": "nidc-workforce-22"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Trust",
+				"type": "String"
+			},
+			{
+				"name": "Training cat",
+				"type": "String"
+			},
+			{
+				"name": "Headcount Formal Quals",
+				"type": "String"
+			},
+			{
+				"name": "Headcount - Local competency",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

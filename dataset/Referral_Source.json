@@ -1,0 +1,27 @@
+{
+	"name": "Referral_Source",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Referral Source",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Referral Source ID",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dev",
+			"table": "Referral Source"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

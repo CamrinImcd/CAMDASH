@@ -1,0 +1,55 @@
+{
+	"name": "Excel_NIDC_Workforce_22_SubStaffJobPlan",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Test_AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "SubStaffJobPlan",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "NIDC_Workforce.xlsx",
+				"container": "nidc-workforce-22"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": [
+			{
+				"name": "Trust",
+				"type": "String"
+			},
+			{
+				"name": "Consultant\nRadiographer ",
+				"type": "String"
+			},
+			{
+				"name": "Advanced \nPractitioner\n",
+				"type": "String"
+			},
+			{
+				"name": "Consultant \nSonographer",
+				"type": "String"
+			},
+			{
+				"name": "Advanced Practitioner - Sonographer",
+				"type": "String"
+			},
+			{
+				"name": "Consultant Mammographer - Symptomatic",
+				"type": "String"
+			},
+			{
+				"name": "Advanced Practitioner – Mammographer ",
+				"type": "String"
+			},
+			{
+				"name": "Reporting \nRadiographer",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

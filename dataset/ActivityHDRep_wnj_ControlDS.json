@@ -1,0 +1,19 @@
+{
+	"name": "ActivityHDRep_wnj_ControlDS",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "ActivityHDRep_wnj_20230427"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"table": "MainControlTable_wnj"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
