@@ -3940,7 +3940,7 @@
 				"type": "ExecuteWranglingDataflow",
 				"dependsOn": [
 					{
-						"activity": "Data flow1",
+						"activity": "Add Columns Core",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -3981,7 +3981,7 @@
 				}
 			},
 			{
-				"name": "Data flow1",
+				"name": "Add Columns Core",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{

@@ -9,7 +9,7 @@
 						"referenceName": "AzureSql_CORE",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "AzureSqlCORE"
 				}
 			],
 			"sinks": [
@@ -18,12 +18,12 @@
 						"referenceName": "AzureSql_CORE_V2_Staging",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "AzureSqlCoreV2Staging"
 				}
 			],
 			"transformations": [
 				{
-					"name": "derivedColumn1"
+					"name": "AddColumns"
 				}
 			],
 			"scriptLines": [
@@ -91,8 +91,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source1",
-				"source1 derive({Status Code.1} = toString(null()),",
+				"     format: 'table') ~> AzureSqlCORE",
+				"AzureSqlCORE derive({Status Code.1} = toString(null()),",
 				"          {Status Date} = toString(null()),",
 				"          {Status Time} = toString(null()),",
 				"          {Status Time2} = lpad(toString(null()),4,\"0\"),",
@@ -102,8 +102,8 @@
 				"          {Tat Type} = toString(null()),",
 				"          Activity = toString(null()),",
 				"          {Count of Activty_Demand for Activity} = toString(null()),",
-				"          {ExamSite Code} = toString(null())) ~> derivedColumn1",
-				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"          {ExamSite Code} = toString(null())) ~> AddColumns",
+				"AddColumns sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          {CRIS No} as integer,",
@@ -215,7 +215,7 @@
 				"          Patient_Type,",
 				"          {Tat Type},",
 				"          {Status Time2}",
-				"     )) ~> sink1"
+				"     )) ~> AzureSqlCoreV2Staging"
 			]
 		}
 	}
