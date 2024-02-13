@@ -12593,7 +12593,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "RequestDateTime",
+								"referenceName": "PopulateNewColumns",
 								"type": "DataFlowReference",
 								"datasetParameters": {
 									"AzureSql_CORE": {},
@@ -13221,7 +13221,7 @@
 				"[concat(variables('factoryId'), '/datasets/AzureSql_REPORT_META')]",
 				"[concat(variables('factoryId'), '/datasets/SqlServer_TEST_PAT')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSql_TEST_PATIENTS')]",
-				"[concat(variables('factoryId'), '/dataflows/RequestDateTime')]",
+				"[concat(variables('factoryId'), '/dataflows/PopulateNewColumns')]",
 				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveAzureIR')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow1')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow2')]",
@@ -25615,7 +25615,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/RequestDateTime')]",
+			"name": "[concat(parameters('factoryName'), '/PopulateNewColumns')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
