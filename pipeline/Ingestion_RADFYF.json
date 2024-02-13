@@ -3936,7 +3936,7 @@
 				]
 			},
 			{
-				"name": "Power Query2",
+				"name": "PopulateNewColumsn",
 				"type": "ExecuteWranglingDataflow",
 				"dependsOn": [
 					{
@@ -4016,7 +4016,7 @@
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Power Query2",
+						"activity": "PopulateNewColumsn",
 						"dependencyConditions": [
 							"Completed"
 						]
