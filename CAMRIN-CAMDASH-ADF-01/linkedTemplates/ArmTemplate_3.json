@@ -1,0 +1,1224 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "CAMRIN-CAMDASH-ADF-01"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_ActivityPathway')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "ActivityPathway",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Multiparametric Prostate MRI",
+						"type": "String"
+					},
+					{
+						"name": "Cauda Equina MRI ",
+						"type": "String"
+					},
+					{
+						"name": "CE_Operational Hours",
+						"type": "String"
+					},
+					{
+						"name": "Mechanical Thrombectomy procedures ",
+						"type": "String"
+					},
+					{
+						"name": "MT_Operational Hours",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_ActivityProtocol')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "ActivityProtocol",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Musculoskeletal (MSK) MRI imaging",
+						"type": "String"
+					},
+					{
+						"name": "Neuro MRI imaging",
+						"type": "String"
+					},
+					{
+						"name": "Breast MRI imaging",
+						"type": "String"
+					},
+					{
+						"name": "CT Colonography imaging",
+						"type": "String"
+					},
+					{
+						"name": "Ultrasound Vetting processes and appointment times ",
+						"type": "String"
+					},
+					{
+						"name": "Other Protocol 1",
+						"type": "String"
+					},
+					{
+						"name": "Service Delivered 1",
+						"type": "String"
+					},
+					{
+						"name": "Other Protocol 2",
+						"type": "String"
+					},
+					{
+						"name": "Service Delivered 2",
+						"type": "String"
+					},
+					{
+						"name": "Other Protocol 3",
+						"type": "String"
+					},
+					{
+						"name": "Service Delivered 3",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_ActivityRep')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "ActivityRep",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Modality",
+						"type": "String"
+					},
+					{
+						"name": "Staff Type",
+						"type": "String"
+					},
+					{
+						"name": "Count",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_ActivityRequests')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "ActivityRequests",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Modality",
+						"type": "String"
+					},
+					{
+						"name": "Source",
+						"type": "String"
+					},
+					{
+						"name": "Count",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_ActivitySpecialRep')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "ActivitySpecialRep",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Reporter type",
+						"type": "String"
+					},
+					{
+						"name": "Chest X-ray",
+						"type": "String"
+					},
+					{
+						"name": "CT Head",
+						"type": "String"
+					},
+					{
+						"name": "CT Colonography",
+						"type": "String"
+					},
+					{
+						"name": "MRI SPINES",
+						"type": "String"
+					},
+					{
+						"name": "MRI KNEES",
+						"type": "String"
+					},
+					{
+						"name": "MRI HEAD",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_AgencyCovidTemp')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "AgencyCovidTemp",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Band",
+						"type": "String"
+					},
+					{
+						"name": "COVID Agency/ locum Head Count",
+						"type": "String"
+					},
+					{
+						"name": "COVID Bank External Headcount",
+						"type": "String"
+					},
+					{
+						"name": "COVID Bank Internal Headcount",
+						"type": "String"
+					},
+					{
+						"name": "Total temporary pay costs for COVID temporary Staffing (£)",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_AgencyExternal')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "AgencyExternal",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Staff Group",
+						"type": "String"
+					},
+					{
+						"name": "Staff Type",
+						"type": "String"
+					},
+					{
+						"name": "Unit Of Payment",
+						"type": "String"
+					},
+					{
+						"name": "Band",
+						"type": "String"
+					},
+					{
+						"name": "Count",
+						"type": "String"
+					},
+					{
+						"name": "Cost",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_AgencyInsource')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "AgencyInsource",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Modality",
+						"type": "String"
+					},
+					{
+						"name": "Activity Group",
+						"type": "String"
+					},
+					{
+						"name": "Volume",
+						"type": "String"
+					},
+					{
+						"name": "Cost",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_AgencyInternal')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "AgencyInternal",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Staff Group",
+						"type": "String"
+					},
+					{
+						"name": "Staff Type",
+						"type": "String"
+					},
+					{
+						"name": "Unit Of Payment",
+						"type": "String"
+					},
+					{
+						"name": "Band",
+						"type": "String"
+					},
+					{
+						"name": "Count",
+						"type": "String"
+					},
+					{
+						"name": "Cost",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_AgencyLocum')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "AgencyLocum",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Staff Group",
+						"type": "String"
+					},
+					{
+						"name": "Staff Type",
+						"type": "String"
+					},
+					{
+						"name": "Unit Of Payment",
+						"type": "String"
+					},
+					{
+						"name": "Band",
+						"type": "String"
+					},
+					{
+						"name": "Count",
+						"type": "String"
+					},
+					{
+						"name": "Cost",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_AgencyOvertime')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "AgencyOvertime",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Staff Group",
+						"type": "String"
+					},
+					{
+						"name": "Staff Type",
+						"type": "String"
+					},
+					{
+						"name": "Unit Of Payment",
+						"type": "String"
+					},
+					{
+						"name": "Band",
+						"type": "String"
+					},
+					{
+						"name": "Count",
+						"type": "String"
+					},
+					{
+						"name": "Cost",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_AgencyVolCost')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "AgencyVolCost",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Staff Group",
+						"type": "String"
+					},
+					{
+						"name": "Staff Type",
+						"type": "String"
+					},
+					{
+						"name": "Unit Of Payment",
+						"type": "String"
+					},
+					{
+						"name": "Volume",
+						"type": "String"
+					},
+					{
+						"name": "Cost",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_Breast_ScreenAFC')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Breast_ScreenAFC",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Staff Type",
+						"type": "String"
+					},
+					{
+						"name": "Band",
+						"type": "String"
+					},
+					{
+						"name": "FTE",
+						"type": "String"
+					},
+					{
+						"name": " Substantive Pay Costs(£)",
+						"type": "String"
+					},
+					{
+						"name": "Extra Duty Payments (£)",
+						"type": "String"
+					},
+					{
+						"name": "Vacancies",
+						"type": "String"
+					},
+					{
+						"name": "Bank & Agency Headcount",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_Breast_ScreenLeavers')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Breast_ScreenLeavers",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Staff Type",
+						"type": "String"
+					},
+					{
+						"name": "Staff Members Left Trust",
+						"type": "String"
+					},
+					{
+						"name": "Staff Members Promoted",
+						"type": "String"
+					},
+					{
+						"name": "Staff Members left breast screening",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_Breast_ScreenMedStaff')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Breast_ScreenMedStaff",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Staff Type",
+						"type": "String"
+					},
+					{
+						"name": "Headcount",
+						"type": "String"
+					},
+					{
+						"name": "FTE",
+						"type": "String"
+					},
+					{
+						"name": "Substantive Pay Costs",
+						"type": "String"
+					},
+					{
+						"name": "Extra Duty Payments(£)",
+						"type": "String"
+					},
+					{
+						"name": "Vacancy",
+						"type": "String"
+					},
+					{
+						"name": "Bank & Agency (FTE)",
+						"type": "String"
+					},
+					{
+						"name": "Bank & Agency Pay Costs (£)",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_Breast_ScreenPlacements')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Breast_ScreenPlacements",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Staff Type",
+						"type": "String"
+					},
+					{
+						"name": "Year 1 Students Annual Headcount",
+						"type": "String"
+					},
+					{
+						"name": "Year 2 Students Annual Headcount",
+						"type": "String"
+					},
+					{
+						"name": "Year 3 Students Annual Headcount",
+						"type": "String"
+					},
+					{
+						"name": "Year 4 Students Annual Headcount",
+						"type": "String"
+					},
+					{
+						"name": "Year 5 Students Annual Headcount",
+						"type": "String"
+					},
+					{
+						"name": "Year 6 Students Annual Headcount",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_Breast_ScreenTraining')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Breast_ScreenTraining",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Staff Type",
+						"type": "String"
+					},
+					{
+						"name": "Headcount Formal Qualification",
+						"type": "String"
+					},
+					{
+						"name": "Headcount - Local competency based ",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_NPC')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "NPC",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Interventional Consumables spend?",
+						"type": "String"
+					},
+					{
+						"name": "separate Interventional consumables spend?",
+						"type": "String"
+					},
+					{
+						"name": "Equipment and Maintenance",
+						"type": "String"
+					},
+					{
+						"name": "Contrast Media",
+						"type": "String"
+					},
+					{
+						"name": "Isotopes",
+						"type": "String"
+					},
+					{
+						"name": "Medicines",
+						"type": "String"
+					},
+					{
+						"name": "Consumables",
+						"type": "String"
+					},
+					{
+						"name": "Interventional Radiology Consumables",
+						"type": "String"
+					},
+					{
+						"name": "Logistics",
+						"type": "String"
+					},
+					{
+						"name": "Estates",
+						"type": "String"
+					},
+					{
+						"name": "PbR Excluded Device / PbR Drugs",
+						"type": "String"
+					},
+					{
+						"name": "Training",
+						"type": "String"
+					},
+					{
+						"name": "Radiology Academy Costs",
+						"type": "String"
+					},
+					{
+						"name": "IT / PACS / RIS",
+						"type": "String"
+					},
+					{
+						"name": "Exams / patients referred out to other NHS trusts",
+						"type": "String"
+					},
+					{
+						"name": "Medical physics services",
+						"type": "String"
+					},
+					{
+						"name": "Other / Not known",
+						"type": "String"
+					},
+					{
+						"name": "Community Diagnostic Centre Non Pay Costs",
+						"type": "String"
+					},
+					{
+						"name": "TA Ionising Radiation",
+						"type": "String"
+					},
+					{
+						"name": "TA MRI",
+						"type": "String"
+					},
+					{
+						"name": "TA Mammography",
+						"type": "String"
+					},
+					{
+						"name": "TA Ultrasound",
+						"type": "String"
+					},
+					{
+						"name": "TA Nuclear Medicine",
+						"type": "String"
+					},
+					{
+						"name": "TA Lasers and UV ",
+						"type": "String"
+					},
+					{
+						"name": "TA PACS Reporting Workstations ",
+						"type": "String"
+					},
+					{
+						"name": "TA Other",
+						"type": "String"
+					},
+					{
+						"name": "CDC Ionising Radiation",
+						"type": "String"
+					},
+					{
+						"name": "CDC MRI",
+						"type": "String"
+					},
+					{
+						"name": "CDC Mammography",
+						"type": "String"
+					},
+					{
+						"name": "CDC Ultrasound",
+						"type": "String"
+					},
+					{
+						"name": "CDC Nuclear Medicine",
+						"type": "String"
+					},
+					{
+						"name": "CDC Lasers and UV ",
+						"type": "String"
+					},
+					{
+						"name": "CDC PACS Reporting Workstations ",
+						"type": "String"
+					},
+					{
+						"name": "CDC Other",
+						"type": "String"
+					},
+					{
+						"name": "TA Radiation Protection Adviser",
+						"type": "String"
+					},
+					{
+						"name": "TA Radioactive Waste Adviser",
+						"type": "String"
+					},
+					{
+						"name": "TA Laser Protection Adviser",
+						"type": "String"
+					},
+					{
+						"name": "TA Medical Physics Expert",
+						"type": "String"
+					},
+					{
+						"name": "TA MR Safety Expert",
+						"type": "String"
+					},
+					{
+						"name": "CDC Radiation Protection Adviser",
+						"type": "String"
+					},
+					{
+						"name": "CDC Radioactive Waste Adviser",
+						"type": "String"
+					},
+					{
+						"name": "CDC Laser Protection Adviser",
+						"type": "String"
+					},
+					{
+						"name": "CDC Medical Physics Expert",
+						"type": "String"
+					},
+					{
+						"name": "CDC MR Safety Expert",
+						"type": "String"
+					},
+					{
+						"name": "PbR Excluded Device / Drugs",
+						"type": "String"
+					},
+					{
+						"name": "Diagnostic Imaging - Outpatient Income (Block Contract)",
+						"type": "String"
+					},
+					{
+						"name": "Diagnostic Imaging - Outpatient Income (Tariff)",
+						"type": "String"
+					},
+					{
+						"name": "Diagnostic Imaging - Direct Access Activity (Block Contract)",
+						"type": "String"
+					},
+					{
+						"name": "Diagnostic Imaging - Direct Access Activity (Tariff)",
+						"type": "String"
+					},
+					{
+						"name": "Diagnostic Imaging - Inpatient Activity Income",
+						"type": "String"
+					},
+					{
+						"name": "Referrals from other NHS Providers",
+						"type": "String"
+					},
+					{
+						"name": "Income from Non-NHS organisations",
+						"type": "String"
+					},
+					{
+						"name": "Income for Clinical Trainee Placements",
+						"type": "String"
+					},
+					{
+						"name": "Income for Training of Substantive Staff",
+						"type": "String"
+					},
+					{
+						"name": "Other Income",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_NPCSavings')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "NPCSavings",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Saving Group",
+						"type": "String"
+					},
+					{
+						"name": "Type of Savings",
+						"type": "String"
+					},
+					{
+						"name": "Saving",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_OutsourceProv')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "OutsourceProv",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Modality",
+						"type": "String"
+					},
+					{
+						"name": "Provider",
+						"type": "String"
+					},
+					{
+						"name": "Count",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		}
+	]
+}

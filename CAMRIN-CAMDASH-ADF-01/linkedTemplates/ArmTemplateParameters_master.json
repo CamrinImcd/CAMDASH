@@ -1,0 +1,53 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "CAMRIN-CAMDASH-ADF-01"
+		},
+		"CAMDASH_DATALAKE_accountKey": {
+			"value": ""
+		},
+		"RADFYF01_CRIS_PostgreSQL_connectionString": {
+			"value": "Integrated Security=True;Data Source=LHCH-RADFYF01;Initial Catalog=_CRIS_PostgreSQL"
+		},
+		"RADFYF01_CRIS_PostgreSQL_password": {
+			"value": ""
+		},
+		"camdashdevtest101_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=camrinsql101.database.windows.net;Initial Catalog=camdashdevtest101"
+		},
+		"camdashprod101_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=camrinsql101.database.windows.net;Initial Catalog=camdashprod101"
+		},
+		"sql_nw_dme_01_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sql-uks-dme-01.database.windows.net;Initial Catalog=sql-nw-dme-01"
+		},
+		"CAMDASH_DATALAKE_properties_typeProperties_url": {
+			"value": "https://camdashdatalake.dfs.core.windows.net/"
+		},
+		"RADFYF01_CRIS_PostgreSQL_properties_typeProperties_userName": {
+			"value": "Ctc\\radfyf.sql"
+		},
+		"Test_AzureBlobStorage_properties_typeProperties_serviceEndpoint": {
+			"value": "https://camdashdatalake.blob.core.windows.net/"
+		},
+		"camdashprod101_mpep_properties_privateLinkResourceId": {
+			"value": "/subscriptions/7f24a222-ee8f-45d1-9d9e-71193702a08a/resourceGroups/CAMRIN-CAMDASH-UKS-SQL-RG/providers/Microsoft.Sql/servers/camrinsql101"
+		},
+		"camdashprod101_mpep_properties_groupId": {
+			"value": "sqlServer"
+		},
+		"camdashprod101_mpep_properties_fqdns": {
+			"value": [
+				"camrinsql101.database.windows.net"
+			]
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}

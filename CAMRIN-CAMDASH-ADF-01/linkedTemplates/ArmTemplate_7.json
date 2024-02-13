@@ -1,0 +1,2167 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "CAMRIN-CAMDASH-ADF-01"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/NIDC_Workforce_SubStaffSkillmix')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "NIDC_Workforce_SubStaffSkillmix"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/NIDC_Workforce_SubStaffVac')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "NIDC_Workforce_SubStaffVac"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ODBC_PTL_v2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CRIS Number",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status Category",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Request Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Booked Date Time",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Creation Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Attended",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Urg",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Days Waiting",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Predicted Reset Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Waiting Time Reset Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Weeks Waiting",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Planned Appointment Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Waiting Breach Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Was Planned",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Was Scheduled",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Was Waiting",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "5 Weeks Wait",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Booked Datetime",
+						"type": "nvarchar"
+					},
+					{
+						"name": "6 Weeks Wait",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Referral Source ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Modality ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Room ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Trust ID",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "FYF_ODBC_PTL_v2"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PROD_Unity_DM01')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashprod101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "PERIOD",
+						"type": "varchar"
+					},
+					{
+						"name": "PROVIDER_PARENT_ORG_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "PROVIDER_PARENT_NAME",
+						"type": "varchar"
+					},
+					{
+						"name": "PROVIDER_ORG_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "PROVIDER_ORG_NAME",
+						"type": "varchar"
+					},
+					{
+						"name": "COMMISSIONER_PARENT_ORG_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "COMMISSIONER_PARENT_NAME",
+						"type": "varchar"
+					},
+					{
+						"name": "COMMISSIONER_ORG_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "COMMISSIONER_ORG_NAME",
+						"type": "varchar"
+					},
+					{
+						"name": "DIAGNOSTIC_TESTS_SORT_ORDER",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DIAGNOSTIC_TESTS",
+						"type": "varchar"
+					},
+					{
+						"name": "WEEK_0_LESSTHAN_1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_1_LESSTHAN_2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_2_LESSTHAN_3",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_3_LESSTHAN_4",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_4_LESSTHAN_5",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_5_LESSTHAN_6",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_6_LESSTHAN_7",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_7_LESSTHAN_8",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_8_LESSTHAN_9",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_9_LESSTHAN_10",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_10_LESSTHAN_11",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_11_LESSTHAN_12",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_12_LESSTHAN_13",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEKS_13PLUS",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TOTAL_WL",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WAITING_LIST_ACTIVITY",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PLANNED_ACTIVITY",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "UNSCHEDULED_ACTIVITY",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TOTAL_ACTIVITY",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Z_SNAPSHOT_MONTH",
+						"type": "varchar"
+					},
+					{
+						"name": "Z_SNAPSHOT_YEAR",
+						"type": "varchar"
+					},
+					{
+						"name": "Z_SNAPSHOT_FISCAL_MONTH",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Z_SNAPSHOT_FISCAL_YEAR",
+						"type": "varchar"
+					},
+					{
+						"name": "Z_LATEST_SNAPSHOT",
+						"type": "varchar"
+					},
+					{
+						"name": "X_SEQNO",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "z_load_date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "z_snapshot_filename",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "Unify",
+					"table": "NAT_DM01"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Patient_Type')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Patient_Type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Patient_Type_ID",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "Patient Type"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Referral_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Referral Source",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Referral Source ID",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "Referral Source"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServerTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RADFYF01_CRIS_PostgreSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "Site",
+						"type": "varchar"
+					},
+					{
+						"name": "Room",
+						"type": "varchar"
+					},
+					{
+						"name": "Room Description",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FYF_ODBC_IMPORTS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_APDNA')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RADFYF01_CRIS_PostgreSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Accession",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Booked Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Referring Locat",
+						"type": "varchar"
+					},
+					{
+						"name": "Examination",
+						"type": "varchar"
+					},
+					{
+						"name": "Room",
+						"type": "varchar"
+					},
+					{
+						"name": "Status Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Lead Clincian ",
+						"type": "varchar"
+					},
+					{
+						"name": "Examination Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FYF_ODBC_APDNA"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_CORE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RADFYF01_CRIS_PostgreSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "CRIS No",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Accession",
+						"type": "varchar"
+					},
+					{
+						"name": "Ref Src",
+						"type": "varchar"
+					},
+					{
+						"name": "Referring Locat",
+						"type": "varchar"
+					},
+					{
+						"name": "Referrer",
+						"type": "varchar"
+					},
+					{
+						"name": "Speciality",
+						"type": "varchar"
+					},
+					{
+						"name": "GP",
+						"type": "varchar"
+					},
+					{
+						"name": "Practice",
+						"type": "varchar"
+					},
+					{
+						"name": "Postcode L",
+						"type": "varchar"
+					},
+					{
+						"name": "Postcode R",
+						"type": "varchar"
+					},
+					{
+						"name": "Site",
+						"type": "varchar"
+					},
+					{
+						"name": "Request Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Event Time",
+						"type": "varchar"
+					},
+					{
+						"name": "On Call",
+						"type": "varchar"
+					},
+					{
+						"name": "PT",
+						"type": "varchar"
+					},
+					{
+						"name": "RC",
+						"type": "varchar"
+					},
+					{
+						"name": "Examination",
+						"type": "varchar"
+					},
+					{
+						"name": "Exam Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Room",
+						"type": "varchar"
+					},
+					{
+						"name": "Start Time",
+						"type": "varchar"
+					},
+					{
+						"name": "End Time",
+						"type": "varchar"
+					},
+					{
+						"name": "Radiographer 1",
+						"type": "varchar"
+					},
+					{
+						"name": "Radiographer 2",
+						"type": "varchar"
+					},
+					{
+						"name": "Required Clinician",
+						"type": "varchar"
+					},
+					{
+						"name": "Contrast Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Qty Used",
+						"type": "decimal",
+						"precision": 6,
+						"scale": 2
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Booked Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Booked Time",
+						"type": "varchar"
+					},
+					{
+						"name": "Creation Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Attended",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Key2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Lead Clinician",
+						"type": "varchar"
+					},
+					{
+						"name": "Intended Radiologist",
+						"type": "varchar"
+					},
+					{
+						"name": "Urg",
+						"type": "varchar"
+					},
+					{
+						"name": "Referring Locat Name ",
+						"type": "varchar"
+					},
+					{
+						"name": "Referrer Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Modality",
+						"type": "varchar"
+					},
+					{
+						"name": "No of Proc",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "GP Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Planned Appointment Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Date First Verified",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Reported By",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported By2",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported By2 Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported By Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Time First Verified",
+						"type": "varchar"
+					},
+					{
+						"name": "Time Taken",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Typed By",
+						"type": "varchar"
+					},
+					{
+						"name": "Was Planned",
+						"type": "varchar"
+					},
+					{
+						"name": "Was Scheduled",
+						"type": "varchar"
+					},
+					{
+						"name": "Was Waiting",
+						"type": "varchar"
+					},
+					{
+						"name": "CCG",
+						"type": "varchar"
+					},
+					{
+						"name": "Postcode",
+						"type": "varchar"
+					},
+					{
+						"name": "Day of Week",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FYF_ODBC_CORE"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_Imports')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RADFYF01_CRIS_PostgreSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "Site",
+						"type": "varchar"
+					},
+					{
+						"name": "Room",
+						"type": "varchar"
+					},
+					{
+						"name": "Room Description",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FYF_ODBC_IMPORTS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_LUNGCA')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RADFYF01_CRIS_PostgreSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "Event key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Site",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Examination",
+						"type": "varchar"
+					},
+					{
+						"name": "Date Verified",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date Last Verified",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Reported by",
+						"type": "varchar"
+					},
+					{
+						"name": "Referral Source",
+						"type": "varchar"
+					},
+					{
+						"name": "Referring Location",
+						"type": "varchar"
+					},
+					{
+						"name": "Date Reported",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FYF_ODBC_LUNG_Ca_ALERTS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_NICOR')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RADFYF01_CRIS_PostgreSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "CRIS No",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Site",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Examination",
+						"type": "varchar"
+					},
+					{
+						"name": "Room",
+						"type": "varchar"
+					},
+					{
+						"name": "Dosage",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Dosage typ",
+						"type": "varchar"
+					},
+					{
+						"name": "Screening time",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Height",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Weight",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Exam Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FYF_ODBC_POST_PROCESSING"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_NICOR2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RADFYF01_CRIS_PostgreSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "CRIS No",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Site",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Examination",
+						"type": "varchar"
+					},
+					{
+						"name": "Room",
+						"type": "varchar"
+					},
+					{
+						"name": "Dosage",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Dosage typ",
+						"type": "varchar"
+					},
+					{
+						"name": "Screening time",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Height",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Weight",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Exam Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FYF_ODBC_NICOR"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_ORDERS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RADFYF01_CRIS_PostgreSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "CRIS No",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Order Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Creation Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Ref Src",
+						"type": "varchar"
+					},
+					{
+						"name": "Referrer",
+						"type": "varchar"
+					},
+					{
+						"name": "Lead Clinician",
+						"type": "varchar"
+					},
+					{
+						"name": "Required Date",
+						"type": "varchar"
+					},
+					{
+						"name": "Required Time",
+						"type": "varchar"
+					},
+					{
+						"name": "Order Id",
+						"type": "varchar"
+					},
+					{
+						"name": "Order Source",
+						"type": "varchar"
+					},
+					{
+						"name": "Episode No",
+						"type": "varchar"
+					},
+					{
+						"name": "Order Type",
+						"type": "varchar"
+					},
+					{
+						"name": "Examination",
+						"type": "varchar"
+					},
+					{
+						"name": "Urg",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FYF_ODBC_ORDERS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_PATIENTS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RADFYF01_CRIS_PostgreSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "CRIS No",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Creation Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Mutation Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "DOB",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "DOD",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Ethnic Origin",
+						"type": "varchar"
+					},
+					{
+						"name": "GP",
+						"type": "varchar"
+					},
+					{
+						"name": "No of Attends",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "No of Events",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Ref Src",
+						"type": "varchar"
+					},
+					{
+						"name": "Postcode L",
+						"type": "varchar"
+					},
+					{
+						"name": "Postcode R",
+						"type": "varchar"
+					},
+					{
+						"name": "Gender",
+						"type": "varchar"
+					},
+					{
+						"name": "Referrer Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Age at Event",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "HIS ID",
+						"type": "varchar"
+					},
+					{
+						"name": "CCG",
+						"type": "varchar"
+					},
+					{
+						"name": "Postcode",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FYF_ODBC_PATIENTS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_PATIENTS2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RADFYF01_CRIS_PostgreSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "CRIS No",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Creation Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Mutation Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "DOB",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "DOD",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Ethnic Origin",
+						"type": "varchar"
+					},
+					{
+						"name": "GP",
+						"type": "varchar"
+					},
+					{
+						"name": "No of Attends",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "No of Events",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Ref Src",
+						"type": "varchar"
+					},
+					{
+						"name": "Postcode L",
+						"type": "varchar"
+					},
+					{
+						"name": "Postcode R",
+						"type": "varchar"
+					},
+					{
+						"name": "Gender",
+						"type": "varchar"
+					},
+					{
+						"name": "Referrer Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Age at Event",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "HIS ID",
+						"type": "varchar"
+					},
+					{
+						"name": "CCG",
+						"type": "varchar"
+					},
+					{
+						"name": "Postcode",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FYF_ODBC_PATIENTS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_PTL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RADFYF01_CRIS_PostgreSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CRIS Number",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status Category",
+						"type": "varchar"
+					},
+					{
+						"name": "Referrer",
+						"type": "varchar"
+					},
+					{
+						"name": "Ref Src",
+						"type": "varchar"
+					},
+					{
+						"name": "Referring Location",
+						"type": "varchar"
+					},
+					{
+						"name": "Examination",
+						"type": "varchar"
+					},
+					{
+						"name": "Site",
+						"type": "varchar"
+					},
+					{
+						"name": "Request Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Booked Time",
+						"type": "varchar"
+					},
+					{
+						"name": "Booked Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Ref Src2",
+						"type": "varchar"
+					},
+					{
+						"name": "Postcode L",
+						"type": "varchar"
+					},
+					{
+						"name": "Postcode R",
+						"type": "varchar"
+					},
+					{
+						"name": "Creation Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Event Key2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Attended",
+						"type": "varchar"
+					},
+					{
+						"name": "Modality",
+						"type": "varchar"
+					},
+					{
+						"name": "Room",
+						"type": "varchar"
+					},
+					{
+						"name": "RC",
+						"type": "varchar"
+					},
+					{
+						"name": "Urg",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Referrer Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Exam Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Date2",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Days Waiting",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Predicted Reset Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Waiting Time Reset Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Weeks Waiting",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Planned Appointment Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Waiting Breach Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Was Planned",
+						"type": "varchar"
+					},
+					{
+						"name": "Was Scheduled",
+						"type": "varchar"
+					},
+					{
+						"name": "Was Waiting",
+						"type": "varchar"
+					},
+					{
+						"name": "CCG",
+						"type": "varchar"
+					},
+					{
+						"name": "D Status",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FYF_ODBC_PTL"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_REPO_META')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RADFYF01_CRIS_PostgreSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Report Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Referral Source",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Event Time",
+						"type": "varchar"
+					},
+					{
+						"name": "Date of First Addendnum",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date First Verified",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date of Last Addendnum",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date Last Verified",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date Reported",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date Typed",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Reported by",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported by2",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported by2 Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported by Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Typed by",
+						"type": "varchar"
+					},
+					{
+						"name": "Typed by Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FYF_ODBC_REPORT_META"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_REPO_TAT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RADFYF01_CRIS_PostgreSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "Accession",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Report Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Request Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Event Time",
+						"type": "varchar"
+					},
+					{
+						"name": "Lead Clinician",
+						"type": "varchar"
+					},
+					{
+						"name": "Referrer",
+						"type": "varchar"
+					},
+					{
+						"name": "Referring Locat",
+						"type": "varchar"
+					},
+					{
+						"name": "Site",
+						"type": "varchar"
+					},
+					{
+						"name": "Examination",
+						"type": "varchar"
+					},
+					{
+						"name": "Exam Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Key2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Intended Radiologist",
+						"type": "varchar"
+					},
+					{
+						"name": "Ref Src",
+						"type": "varchar"
+					},
+					{
+						"name": "Modality",
+						"type": "varchar"
+					},
+					{
+						"name": "Date First Addended",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date First Verified",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date Last Addended",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date LAst Verified",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date Reported",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date Typed",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "First Addended By",
+						"type": "varchar"
+					},
+					{
+						"name": "First Addended by Name",
+						"type": "varchar"
+					},
+					{
+						"name": "First Verified By",
+						"type": "varchar"
+					},
+					{
+						"name": "First Verified By Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Last Addended By",
+						"type": "varchar"
+					},
+					{
+						"name": "Last Addended By Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Last Verified By",
+						"type": "varchar"
+					},
+					{
+						"name": "Last Verified By Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported By",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported By2",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported By Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported By2 Name",
+						"type": "varchar"
+					},
+					{
+						"name": "First Verified Time",
+						"type": "varchar"
+					},
+					{
+						"name": "Last Verified Time",
+						"type": "varchar"
+					},
+					{
+						"name": "Time Reported",
+						"type": "varchar"
+					},
+					{
+						"name": "Time Typed",
+						"type": "varchar"
+					},
+					{
+						"name": "Typed By",
+						"type": "varchar"
+					},
+					{
+						"name": "Attend to First Verified Days",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Attend to Reported Days",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FYF_ODBC_REPORTING_TAT"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_REQUESTS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RADFYF01_CRIS_PostgreSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "Accession",
+						"type": "varchar"
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Urg",
+						"type": "varchar"
+					},
+					{
+						"name": "Ref Src",
+						"type": "varchar"
+					},
+					{
+						"name": "Referring Locat",
+						"type": "varchar"
+					},
+					{
+						"name": "Referrer",
+						"type": "varchar"
+					},
+					{
+						"name": "Lead Clinician",
+						"type": "varchar"
+					},
+					{
+						"name": "Site",
+						"type": "varchar"
+					},
+					{
+						"name": "Request Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Event Time",
+						"type": "varchar"
+					},
+					{
+						"name": "On Call",
+						"type": "varchar"
+					},
+					{
+						"name": "PT",
+						"type": "varchar"
+					},
+					{
+						"name": "RC",
+						"type": "varchar"
+					},
+					{
+						"name": "Examination",
+						"type": "varchar"
+					},
+					{
+						"name": "Examination Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Required Clinician",
+						"type": "varchar"
+					},
+					{
+						"name": "Status Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Booked Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Booked Time",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Key2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Creation Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Attended",
+						"type": "varchar"
+					},
+					{
+						"name": "Referrer Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Modality",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Date at Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Predicted Reset Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Waiting Time Reset Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Planned Appointment Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Waiting Time Breach Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FYF_ODBC_REQUESTS"
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

@@ -1,0 +1,292 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "CAMRIN-CAMDASH-ADF-01"
+		},
+		"CAMDASH_DATALAKE_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'CAMDASH_DATALAKE'"
+		},
+		"RADFYF01_CRIS_PostgreSQL_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'RADFYF01_CRIS_PostgreSQL'",
+			"defaultValue": "Integrated Security=True;Data Source=LHCH-RADFYF01;Initial Catalog=_CRIS_PostgreSQL"
+		},
+		"RADFYF01_CRIS_PostgreSQL_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'RADFYF01_CRIS_PostgreSQL'"
+		},
+		"camdashdevtest101_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'camdashdevtest101'",
+			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=camrinsql101.database.windows.net;Initial Catalog=camdashdevtest101"
+		},
+		"camdashprod101_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'camdashprod101'",
+			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=camrinsql101.database.windows.net;Initial Catalog=camdashprod101"
+		},
+		"sql_nw_dme_01_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'sql_nw_dme_01'",
+			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=sql-uks-dme-01.database.windows.net;Initial Catalog=sql-nw-dme-01"
+		},
+		"CAMDASH_DATALAKE_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://camdashdatalake.dfs.core.windows.net/"
+		},
+		"RADFYF01_CRIS_PostgreSQL_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "Ctc\\radfyf.sql"
+		},
+		"Test_AzureBlobStorage_properties_typeProperties_serviceEndpoint": {
+			"type": "string",
+			"defaultValue": "https://camdashdatalake.blob.core.windows.net/"
+		},
+		"camdashprod101_mpep_properties_privateLinkResourceId": {
+			"type": "string",
+			"defaultValue": "/subscriptions/7f24a222-ee8f-45d1-9d9e-71193702a08a/resourceGroups/CAMRIN-CAMDASH-UKS-SQL-RG/providers/Microsoft.Sql/servers/camrinsql101"
+		},
+		"camdashprod101_mpep_properties_groupId": {
+			"type": "string",
+			"defaultValue": "sqlServer"
+		},
+		"camdashprod101_mpep_properties_fqdns": {
+			"type": "array",
+			"defaultValue": [
+				"camrinsql101.database.windows.net"
+			]
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "CAMRIN-CAMDASH-ADF-01_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"CAMDASH_DATALAKE_accountKey": {
+						"value": "[parameters('CAMDASH_DATALAKE_accountKey')]"
+					},
+					"RADFYF01_CRIS_PostgreSQL_connectionString": {
+						"value": "[parameters('RADFYF01_CRIS_PostgreSQL_connectionString')]"
+					},
+					"RADFYF01_CRIS_PostgreSQL_password": {
+						"value": "[parameters('RADFYF01_CRIS_PostgreSQL_password')]"
+					},
+					"camdashdevtest101_connectionString": {
+						"value": "[parameters('camdashdevtest101_connectionString')]"
+					},
+					"camdashprod101_connectionString": {
+						"value": "[parameters('camdashprod101_connectionString')]"
+					},
+					"sql_nw_dme_01_connectionString": {
+						"value": "[parameters('sql_nw_dme_01_connectionString')]"
+					},
+					"CAMDASH_DATALAKE_properties_typeProperties_url": {
+						"value": "[parameters('CAMDASH_DATALAKE_properties_typeProperties_url')]"
+					},
+					"RADFYF01_CRIS_PostgreSQL_properties_typeProperties_userName": {
+						"value": "[parameters('RADFYF01_CRIS_PostgreSQL_properties_typeProperties_userName')]"
+					},
+					"Test_AzureBlobStorage_properties_typeProperties_serviceEndpoint": {
+						"value": "[parameters('Test_AzureBlobStorage_properties_typeProperties_serviceEndpoint')]"
+					},
+					"camdashprod101_mpep_properties_privateLinkResourceId": {
+						"value": "[parameters('camdashprod101_mpep_properties_privateLinkResourceId')]"
+					},
+					"camdashprod101_mpep_properties_groupId": {
+						"value": "[parameters('camdashprod101_mpep_properties_groupId')]"
+					},
+					"camdashprod101_mpep_properties_fqdns": {
+						"value": "[parameters('camdashprod101_mpep_properties_fqdns')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "CAMRIN-CAMDASH-ADF-01_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'CAMRIN-CAMDASH-ADF-01_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "CAMRIN-CAMDASH-ADF-01_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'CAMRIN-CAMDASH-ADF-01_ArmTemplate_1')]"
+			]
+		},
+		{
+			"name": "CAMRIN-CAMDASH-ADF-01_ArmTemplate_3",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'CAMRIN-CAMDASH-ADF-01_ArmTemplate_2')]"
+			]
+		},
+		{
+			"name": "CAMRIN-CAMDASH-ADF-01_ArmTemplate_4",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_4.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'CAMRIN-CAMDASH-ADF-01_ArmTemplate_3')]"
+			]
+		},
+		{
+			"name": "CAMRIN-CAMDASH-ADF-01_ArmTemplate_5",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_5.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'CAMRIN-CAMDASH-ADF-01_ArmTemplate_4')]"
+			]
+		},
+		{
+			"name": "CAMRIN-CAMDASH-ADF-01_ArmTemplate_6",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_6.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'CAMRIN-CAMDASH-ADF-01_ArmTemplate_5')]"
+			]
+		},
+		{
+			"name": "CAMRIN-CAMDASH-ADF-01_ArmTemplate_7",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_7.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'CAMRIN-CAMDASH-ADF-01_ArmTemplate_6')]"
+			]
+		},
+		{
+			"name": "CAMRIN-CAMDASH-ADF-01_ArmTemplate_8",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_8.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'CAMRIN-CAMDASH-ADF-01_ArmTemplate_7')]"
+			]
+		}
+	]
+}
