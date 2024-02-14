@@ -9,42 +9,42 @@
 						"referenceName": "AzureSql_PTL",
 						"type": "DatasetReference"
 					},
-					"name": "source1"
+					"name": "AzureSqlPTL"
 				},
 				{
 					"dataset": {
 						"referenceName": "Referral_Source",
 						"type": "DatasetReference"
 					},
-					"name": "source2"
+					"name": "ReferralSource"
 				},
 				{
 					"dataset": {
 						"referenceName": "Exam",
 						"type": "DatasetReference"
 					},
-					"name": "source3"
+					"name": "Exam"
 				},
 				{
 					"dataset": {
 						"referenceName": "Trust",
 						"type": "DatasetReference"
 					},
-					"name": "source4"
+					"name": "Trust"
 				},
 				{
 					"dataset": {
 						"referenceName": "Modality",
 						"type": "DatasetReference"
 					},
-					"name": "source5"
+					"name": "Modality"
 				},
 				{
 					"dataset": {
 						"referenceName": "Exam_Site",
 						"type": "DatasetReference"
 					},
-					"name": "source6"
+					"name": "ExamSite"
 				}
 			],
 			"sinks": [
@@ -53,57 +53,57 @@
 						"referenceName": "AzureSqlPTL_V2_Staging",
 						"type": "DatasetReference"
 					},
-					"name": "sink1"
+					"name": "AzureSqlPTLV2Staging"
 				}
 			],
 			"transformations": [
 				{
-					"name": "derivedColumn1"
+					"name": "AddColumns"
 				},
 				{
-					"name": "filter1"
+					"name": "SelectMostRecent"
 				},
 				{
-					"name": "sort1"
+					"name": "SortColumns"
 				},
 				{
-					"name": "rank1"
+					"name": "CreateID"
 				},
 				{
-					"name": "select1"
+					"name": "RenameandRemoveCols"
 				},
 				{
-					"name": "lookup1"
+					"name": "lookupReferralSource"
 				},
 				{
-					"name": "lookup2"
+					"name": "lookupExam"
 				},
 				{
-					"name": "Trust"
+					"name": "DeriveTrust"
 				},
 				{
-					"name": "lookup3"
+					"name": "lookupTrust"
 				},
 				{
-					"name": "derivedColumn2"
+					"name": "deriveModlaityCode"
 				},
 				{
-					"name": "lookup4"
+					"name": "lookupModality"
 				},
 				{
-					"name": "derivedColumn3"
+					"name": "derivedEamsiteCode"
 				},
 				{
-					"name": "lookup5"
+					"name": "lookupExamSite"
 				},
 				{
-					"name": "select2"
+					"name": "RemoveCols"
 				},
 				{
-					"name": "derivedColumn4"
+					"name": "deriveBookedDateTime"
 				},
 				{
-					"name": "select3"
+					"name": "RenameCols3"
 				}
 			],
 			"scriptLines": [
@@ -150,7 +150,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source1",
+				"     format: 'table') ~> AzureSqlPTL",
 				"source(output(",
 				"          {Referral Source} as string,",
 				"          {Referral Source ID} as integer",
@@ -158,7 +158,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source2",
+				"     format: 'table') ~> ReferralSource",
 				"source(output(",
 				"          {Exam Name} as string,",
 				"          {Exam Code} as string,",
@@ -167,7 +167,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source3",
+				"     format: 'table') ~> Exam",
 				"source(output(",
 				"          {Trust Name} as string,",
 				"          {Trust ID} as integer,",
@@ -178,7 +178,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source4",
+				"     format: 'table') ~> Trust",
 				"source(output(",
 				"          Modality2 as string,",
 				"          {Modality ID} as integer",
@@ -186,7 +186,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source5",
+				"     format: 'table') ~> Modality",
 				"source(output(",
 				"          {Exam Site} as string,",
 				"          {Exam Room} as string,",
@@ -196,16 +196,16 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source6",
-				"source1 derive({5 Weeks Wait} = iif({Weeks Waiting}>=6,1,0),",
+				"     format: 'table') ~> ExamSite",
+				"AzureSqlPTL derive({5 Weeks Wait} = iif({Weeks Waiting}>=6,1,0),",
 				"          {Booked Datetime} = toString(null()),",
 				"          {6 Weeks Wait} = toString(null()),",
-				"          {Stat Date} = toDate({Stat Date})) ~> derivedColumn1",
-				"rank1 filter(rank==1) ~> filter1",
-				"derivedColumn1 sort(desc({Stat Date}, true)) ~> sort1",
-				"sort1 rank(desc({Stat Date}, true),",
-				"     output(rank as long)) ~> rank1",
-				"filter1 select(mapColumn(",
+				"          {Stat Date} = toDate({Stat Date})) ~> AddColumns",
+				"CreateID filter(rank==1) ~> SelectMostRecent",
+				"AddColumns sort(desc({Stat Date}, true)) ~> SortColumns",
+				"SortColumns rank(desc({Stat Date}, true),",
+				"     output(rank as long)) ~> CreateID",
+				"SelectMostRecent select(mapColumn(",
 				"          {Event Key},",
 				"          {Exam Key},",
 				"          {CRIS Number},",
@@ -239,31 +239,31 @@
 				"          {6 Weeks Wait}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1, source2 lookup({Ref Src} == {Referral Source},",
+				"     skipDuplicateMapOutputs: true) ~> RenameandRemoveCols",
+				"RenameandRemoveCols, ReferralSource lookup({Ref Src} == {Referral Source},",
 				"     multiple: false,",
 				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookup1",
-				"lookup1, source3 lookup(Examination == {Exam Code},",
+				"     broadcast: 'auto')~> lookupReferralSource",
+				"lookupReferralSource, Exam lookup(Examination == {Exam Code},",
 				"     multiple: false,",
 				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookup2",
-				"lookup5 derive(Site = iif ({Site} == \"5HA16\", \"LUHFT\", iif ({Site} == \"5NL93\", \"LUHFT\", iif (left({Site},3) == \"REM\", \"LUHFT\", iif (left({Site},3) == \"RQ6\", \"LUHFT\",  iif (left({Site},3) == \"RQ6\", \"LUHFT\", iif (left({Site},3) == \"RQ6\", \"LUHFT\", iif (left({Site},3) == \"RQ6\", \"LUHFT\", iif (left({Site},3) == \"RBL\", \"WUTH\", iif (left({Site},3) == \"RBN\", \"STHK\", iif (left({Site},3) == \"RBQ\", \"LHCH\", iif (left({Site},3) == \"RBS\", \"Alder Hey\", iif (left({Site},3) == \"RBT\", \"MCH\", iif (left({Site},3) == \"REN\", \"CCC\" , iif (left({Site},3) == \"REP\", \"Womens\", iif (left({Site},3) == \"RET\", \"TWC\", iif (left({Site},3) == \"RJR\", \"COCH\", iif (left({Site},3) == \"RVY\", \"S&O\", iif (left({Site},3) == \"RWW\", \"WHH\", {Site}))))))))))))))))))) ~> Trust",
-				"Trust, source4 lookup(Site == {Trust Name},",
+				"     broadcast: 'auto')~> lookupExam",
+				"lookupExamSite derive(Site = iif ({Site} == \"5HA16\", \"LUHFT\", iif ({Site} == \"5NL93\", \"LUHFT\", iif (left({Site},3) == \"REM\", \"LUHFT\", iif (left({Site},3) == \"RQ6\", \"LUHFT\",  iif (left({Site},3) == \"RQ6\", \"LUHFT\", iif (left({Site},3) == \"RQ6\", \"LUHFT\", iif (left({Site},3) == \"RQ6\", \"LUHFT\", iif (left({Site},3) == \"RBL\", \"WUTH\", iif (left({Site},3) == \"RBN\", \"STHK\", iif (left({Site},3) == \"RBQ\", \"LHCH\", iif (left({Site},3) == \"RBS\", \"Alder Hey\", iif (left({Site},3) == \"RBT\", \"MCH\", iif (left({Site},3) == \"REN\", \"CCC\" , iif (left({Site},3) == \"REP\", \"Womens\", iif (left({Site},3) == \"RET\", \"TWC\", iif (left({Site},3) == \"RJR\", \"COCH\", iif (left({Site},3) == \"RVY\", \"S&O\", iif (left({Site},3) == \"RWW\", \"WHH\", {Site}))))))))))))))))))) ~> DeriveTrust",
+				"DeriveTrust, Trust lookup(Site == {Trust Name},",
 				"     multiple: false,",
 				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookup3",
-				"lookup2 derive(Modality = iif({Modality} == \"R\", \"Plain X-Ray\", iif({Modality} == \"A\", \"IR\", iif({Modality} == \"B\", \"Mammo\", iif({Modality} == \"C\", \"CT\", iif({Modality} == \"M\", \"MRI\", iif({Modality} == \"F\", \"Fluoro\", iif({Modality} == \"U\", \"NOUS\", iif({Modality} == \"Z\", \"Additional Workload\", iif({Modality} == \"O\", \"Obstetrics\", iif({Modality} == \"N\", \"Nuc Med\", iif({Modality} == \"H\", \"Cardio\", iif({Modality} == \"S\", \"DEXA\", iif({Modality} == \"Y\", \"Med Phys\", iif({Modality} == \"E\", \"Endo\", iif({Modality} == \"D\", \"Doppler\", \"other\")))))))))))))))) ~> derivedColumn2",
-				"derivedColumn2, source5 lookup(Modality == Modality2,",
+				"     broadcast: 'auto')~> lookupTrust",
+				"lookupExam derive(Modality = iif({Modality} == \"R\", \"Plain X-Ray\", iif({Modality} == \"A\", \"IR\", iif({Modality} == \"B\", \"Mammo\", iif({Modality} == \"C\", \"CT\", iif({Modality} == \"M\", \"MRI\", iif({Modality} == \"F\", \"Fluoro\", iif({Modality} == \"U\", \"NOUS\", iif({Modality} == \"Z\", \"Additional Workload\", iif({Modality} == \"O\", \"Obstetrics\", iif({Modality} == \"N\", \"Nuc Med\", iif({Modality} == \"H\", \"Cardio\", iif({Modality} == \"S\", \"DEXA\", iif({Modality} == \"Y\", \"Med Phys\", iif({Modality} == \"E\", \"Endo\", iif({Modality} == \"D\", \"Doppler\", \"other\")))))))))))))))) ~> deriveModlaityCode",
+				"deriveModlaityCode, Modality lookup(Modality == Modality2,",
 				"     multiple: false,",
 				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookup4",
-				"lookup4 derive(Room = concat({Site},{Room})) ~> derivedColumn3",
-				"derivedColumn3, source6 lookup(Room == {Exam Site Code},",
+				"     broadcast: 'auto')~> lookupModality",
+				"lookupModality derive(Room = concat({Site},{Room})) ~> derivedEamsiteCode",
+				"derivedEamsiteCode, ExamSite lookup(Room == {Exam Site Code},",
 				"     multiple: false,",
 				"     pickup: 'any',",
-				"     broadcast: 'auto')~> lookup5",
-				"lookup3 select(mapColumn(",
+				"     broadcast: 'auto')~> lookupExamSite",
+				"lookupTrust select(mapColumn(",
 				"          {Event Key},",
 				"          {Exam Key},",
 				"          {CRIS Number},",
@@ -295,9 +295,9 @@
 				"          {Trust ID}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select2",
-				"select2 derive({Booked Date} = toTimestamp(concatWS(\" \", left(toString({Booked Date}),10), concatWS(\":\",left({Booked Time}, 2), concatWS(\":\",right({Booked Time}, 2),\"00\"))))) ~> derivedColumn4",
-				"derivedColumn4 select(mapColumn(",
+				"     skipDuplicateMapOutputs: true) ~> RemoveCols",
+				"RemoveCols derive({Booked Date} = toTimestamp(concatWS(\" \", left(toString({Booked Date}),10), concatWS(\":\",left({Booked Time}, 2), concatWS(\":\",right({Booked Time}, 2),\"00\"))))) ~> deriveBookedDateTime",
+				"deriveBookedDateTime select(mapColumn(",
 				"          {Event Key},",
 				"          {Exam Key},",
 				"          {CRIS Number},",
@@ -328,8 +328,8 @@
 				"          {Trust ID}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select3",
-				"select3 sink(allowSchemaDrift: true,",
+				"     skipDuplicateMapOutputs: true) ~> RenameCols3",
+				"RenameCols3 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          {Event Key} as integer,",
@@ -380,7 +380,7 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 1,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError') ~> AzureSqlPTLV2Staging"
 			]
 		}
 	}

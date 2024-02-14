@@ -4043,7 +4043,7 @@
 				}
 			},
 			{
-				"name": "Data flow3",
+				"name": "ReferenceLookups",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
@@ -4078,7 +4078,7 @@
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Data flow3",
+						"activity": "ReferenceLookups",
 						"dependencyConditions": [
 							"Completed"
 						]
