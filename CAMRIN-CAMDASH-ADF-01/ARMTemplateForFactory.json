@@ -13197,7 +13197,7 @@
 							{
 								"activity": "InsertPTL",
 								"dependencyConditions": [
-									"Succeeded"
+									"Completed"
 								]
 							}
 						],
