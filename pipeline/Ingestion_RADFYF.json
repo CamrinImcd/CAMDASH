@@ -4012,7 +4012,7 @@
 				}
 			},
 			{
-				"name": "Data flow2",
+				"name": "CreateReferrenceTables",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
@@ -4047,7 +4047,7 @@
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Data flow2",
+						"activity": "CreateReferrenceTables",
 						"dependencyConditions": [
 							"Completed"
 						]
