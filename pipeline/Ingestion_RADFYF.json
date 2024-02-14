@@ -4494,6 +4494,37 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "CreateAct_Dem",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "InsertPTL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "CreateActDem",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
 			}
 		],
 		"folder": {
