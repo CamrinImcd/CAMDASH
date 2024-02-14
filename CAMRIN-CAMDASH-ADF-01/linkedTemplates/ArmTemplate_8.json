@@ -14985,7 +14985,7 @@
 						}
 					},
 					{
-						"name": "ReferenceLookups",
+						"name": "ReferenceLookupsCore",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
@@ -15030,11 +15030,11 @@
 						}
 					},
 					{
-						"name": "Data flow4",
+						"name": "ReferenceLookupsPTL",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
-								"activity": "ReferenceLookups",
+								"activity": "ReferenceLookupsCore",
 								"dependencyConditions": [
 									"Completed"
 								]
@@ -15072,11 +15072,11 @@
 						}
 					},
 					{
-						"name": "Copy data1",
+						"name": "InsertPTL",
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Data flow4",
+								"activity": "ReferenceLookupsPTL",
 								"dependencyConditions": [
 									"Completed"
 								]
