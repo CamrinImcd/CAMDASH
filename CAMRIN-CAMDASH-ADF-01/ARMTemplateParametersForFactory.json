@@ -5,6 +5,9 @@
 		"factoryName": {
 			"value": "CAMRIN-CAMDASH-ADF-01"
 		},
+		"ActDem_connectionString": {
+			"value": ""
+		},
 		"CAMDASH_DATALAKE_accountKey": {
 			"value": ""
 		},

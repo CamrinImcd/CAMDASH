@@ -13,6 +13,348 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSql_REQUESTS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Accession",
+						"type": "varchar"
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Urg",
+						"type": "varchar"
+					},
+					{
+						"name": "Ref Src",
+						"type": "varchar"
+					},
+					{
+						"name": "Referring Locat",
+						"type": "varchar"
+					},
+					{
+						"name": "Referrer",
+						"type": "varchar"
+					},
+					{
+						"name": "Lead Clinician",
+						"type": "varchar"
+					},
+					{
+						"name": "Site",
+						"type": "varchar"
+					},
+					{
+						"name": "Request Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Event Time",
+						"type": "varchar"
+					},
+					{
+						"name": "On Call",
+						"type": "varchar"
+					},
+					{
+						"name": "PT",
+						"type": "varchar"
+					},
+					{
+						"name": "RC",
+						"type": "varchar"
+					},
+					{
+						"name": "Examination",
+						"type": "varchar"
+					},
+					{
+						"name": "Examination Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Required Clinician",
+						"type": "varchar"
+					},
+					{
+						"name": "Status Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Booked Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Booked Time",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Key2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Creation Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Attended",
+						"type": "varchar"
+					},
+					{
+						"name": "Referrer Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Modality",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Date at Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Predicted Reset Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Waiting Time Reset Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Planned Appointment Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Waiting Time Breach Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "FYF_ODBC_REQUESTS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSql_Requests_LUFT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Accession",
+						"type": "varchar"
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Urg",
+						"type": "varchar"
+					},
+					{
+						"name": "Ref Src",
+						"type": "varchar"
+					},
+					{
+						"name": "Referring Locat",
+						"type": "varchar"
+					},
+					{
+						"name": "Referrer",
+						"type": "varchar"
+					},
+					{
+						"name": "Lead Clinician",
+						"type": "varchar"
+					},
+					{
+						"name": "Site",
+						"type": "varchar"
+					},
+					{
+						"name": "Request Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Event Time",
+						"type": "varchar"
+					},
+					{
+						"name": "On Call",
+						"type": "varchar"
+					},
+					{
+						"name": "PT",
+						"type": "varchar"
+					},
+					{
+						"name": "RC",
+						"type": "varchar"
+					},
+					{
+						"name": "Examination",
+						"type": "varchar"
+					},
+					{
+						"name": "Examination Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Required Clinician",
+						"type": "varchar"
+					},
+					{
+						"name": "Status Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Booked Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Booked Time",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Key2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Creation Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Attended",
+						"type": "varchar"
+					},
+					{
+						"name": "Referrer Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Modality",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Date at Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Predicted Reset Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Waiting Time Reset Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Planned Appointment Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Waiting Time Breach Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "luft",
+					"table": "FYF_ODBC_REQUESTS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSql_STATUSES')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2262,104 +2604,6 @@
 					},
 					{
 						"name": "Other",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_ActivityIA')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "ActivityIA",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "NIDC_Workforce.xlsx",
-						"container": "nidc-workforce-22"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Trust",
-						"type": "String"
-					},
-					{
-						"name": "Site",
-						"type": "String"
-					},
-					{
-						"name": "Code",
-						"type": "String"
-					},
-					{
-						"name": "Modality",
-						"type": "String"
-					},
-					{
-						"name": "Count",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_ActivityKPI')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "ActivityKPI",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "NIDC_Workforce.xlsx",
-						"container": "nidc-workforce-22"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Trust",
-						"type": "String"
-					},
-					{
-						"name": "Modality",
-						"type": "String"
-					},
-					{
-						"name": "95th Percentile Request to Report Issued",
-						"type": "String"
-					},
-					{
-						"name": "95th Percentile Exam to Report Issued",
-						"type": "String"
-					},
-					{
-						"name": "Report outstanding > 10 days",
-						"type": "String"
-					},
-					{
-						"name": "Report outstanding > 30 days",
-						"type": "String"
-					},
-					{
-						"name": "Percentage of appointments not attended by patient",
 						"type": "String"
 					}
 				]

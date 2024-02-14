@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "CAMRIN-CAMDASH-ADF-01"
 		},
+		"ActDem_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ActDem'"
+		},
 		"CAMDASH_DATALAKE_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'CAMDASH_DATALAKE'"
@@ -103,6 +107,25 @@
 			"apiVersion": "2018-06-01",
 			"properties": {},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ActDem')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureTableStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('ActDem_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveAzureIR",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveAzureIR')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/CAMDASH_DATALAKE')]",
@@ -341,6 +364,86 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/RADFYF01_CRIS_PostgreSQL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Act_Dem')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Activity",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Date",
+						"type": "date"
+					},
+					{
+						"name": "Demand",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "ID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Modality ID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Month",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Monthly Activity Sum",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Monthly Demand Sum",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Monthly Max",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Trust ID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Years",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DNA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DNARate",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "Act_Dem"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
 			]
 		},
 		{
@@ -889,353 +992,6 @@
 				"typeProperties": {
 					"schema": "dev",
 					"table": "FYF_ODBC_APDNA"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSql_APDNA_LUFT')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Accession",
-						"type": "varchar"
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Booked Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Referring Locat",
-						"type": "varchar"
-					},
-					{
-						"name": "Examination",
-						"type": "varchar"
-					},
-					{
-						"name": "Room",
-						"type": "varchar"
-					},
-					{
-						"name": "Status Code",
-						"type": "varchar"
-					},
-					{
-						"name": "Lead Clincian ",
-						"type": "varchar"
-					},
-					{
-						"name": "Examination Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "luft",
-					"table": "FYF_ODBC_APDNA"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSql_CORE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "CRIS No",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Accession",
-						"type": "varchar"
-					},
-					{
-						"name": "Ref Src",
-						"type": "varchar"
-					},
-					{
-						"name": "Referring Locat",
-						"type": "varchar"
-					},
-					{
-						"name": "Referrer",
-						"type": "varchar"
-					},
-					{
-						"name": "Speciality",
-						"type": "varchar"
-					},
-					{
-						"name": "GP",
-						"type": "varchar"
-					},
-					{
-						"name": "Practice",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode L",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode R",
-						"type": "varchar"
-					},
-					{
-						"name": "Site",
-						"type": "varchar"
-					},
-					{
-						"name": "Request Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Time",
-						"type": "varchar"
-					},
-					{
-						"name": "On Call",
-						"type": "varchar"
-					},
-					{
-						"name": "PT",
-						"type": "varchar"
-					},
-					{
-						"name": "RC",
-						"type": "varchar"
-					},
-					{
-						"name": "Examination",
-						"type": "varchar"
-					},
-					{
-						"name": "Exam Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Room",
-						"type": "varchar"
-					},
-					{
-						"name": "Start Time",
-						"type": "varchar"
-					},
-					{
-						"name": "End Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Radiographer 1",
-						"type": "varchar"
-					},
-					{
-						"name": "Radiographer 2",
-						"type": "varchar"
-					},
-					{
-						"name": "Required Clinician",
-						"type": "varchar"
-					},
-					{
-						"name": "Contrast Code",
-						"type": "varchar"
-					},
-					{
-						"name": "Qty Used",
-						"type": "decimal",
-						"precision": 6,
-						"scale": 2
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status Code",
-						"type": "varchar"
-					},
-					{
-						"name": "Booked Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Booked Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Creation Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Attended",
-						"type": "varchar"
-					},
-					{
-						"name": "Event Key2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Lead Clinician",
-						"type": "varchar"
-					},
-					{
-						"name": "Intended Radiologist",
-						"type": "varchar"
-					},
-					{
-						"name": "Urg",
-						"type": "varchar"
-					},
-					{
-						"name": "Referring Locat Name ",
-						"type": "varchar"
-					},
-					{
-						"name": "Referrer Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Modality",
-						"type": "varchar"
-					},
-					{
-						"name": "No of Proc",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "GP Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Planned Appointment Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Date First Verified",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Reported By",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By2",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By2 Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Time First Verified",
-						"type": "varchar"
-					},
-					{
-						"name": "Time Taken",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Typed By",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Planned",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Scheduled",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Waiting",
-						"type": "varchar"
-					},
-					{
-						"name": "CCG",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode",
-						"type": "varchar"
-					},
-					{
-						"name": "Day of Week",
-						"type": "varchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "dev",
-					"table": "FYF_ODBC_CORE"
 				}
 			},
 			"dependsOn": [

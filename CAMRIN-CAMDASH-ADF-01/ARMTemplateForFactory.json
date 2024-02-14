@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "CAMRIN-CAMDASH-ADF-01"
 		},
+		"ActDem_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ActDem'"
+		},
 		"CAMDASH_DATALAKE_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'CAMDASH_DATALAKE'"
@@ -13185,6 +13189,43 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "CreateAct_Dem",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "InsertPTL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "CreateActDem",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Core": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
 					}
 				],
 				"policy": {
@@ -13229,6 +13270,7 @@
 				"[concat(variables('factoryId'), '/dataflows/dataflow1_copy1')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlPTL_V2_Staging')]",
 				"[concat(variables('factoryId'), '/datasets/ODBC_PTL_v2')]",
+				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSql_CORE_V2_Staging')]"
 			]
 		},
@@ -13432,6 +13474,86 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/RADFYF01_CRIS_PostgreSQL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Act_Dem')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Activity",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Date",
+						"type": "date"
+					},
+					{
+						"name": "Demand",
+						"type": "money",
+						"precision": 19,
+						"scale": 4
+					},
+					{
+						"name": "ID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Modality ID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Month",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Monthly Activity Sum",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Monthly Demand Sum",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Monthly Max",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Trust ID",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Years",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DNA",
+						"type": "nvarchar"
+					},
+					{
+						"name": "DNARate",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "Act_Dem"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
 			]
 		},
 		{
@@ -25313,6 +25435,25 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/ActDem')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureTableStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('ActDem_connectionString')]"
+				},
+				"connectVia": {
+					"referenceName": "AutoResolveAzureIR",
+					"type": "IntegrationRuntimeReference"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveAzureIR')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/CAMDASH_DATALAKE')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -25613,6 +25754,306 @@
 				"typeProperties": {}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CreateActDem')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSql_CORE_V2",
+								"type": "DatasetReference"
+							},
+							"name": "Core"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Act_Dem",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "CreateDNAColumn"
+						},
+						{
+							"name": "GroupbyEvent"
+						},
+						{
+							"name": "GroupbyRequest"
+						},
+						{
+							"name": "RenameDate1"
+						},
+						{
+							"name": "RenameDate2"
+						},
+						{
+							"name": "derivedColumn1"
+						},
+						{
+							"name": "derivedColumn2"
+						},
+						{
+							"name": "join1"
+						},
+						{
+							"name": "derivedColumn3"
+						},
+						{
+							"name": "select1"
+						},
+						{
+							"name": "derivedColumn4"
+						},
+						{
+							"name": "aggregate1"
+						},
+						{
+							"name": "aggregate2"
+						},
+						{
+							"name": "join2"
+						},
+						{
+							"name": "join3"
+						},
+						{
+							"name": "select2"
+						},
+						{
+							"name": "select3"
+						},
+						{
+							"name": "derivedColumn5"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          {CRIS No} as integer,",
+						"          Accession as string,",
+						"          {Ref Src} as string,",
+						"          Site as string,",
+						"          {Request Date} as timestamp,",
+						"          {Event Date} as timestamp,",
+						"          {Event Time} as string,",
+						"          {On Call} as string,",
+						"          PT as string,",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          Room as string,",
+						"          {ExamSite Code} as string,",
+						"          {Start Time} as string,",
+						"          {End Time} as string,",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          {Status Code} as string,",
+						"          {Booked Date} as timestamp,",
+						"          {Booked Time} as string,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          Urg as string,",
+						"          Modality as string,",
+						"          {No of Proc} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Date First Verified} as timestamp,",
+						"          {Time First Verified} as string,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {Status Date} as timestamp,",
+						"          {Status Time} as integer,",
+						"          Modality2 as string,",
+						"          {Trust Name} as string,",
+						"          Patient_Type as string,",
+						"          {Tat Type} as string,",
+						"          Activity as integer,",
+						"          {Count of Activty_Demand for Activity} as integer,",
+						"          {Status Code2} as string,",
+						"          {Status Time2} as string,",
+						"          {Patient Type ID} as integer,",
+						"          {Modality ID} as integer,",
+						"          {Status ID} as integer,",
+						"          {Status Category} as string,",
+						"          {Exam Code} as string,",
+						"          {Exam ID} as integer,",
+						"          {Exam Site} as string,",
+						"          {Exam Room} as string,",
+						"          {Exam Site Code} as string,",
+						"          {Exam Room ID} as integer,",
+						"          {Trust ID} as integer,",
+						"          {Trust Name Group} as string,",
+						"          {Trust Name Group2} as string,",
+						"          {Trust Name Group3} as string,",
+						"          {Referral Source} as string,",
+						"          {Referral Source ID} as integer,",
+						"          {Tat Type ID} as integer,",
+						"          Target as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> Core",
+						"Core derive(DNA = iif({Status Code}==\"CPDNA\", 1, iif({Status Code}==\"APDNA\", 1, 0))) ~> CreateDNAColumn",
+						"CreateDNAColumn aggregate(groupBy({Event Date},",
+						"          {Modality ID},",
+						"          {Trust ID}),",
+						"     Activity = sum(Activity),",
+						"          DNA = sum(DNA)) ~> GroupbyEvent",
+						"CreateDNAColumn aggregate(groupBy({Request Date},",
+						"          {Modality ID},",
+						"          {Trust ID}),",
+						"     Demand = count(Activity)) ~> GroupbyRequest",
+						"GroupbyRequest select(mapColumn(",
+						"          Date = {Request Date},",
+						"          {Modality ID},",
+						"          {Trust ID},",
+						"          Demand",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RenameDate1",
+						"GroupbyEvent select(mapColumn(",
+						"          Date = {Event Date},",
+						"          {Modality ID},",
+						"          {Trust ID},",
+						"          Activity,",
+						"          DNA",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RenameDate2",
+						"RenameDate1 derive(Date = toDate(toString(Date)),",
+						"          ID = concat(toString(Date), concat(toString({Modality ID}), toString({Trust ID})))) ~> derivedColumn1",
+						"RenameDate2 derive(Date = toDate(toString(Date)),",
+						"          ID = concat(toString(Date), concat(toString({Modality ID}), toString({Trust ID})))) ~> derivedColumn2",
+						"derivedColumn1, derivedColumn2 join(derivedColumn1@ID == derivedColumn2@ID,",
+						"     joinType:'outer',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join1",
+						"join1 derive(Date = iifNull(derivedColumn1@Date,derivedColumn2@Date),",
+						"          {Modality ID} = iifNull(RenameDate1@{Modality ID},RenameDate2@{Modality ID}),",
+						"          {Trust ID} = iifNull(RenameDate1@{Trust ID},RenameDate2@{Trust ID}),",
+						"          ID = iifNull(derivedColumn1@ID, derivedColumn2@ID)) ~> derivedColumn3",
+						"derivedColumn4 select(mapColumn(",
+						"          Date,",
+						"          {Modality ID},",
+						"          {Trust ID},",
+						"          Demand,",
+						"          ID,",
+						"          Activity,",
+						"          DNA,",
+						"          Month",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"derivedColumn3 derive(Month = addMonths(addDays(lastDayOfMonth(Date),1),-1)) ~> derivedColumn4",
+						"derivedColumn4 aggregate(groupBy({Modality ID},",
+						"          {Trust ID},",
+						"          Month),",
+						"     {Monthly Activity Sum} = sum(Activity),",
+						"          {Monthly Demand Sum} = sum(Demand)) ~> aggregate1",
+						"aggregate1 aggregate(groupBy({Modality ID},",
+						"          {Trust ID},",
+						"          Month),",
+						"     {Monthly Demand Max} = iif(max({Monthly Demand Sum})>max({Monthly Activity Sum}), max({Monthly Demand Sum}), max({Monthly Activity Sum}))) ~> aggregate2",
+						"aggregate2, aggregate1 join(aggregate2@{Modality ID} == aggregate1@{Modality ID}",
+						"     && aggregate2@{Trust ID} == aggregate1@{Trust ID}",
+						"     && aggregate2@Month == aggregate1@Month,",
+						"     joinType:'outer',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join2",
+						"select1, select2 join(select1@{Modality ID} == select2@{Modality ID}",
+						"     && select1@{Trust ID} == select2@{Trust ID}",
+						"     && select1@Month == select2@Month,",
+						"     joinType:'outer',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join3",
+						"join2 select(mapColumn(",
+						"          {Modality ID} = aggregate2@{Modality ID},",
+						"          {Trust ID} = aggregate2@{Trust ID},",
+						"          Month = aggregate2@Month,",
+						"          {Monthly Demand Max},",
+						"          {Monthly Activity Sum},",
+						"          {Monthly Demand Sum}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select2",
+						"join3 select(mapColumn(",
+						"          Date,",
+						"          {Modality ID} = select1@{Modality ID},",
+						"          {Trust ID} = select1@{Trust ID},",
+						"          Demand,",
+						"          ID,",
+						"          Activity,",
+						"          DNA,",
+						"          Month = select1@Month,",
+						"          {Monthly Demand Max},",
+						"          {Monthly Activity Sum},",
+						"          {Monthly Demand Sum}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select3",
+						"select3 derive(Year = year(Date),",
+						"          DNARate = DNA/Activity) ~> derivedColumn5",
+						"derivedColumn5 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          Activity as integer,",
+						"          Date as date,",
+						"          Demand as decimal(19,4),",
+						"          ID as string,",
+						"          {Modality ID} as string,",
+						"          Month as string,",
+						"          {Monthly Activity Sum} as integer,",
+						"          {Monthly Demand Sum} as integer,",
+						"          {Monthly Max} as integer,",
+						"          {Trust ID} as string,",
+						"          Years as string,",
+						"          DNA as string,",
+						"          DNARate as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     recreate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          Activity,",
+						"          Date,",
+						"          Demand,",
+						"          ID,",
+						"          {Modality ID},",
+						"          Month,",
+						"          {Monthly Activity Sum},",
+						"          {Monthly Demand Sum},",
+						"          {Monthly Max} = {Monthly Demand Max},",
+						"          {Trust ID},",
+						"          Years = Year,",
+						"          DNA,",
+						"          DNARate",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSql_CORE_V2')]",
+				"[concat(variables('factoryId'), '/datasets/Act_Dem')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PopulateNewColumns')]",

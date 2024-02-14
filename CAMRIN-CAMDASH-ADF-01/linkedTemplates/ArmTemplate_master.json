@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "CAMRIN-CAMDASH-ADF-01"
 		},
+		"ActDem_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ActDem'"
+		},
 		"CAMDASH_DATALAKE_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'CAMDASH_DATALAKE'"
@@ -87,6 +91,9 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"ActDem_connectionString": {
+						"value": "[parameters('ActDem_connectionString')]"
 					},
 					"CAMDASH_DATALAKE_accountKey": {
 						"value": "[parameters('CAMDASH_DATALAKE_accountKey')]"
