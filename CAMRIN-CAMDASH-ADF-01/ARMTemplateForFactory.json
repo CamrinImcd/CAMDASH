@@ -12662,7 +12662,7 @@
 						}
 					},
 					{
-						"name": "Data flow2",
+						"name": "CreateReferrenceTables",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
@@ -12711,7 +12711,7 @@
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
-								"activity": "Data flow2",
+								"activity": "CreateReferrenceTables",
 								"dependencyConditions": [
 									"Completed"
 								]
@@ -12731,16 +12731,16 @@
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
-									"source1": {},
-									"source2": {},
-									"source3": {},
-									"source4": {},
-									"source5": {},
-									"source6": {},
-									"source7": {},
-									"source8": {},
-									"source9": {},
-									"sink1": {}
+									"AzureSqlCOREV2Staging": {},
+									"PatientType": {},
+									"Modality": {},
+									"Status": {},
+									"Exam": {},
+									"ExamSite": {},
+									"Trust": {},
+									"ReferralSource": {},
+									"TatType": {},
+									"AzureSqlCOREV2": {}
 								}
 							},
 							"staging": {},
@@ -26905,63 +26905,63 @@
 								"referenceName": "AzureSql_CORE_V2_Staging",
 								"type": "DatasetReference"
 							},
-							"name": "source1"
+							"name": "AzureSqlCOREV2Staging"
 						},
 						{
 							"dataset": {
 								"referenceName": "Patient_Type",
 								"type": "DatasetReference"
 							},
-							"name": "source2"
+							"name": "PatientType"
 						},
 						{
 							"dataset": {
 								"referenceName": "Modality",
 								"type": "DatasetReference"
 							},
-							"name": "source3"
+							"name": "Modality"
 						},
 						{
 							"dataset": {
 								"referenceName": "Status",
 								"type": "DatasetReference"
 							},
-							"name": "source4"
+							"name": "Status"
 						},
 						{
 							"dataset": {
 								"referenceName": "Exam",
 								"type": "DatasetReference"
 							},
-							"name": "source5"
+							"name": "Exam"
 						},
 						{
 							"dataset": {
 								"referenceName": "Exam_Site",
 								"type": "DatasetReference"
 							},
-							"name": "source6"
+							"name": "ExamSite"
 						},
 						{
 							"dataset": {
 								"referenceName": "Trust",
 								"type": "DatasetReference"
 							},
-							"name": "source7"
+							"name": "Trust"
 						},
 						{
 							"dataset": {
 								"referenceName": "Referral_Source",
 								"type": "DatasetReference"
 							},
-							"name": "source8"
+							"name": "ReferralSource"
 						},
 						{
 							"dataset": {
 								"referenceName": "Tat_Type",
 								"type": "DatasetReference"
 							},
-							"name": "source9"
+							"name": "TatType"
 						}
 					],
 					"sinks": [
@@ -26970,7 +26970,7 @@
 								"referenceName": "AzureSql_CORE_V2",
 								"type": "DatasetReference"
 							},
-							"name": "sink1"
+							"name": "AzureSqlCOREV2"
 						}
 					],
 					"transformations": [
@@ -26983,62 +26983,62 @@
 							"description": "Creates an explicit mapping for each drifted column"
 						},
 						{
-							"name": "select1"
+							"name": "RemoveColumns6"
 						},
 						{
 							"name": "MapDrifted3",
 							"description": "Creates an explicit mapping for each drifted column"
 						},
 						{
-							"name": "select2"
+							"name": "RemoveColumns1"
 						},
 						{
-							"name": "select3"
+							"name": "RemoveColumns2"
 						},
 						{
-							"name": "select4"
+							"name": "RemoveColumns3"
 						},
 						{
-							"name": "select5"
+							"name": "RemoveColumns4"
 						},
 						{
 							"name": "select6"
 						},
 						{
-							"name": "select7"
+							"name": "RemoveColumns5"
 						},
 						{
-							"name": "derivedColumn1"
+							"name": "DerivedColumn1"
 						},
 						{
-							"name": "select8"
+							"name": "RenameColumn"
 						},
 						{
-							"name": "lookup1"
+							"name": "LookupPatientType"
 						},
 						{
-							"name": "lookup2"
+							"name": "lookupModality"
 						},
 						{
-							"name": "lookup3"
+							"name": "lookupStatus"
 						},
 						{
-							"name": "lookup4"
+							"name": "lookupExam"
 						},
 						{
-							"name": "lookup5"
+							"name": "lookupExamSite"
 						},
 						{
 							"name": "lookup6"
 						},
 						{
-							"name": "lookup7"
+							"name": "lookupReferralSource"
 						},
 						{
-							"name": "lookup8"
+							"name": "lookupTatType"
 						},
 						{
-							"name": "select9"
+							"name": "RenameColumn2"
 						}
 					],
 					"scriptLines": [
@@ -27107,7 +27107,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
+						"     format: 'table') ~> AzureSqlCOREV2Staging",
 						"source(output(",
 						"          Patient_Type as string,",
 						"          Patient_Type_ID as integer",
@@ -27115,7 +27115,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source2",
+						"     format: 'table') ~> PatientType",
 						"source(output(",
 						"          Modality2 as string,",
 						"          {Modality ID} as integer",
@@ -27123,7 +27123,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source3",
+						"     format: 'table') ~> Modality",
 						"source(output(",
 						"          {Status Code} as string,",
 						"          {Status ID} as integer,",
@@ -27132,7 +27132,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source4",
+						"     format: 'table') ~> Status",
 						"source(output(",
 						"          {Exam Name} as string,",
 						"          {Exam Code} as string,",
@@ -27141,7 +27141,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source5",
+						"     format: 'table') ~> Exam",
 						"source(output(",
 						"          {Exam Site} as string,",
 						"          {Exam Room} as string,",
@@ -27151,7 +27151,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source6",
+						"     format: 'table') ~> ExamSite",
 						"source(output(",
 						"          {Trust Name} as string,",
 						"          {Trust ID} as integer,",
@@ -27162,7 +27162,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source7",
+						"     format: 'table') ~> Trust",
 						"source(output(",
 						"          {Referral Source} as string,",
 						"          {Referral Source ID} as integer",
@@ -27170,7 +27170,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source8",
+						"     format: 'table') ~> ReferralSource",
 						"source(output(",
 						"          {Tat Type} as string,",
 						"          {Tat Type ID} as integer,",
@@ -27179,10 +27179,10 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source9",
-						"lookup1 derive({Patient Type ID} = toLong(byName('Patient Type ID'))) ~> MapDrifted1",
-						"source6 derive({ExamSite Code} = toString(byName('ExamSite Code'))) ~> MapDrifted2",
-						"lookup8 select(mapColumn(",
+						"     format: 'table') ~> TatType",
+						"LookupPatientType derive({Patient Type ID} = toLong(byName('Patient Type ID'))) ~> MapDrifted1",
+						"ExamSite derive({ExamSite Code} = toString(byName('ExamSite Code'))) ~> MapDrifted2",
+						"lookupTatType select(mapColumn(",
 						"          {CRIS No},",
 						"          Accession,",
 						"          {Ref Src},",
@@ -27220,7 +27220,7 @@
 						"          Modality2,",
 						"          {Trust Name},",
 						"          Patient_Type,",
-						"          {Tat Type} = select7@{Tat Type},",
+						"          {Tat Type} = RemoveColumns5@{Tat Type},",
 						"          Activity,",
 						"          {Count of Activty_Demand for Activity},",
 						"          {Status Code2},",
@@ -27235,8 +27235,8 @@
 						"          {Tat Type ID}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select1",
-						"source2 derive({Patient Type ID} = toLong(byName('Patient Type ID'))) ~> MapDrifted3",
+						"     skipDuplicateMapOutputs: true) ~> RemoveColumns6",
+						"PatientType derive({Patient Type ID} = toLong(byName('Patient Type ID'))) ~> MapDrifted3",
 						"MapDrifted1 select(mapColumn(",
 						"          {CRIS No},",
 						"          Accession,",
@@ -27274,7 +27274,7 @@
 						"          {Status Time},",
 						"          Modality2,",
 						"          {Trust Name},",
-						"          Patient_Type = source1@Patient_Type,",
+						"          Patient_Type = AzureSqlCOREV2Staging@Patient_Type,",
 						"          {Tat Type},",
 						"          Activity,",
 						"          {Count of Activty_Demand for Activity},",
@@ -27283,8 +27283,8 @@
 						"          {Patient Type ID}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select2",
-						"lookup3 select(mapColumn(",
+						"     skipDuplicateMapOutputs: true) ~> RemoveColumns1",
+						"lookupStatus select(mapColumn(",
 						"          {CRIS No},",
 						"          Accession,",
 						"          {Ref Src},",
@@ -27302,7 +27302,7 @@
 						"          {End Time},",
 						"          {Exam Key},",
 						"          {Event Key},",
-						"          {Status Code} = select2@{Status Code},",
+						"          {Status Code} = RemoveColumns1@{Status Code},",
 						"          {Booked Date},",
 						"          {Booked Time},",
 						"          {Creation Date},",
@@ -27319,7 +27319,7 @@
 						"          {Stat Date},",
 						"          {Status Date},",
 						"          {Status Time},",
-						"          Modality2 = select2@Modality2,",
+						"          Modality2 = RemoveColumns1@Modality2,",
 						"          {Trust Name},",
 						"          Patient_Type,",
 						"          {Tat Type},",
@@ -27332,8 +27332,8 @@
 						"          {Status ID}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select3",
-						"lookup4 select(mapColumn(",
+						"     skipDuplicateMapOutputs: true) ~> RemoveColumns2",
+						"lookupExam select(mapColumn(",
 						"          {CRIS No},",
 						"          Accession,",
 						"          {Ref Src},",
@@ -27344,7 +27344,7 @@
 						"          {On Call},",
 						"          PT,",
 						"          Examination,",
-						"          {Exam Name} = select3@{Exam Name},",
+						"          {Exam Name} = RemoveColumns2@{Exam Name},",
 						"          Room,",
 						"          {ExamSite Code},",
 						"          {Start Time},",
@@ -27382,8 +27382,8 @@
 						"          {Exam ID}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select4",
-						"lookup5 select(mapColumn(",
+						"     skipDuplicateMapOutputs: true) ~> RemoveColumns3",
+						"lookupExamSite select(mapColumn(",
 						"          {CRIS No},",
 						"          Accession,",
 						"          {Ref Src},",
@@ -27396,7 +27396,7 @@
 						"          Examination,",
 						"          {Exam Name},",
 						"          Room,",
-						"          {ExamSite Code} = select4@{ExamSite Code},",
+						"          {ExamSite Code} = RemoveColumns3@{ExamSite Code},",
 						"          {Start Time},",
 						"          {End Time},",
 						"          {Exam Key},",
@@ -27433,7 +27433,7 @@
 						"          {Exam Room ID}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select5",
+						"     skipDuplicateMapOutputs: true) ~> RemoveColumns4",
 						"lookup6 select(mapColumn(",
 						"          {CRIS No},",
 						"          Accession,",
@@ -27470,7 +27470,7 @@
 						"          {Status Date},",
 						"          {Status Time},",
 						"          Modality2,",
-						"          {Trust Name} = select5@{Trust Name},",
+						"          {Trust Name} = RemoveColumns4@{Trust Name},",
 						"          Patient_Type,",
 						"          {Tat Type},",
 						"          Activity,",
@@ -27486,7 +27486,7 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select6",
-						"lookup7 select(mapColumn(",
+						"lookupReferralSource select(mapColumn(",
 						"          {CRIS No},",
 						"          Accession,",
 						"          {Ref Src},",
@@ -27538,46 +27538,46 @@
 						"          {Referral Source ID}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select7",
-						"source1 derive({Status Time2} = lpad(toString({Status Time}),4,\"0\")) ~> derivedColumn1",
+						"     skipDuplicateMapOutputs: true) ~> RemoveColumns5",
+						"AzureSqlCOREV2Staging derive({Status Time2} = lpad(toString({Status Time}),4,\"0\")) ~> DerivedColumn1",
 						"MapDrifted3 select(mapColumn(",
 						"          Patient_Type,",
 						"          {Patient Type ID}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select8",
-						"derivedColumn1, select8 lookup(source1@Patient_Type == select8@Patient_Type,",
+						"     skipDuplicateMapOutputs: true) ~> RenameColumn",
+						"DerivedColumn1, RenameColumn lookup(AzureSqlCOREV2Staging@Patient_Type == RenameColumn@Patient_Type,",
 						"     multiple: false,",
 						"     pickup: 'any',",
-						"     broadcast: 'auto')~> lookup1",
-						"select2, source3 lookup(select2@Modality2 == source3@Modality2,",
+						"     broadcast: 'auto')~> LookupPatientType",
+						"RemoveColumns1, Modality lookup(RemoveColumns1@Modality2 == Modality@Modality2,",
 						"     multiple: false,",
 						"     pickup: 'any',",
-						"     broadcast: 'auto')~> lookup2",
-						"lookup2, source4 lookup(select2@{Status Code} == source4@{Status Code},",
+						"     broadcast: 'auto')~> lookupModality",
+						"lookupModality, Status lookup(RemoveColumns1@{Status Code} == Status@{Status Code},",
 						"     multiple: false,",
 						"     pickup: 'any',",
-						"     broadcast: 'auto')~> lookup3",
-						"select3, source5 lookup(Examination == {Exam Code},",
+						"     broadcast: 'auto')~> lookupStatus",
+						"RemoveColumns2, Exam lookup(Examination == {Exam Code},",
 						"     multiple: false,",
 						"     pickup: 'any',",
-						"     broadcast: 'auto')~> lookup4",
-						"select4, MapDrifted2 lookup(select4@{ExamSite Code} == MapDrifted2@{ExamSite Code},",
+						"     broadcast: 'auto')~> lookupExam",
+						"RemoveColumns3, MapDrifted2 lookup(RemoveColumns3@{ExamSite Code} == MapDrifted2@{ExamSite Code},",
 						"     multiple: false,",
 						"     pickup: 'any',",
-						"     broadcast: 'auto')~> lookup5",
-						"select5, source7 lookup(select5@{Trust Name} == source7@{Trust Name},",
+						"     broadcast: 'auto')~> lookupExamSite",
+						"RemoveColumns4, Trust lookup(RemoveColumns4@{Trust Name} == Trust@{Trust Name},",
 						"     multiple: false,",
 						"     pickup: 'any',",
 						"     broadcast: 'auto')~> lookup6",
-						"select6, source8 lookup({Ref Src} == {Referral Source},",
+						"select6, ReferralSource lookup({Ref Src} == {Referral Source},",
 						"     multiple: false,",
 						"     pickup: 'any',",
-						"     broadcast: 'auto')~> lookup7",
-						"select7, source9 lookup(select7@{Tat Type} == source9@{Tat Type},",
+						"     broadcast: 'auto')~> lookupReferralSource",
+						"RemoveColumns5, TatType lookup(RemoveColumns5@{Tat Type} == TatType@{Tat Type},",
 						"     multiple: false,",
 						"     pickup: 'any',",
-						"     broadcast: 'auto')~> lookup8",
+						"     broadcast: 'auto')~> lookupTatType",
 						"MapDrifted2 select(mapColumn(",
 						"          {Exam Site},",
 						"          {Exam Room},",
@@ -27585,8 +27585,8 @@
 						"          {ExamSite Code}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select9",
-						"select1 sink(allowSchemaDrift: true,",
+						"     skipDuplicateMapOutputs: true) ~> RenameColumn2",
+						"RemoveColumns6 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          {CRIS No} as integer,",
@@ -27659,7 +27659,7 @@
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     saveOrder: 1,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+						"     errorHandlingOption: 'stopOnFirstError') ~> AzureSqlCOREV2"
 					]
 				}
 			},
