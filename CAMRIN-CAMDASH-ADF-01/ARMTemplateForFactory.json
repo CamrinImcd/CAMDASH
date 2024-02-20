@@ -25834,6 +25834,12 @@
 						},
 						{
 							"name": "derivedColumn5"
+						},
+						{
+							"name": "filter1"
+						},
+						{
+							"name": "filter2"
 						}
 					],
 					"scriptLines": [
@@ -25934,7 +25940,7 @@
 						"          ID = concat(left(toString(Date),10), concat(toString({Modality ID}), toString({Trust ID})))) ~> derivedColumn1",
 						"RenameDate2 derive(Date = toDate(toString(Date)),",
 						"          ID = concat(left(toString(Date),10), concat(toString({Modality ID}), toString({Trust ID})))) ~> derivedColumn2",
-						"derivedColumn1, derivedColumn2 join(derivedColumn1@ID == derivedColumn2@ID,",
+						"filter2, derivedColumn2 join(derivedColumn1@ID == derivedColumn2@ID,",
 						"     joinType:'outer',",
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
@@ -26006,7 +26012,9 @@
 						"     skipDuplicateMapOutputs: true) ~> select3",
 						"select3 derive(Year = year(Date),",
 						"          DNARate = DNA/Activity) ~> derivedColumn5",
-						"derivedColumn5 sink(allowSchemaDrift: true,",
+						"derivedColumn5 filter(isNull(ID)==false()) ~> filter1",
+						"derivedColumn1 filter(isNull(ID)==false()) ~> filter2",
+						"filter1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          Activity as integer,",
