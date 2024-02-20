@@ -9498,7 +9498,7 @@
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select3",
 						"select3 derive(Year = year(Date),",
-						"          DNARate = (Activity+DNA)) ~> derivedColumn5",
+						"          DNARate = DNA/(Activity+DNA)) ~> derivedColumn5",
 						"derivedColumn5 filter(isNull(ID)==false()) ~> filter1",
 						"derivedColumn1 filter(isNull(ID)==false()) ~> filter2",
 						"filter1 sink(allowSchemaDrift: true,",
