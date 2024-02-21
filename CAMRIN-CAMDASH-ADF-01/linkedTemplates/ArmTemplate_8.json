@@ -9778,7 +9778,8 @@
 						"          {Trust Name},",
 						"          Patient_Type,",
 						"          {Tat Type},",
-						"          {Status Time2}",
+						"          {Status Time} = {Status Time2},",
+						"          {Reported By}",
 						"     )) ~> AzureSqlCoreV2Staging"
 					]
 				}
