@@ -15625,7 +15625,7 @@
 							{
 								"activity": "PopulateNewColumsn",
 								"dependencyConditions": [
-									"Failed"
+									"Completed"
 								]
 							}
 						],
@@ -15715,7 +15715,7 @@
 							{
 								"activity": "ReferenceLookupsCore",
 								"dependencyConditions": [
-									"Completed"
+									"Failed"
 								]
 							}
 						],
