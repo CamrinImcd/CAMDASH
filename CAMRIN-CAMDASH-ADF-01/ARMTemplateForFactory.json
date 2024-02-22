@@ -14940,29 +14940,9 @@
 						"precision": 10
 					},
 					{
-						"name": "Status Category",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Exam Code",
-						"type": "nvarchar"
-					},
-					{
 						"name": "Exam ID",
 						"type": "int",
 						"precision": 10
-					},
-					{
-						"name": "Exam Site",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Exam Room",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Exam Site Code",
-						"type": "nvarchar"
 					},
 					{
 						"name": "Exam Room ID",
@@ -14975,22 +14955,6 @@
 						"precision": 10
 					},
 					{
-						"name": "Trust Name Group",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Trust Name Group2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Trust Name Group3",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Referral Source",
-						"type": "nvarchar"
-					},
-					{
 						"name": "Referral Source ID",
 						"type": "int",
 						"precision": 10
@@ -15001,9 +14965,8 @@
 						"precision": 10
 					},
 					{
-						"name": "Target",
-						"type": "int",
-						"precision": 10
+						"name": "Reported By",
+						"type": "nvarchar"
 					}
 				],
 				"typeProperties": {
@@ -27390,6 +27353,14 @@
 						},
 						{
 							"name": "RenameColumn2"
+						},
+						{
+							"name": "MapDrifted4",
+							"description": "Creates an explicit mapping for each drifted column"
+						},
+						{
+							"name": "MapDrifted5",
+							"description": "Creates an explicit mapping for each drifted column"
 						}
 					],
 					"scriptLines": [
@@ -27583,12 +27554,13 @@
 						"          {Exam Room ID},",
 						"          {Trust ID},",
 						"          {Referral Source ID},",
-						"          {Tat Type ID}",
+						"          {Tat Type ID},",
+						"          {Reported By}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns6",
 						"PatientType derive({Patient Type ID} = toLong(byName('Patient Type ID'))) ~> MapDrifted3",
-						"MapDrifted1 select(mapColumn(",
+						"MapDrifted5 select(mapColumn(",
 						"          {CRIS No},",
 						"          Accession,",
 						"          {Ref Src},",
@@ -27631,7 +27603,8 @@
 						"          {Count of Activty_Demand for Activity},",
 						"          {Status Code2},",
 						"          {Status Time2},",
-						"          {Patient Type ID}",
+						"          {Patient Type ID},",
+						"          {Reported By}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns1",
@@ -27680,7 +27653,8 @@
 						"          {Status Time2},",
 						"          {Patient Type ID},",
 						"          {Modality ID},",
-						"          {Status ID}",
+						"          {Status ID},",
+						"          {Reported By}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns2",
@@ -27730,7 +27704,8 @@
 						"          {Patient Type ID},",
 						"          {Modality ID},",
 						"          {Status ID},",
-						"          {Exam ID}",
+						"          {Exam ID},",
+						"          {Reported By}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns3",
@@ -27781,7 +27756,8 @@
 						"          {Modality ID},",
 						"          {Status ID},",
 						"          {Exam ID},",
-						"          {Exam Room ID}",
+						"          {Exam Room ID},",
+						"          {Reported By}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns4",
@@ -27833,7 +27809,8 @@
 						"          {Status ID},",
 						"          {Exam ID},",
 						"          {Exam Room ID},",
-						"          {Trust ID}",
+						"          {Trust ID},",
+						"          {Reported By}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select6",
@@ -27886,11 +27863,12 @@
 						"          {Exam ID},",
 						"          {Exam Room ID},",
 						"          {Trust ID},",
-						"          {Referral Source ID}",
+						"          {Referral Source ID},",
+						"          {Reported By}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns5",
-						"AzureSqlCOREV2Staging derive({Status Time2} = lpad(toString({Status Time}),4,\"0\")) ~> DerivedColumn1",
+						"MapDrifted4 derive({Status Time2} = lpad(toString({Status Time}),4,\"0\")) ~> DerivedColumn1",
 						"MapDrifted3 select(mapColumn(",
 						"          Patient_Type,",
 						"          {Patient Type ID}",
@@ -27937,6 +27915,8 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RenameColumn2",
+						"AzureSqlCOREV2Staging derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted4",
+						"MapDrifted1 derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted5",
 						"RemoveColumns6 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
@@ -27985,21 +27965,12 @@
 						"          {Patient Type ID} as integer,",
 						"          {Modality ID} as integer,",
 						"          {Status ID} as integer,",
-						"          {Status Category} as string,",
-						"          {Exam Code} as string,",
 						"          {Exam ID} as integer,",
-						"          {Exam Site} as string,",
-						"          {Exam Room} as string,",
-						"          {Exam Site Code} as string,",
 						"          {Exam Room ID} as integer,",
 						"          {Trust ID} as integer,",
-						"          {Trust Name Group} as string,",
-						"          {Trust Name Group2} as string,",
-						"          {Trust Name Group3} as string,",
-						"          {Referral Source} as string,",
 						"          {Referral Source ID} as integer,",
 						"          {Tat Type ID} as integer,",
-						"          Target as integer",
+						"          {Reported By} as string",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -28010,7 +27981,60 @@
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     saveOrder: 1,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> AzureSqlCOREV2"
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          {CRIS No},",
+						"          Accession,",
+						"          {Ref Src},",
+						"          Site,",
+						"          {Request Date},",
+						"          {Event Date},",
+						"          {Event Time},",
+						"          {On Call},",
+						"          PT,",
+						"          Examination,",
+						"          {Exam Name},",
+						"          Room,",
+						"          {ExamSite Code},",
+						"          {Start Time},",
+						"          {End Time},",
+						"          {Exam Key},",
+						"          {Event Key},",
+						"          {Status Code},",
+						"          {Booked Date},",
+						"          {Booked Time},",
+						"          {Creation Date},",
+						"          Attended,",
+						"          Urg,",
+						"          Modality,",
+						"          {No of Proc},",
+						"          {Planned Appointment Date},",
+						"          {Date First Verified},",
+						"          {Time First Verified},",
+						"          {Was Planned},",
+						"          {Was Scheduled},",
+						"          {Was Waiting},",
+						"          {Stat Date},",
+						"          {Status Date},",
+						"          {Status Time},",
+						"          Modality2,",
+						"          {Trust Name},",
+						"          Patient_Type,",
+						"          {Tat Type},",
+						"          Activity,",
+						"          {Count of Activty_Demand for Activity},",
+						"          {Status Code2},",
+						"          {Status Time2},",
+						"          {Patient Type ID},",
+						"          {Modality ID},",
+						"          {Status ID},",
+						"          {Exam ID},",
+						"          {Exam Room ID},",
+						"          {Trust ID},",
+						"          {Referral Source ID},",
+						"          {Tat Type ID},",
+						"          {Reported By}",
+						"     )) ~> AzureSqlCOREV2"
 					]
 				}
 			},
