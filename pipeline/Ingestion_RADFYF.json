@@ -4018,7 +4018,7 @@
 					{
 						"activity": "PopulateNewColumsn",
 						"dependencyConditions": [
-							"Completed"
+							"Failed"
 						]
 					}
 				],
