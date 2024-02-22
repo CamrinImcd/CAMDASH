@@ -12762,7 +12762,7 @@
 							{
 								"activity": "ReferenceLookupsCore",
 								"dependencyConditions": [
-									"Failed"
+									"Completed"
 								]
 							}
 						],
