@@ -12713,7 +12713,14 @@
 					{
 						"name": "ReferenceLookupsCore",
 						"type": "ExecuteDataFlow",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "CreateReferrenceTables",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -13260,7 +13267,6 @@
 				"[concat(variables('factoryId'), '/dataflows/dataflow1')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow2')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow3')]",
-				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow1_copy1')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlPTL_V2_Staging')]",
 				"[concat(variables('factoryId'), '/datasets/ODBC_PTL_v2')]",
