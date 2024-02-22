@@ -207,29 +207,9 @@
 				"precision": 10
 			},
 			{
-				"name": "Status Category",
-				"type": "nvarchar"
-			},
-			{
-				"name": "Exam Code",
-				"type": "nvarchar"
-			},
-			{
 				"name": "Exam ID",
 				"type": "int",
 				"precision": 10
-			},
-			{
-				"name": "Exam Site",
-				"type": "nvarchar"
-			},
-			{
-				"name": "Exam Room",
-				"type": "nvarchar"
-			},
-			{
-				"name": "Exam Site Code",
-				"type": "nvarchar"
 			},
 			{
 				"name": "Exam Room ID",
@@ -242,22 +222,6 @@
 				"precision": 10
 			},
 			{
-				"name": "Trust Name Group",
-				"type": "nvarchar"
-			},
-			{
-				"name": "Trust Name Group2",
-				"type": "nvarchar"
-			},
-			{
-				"name": "Trust Name Group3",
-				"type": "nvarchar"
-			},
-			{
-				"name": "Referral Source",
-				"type": "nvarchar"
-			},
-			{
 				"name": "Referral Source ID",
 				"type": "int",
 				"precision": 10
@@ -268,9 +232,8 @@
 				"precision": 10
 			},
 			{
-				"name": "Target",
-				"type": "int",
-				"precision": 10
+				"name": "Reported By",
+				"type": "nvarchar"
 			}
 		],
 		"typeProperties": {
