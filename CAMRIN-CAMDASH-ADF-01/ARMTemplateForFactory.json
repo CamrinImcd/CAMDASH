@@ -12583,7 +12583,7 @@
 							{
 								"activity": "Add Columns Core",
 								"dependencyConditions": [
-									"Completed"
+									"Failed"
 								]
 							}
 						],
