@@ -26007,12 +26007,6 @@
 					"transformations": [
 						{
 							"name": "AddColumns"
-						},
-						{
-							"name": "rank1"
-						},
-						{
-							"name": "select1"
 						}
 					],
 					"scriptLines": [
@@ -26081,7 +26075,7 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> AzureSqlCORE",
-						"select1 derive({Status Code.1} = toString(null()),",
+						"AzureSqlCORE derive({Status Code.1} = toString(null()),",
 						"          {Status Date} = toString(null()),",
 						"          {Status Time} = toString(null()),",
 						"          {Status Time2} = lpad(toString(null()),4,\"0\"),",
@@ -26092,15 +26086,6 @@
 						"          Activity = toString(null()),",
 						"          {Count of Activty_Demand for Activity} = toString(null()),",
 						"          {ExamSite Code} = toString(null())) ~> AddColumns",
-						"AzureSqlCORE rank(asc({Exam Key}, true),",
-						"     desc({Stat Date}, true),",
-						"     output({Lastest Stat} as long)) ~> rank1",
-						"rank1 select(mapColumn(",
-						"          each(match(/* All input columns */true()),",
-						"               /* Input name */$$ = $$)",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select1",
 						"AddColumns sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
