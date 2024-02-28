@@ -1,0 +1,73 @@
+{
+	"name": "dataflow4",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "AzureSql_STATUSES",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "window1"
+				},
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "sort1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {Exam Key} as integer,",
+				"          {Event Key} as integer,",
+				"          Accession as string,",
+				"          Referrer as string,",
+				"          {Referral Location} as string,",
+				"          {Referral Source} as string,",
+				"          Urg as string,",
+				"          Site as string,",
+				"          {Status Code} as string,",
+				"          {Status Date} as timestamp,",
+				"          {Status Time} as integer,",
+				"          {Referral Location Name} as string,",
+				"          {Referral Source Name} as string,",
+				"          {Referral Name} as string,",
+				"          {Examination Name} as string,",
+				"          Modality as string,",
+				"          {Status Code at State Date} as string,",
+				"          {Stat Date} as timestamp,",
+				"          {D Status} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"filter1 window(over({Exam Key}),",
+				"     desc({Status Date}, true),",
+				"     desc({Status Time}, false),",
+				"     Rank = denseRank()) ~> window1",
+				"source1 filter({Status Code}==\"RR\") ~> filter1",
+				"window1 sort(desc({Exam Key}, true)) ~> sort1",
+				"sort1 sink(validateSchema: false,",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     store: 'cache',",
+				"     format: 'inline',",
+				"     output: false,",
+				"     saveOrder: 1) ~> sink1"
+			]
+		}
+	}
+}
