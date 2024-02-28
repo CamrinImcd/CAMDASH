@@ -72,7 +72,7 @@
 				"     upsertable:false,",
 				"     truncate:true,",
 				"     format: 'table',",
-				"     preSQLs:['truncate table [dev].[RequestRecievedStatus]'],",
+				"     preSQLs:['truncate table AzureSqlTable2'],",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 1,",
