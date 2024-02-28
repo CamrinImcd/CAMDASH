@@ -1710,7 +1710,7 @@
 					{
 						"activity": "Lastest status",
 						"dependencyConditions": [
-							"Completed"
+							"Failed"
 						]
 					}
 				],
