@@ -28141,6 +28141,9 @@
 						},
 						{
 							"name": "filter1"
+						},
+						{
+							"name": "filter2"
 						}
 					],
 					"scriptLines": [
@@ -28175,7 +28178,8 @@
 						"     asc({Status Code at State Date}, false),",
 						"     Rank = denseRank()) ~> window1",
 						"source1 filter({Status Code}==\"RR\") ~> filter1",
-						"window1 sink(allowSchemaDrift: true,",
+						"window1 filter(Rank==1) ~> filter2",
+						"filter2 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
