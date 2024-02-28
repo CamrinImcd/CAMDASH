@@ -10333,9 +10333,9 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Copy_STATUSES",
+								"activity": "Lastest status",
 								"dependencyConditions": [
-									"Completed"
+									"Failed"
 								]
 							}
 						],
@@ -13226,6 +13226,43 @@
 							},
 							"traceLevel": "Fine"
 						}
+					},
+					{
+						"name": "Lastest status",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Copy_STATUSES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow4",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
 					}
 				],
 				"policy": {
@@ -13271,6 +13308,7 @@
 				"[concat(variables('factoryId'), '/datasets/AzureSqlPTL_V2_Staging')]",
 				"[concat(variables('factoryId'), '/datasets/ODBC_PTL_v2')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
+				"[concat(variables('factoryId'), '/dataflows/dataflow4')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSql_CORE_V2_Staging')]"
 			]
 		},
@@ -28049,6 +28087,84 @@
 				"[concat(variables('factoryId'), '/datasets/Referral_Source')]",
 				"[concat(variables('factoryId'), '/datasets/Tat_Type')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSql_CORE_V2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow4')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSql_STATUSES",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "window1"
+						},
+						{
+							"name": "filter1"
+						},
+						{
+							"name": "sort1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          Accession as string,",
+						"          Referrer as string,",
+						"          {Referral Location} as string,",
+						"          {Referral Source} as string,",
+						"          Urg as string,",
+						"          Site as string,",
+						"          {Status Code} as string,",
+						"          {Status Date} as timestamp,",
+						"          {Status Time} as integer,",
+						"          {Referral Location Name} as string,",
+						"          {Referral Source Name} as string,",
+						"          {Referral Name} as string,",
+						"          {Examination Name} as string,",
+						"          Modality as string,",
+						"          {Status Code at State Date} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {D Status} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"filter1 window(over({Exam Key}),",
+						"     desc({Status Date}, true),",
+						"     desc({Status Time}, false),",
+						"     Rank = denseRank()) ~> window1",
+						"source1 filter({Status Code}==\"RR\") ~> filter1",
+						"window1 sort(desc({Exam Key}, true)) ~> sort1",
+						"sort1 sink(validateSchema: false,",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     store: 'cache',",
+						"     format: 'inline',",
+						"     output: false,",
+						"     saveOrder: 1) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSql_STATUSES')]"
 			]
 		},
 		{
