@@ -29,7 +29,7 @@
 					"name": "filter1"
 				},
 				{
-					"name": "sort1"
+					"name": "filter2"
 				}
 			],
 			"scriptLines": [
@@ -63,8 +63,8 @@
 				"     desc({Status Time}, false),",
 				"     Rank = denseRank()) ~> window1",
 				"source1 filter({Status Code}==\"RR\") ~> filter1",
-				"window1 sort(desc({Exam Key}, true)) ~> sort1",
-				"sort1 sink(allowSchemaDrift: true,",
+				"window1 filter(Rank==1) ~> filter2",
+				"filter2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",
