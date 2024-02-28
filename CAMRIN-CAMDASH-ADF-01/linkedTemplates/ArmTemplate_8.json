@@ -13,6 +13,126 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_REPO_META')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RADFYF01_CRIS_PostgreSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Report Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Referral Source",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Event Time",
+						"type": "varchar"
+					},
+					{
+						"name": "Date of First Addendnum",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date First Verified",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date of Last Addendnum",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date Last Verified",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date Reported",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date Typed",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Reported by",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported by2",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported by2 Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported by Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Typed by",
+						"type": "varchar"
+					},
+					{
+						"name": "Typed by Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FYF_ODBC_REPORT_META"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SqlServer_REPO_TAT')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -11645,6 +11765,10 @@
 					],
 					"sinks": [
 						{
+							"dataset": {
+								"referenceName": "AzureSqlTable2",
+								"type": "DatasetReference"
+							},
 							"name": "sink1"
 						}
 					],
@@ -11691,13 +11815,17 @@
 						"     Rank = denseRank()) ~> window1",
 						"source1 filter({Status Code}==\"RR\") ~> filter1",
 						"window1 sort(desc({Exam Key}, true)) ~> sort1",
-						"sort1 sink(validateSchema: false,",
+						"sort1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     store: 'cache',",
-						"     format: 'inline',",
-						"     output: false,",
-						"     saveOrder: 1) ~> sink1"
+						"     saveOrder: 1,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 					]
 				}
 			},
@@ -16368,6 +16496,7 @@
 				"[concat(variables('factoryId'), '/datasets/SqlServer_REQUESTS')]",
 				"[concat(variables('factoryId'), '/datasets/SqlServer_STATUSES')]",
 				"[concat(variables('factoryId'), '/datasets/SqlServer_REPO_TAT')]",
+				"[concat(variables('factoryId'), '/datasets/SqlServer_REPO_META')]",
 				"[concat(variables('factoryId'), '/datasets/SqlServer_TEST_PAT')]",
 				"[concat(variables('factoryId'), '/dataflows/PopulateNewColumns')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow1')]",
@@ -16417,44 +16546,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/Move from ICB to CAMRIN')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Daily')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Ingestion_RADFYF",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2023-08-09T08:00:00",
-						"timeZone": "GMT Standard Time",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								1
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Ingestion_RADFYF')]"
 			]
 		}
 	]
