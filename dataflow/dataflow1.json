@@ -24,6 +24,9 @@
 			"transformations": [
 				{
 					"name": "AddColumns"
+				},
+				{
+					"name": "window1"
 				}
 			],
 			"scriptLines": [
@@ -103,7 +106,10 @@
 				"          Activity = toString(null()),",
 				"          {Count of Activty_Demand for Activity} = toString(null()),",
 				"          {ExamSite Code} = toString(null())) ~> AddColumns",
-				"AddColumns sink(allowSchemaDrift: true,",
+				"AddColumns window(over({Exam Key}),",
+				"     desc({Stat Date}, false),",
+				"     Rank = denseRank()) ~> window1",
+				"window1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          {CRIS No} as integer,",
