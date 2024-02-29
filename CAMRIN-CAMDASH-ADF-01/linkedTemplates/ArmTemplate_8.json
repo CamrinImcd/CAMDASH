@@ -13,6 +13,205 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_PTL')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RADFYF01_CRIS_PostgreSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CRIS Number",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status Category",
+						"type": "varchar"
+					},
+					{
+						"name": "Referrer",
+						"type": "varchar"
+					},
+					{
+						"name": "Ref Src",
+						"type": "varchar"
+					},
+					{
+						"name": "Referring Location",
+						"type": "varchar"
+					},
+					{
+						"name": "Examination",
+						"type": "varchar"
+					},
+					{
+						"name": "Site",
+						"type": "varchar"
+					},
+					{
+						"name": "Request Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Booked Time",
+						"type": "varchar"
+					},
+					{
+						"name": "Booked Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Ref Src2",
+						"type": "varchar"
+					},
+					{
+						"name": "Postcode L",
+						"type": "varchar"
+					},
+					{
+						"name": "Postcode R",
+						"type": "varchar"
+					},
+					{
+						"name": "Creation Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Event Key2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Attended",
+						"type": "varchar"
+					},
+					{
+						"name": "Modality",
+						"type": "varchar"
+					},
+					{
+						"name": "Room",
+						"type": "varchar"
+					},
+					{
+						"name": "RC",
+						"type": "varchar"
+					},
+					{
+						"name": "Urg",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Referrer Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Exam Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Date2",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Days Waiting",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Predicted Reset Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Waiting Time Reset Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Weeks Waiting",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Planned Appointment Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Waiting Breach Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Was Planned",
+						"type": "varchar"
+					},
+					{
+						"name": "Was Scheduled",
+						"type": "varchar"
+					},
+					{
+						"name": "Was Waiting",
+						"type": "varchar"
+					},
+					{
+						"name": "CCG",
+						"type": "varchar"
+					},
+					{
+						"name": "D Status",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FYF_ODBC_PTL"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SqlServer_REPO_META')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -9717,7 +9916,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "AzureSql_CORE_V2_Staging",
+								"referenceName": "AzureSQLCore_V2Staging",
 								"type": "DatasetReference"
 							},
 							"name": "AzureSqlCoreV2Staging"
@@ -9813,55 +10012,11 @@
 						"     Rank = denseRank()) ~> window1",
 						"window1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     input(",
-						"          {CRIS No} as integer,",
-						"          Accession as string,",
-						"          {Ref Src} as string,",
-						"          Site as string,",
-						"          {Request Date} as timestamp,",
-						"          {Event Date} as timestamp,",
-						"          {Event Time} as string,",
-						"          {On Call} as string,",
-						"          PT as string,",
-						"          Examination as string,",
-						"          {Exam Name} as string,",
-						"          Room as string,",
-						"          {ExamSite Code} as string,",
-						"          {Start Time} as string,",
-						"          {End Time} as string,",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          {Status Code} as string,",
-						"          {Booked Date} as timestamp,",
-						"          {Booked Time} as string,",
-						"          {Creation Date} as timestamp,",
-						"          Attended as string,",
-						"          Urg as string,",
-						"          Modality as string,",
-						"          {No of Proc} as integer,",
-						"          {Planned Appointment Date} as timestamp,",
-						"          {Date First Verified} as timestamp,",
-						"          {Time First Verified} as string,",
-						"          {Was Planned} as string,",
-						"          {Was Scheduled} as string,",
-						"          {Was Waiting} as string,",
-						"          {Stat Date} as timestamp,",
-						"          {Status Date} as timestamp,",
-						"          {Status Time} as integer,",
-						"          Modality2 as string,",
-						"          {Trust Name} as string,",
-						"          Patient_Type as string,",
-						"          {Tat Type} as string,",
-						"          Activity as integer,",
-						"          {Count of Activty_Demand for Activity} as integer,",
-						"          {Status Code2} as string,",
-						"          {Reported By} as string",
-						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
-						"     recreate:true,",
+						"     truncate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
@@ -9905,7 +10060,8 @@
 						"          Patient_Type,",
 						"          {Tat Type},",
 						"          {Status Time} = {Status Time2},",
-						"          {Reported By}",
+						"          {Reported By},",
+						"          Rank",
 						"     )) ~> AzureSqlCoreV2Staging"
 					]
 				}
@@ -10569,25 +10725,7 @@
 						"          Activity as integer,",
 						"          {Count of Activty_Demand for Activity} as integer,",
 						"          {Status Code2} as string,",
-						"          {Status Time2} as string,",
-						"          {Patient Type ID} as integer,",
-						"          {Modality ID} as integer,",
-						"          {Status ID} as integer,",
-						"          {Status Category} as string,",
-						"          {Exam Code} as string,",
-						"          {Exam ID} as integer,",
-						"          {Exam Site} as string,",
-						"          {Exam Room} as string,",
-						"          {Exam Site Code} as string,",
-						"          {Exam Room ID} as integer,",
-						"          {Trust ID} as integer,",
-						"          {Trust Name Group} as string,",
-						"          {Trust Name Group2} as string,",
-						"          {Trust Name Group3} as string,",
-						"          {Referral Source} as string,",
-						"          {Referral Source ID} as integer,",
-						"          {Tat Type ID} as integer,",
-						"          Target as integer",
+						"          {Reported By} as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -11115,25 +11253,7 @@
 						"          Activity as integer,",
 						"          {Count of Activty_Demand for Activity} as integer,",
 						"          {Status Code2} as string,",
-						"          {Status Time2} as string,",
-						"          {Patient Type ID} as integer,",
-						"          {Modality ID} as integer,",
-						"          {Status ID} as integer,",
-						"          {Status Category} as string,",
-						"          {Exam Code} as string,",
-						"          {Exam ID} as integer,",
-						"          {Exam Site} as string,",
-						"          {Exam Room} as string,",
-						"          {Exam Site Code} as string,",
-						"          {Exam Room ID} as integer,",
-						"          {Trust ID} as integer,",
-						"          {Trust Name Group} as string,",
-						"          {Trust Name Group2} as string,",
-						"          {Trust Name Group3} as string,",
-						"          {Referral Source} as string,",
-						"          {Referral Source ID} as integer,",
-						"          {Tat Type ID} as integer,",
-						"          Target as integer",
+						"          {Reported By} as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -15840,7 +15960,7 @@
 								"datasetParameters": {
 									"AzureSql_CORE": {},
 									"AzureSql_STATUSES": {},
-									"UserQueryAzureSqlCOREV2": {}
+									"UserQueryAzureSQLCoreV2Staging": {}
 								}
 							},
 							"staging": {},
@@ -15853,13 +15973,13 @@
 									"queryName": "UserQuery",
 									"dataflowSinks": [
 										{
-											"name": "UserQueryAzureSqlCOREV2",
+											"name": "UserQueryAzureSQLCoreV2Staging",
 											"dataset": {
-												"referenceName": "AzureSql_CORE_V2_Staging",
+												"referenceName": "AzureSQLCore_V2Staging",
 												"type": "DatasetReference",
 												"parameters": {}
 											},
-											"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\t{CRIS No} as integer,\n\t\tAccession as string,\n\t\t{Ref Src} as string,\n\t\tSite as string,\n\t\t{Request Date} as timestamp,\n\t\t{Event Date} as timestamp,\n\t\t{Event Time} as string,\n\t\t{On Call} as string,\n\t\tPT as string,\n\t\tExamination as string,\n\t\t{Exam Name} as string,\n\t\tRoom as string,\n\t\t{ExamSite Code} as string,\n\t\t{Start Time} as string,\n\t\t{End Time} as string,\n\t\t{Exam Key} as integer,\n\t\t{Event Key} as integer,\n\t\t{Status Code} as string,\n\t\t{Booked Date} as timestamp,\n\t\t{Booked Time} as string,\n\t\t{Creation Date} as timestamp,\n\t\tAttended as string,\n\t\tUrg as string,\n\t\tModality as string,\n\t\t{No of Proc} as integer,\n\t\t{Planned Appointment Date} as timestamp,\n\t\t{Date First Verified} as timestamp,\n\t\t{Time First Verified} as string,\n\t\t{Was Planned} as string,\n\t\t{Was Scheduled} as string,\n\t\t{Was Waiting} as string,\n\t\t{Stat Date} as timestamp,\n\t\t{Status Date} as timestamp,\n\t\t{Status Time} as integer,\n\t\tModality2 as string,\n\t\t{Trust Name} as string,\n\t\tPatient_Type as string,\n\t\t{Tat Type} as string,\n\t\tActivity as integer,\n\t\t{Count of Activty_Demand for Activity} as integer,\n\t\t{Status Code2} as string,\n\t\t{Reported By} as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tpreSQLs:['truncate table [dev].[FYF_ODBC_CORE_v2]'],\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\t{CRIS No},\n\t\tAccession,\n\t\t{Ref Src},\n\t\tSite,\n\t\t{Request Date},\n\t\t{Event Date},\n\t\t{Event Time},\n\t\t{On Call},\n\t\tPT,\n\t\tExamination,\n\t\t{Exam Name},\n\t\tRoom,\n\t\t{ExamSite Code},\n\t\t{Start Time},\n\t\t{End Time},\n\t\t{Exam Key},\n\t\t{Event Key},\n\t\t{Status Code},\n\t\t{Booked Date},\n\t\t{Booked Time},\n\t\t{Creation Date},\n\t\tAttended,\n\t\tUrg,\n\t\tModality,\n\t\t{No of Proc},\n\t\t{Planned Appointment Date},\n\t\t{Date First Verified},\n\t\t{Time First Verified},\n\t\t{Was Planned},\n\t\t{Was Scheduled},\n\t\t{Was Waiting},\n\t\t{Stat Date},\n\t\t{Status Date},\n\t\t{Status Time},\n\t\tModality2,\n\t\t{Trust Name},\n\t\tPatient_Type,\n\t\t{Tat Type},\n\t\tActivity,\n\t\t{Count of Activty_Demand for Activity},\n\t\t{Status Code2} = {Status Code.1},\n\t\t{Reported By}\n\t)) ~> UserQueryAzureSqlCOREV2"
+											"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> UserQueryAzureSQLCoreV2Staging"
 										}
 									]
 								}
@@ -15910,7 +16030,7 @@
 							{
 								"activity": "PopulateNewColumsn",
 								"dependencyConditions": [
-									"Completed"
+									"Failed"
 								]
 							}
 						],
@@ -16515,6 +16635,7 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/SqlServer_REQUESTS')]",
 				"[concat(variables('factoryId'), '/datasets/SqlServer_STATUSES')]",
+				"[concat(variables('factoryId'), '/datasets/SqlServer_PTL')]",
 				"[concat(variables('factoryId'), '/datasets/SqlServer_REPO_TAT')]",
 				"[concat(variables('factoryId'), '/datasets/SqlServer_REPO_META')]",
 				"[concat(variables('factoryId'), '/datasets/SqlServer_TEST_PAT')]",
@@ -16525,47 +16646,6 @@
 				"[concat(variables('factoryId'), '/dataflows/dataflow1_copy1')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow4')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/trig_DM01_Weekly')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Move from ICB to CAMRIN",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Week",
-						"interval": 1,
-						"startTime": "2023-11-23T11:22:00",
-						"timeZone": "GMT Standard Time",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								23
-							],
-							"weekDays": [
-								"Sunday"
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Move from ICB to CAMRIN')]"
 			]
 		}
 	]

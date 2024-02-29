@@ -12602,7 +12602,7 @@
 								"datasetParameters": {
 									"AzureSql_CORE": {},
 									"AzureSql_STATUSES": {},
-									"UserQueryAzureSqlCOREV2": {}
+									"UserQueryAzureSQLCoreV2Staging": {}
 								}
 							},
 							"staging": {},
@@ -12615,13 +12615,13 @@
 									"queryName": "UserQuery",
 									"dataflowSinks": [
 										{
-											"name": "UserQueryAzureSqlCOREV2",
+											"name": "UserQueryAzureSQLCoreV2Staging",
 											"dataset": {
-												"referenceName": "AzureSql_CORE_V2_Staging",
+												"referenceName": "AzureSQLCore_V2Staging",
 												"type": "DatasetReference",
 												"parameters": {}
 											},
-											"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\t{CRIS No} as integer,\n\t\tAccession as string,\n\t\t{Ref Src} as string,\n\t\tSite as string,\n\t\t{Request Date} as timestamp,\n\t\t{Event Date} as timestamp,\n\t\t{Event Time} as string,\n\t\t{On Call} as string,\n\t\tPT as string,\n\t\tExamination as string,\n\t\t{Exam Name} as string,\n\t\tRoom as string,\n\t\t{ExamSite Code} as string,\n\t\t{Start Time} as string,\n\t\t{End Time} as string,\n\t\t{Exam Key} as integer,\n\t\t{Event Key} as integer,\n\t\t{Status Code} as string,\n\t\t{Booked Date} as timestamp,\n\t\t{Booked Time} as string,\n\t\t{Creation Date} as timestamp,\n\t\tAttended as string,\n\t\tUrg as string,\n\t\tModality as string,\n\t\t{No of Proc} as integer,\n\t\t{Planned Appointment Date} as timestamp,\n\t\t{Date First Verified} as timestamp,\n\t\t{Time First Verified} as string,\n\t\t{Was Planned} as string,\n\t\t{Was Scheduled} as string,\n\t\t{Was Waiting} as string,\n\t\t{Stat Date} as timestamp,\n\t\t{Status Date} as timestamp,\n\t\t{Status Time} as integer,\n\t\tModality2 as string,\n\t\t{Trust Name} as string,\n\t\tPatient_Type as string,\n\t\t{Tat Type} as string,\n\t\tActivity as integer,\n\t\t{Count of Activty_Demand for Activity} as integer,\n\t\t{Status Code2} as string,\n\t\t{Reported By} as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tpreSQLs:['truncate table [dev].[FYF_ODBC_CORE_v2]'],\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\t{CRIS No},\n\t\tAccession,\n\t\t{Ref Src},\n\t\tSite,\n\t\t{Request Date},\n\t\t{Event Date},\n\t\t{Event Time},\n\t\t{On Call},\n\t\tPT,\n\t\tExamination,\n\t\t{Exam Name},\n\t\tRoom,\n\t\t{ExamSite Code},\n\t\t{Start Time},\n\t\t{End Time},\n\t\t{Exam Key},\n\t\t{Event Key},\n\t\t{Status Code},\n\t\t{Booked Date},\n\t\t{Booked Time},\n\t\t{Creation Date},\n\t\tAttended,\n\t\tUrg,\n\t\tModality,\n\t\t{No of Proc},\n\t\t{Planned Appointment Date},\n\t\t{Date First Verified},\n\t\t{Time First Verified},\n\t\t{Was Planned},\n\t\t{Was Scheduled},\n\t\t{Was Waiting},\n\t\t{Stat Date},\n\t\t{Status Date},\n\t\t{Status Time},\n\t\tModality2,\n\t\t{Trust Name},\n\t\tPatient_Type,\n\t\t{Tat Type},\n\t\tActivity,\n\t\t{Count of Activty_Demand for Activity},\n\t\t{Status Code2} = {Status Code.1},\n\t\t{Reported By}\n\t)) ~> UserQueryAzureSqlCOREV2"
+											"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> UserQueryAzureSQLCoreV2Staging"
 										}
 									]
 								}
@@ -12672,7 +12672,7 @@
 							{
 								"activity": "PopulateNewColumsn",
 								"dependencyConditions": [
-									"Completed"
+									"Failed"
 								]
 							}
 						],
@@ -13309,7 +13309,7 @@
 				"[concat(variables('factoryId'), '/datasets/ODBC_PTL_v2')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow4')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSql_CORE_V2_Staging')]"
+				"[concat(variables('factoryId'), '/datasets/AzureSQLCore_V2Staging')]"
 			]
 		},
 		{
@@ -13715,6 +13715,27 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/Test_AzureBlobStorage')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSQLCore_V2Staging')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "AzureSQLCore_V2Staging"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
 			]
 		},
 		{
@@ -26057,7 +26078,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "AzureSql_CORE_V2_Staging",
+								"referenceName": "AzureSQLCore_V2Staging",
 								"type": "DatasetReference"
 							},
 							"name": "AzureSqlCoreV2Staging"
@@ -26153,55 +26174,11 @@
 						"     Rank = denseRank()) ~> window1",
 						"window1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     input(",
-						"          {CRIS No} as integer,",
-						"          Accession as string,",
-						"          {Ref Src} as string,",
-						"          Site as string,",
-						"          {Request Date} as timestamp,",
-						"          {Event Date} as timestamp,",
-						"          {Event Time} as string,",
-						"          {On Call} as string,",
-						"          PT as string,",
-						"          Examination as string,",
-						"          {Exam Name} as string,",
-						"          Room as string,",
-						"          {ExamSite Code} as string,",
-						"          {Start Time} as string,",
-						"          {End Time} as string,",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          {Status Code} as string,",
-						"          {Booked Date} as timestamp,",
-						"          {Booked Time} as string,",
-						"          {Creation Date} as timestamp,",
-						"          Attended as string,",
-						"          Urg as string,",
-						"          Modality as string,",
-						"          {No of Proc} as integer,",
-						"          {Planned Appointment Date} as timestamp,",
-						"          {Date First Verified} as timestamp,",
-						"          {Time First Verified} as string,",
-						"          {Was Planned} as string,",
-						"          {Was Scheduled} as string,",
-						"          {Was Waiting} as string,",
-						"          {Stat Date} as timestamp,",
-						"          {Status Date} as timestamp,",
-						"          {Status Time} as integer,",
-						"          Modality2 as string,",
-						"          {Trust Name} as string,",
-						"          Patient_Type as string,",
-						"          {Tat Type} as string,",
-						"          Activity as integer,",
-						"          {Count of Activty_Demand for Activity} as integer,",
-						"          {Status Code2} as string,",
-						"          {Reported By} as string",
-						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
-						"     recreate:true,",
+						"     truncate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
@@ -26245,14 +26222,15 @@
 						"          Patient_Type,",
 						"          {Tat Type},",
 						"          {Status Time} = {Status Time2},",
-						"          {Reported By}",
+						"          {Reported By},",
+						"          Rank",
 						"     )) ~> AzureSqlCoreV2Staging"
 					]
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/AzureSql_CORE')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSql_CORE_V2_Staging')]"
+				"[concat(variables('factoryId'), '/datasets/AzureSQLCore_V2Staging')]"
 			]
 		},
 		{
@@ -26918,25 +26896,7 @@
 						"          Activity as integer,",
 						"          {Count of Activty_Demand for Activity} as integer,",
 						"          {Status Code2} as string,",
-						"          {Status Time2} as string,",
-						"          {Patient Type ID} as integer,",
-						"          {Modality ID} as integer,",
-						"          {Status ID} as integer,",
-						"          {Status Category} as string,",
-						"          {Exam Code} as string,",
-						"          {Exam ID} as integer,",
-						"          {Exam Site} as string,",
-						"          {Exam Room} as string,",
-						"          {Exam Site Code} as string,",
-						"          {Exam Room ID} as integer,",
-						"          {Trust ID} as integer,",
-						"          {Trust Name Group} as string,",
-						"          {Trust Name Group2} as string,",
-						"          {Trust Name Group3} as string,",
-						"          {Referral Source} as string,",
-						"          {Referral Source ID} as integer,",
-						"          {Tat Type ID} as integer,",
-						"          Target as integer",
+						"          {Reported By} as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -27471,25 +27431,7 @@
 						"          Activity as integer,",
 						"          {Count of Activty_Demand for Activity} as integer,",
 						"          {Status Code2} as string,",
-						"          {Status Time2} as string,",
-						"          {Patient Type ID} as integer,",
-						"          {Modality ID} as integer,",
-						"          {Status ID} as integer,",
-						"          {Status Category} as string,",
-						"          {Exam Code} as string,",
-						"          {Exam ID} as integer,",
-						"          {Exam Site} as string,",
-						"          {Exam Room} as string,",
-						"          {Exam Site Code} as string,",
-						"          {Exam Room ID} as integer,",
-						"          {Trust ID} as integer,",
-						"          {Trust Name Group} as string,",
-						"          {Trust Name Group2} as string,",
-						"          {Trust Name Group3} as string,",
-						"          {Referral Source} as string,",
-						"          {Referral Source ID} as integer,",
-						"          {Tat Type ID} as integer,",
-						"          Target as integer",
+						"          {Reported By} as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
