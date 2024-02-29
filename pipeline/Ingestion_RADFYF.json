@@ -3968,12 +3968,12 @@
 							"queryName": "UserQuery",
 							"dataflowSinks": [
 								{
-									"name": "UserQueryAzureSqlCOREV2",
+									"name": "UserQueryAzureSQLCoreV2Staging",
 									"dataset": {
-										"referenceName": "AzureSql_CORE_V2_Staging",
+										"referenceName": "AzureSQLCore_V2Staging",
 										"type": "DatasetReference"
 									},
-									"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\t{CRIS No} as integer,\n\t\tAccession as string,\n\t\t{Ref Src} as string,\n\t\tSite as string,\n\t\t{Request Date} as timestamp,\n\t\t{Event Date} as timestamp,\n\t\t{Event Time} as string,\n\t\t{On Call} as string,\n\t\tPT as string,\n\t\tExamination as string,\n\t\t{Exam Name} as string,\n\t\tRoom as string,\n\t\t{ExamSite Code} as string,\n\t\t{Start Time} as string,\n\t\t{End Time} as string,\n\t\t{Exam Key} as integer,\n\t\t{Event Key} as integer,\n\t\t{Status Code} as string,\n\t\t{Booked Date} as timestamp,\n\t\t{Booked Time} as string,\n\t\t{Creation Date} as timestamp,\n\t\tAttended as string,\n\t\tUrg as string,\n\t\tModality as string,\n\t\t{No of Proc} as integer,\n\t\t{Planned Appointment Date} as timestamp,\n\t\t{Date First Verified} as timestamp,\n\t\t{Time First Verified} as string,\n\t\t{Was Planned} as string,\n\t\t{Was Scheduled} as string,\n\t\t{Was Waiting} as string,\n\t\t{Stat Date} as timestamp,\n\t\t{Status Date} as timestamp,\n\t\t{Status Time} as integer,\n\t\tModality2 as string,\n\t\t{Trust Name} as string,\n\t\tPatient_Type as string,\n\t\t{Tat Type} as string,\n\t\tActivity as integer,\n\t\t{Count of Activty_Demand for Activity} as integer,\n\t\t{Status Code2} as string,\n\t\t{Reported By} as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tpreSQLs:['truncate table [dev].[FYF_ODBC_CORE_v2]'],\n\terrorHandlingOption: 'stopOnFirstError',\n\tmapColumn(\n\t\t{CRIS No},\n\t\tAccession,\n\t\t{Ref Src},\n\t\tSite,\n\t\t{Request Date},\n\t\t{Event Date},\n\t\t{Event Time},\n\t\t{On Call},\n\t\tPT,\n\t\tExamination,\n\t\t{Exam Name},\n\t\tRoom,\n\t\t{ExamSite Code},\n\t\t{Start Time},\n\t\t{End Time},\n\t\t{Exam Key},\n\t\t{Event Key},\n\t\t{Status Code},\n\t\t{Booked Date},\n\t\t{Booked Time},\n\t\t{Creation Date},\n\t\tAttended,\n\t\tUrg,\n\t\tModality,\n\t\t{No of Proc},\n\t\t{Planned Appointment Date},\n\t\t{Date First Verified},\n\t\t{Time First Verified},\n\t\t{Was Planned},\n\t\t{Was Scheduled},\n\t\t{Was Waiting},\n\t\t{Stat Date},\n\t\t{Status Date},\n\t\t{Status Time},\n\t\tModality2,\n\t\t{Trust Name},\n\t\tPatient_Type,\n\t\t{Tat Type},\n\t\tActivity,\n\t\t{Count of Activty_Demand for Activity},\n\t\t{Status Code2} = {Status Code.1},\n\t\t{Reported By}\n\t)) ~> UserQueryAzureSqlCOREV2"
+									"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> UserQueryAzureSQLCoreV2Staging"
 								}
 							]
 						}
