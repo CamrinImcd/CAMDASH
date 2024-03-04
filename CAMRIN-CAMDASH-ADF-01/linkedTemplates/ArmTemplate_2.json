@@ -13,6 +13,126 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSql_REPORT_META_LUFT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Report Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Referral Source",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Event Time",
+						"type": "varchar"
+					},
+					{
+						"name": "Date of First Addendnum",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date First Verified",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date of Last Addendnum",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date Last Verified",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date Reported",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date Typed",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Reported by",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported by2",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported by2 Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported by Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Typed by",
+						"type": "varchar"
+					},
+					{
+						"name": "Typed by Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "luft",
+					"table": "FYF_ODBC_REPORT_META"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSql_REPORT_TAT')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2749,115 +2869,6 @@
 					},
 					{
 						"name": "level_of_attainment",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Asset_22_MES')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "MESCon",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "NIDC_Asset_file.xlsx",
-						"container": "nicd-asset-22"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Trust",
-						"type": "String"
-					},
-					{
-						"name": "Managed_Equipment_Service_Contract ",
-						"type": "String"
-					},
-					{
-						"name": "MES1_Contract_Number",
-						"type": "String"
-					},
-					{
-						"name": "MES1_Supplier",
-						"type": "String"
-					},
-					{
-						"name": "MES1_Contract_Start_Date",
-						"type": "String"
-					},
-					{
-						"name": "MES1_Contract_End_Date",
-						"type": "String"
-					},
-					{
-						"name": "MES1_Initial_Cost",
-						"type": "String"
-					},
-					{
-						"name": "MES1_Interest_Rate (%)",
-						"type": "String"
-					},
-					{
-						"name": "MES1_Consumables_included?",
-						"type": "String"
-					},
-					{
-						"name": "MES1_Accessories Included? ",
-						"type": "String"
-					},
-					{
-						"name": "MES1_Maintenance_Included?",
-						"type": "String"
-					},
-					{
-						"name": "Plain_X-Ray_Depreciation",
-						"type": "String"
-					},
-					{
-						"name": "CT_Depreciation",
-						"type": "String"
-					},
-					{
-						"name": "MRI_Depreciation",
-						"type": "String"
-					},
-					{
-						"name": "Ultrasound_Depreciation",
-						"type": "String"
-					},
-					{
-						"name": "DEXA_Depreciation",
-						"type": "String"
-					},
-					{
-						"name": "Nuclear_Medicine_Depreciation",
-						"type": "String"
-					},
-					{
-						"name": "Fluoroscopy_Depreciation",
-						"type": "String"
-					},
-					{
-						"name": "Interventional_Radiology_Depreciation",
-						"type": "String"
-					},
-					{
-						"name": "Mammography_Depreciation",
-						"type": "String"
-					},
-					{
-						"name": "Catheter_Laboratory_Depreciation",
 						"type": "String"
 					}
 				]

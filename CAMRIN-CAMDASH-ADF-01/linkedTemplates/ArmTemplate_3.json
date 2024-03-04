@@ -13,6 +13,115 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Asset_22_MES')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "MESCon",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Asset_file.xlsx",
+						"container": "nicd-asset-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Managed_Equipment_Service_Contract ",
+						"type": "String"
+					},
+					{
+						"name": "MES1_Contract_Number",
+						"type": "String"
+					},
+					{
+						"name": "MES1_Supplier",
+						"type": "String"
+					},
+					{
+						"name": "MES1_Contract_Start_Date",
+						"type": "String"
+					},
+					{
+						"name": "MES1_Contract_End_Date",
+						"type": "String"
+					},
+					{
+						"name": "MES1_Initial_Cost",
+						"type": "String"
+					},
+					{
+						"name": "MES1_Interest_Rate (%)",
+						"type": "String"
+					},
+					{
+						"name": "MES1_Consumables_included?",
+						"type": "String"
+					},
+					{
+						"name": "MES1_Accessories Included? ",
+						"type": "String"
+					},
+					{
+						"name": "MES1_Maintenance_Included?",
+						"type": "String"
+					},
+					{
+						"name": "Plain_X-Ray_Depreciation",
+						"type": "String"
+					},
+					{
+						"name": "CT_Depreciation",
+						"type": "String"
+					},
+					{
+						"name": "MRI_Depreciation",
+						"type": "String"
+					},
+					{
+						"name": "Ultrasound_Depreciation",
+						"type": "String"
+					},
+					{
+						"name": "DEXA_Depreciation",
+						"type": "String"
+					},
+					{
+						"name": "Nuclear_Medicine_Depreciation",
+						"type": "String"
+					},
+					{
+						"name": "Fluoroscopy_Depreciation",
+						"type": "String"
+					},
+					{
+						"name": "Interventional_Radiology_Depreciation",
+						"type": "String"
+					},
+					{
+						"name": "Mammography_Depreciation",
+						"type": "String"
+					},
+					{
+						"name": "Catheter_Laboratory_Depreciation",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Asset_22_Spec')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1069,63 +1178,6 @@
 					},
 					{
 						"name": "Bank & Agency Pay Costs (£)",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_Breast_ScreenPlacements')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "Breast_ScreenPlacements",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "NIDC_Workforce.xlsx",
-						"container": "nidc-workforce-22"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Trust",
-						"type": "String"
-					},
-					{
-						"name": "Staff Type",
-						"type": "String"
-					},
-					{
-						"name": "Year 1 Students Annual Headcount",
-						"type": "String"
-					},
-					{
-						"name": "Year 2 Students Annual Headcount",
-						"type": "String"
-					},
-					{
-						"name": "Year 3 Students Annual Headcount",
-						"type": "String"
-					},
-					{
-						"name": "Year 4 Students Annual Headcount",
-						"type": "String"
-					},
-					{
-						"name": "Year 5 Students Annual Headcount",
-						"type": "String"
-					},
-					{
-						"name": "Year 6 Students Annual Headcount",
 						"type": "String"
 					}
 				]
