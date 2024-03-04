@@ -7,7 +7,94 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [],
+		"schema": [
+			{
+				"name": "Exam Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Event Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Accession",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Referrer",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Referral Location",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Referral Source",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Urg",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Site",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Status Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Status Date",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "Status Time",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Referral Location Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Referral Source Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Referral Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Examination Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Modality",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Status Code at State Date",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Stat Date",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "D Status",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Rank",
+				"type": "int",
+				"precision": 10
+			}
+		],
 		"typeProperties": {
 			"schema": "dev",
 			"table": "RequestRecievedStatus"
