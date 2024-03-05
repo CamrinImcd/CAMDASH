@@ -12683,7 +12683,7 @@
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
-									"AzureSqlCOREV2Staging": {},
+									"AzureSQLCoreV3Staging": {},
 									"PatientType": {},
 									"Modality": {},
 									"Status": {},
@@ -14382,6 +14382,27 @@
 				"typeProperties": {
 					"schema": "dev",
 					"table": "RequestRecievedStatus"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "AzureSQL_CORE_V3"
 				}
 			},
 			"dependsOn": [
@@ -27749,7 +27770,7 @@
 								"referenceName": "AzureSQLCoreV3Staging",
 								"type": "DatasetReference"
 							},
-							"name": "AzureSqlCOREV2Staging"
+							"name": "AzureSQLCoreV3Staging"
 						},
 						{
 							"dataset": {
@@ -27811,7 +27832,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "AzureSql_CORE_V2",
+								"referenceName": "AzureSqlTable3",
 								"type": "DatasetReference"
 							},
 							"name": "AzureSqlCOREV2"
@@ -27942,7 +27963,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> AzureSqlCOREV2Staging",
+						"     format: 'table') ~> AzureSQLCoreV3Staging",
 						"source(output(",
 						"          Patient_Type as string,",
 						"          Patient_Type_ID as integer",
@@ -28067,7 +28088,8 @@
 						"          {Trust ID},",
 						"          {Referral Source ID},",
 						"          {Tat Type ID},",
-						"          {Reported By}",
+						"          {Reported By},",
+						"          Rank",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns6",
@@ -28109,13 +28131,14 @@
 						"          {Status Time},",
 						"          Modality2,",
 						"          {Trust Name},",
-						"          Patient_Type = AzureSqlCOREV2Staging@Patient_Type,",
+						"          Patient_Type = AzureSQLCoreV3Staging@Patient_Type,",
 						"          {Tat Type},",
 						"          Activity,",
 						"          {Count of Activty_Demand for Activity},",
 						"          {Status Time2},",
 						"          {Patient Type ID},",
-						"          {Reported By}",
+						"          {Reported By},",
+						"          Rank",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns1",
@@ -28164,7 +28187,8 @@
 						"          {Patient Type ID},",
 						"          {Modality ID},",
 						"          {Status ID},",
-						"          {Reported By}",
+						"          {Reported By},",
+						"          Rank",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns2",
@@ -28214,7 +28238,8 @@
 						"          {Modality ID},",
 						"          {Status ID},",
 						"          {Exam ID},",
-						"          {Reported By}",
+						"          {Reported By},",
+						"          Rank",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns3",
@@ -28265,7 +28290,8 @@
 						"          {Status ID},",
 						"          {Exam ID},",
 						"          {Exam Room ID},",
-						"          {Reported By}",
+						"          {Reported By},",
+						"          Rank",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns4",
@@ -28317,7 +28343,8 @@
 						"          {Exam ID},",
 						"          {Exam Room ID},",
 						"          {Trust ID},",
-						"          {Reported By}",
+						"          {Reported By},",
+						"          Rank",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select6",
@@ -28370,7 +28397,8 @@
 						"          {Exam Room ID},",
 						"          {Trust ID},",
 						"          {Referral Source ID},",
-						"          {Reported By}",
+						"          {Reported By},",
+						"          Rank",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns5",
@@ -28381,7 +28409,7 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RenameColumn",
-						"DerivedColumn1, RenameColumn lookup(AzureSqlCOREV2Staging@Patient_Type == RenameColumn@Patient_Type,",
+						"DerivedColumn1, RenameColumn lookup(AzureSQLCoreV3Staging@Patient_Type == RenameColumn@Patient_Type,",
 						"     multiple: false,",
 						"     pickup: 'any',",
 						"     broadcast: 'auto')~> LookupPatientType",
@@ -28421,68 +28449,14 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RenameColumn2",
-						"AzureSqlCOREV2Staging derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted4",
+						"AzureSQLCoreV3Staging derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted4",
 						"MapDrifted1 derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted5",
 						"RemoveColumns6 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     input(",
-						"          {CRIS No} as integer,",
-						"          Accession as string,",
-						"          {Ref Src} as string,",
-						"          Site as string,",
-						"          {Request Date} as timestamp,",
-						"          {Event Date} as timestamp,",
-						"          {Event Time} as string,",
-						"          {On Call} as string,",
-						"          PT as string,",
-						"          Examination as string,",
-						"          {Exam Name} as string,",
-						"          Room as string,",
-						"          {ExamSite Code} as string,",
-						"          {Start Time} as string,",
-						"          {End Time} as string,",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          {Status Code} as string,",
-						"          {Booked Date} as timestamp,",
-						"          {Booked Time} as string,",
-						"          {Creation Date} as timestamp,",
-						"          Attended as string,",
-						"          Urg as string,",
-						"          Modality as string,",
-						"          {No of Proc} as integer,",
-						"          {Planned Appointment Date} as timestamp,",
-						"          {Date First Verified} as timestamp,",
-						"          {Time First Verified} as string,",
-						"          {Was Planned} as string,",
-						"          {Was Scheduled} as string,",
-						"          {Was Waiting} as string,",
-						"          {Stat Date} as timestamp,",
-						"          {Status Date} as timestamp,",
-						"          {Status Time} as integer,",
-						"          Modality2 as string,",
-						"          {Trust Name} as string,",
-						"          Patient_Type as string,",
-						"          {Tat Type} as string,",
-						"          Activity as integer,",
-						"          {Count of Activty_Demand for Activity} as integer,",
-						"          {Status Code2} as string,",
-						"          {Status Time2} as string,",
-						"          {Patient Type ID} as integer,",
-						"          {Modality ID} as integer,",
-						"          {Status ID} as integer,",
-						"          {Exam ID} as integer,",
-						"          {Exam Room ID} as integer,",
-						"          {Trust ID} as integer,",
-						"          {Referral Source ID} as integer,",
-						"          {Tat Type ID} as integer,",
-						"          {Reported By} as string",
-						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
-						"     recreate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
@@ -28537,7 +28511,8 @@
 						"          {Trust ID},",
 						"          {Referral Source ID},",
 						"          {Tat Type ID},",
-						"          {Reported By}",
+						"          {Reported By},",
+						"          Rank",
 						"     )) ~> AzureSqlCOREV2"
 					]
 				}
@@ -28552,7 +28527,7 @@
 				"[concat(variables('factoryId'), '/datasets/Trust')]",
 				"[concat(variables('factoryId'), '/datasets/Referral_Source')]",
 				"[concat(variables('factoryId'), '/datasets/Tat_Type')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSql_CORE_V2')]"
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable3')]"
 			]
 		},
 		{

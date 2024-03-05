@@ -13,6 +13,122 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_PATIENTS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RADFYF01_CRIS_PostgreSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "CRIS No",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Creation Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Mutation Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "DOB",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "DOD",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Ethnic Origin",
+						"type": "varchar"
+					},
+					{
+						"name": "GP",
+						"type": "varchar"
+					},
+					{
+						"name": "No of Attends",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "No of Events",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Ref Src",
+						"type": "varchar"
+					},
+					{
+						"name": "Postcode L",
+						"type": "varchar"
+					},
+					{
+						"name": "Postcode R",
+						"type": "varchar"
+					},
+					{
+						"name": "Gender",
+						"type": "varchar"
+					},
+					{
+						"name": "Referrer Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Age at Event",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "HIS ID",
+						"type": "varchar"
+					},
+					{
+						"name": "CCG",
+						"type": "varchar"
+					},
+					{
+						"name": "Postcode",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FYF_ODBC_PATIENTS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SqlServer_PATIENTS2')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -11224,7 +11340,7 @@
 								"referenceName": "AzureSQLCoreV3Staging",
 								"type": "DatasetReference"
 							},
-							"name": "AzureSqlCOREV2Staging"
+							"name": "AzureSQLCoreV3Staging"
 						},
 						{
 							"dataset": {
@@ -11286,7 +11402,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "AzureSql_CORE_V2",
+								"referenceName": "AzureSqlTable3",
 								"type": "DatasetReference"
 							},
 							"name": "AzureSqlCOREV2"
@@ -11417,7 +11533,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> AzureSqlCOREV2Staging",
+						"     format: 'table') ~> AzureSQLCoreV3Staging",
 						"source(output(",
 						"          Patient_Type as string,",
 						"          Patient_Type_ID as integer",
@@ -11542,7 +11658,8 @@
 						"          {Trust ID},",
 						"          {Referral Source ID},",
 						"          {Tat Type ID},",
-						"          {Reported By}",
+						"          {Reported By},",
+						"          Rank",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns6",
@@ -11584,13 +11701,14 @@
 						"          {Status Time},",
 						"          Modality2,",
 						"          {Trust Name},",
-						"          Patient_Type = AzureSqlCOREV2Staging@Patient_Type,",
+						"          Patient_Type = AzureSQLCoreV3Staging@Patient_Type,",
 						"          {Tat Type},",
 						"          Activity,",
 						"          {Count of Activty_Demand for Activity},",
 						"          {Status Time2},",
 						"          {Patient Type ID},",
-						"          {Reported By}",
+						"          {Reported By},",
+						"          Rank",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns1",
@@ -11639,7 +11757,8 @@
 						"          {Patient Type ID},",
 						"          {Modality ID},",
 						"          {Status ID},",
-						"          {Reported By}",
+						"          {Reported By},",
+						"          Rank",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns2",
@@ -11689,7 +11808,8 @@
 						"          {Modality ID},",
 						"          {Status ID},",
 						"          {Exam ID},",
-						"          {Reported By}",
+						"          {Reported By},",
+						"          Rank",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns3",
@@ -11740,7 +11860,8 @@
 						"          {Status ID},",
 						"          {Exam ID},",
 						"          {Exam Room ID},",
-						"          {Reported By}",
+						"          {Reported By},",
+						"          Rank",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns4",
@@ -11792,7 +11913,8 @@
 						"          {Exam ID},",
 						"          {Exam Room ID},",
 						"          {Trust ID},",
-						"          {Reported By}",
+						"          {Reported By},",
+						"          Rank",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select6",
@@ -11845,7 +11967,8 @@
 						"          {Exam Room ID},",
 						"          {Trust ID},",
 						"          {Referral Source ID},",
-						"          {Reported By}",
+						"          {Reported By},",
+						"          Rank",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns5",
@@ -11856,7 +11979,7 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RenameColumn",
-						"DerivedColumn1, RenameColumn lookup(AzureSqlCOREV2Staging@Patient_Type == RenameColumn@Patient_Type,",
+						"DerivedColumn1, RenameColumn lookup(AzureSQLCoreV3Staging@Patient_Type == RenameColumn@Patient_Type,",
 						"     multiple: false,",
 						"     pickup: 'any',",
 						"     broadcast: 'auto')~> LookupPatientType",
@@ -11896,68 +12019,14 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RenameColumn2",
-						"AzureSqlCOREV2Staging derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted4",
+						"AzureSQLCoreV3Staging derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted4",
 						"MapDrifted1 derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted5",
 						"RemoveColumns6 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     input(",
-						"          {CRIS No} as integer,",
-						"          Accession as string,",
-						"          {Ref Src} as string,",
-						"          Site as string,",
-						"          {Request Date} as timestamp,",
-						"          {Event Date} as timestamp,",
-						"          {Event Time} as string,",
-						"          {On Call} as string,",
-						"          PT as string,",
-						"          Examination as string,",
-						"          {Exam Name} as string,",
-						"          Room as string,",
-						"          {ExamSite Code} as string,",
-						"          {Start Time} as string,",
-						"          {End Time} as string,",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          {Status Code} as string,",
-						"          {Booked Date} as timestamp,",
-						"          {Booked Time} as string,",
-						"          {Creation Date} as timestamp,",
-						"          Attended as string,",
-						"          Urg as string,",
-						"          Modality as string,",
-						"          {No of Proc} as integer,",
-						"          {Planned Appointment Date} as timestamp,",
-						"          {Date First Verified} as timestamp,",
-						"          {Time First Verified} as string,",
-						"          {Was Planned} as string,",
-						"          {Was Scheduled} as string,",
-						"          {Was Waiting} as string,",
-						"          {Stat Date} as timestamp,",
-						"          {Status Date} as timestamp,",
-						"          {Status Time} as integer,",
-						"          Modality2 as string,",
-						"          {Trust Name} as string,",
-						"          Patient_Type as string,",
-						"          {Tat Type} as string,",
-						"          Activity as integer,",
-						"          {Count of Activty_Demand for Activity} as integer,",
-						"          {Status Code2} as string,",
-						"          {Status Time2} as string,",
-						"          {Patient Type ID} as integer,",
-						"          {Modality ID} as integer,",
-						"          {Status ID} as integer,",
-						"          {Exam ID} as integer,",
-						"          {Exam Room ID} as integer,",
-						"          {Trust ID} as integer,",
-						"          {Referral Source ID} as integer,",
-						"          {Tat Type ID} as integer,",
-						"          {Reported By} as string",
-						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
-						"     recreate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
@@ -12012,7 +12081,8 @@
 						"          {Trust ID},",
 						"          {Referral Source ID},",
 						"          {Tat Type ID},",
-						"          {Reported By}",
+						"          {Reported By},",
+						"          Rank",
 						"     )) ~> AzureSqlCOREV2"
 					]
 				}
@@ -12022,126 +12092,6 @@
 				"[concat(variables('factoryId'), '/datasets/Trust')]",
 				"[concat(variables('factoryId'), '/datasets/Tat_Type')]"
 			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dataflow4')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "AzureSql_STATUSES",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "AzureSqlTable2",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "window1"
-						},
-						{
-							"name": "filter1"
-						},
-						{
-							"name": "filter2"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          Accession as string,",
-						"          Referrer as string,",
-						"          {Referral Location} as string,",
-						"          {Referral Source} as string,",
-						"          Urg as string,",
-						"          Site as string,",
-						"          {Status Code} as string,",
-						"          {Status Date} as timestamp,",
-						"          {Status Time} as integer,",
-						"          {Referral Location Name} as string,",
-						"          {Referral Source Name} as string,",
-						"          {Referral Name} as string,",
-						"          {Examination Name} as string,",
-						"          Modality as string,",
-						"          {Status Code at State Date} as string,",
-						"          {Stat Date} as timestamp,",
-						"          {D Status} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
-						"filter1 window(over({Exam Key}),",
-						"     desc({Status Date}, false),",
-						"     desc({Status Time}, false),",
-						"     asc({Status Code at State Date}, false),",
-						"     asc(Referrer, true),",
-						"     asc({Referral Location}, true),",
-						"     asc({Referral Source}, true),",
-						"     asc(Urg, true),",
-						"     asc(Site, true),",
-						"     asc({Referral Location Name}, true),",
-						"     asc({Referral Source Name}, true),",
-						"     asc({Referral Name}, true),",
-						"     asc({Examination Name}, true),",
-						"     asc(Modality, true),",
-						"     asc({Stat Date}, true),",
-						"     asc({D Status}, true),",
-						"     Rank = denseRank()) ~> window1",
-						"source1 filter({Status Code}==\"RR\") ~> filter1",
-						"window1 filter(Rank==1) ~> filter2",
-						"filter2 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          Accession as string,",
-						"          Referrer as string,",
-						"          {Referral Location} as string,",
-						"          {Referral Source} as string,",
-						"          Urg as string,",
-						"          Site as string,",
-						"          {Status Code} as string,",
-						"          {Status Date} as timestamp,",
-						"          {Status Time} as integer,",
-						"          {Referral Location Name} as string,",
-						"          {Referral Source Name} as string,",
-						"          {Referral Name} as string,",
-						"          {Examination Name} as string,",
-						"          Modality as string,",
-						"          {Status Code at State Date} as string,",
-						"          {Stat Date} as timestamp,",
-						"          {D Status} as string,",
-						"          Rank as integer",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     recreate:true,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     saveOrder: 1,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
-					]
-				}
-			},
-			"dependsOn": []
 		}
 	]
 }
