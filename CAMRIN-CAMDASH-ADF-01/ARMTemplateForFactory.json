@@ -22415,6 +22415,27 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/FYF_ODBC_CORE_v2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "FYF_ODBC_CORE_v2"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Modality')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -27832,7 +27853,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "AzureSqlTable3",
+								"referenceName": "FYF_ODBC_CORE_v2",
 								"type": "DatasetReference"
 							},
 							"name": "AzureSqlCOREV2"
@@ -28527,7 +28548,7 @@
 				"[concat(variables('factoryId'), '/datasets/Trust')]",
 				"[concat(variables('factoryId'), '/datasets/Referral_Source')]",
 				"[concat(variables('factoryId'), '/datasets/Tat_Type')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable3')]"
+				"[concat(variables('factoryId'), '/datasets/FYF_ODBC_CORE_v2')]"
 			]
 		},
 		{
