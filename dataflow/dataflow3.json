@@ -71,7 +71,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "AzureSqlTable3",
+						"referenceName": "FYF_ODBC_CORE_v2",
 						"type": "DatasetReference"
 					},
 					"name": "AzureSqlCOREV2"
