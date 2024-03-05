@@ -4064,7 +4064,7 @@
 							{
 								"activity": "CreateReferrenceTables",
 								"dependencyConditions": [
-									"Failed"
+									"Completed"
 								]
 							}
 						],
