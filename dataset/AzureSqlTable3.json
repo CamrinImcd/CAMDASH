@@ -1,0 +1,16 @@
+{
+	"name": "AzureSqlTable3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dev",
+			"table": "AzureSQL_CORE_V3"
+		}
+	}
+}
