@@ -13,528 +13,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/SqlServer_ORDERS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "RADFYF01_CRIS_PostgreSQL",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "CRIS No",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Order Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Creation Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Ref Src",
-						"type": "varchar"
-					},
-					{
-						"name": "Referrer",
-						"type": "varchar"
-					},
-					{
-						"name": "Lead Clinician",
-						"type": "varchar"
-					},
-					{
-						"name": "Required Date",
-						"type": "varchar"
-					},
-					{
-						"name": "Required Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Order Id",
-						"type": "varchar"
-					},
-					{
-						"name": "Order Source",
-						"type": "varchar"
-					},
-					{
-						"name": "Episode No",
-						"type": "varchar"
-					},
-					{
-						"name": "Order Type",
-						"type": "varchar"
-					},
-					{
-						"name": "Examination",
-						"type": "varchar"
-					},
-					{
-						"name": "Urg",
-						"type": "varchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "FYF_ODBC_ORDERS"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServer_PATIENTS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "RADFYF01_CRIS_PostgreSQL",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "CRIS No",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Creation Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Mutation Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "DOB",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "DOD",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Ethnic Origin",
-						"type": "varchar"
-					},
-					{
-						"name": "GP",
-						"type": "varchar"
-					},
-					{
-						"name": "No of Attends",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "No of Events",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Ref Src",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode L",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode R",
-						"type": "varchar"
-					},
-					{
-						"name": "Gender",
-						"type": "varchar"
-					},
-					{
-						"name": "Referrer Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Age at Event",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "HIS ID",
-						"type": "varchar"
-					},
-					{
-						"name": "CCG",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode",
-						"type": "varchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "FYF_ODBC_PATIENTS"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServer_PATIENTS2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "RADFYF01_CRIS_PostgreSQL",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "CRIS No",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Creation Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Mutation Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "DOB",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "DOD",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Ethnic Origin",
-						"type": "varchar"
-					},
-					{
-						"name": "GP",
-						"type": "varchar"
-					},
-					{
-						"name": "No of Attends",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "No of Events",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Ref Src",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode L",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode R",
-						"type": "varchar"
-					},
-					{
-						"name": "Gender",
-						"type": "varchar"
-					},
-					{
-						"name": "Referrer Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Age at Event",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "HIS ID",
-						"type": "varchar"
-					},
-					{
-						"name": "CCG",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode",
-						"type": "varchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "FYF_ODBC_PATIENTS"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServer_PTL')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "RADFYF01_CRIS_PostgreSQL",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "CRIS Number",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status Category",
-						"type": "varchar"
-					},
-					{
-						"name": "Referrer",
-						"type": "varchar"
-					},
-					{
-						"name": "Ref Src",
-						"type": "varchar"
-					},
-					{
-						"name": "Referring Location",
-						"type": "varchar"
-					},
-					{
-						"name": "Examination",
-						"type": "varchar"
-					},
-					{
-						"name": "Site",
-						"type": "varchar"
-					},
-					{
-						"name": "Request Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Booked Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Booked Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Ref Src2",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode L",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode R",
-						"type": "varchar"
-					},
-					{
-						"name": "Creation Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Event Key2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Attended",
-						"type": "varchar"
-					},
-					{
-						"name": "Modality",
-						"type": "varchar"
-					},
-					{
-						"name": "Room",
-						"type": "varchar"
-					},
-					{
-						"name": "RC",
-						"type": "varchar"
-					},
-					{
-						"name": "Urg",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Referrer Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Exam Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Event Date2",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Days Waiting",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Predicted Reset Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Waiting Time Reset Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Weeks Waiting",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Planned Appointment Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Waiting Breach Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Was Planned",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Scheduled",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Waiting",
-						"type": "varchar"
-					},
-					{
-						"name": "CCG",
-						"type": "varchar"
-					},
-					{
-						"name": "D Status",
-						"type": "varchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "FYF_ODBC_PTL"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/SqlServer_REPO_META')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -9894,7 +9372,7 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "AzureSql_CORE_V2",
+								"referenceName": "FYF_ODBC_CORE_v2",
 								"type": "DatasetReference"
 							},
 							"name": "Core"
@@ -9969,76 +9447,18 @@
 						},
 						{
 							"name": "filter2"
+						},
+						{
+							"name": "MapDrifted1",
+							"description": "Creates an explicit mapping for each drifted column"
 						}
 					],
 					"scriptLines": [
-						"source(output(",
-						"          {CRIS No} as integer,",
-						"          Accession as string,",
-						"          {Ref Src} as string,",
-						"          Site as string,",
-						"          {Request Date} as timestamp,",
-						"          {Event Date} as timestamp,",
-						"          {Event Time} as string,",
-						"          {On Call} as string,",
-						"          PT as string,",
-						"          Examination as string,",
-						"          {Exam Name} as string,",
-						"          Room as string,",
-						"          {ExamSite Code} as string,",
-						"          {Start Time} as string,",
-						"          {End Time} as string,",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          {Status Code} as string,",
-						"          {Booked Date} as timestamp,",
-						"          {Booked Time} as string,",
-						"          {Creation Date} as timestamp,",
-						"          Attended as string,",
-						"          Urg as string,",
-						"          Modality as string,",
-						"          {No of Proc} as integer,",
-						"          {Planned Appointment Date} as timestamp,",
-						"          {Date First Verified} as timestamp,",
-						"          {Time First Verified} as string,",
-						"          {Was Planned} as string,",
-						"          {Was Scheduled} as string,",
-						"          {Was Waiting} as string,",
-						"          {Stat Date} as timestamp,",
-						"          {Status Date} as timestamp,",
-						"          {Status Time} as integer,",
-						"          Modality2 as string,",
-						"          {Trust Name} as string,",
-						"          Patient_Type as string,",
-						"          {Tat Type} as string,",
-						"          Activity as integer,",
-						"          {Count of Activty_Demand for Activity} as integer,",
-						"          {Status Code2} as string,",
-						"          {Status Time2} as string,",
-						"          {Patient Type ID} as integer,",
-						"          {Modality ID} as integer,",
-						"          {Status ID} as integer,",
-						"          {Status Category} as string,",
-						"          {Exam Code} as string,",
-						"          {Exam ID} as integer,",
-						"          {Exam Site} as string,",
-						"          {Exam Room} as string,",
-						"          {Exam Site Code} as string,",
-						"          {Exam Room ID} as integer,",
-						"          {Trust ID} as integer,",
-						"          {Trust Name Group} as string,",
-						"          {Trust Name Group2} as string,",
-						"          {Trust Name Group3} as string,",
-						"          {Referral Source} as string,",
-						"          {Referral Source ID} as integer,",
-						"          {Tat Type ID} as integer,",
-						"          Target as integer",
-						"     ),",
-						"     allowSchemaDrift: true,",
+						"source(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> Core",
-						"Core derive(DNA = iif({Status Code}==\"CPDNA\", 1, iif({Status Code}==\"APDNA\", 1, 0))) ~> CreateDNAColumn",
+						"MapDrifted1 derive(DNA = iif({Status Code}==\"CPDNA\", 1, iif({Status Code}==\"APDNA\", 1, 0))) ~> CreateDNAColumn",
 						"CreateDNAColumn aggregate(groupBy({Event Date},",
 						"          {Modality ID},",
 						"          {Trust ID}),",
@@ -10143,6 +9563,56 @@
 						"          DNARate = DNA/(Activity+DNA)) ~> derivedColumn5",
 						"derivedColumn5 filter(isNull(ID)==false()) ~> filter1",
 						"derivedColumn1 filter(isNull(ID)==false()) ~> filter2",
+						"Core derive({CRIS No} = toInteger(byName('CRIS No')),",
+						"          Accession = toString(byName('Accession')),",
+						"          {Ref Src} = toString(byName('Ref Src')),",
+						"          Site = toString(byName('Site')),",
+						"          {Request Date} = toDate(byName('Request Date')),",
+						"          {Event Date} = toDate(byName('Event Date')),",
+						"          {Event Time} = toString(byName('Event Time')),",
+						"          {On Call} = toString(byName('On Call')),",
+						"          PT = toString(byName('PT')),",
+						"          Examination = toString(byName('Examination')),",
+						"          {Exam Name} = toString(byName('Exam Name')),",
+						"          Room = toString(byName('Room')),",
+						"          {ExamSite Code} = toString(byName('ExamSite Code')),",
+						"          {Start Time} = toString(byName('Start Time')),",
+						"          {End Time} = toString(byName('End Time')),",
+						"          {Exam Key} = toInteger(byName('Exam Key')),",
+						"          {Event Key} = toInteger(byName('Event Key')),",
+						"          {Status Code} = toString(byName('Status Code')),",
+						"          {Booked Date} = toTimestamp(byName('Booked Date')),",
+						"          {Booked Time} = toString(byName('Booked Time')),",
+						"          {Creation Date} = toTimestamp(byName('Creation Date')),",
+						"          Attended = toString(byName('Attended')),",
+						"          Urg = toString(byName('Urg')),",
+						"          Modality = toString(byName('Modality')),",
+						"          {No of Proc} = toInteger(byName('No of Proc')),",
+						"          {Planned Appointment Date} = toTimestamp(byName('Planned Appointment Date')),",
+						"          {Date First Verified} = toTimestamp(byName('Date First Verified')),",
+						"          {Time First Verified} = toString(byName('Time First Verified')),",
+						"          {Was Planned} = toString(byName('Was Planned')),",
+						"          {Was Scheduled} = toString(byName('Was Scheduled')),",
+						"          {Was Waiting} = toString(byName('Was Waiting')),",
+						"          {Stat Date} = toTimestamp(byName('Stat Date')),",
+						"          {Status Date} = toTimestamp(byName('Status Date')),",
+						"          Modality2 = toString(byName('Modality2')),",
+						"          {Trust Name} = toString(byName('Trust Name')),",
+						"          Patient_Type = toString(byName('Patient_Type')),",
+						"          {Tat Type} = toString(byName('Tat Type')),",
+						"          Activity = toInteger(byName('Activity')),",
+						"          {Count of Activty_Demand for Activity} = toLong(byName('Count of Activty_Demand for Activity')),",
+						"          {Status Time2} = toString(byName('Status Time2')),",
+						"          {Patient Type ID} = toLong(byName('Patient Type ID')),",
+						"          {Modality ID} = toInteger(byName('Modality ID')),",
+						"          {Status ID} = toInteger(byName('Status ID')),",
+						"          {Exam ID} = toInteger(byName('Exam ID')),",
+						"          {Exam Room ID} = toInteger(byName('Exam Room ID')),",
+						"          {Trust ID} = toInteger(byName('Trust ID')),",
+						"          {Referral Source ID} = toInteger(byName('Referral Source ID')),",
+						"          {Tat Type ID} = toInteger(byName('Tat Type ID')),",
+						"          {Reported By} = toString(byName('Reported By')),",
+						"          Rank = toInteger(byName('Rank'))) ~> MapDrifted1",
 						"filter1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
@@ -10239,10 +9709,10 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "AzureSql_CoreV2Staging",
+								"referenceName": "AzureSQLCoreV3Staging",
 								"type": "DatasetReference"
 							},
-							"name": "AzureSqlCoreV2Staging"
+							"name": "AzureSQLCoreV3Staging"
 						}
 					],
 					"transformations": [
@@ -10340,15 +9810,14 @@
 						"          Accession as string,",
 						"          {Ref Src} as string,",
 						"          Site as string,",
-						"          {Request Date} as timestamp,",
-						"          {Event Date} as timestamp,",
+						"          {Request Date} as date,",
+						"          {Event Date} as date,",
 						"          {Event Time} as string,",
 						"          {On Call} as string,",
 						"          PT as string,",
 						"          Examination as string,",
 						"          {Exam Name} as string,",
 						"          Room as string,",
-						"          {ExamSite Code} as string,",
 						"          {Start Time} as string,",
 						"          {End Time} as string,",
 						"          {Exam Key} as integer,",
@@ -10368,13 +9837,18 @@
 						"          {Was Scheduled} as string,",
 						"          {Was Waiting} as string,",
 						"          {Stat Date} as timestamp,",
+						"          {Reported By} as string,",
+						"          Rank as integer,",
+						"          {Status Code.1} as string,",
+						"          {Status Date} as timestamp,",
+						"          {Status Time} as string,",
 						"          Modality2 as string,",
 						"          {Trust Name} as string,",
 						"          Patient_Type as string,",
 						"          {Tat Type} as string,",
-						"          {Status Time} as string,",
-						"          {Reported By} as string,",
-						"          Rank as integer",
+						"          Activity as integer,",
+						"          {Count of Activty_Demand for Activity} as long,",
+						"          {ExamSite Code} as string",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -10426,7 +9900,7 @@
 						"          {Status Time} = {Status Time2},",
 						"          {Reported By},",
 						"          Rank",
-						"     )) ~> AzureSqlCoreV2Staging"
+						"     )) ~> AzureSQLCoreV3Staging"
 					]
 				}
 			},
@@ -11416,6 +10890,5614 @@
 				"[concat(variables('factoryId'), '/datasets/Tat_Type')]",
 				"[concat(variables('factoryId'), '/datasets/Trust')]",
 				"[concat(variables('factoryId'), '/datasets/Status')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow3')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSQLCoreV3Staging",
+								"type": "DatasetReference"
+							},
+							"name": "AzureSQLCoreV3Staging"
+						},
+						{
+							"dataset": {
+								"referenceName": "Patient_Type",
+								"type": "DatasetReference"
+							},
+							"name": "PatientType"
+						},
+						{
+							"dataset": {
+								"referenceName": "Modality",
+								"type": "DatasetReference"
+							},
+							"name": "Modality"
+						},
+						{
+							"dataset": {
+								"referenceName": "Status",
+								"type": "DatasetReference"
+							},
+							"name": "Status"
+						},
+						{
+							"dataset": {
+								"referenceName": "Exam",
+								"type": "DatasetReference"
+							},
+							"name": "Exam"
+						},
+						{
+							"dataset": {
+								"referenceName": "Exam_Site",
+								"type": "DatasetReference"
+							},
+							"name": "ExamSite"
+						},
+						{
+							"dataset": {
+								"referenceName": "Trust",
+								"type": "DatasetReference"
+							},
+							"name": "Trust"
+						},
+						{
+							"dataset": {
+								"referenceName": "Referral_Source",
+								"type": "DatasetReference"
+							},
+							"name": "ReferralSource"
+						},
+						{
+							"dataset": {
+								"referenceName": "Tat_Type",
+								"type": "DatasetReference"
+							},
+							"name": "TatType"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference"
+							},
+							"name": "AzureSqlCOREV2"
+						}
+					],
+					"transformations": [
+						{
+							"name": "MapDrifted1",
+							"description": "Creates an explicit mapping for each drifted column"
+						},
+						{
+							"name": "MapDrifted2",
+							"description": "Creates an explicit mapping for each drifted column"
+						},
+						{
+							"name": "RemoveColumns6"
+						},
+						{
+							"name": "MapDrifted3",
+							"description": "Creates an explicit mapping for each drifted column"
+						},
+						{
+							"name": "RemoveColumns1"
+						},
+						{
+							"name": "RemoveColumns2"
+						},
+						{
+							"name": "RemoveColumns3"
+						},
+						{
+							"name": "RemoveColumns4"
+						},
+						{
+							"name": "select6"
+						},
+						{
+							"name": "RemoveColumns5"
+						},
+						{
+							"name": "DerivedColumn1"
+						},
+						{
+							"name": "RenameColumn"
+						},
+						{
+							"name": "LookupPatientType"
+						},
+						{
+							"name": "lookupModality"
+						},
+						{
+							"name": "lookupStatus"
+						},
+						{
+							"name": "lookupExam"
+						},
+						{
+							"name": "lookupExamSite"
+						},
+						{
+							"name": "lookup6"
+						},
+						{
+							"name": "lookupReferralSource"
+						},
+						{
+							"name": "lookupTatType"
+						},
+						{
+							"name": "RenameColumn2"
+						},
+						{
+							"name": "MapDrifted4",
+							"description": "Creates an explicit mapping for each drifted column"
+						},
+						{
+							"name": "MapDrifted5",
+							"description": "Creates an explicit mapping for each drifted column"
+						},
+						{
+							"name": "filter1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          {CRIS No} as integer,",
+						"          Accession as string,",
+						"          {Ref Src} as string,",
+						"          Site as string,",
+						"          {Request Date} as date,",
+						"          {Event Date} as date,",
+						"          {Event Time} as string,",
+						"          {On Call} as string,",
+						"          PT as string,",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          Room as string,",
+						"          {Start Time} as string,",
+						"          {End Time} as string,",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          {Status Code} as string,",
+						"          {Booked Date} as timestamp,",
+						"          {Booked Time} as string,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          Urg as string,",
+						"          Modality as string,",
+						"          {No of Proc} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Date First Verified} as timestamp,",
+						"          {Time First Verified} as string,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {Reported By} as string,",
+						"          Rank as integer,",
+						"          {Status Code.1} as string,",
+						"          {Status Date} as timestamp,",
+						"          {Status Time} as string,",
+						"          Modality2 as string,",
+						"          {Trust Name} as string,",
+						"          Patient_Type as string,",
+						"          {Tat Type} as string,",
+						"          Activity as integer,",
+						"          {Count of Activty_Demand for Activity} as long,",
+						"          {ExamSite Code} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> AzureSQLCoreV3Staging",
+						"source(output(",
+						"          Patient_Type as string,",
+						"          Patient_Type_ID as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> PatientType",
+						"source(output(",
+						"          Modality2 as string,",
+						"          {Modality ID} as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> Modality",
+						"source(output(",
+						"          {Status Code} as string,",
+						"          {Status ID} as integer,",
+						"          {Status Category} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> Status",
+						"source(output(",
+						"          {Exam Name} as string,",
+						"          {Exam Code} as string,",
+						"          {Exam ID} as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> Exam",
+						"source(output(",
+						"          {Exam Site} as string,",
+						"          {Exam Room} as string,",
+						"          {Exam Site Code} as string,",
+						"          {Exam Room ID} as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ExamSite",
+						"source(output(",
+						"          {Trust Name} as string,",
+						"          {Trust ID} as integer,",
+						"          {Trust Name Group} as string,",
+						"          {Trust Name Group2} as string,",
+						"          {Trust Name Group3} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> Trust",
+						"source(output(",
+						"          {Referral Source} as string,",
+						"          {Referral Source ID} as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ReferralSource",
+						"source(output(",
+						"          {Tat Type} as string,",
+						"          {Tat Type ID} as integer,",
+						"          Target as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> TatType",
+						"LookupPatientType derive({Patient Type ID} = toLong(byName('Patient Type ID'))) ~> MapDrifted1",
+						"ExamSite derive({ExamSite Code} = toString(byName('ExamSite Code'))) ~> MapDrifted2",
+						"lookupTatType select(mapColumn(",
+						"          {CRIS No},",
+						"          Accession,",
+						"          {Ref Src},",
+						"          Site,",
+						"          {Request Date},",
+						"          {Event Date},",
+						"          {Event Time},",
+						"          {On Call},",
+						"          PT,",
+						"          Examination,",
+						"          {Exam Name},",
+						"          Room,",
+						"          {ExamSite Code},",
+						"          {Start Time},",
+						"          {End Time},",
+						"          {Exam Key},",
+						"          {Event Key},",
+						"          {Status Code},",
+						"          {Booked Date},",
+						"          {Booked Time},",
+						"          {Creation Date},",
+						"          Attended,",
+						"          Urg,",
+						"          Modality,",
+						"          {No of Proc},",
+						"          {Planned Appointment Date},",
+						"          {Date First Verified},",
+						"          {Time First Verified},",
+						"          {Was Planned},",
+						"          {Was Scheduled},",
+						"          {Was Waiting},",
+						"          {Stat Date},",
+						"          {Status Date},",
+						"          {Status Time},",
+						"          Modality2,",
+						"          {Trust Name},",
+						"          Patient_Type,",
+						"          {Tat Type} = RemoveColumns5@{Tat Type},",
+						"          Activity,",
+						"          {Count of Activty_Demand for Activity},",
+						"          {Status Time2},",
+						"          {Patient Type ID},",
+						"          {Modality ID},",
+						"          {Status ID},",
+						"          {Exam ID},",
+						"          {Exam Room ID},",
+						"          {Trust ID},",
+						"          {Referral Source ID},",
+						"          {Tat Type ID},",
+						"          {Reported By},",
+						"          Rank",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RemoveColumns6",
+						"PatientType derive({Patient Type ID} = toLong(byName('Patient Type ID'))) ~> MapDrifted3",
+						"MapDrifted5 select(mapColumn(",
+						"          {CRIS No},",
+						"          Accession,",
+						"          {Ref Src},",
+						"          Site,",
+						"          {Request Date},",
+						"          {Event Date},",
+						"          {Event Time},",
+						"          {On Call},",
+						"          PT,",
+						"          Examination,",
+						"          {Exam Name},",
+						"          Room,",
+						"          {ExamSite Code},",
+						"          {Start Time},",
+						"          {End Time},",
+						"          {Exam Key},",
+						"          {Event Key},",
+						"          {Status Code},",
+						"          {Booked Date},",
+						"          {Booked Time},",
+						"          {Creation Date},",
+						"          Attended,",
+						"          Urg,",
+						"          Modality,",
+						"          {No of Proc},",
+						"          {Planned Appointment Date},",
+						"          {Date First Verified},",
+						"          {Time First Verified},",
+						"          {Was Planned},",
+						"          {Was Scheduled},",
+						"          {Was Waiting},",
+						"          {Stat Date},",
+						"          {Status Date},",
+						"          {Status Time},",
+						"          Modality2,",
+						"          {Trust Name},",
+						"          Patient_Type = AzureSQLCoreV3Staging@Patient_Type,",
+						"          {Tat Type},",
+						"          Activity,",
+						"          {Count of Activty_Demand for Activity},",
+						"          {Status Time2},",
+						"          {Patient Type ID},",
+						"          {Reported By},",
+						"          Rank",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RemoveColumns1",
+						"lookupStatus select(mapColumn(",
+						"          {CRIS No},",
+						"          Accession,",
+						"          {Ref Src},",
+						"          Site,",
+						"          {Request Date},",
+						"          {Event Date},",
+						"          {Event Time},",
+						"          {On Call},",
+						"          PT,",
+						"          Examination,",
+						"          {Exam Name},",
+						"          Room,",
+						"          {ExamSite Code},",
+						"          {Start Time},",
+						"          {End Time},",
+						"          {Exam Key},",
+						"          {Event Key},",
+						"          {Status Code} = RemoveColumns1@{Status Code},",
+						"          {Booked Date},",
+						"          {Booked Time},",
+						"          {Creation Date},",
+						"          Attended,",
+						"          Urg,",
+						"          Modality,",
+						"          {No of Proc},",
+						"          {Planned Appointment Date},",
+						"          {Date First Verified},",
+						"          {Time First Verified},",
+						"          {Was Planned},",
+						"          {Was Scheduled},",
+						"          {Was Waiting},",
+						"          {Stat Date},",
+						"          {Status Date},",
+						"          {Status Time},",
+						"          Modality2 = RemoveColumns1@Modality2,",
+						"          {Trust Name},",
+						"          Patient_Type,",
+						"          {Tat Type},",
+						"          Activity,",
+						"          {Count of Activty_Demand for Activity},",
+						"          {Status Time2},",
+						"          {Patient Type ID},",
+						"          {Modality ID},",
+						"          {Status ID},",
+						"          {Reported By},",
+						"          Rank",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RemoveColumns2",
+						"lookupExam select(mapColumn(",
+						"          {CRIS No},",
+						"          Accession,",
+						"          {Ref Src},",
+						"          Site,",
+						"          {Request Date},",
+						"          {Event Date},",
+						"          {Event Time},",
+						"          {On Call},",
+						"          PT,",
+						"          Examination,",
+						"          {Exam Name} = RemoveColumns2@{Exam Name},",
+						"          Room,",
+						"          {ExamSite Code},",
+						"          {Start Time},",
+						"          {End Time},",
+						"          {Exam Key},",
+						"          {Event Key},",
+						"          {Status Code},",
+						"          {Booked Date},",
+						"          {Booked Time},",
+						"          {Creation Date},",
+						"          Attended,",
+						"          Urg,",
+						"          Modality,",
+						"          {No of Proc},",
+						"          {Planned Appointment Date},",
+						"          {Date First Verified},",
+						"          {Time First Verified},",
+						"          {Was Planned},",
+						"          {Was Scheduled},",
+						"          {Was Waiting},",
+						"          {Stat Date},",
+						"          {Status Date},",
+						"          {Status Time},",
+						"          Modality2,",
+						"          {Trust Name},",
+						"          Patient_Type,",
+						"          {Tat Type},",
+						"          Activity,",
+						"          {Count of Activty_Demand for Activity},",
+						"          {Status Time2},",
+						"          {Patient Type ID},",
+						"          {Modality ID},",
+						"          {Status ID},",
+						"          {Exam ID},",
+						"          {Reported By},",
+						"          Rank",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RemoveColumns3",
+						"lookupExamSite select(mapColumn(",
+						"          {CRIS No},",
+						"          Accession,",
+						"          {Ref Src},",
+						"          Site,",
+						"          {Request Date},",
+						"          {Event Date},",
+						"          {Event Time},",
+						"          {On Call},",
+						"          PT,",
+						"          Examination,",
+						"          {Exam Name},",
+						"          Room,",
+						"          {ExamSite Code} = RemoveColumns3@{ExamSite Code},",
+						"          {Start Time},",
+						"          {End Time},",
+						"          {Exam Key},",
+						"          {Event Key},",
+						"          {Status Code},",
+						"          {Booked Date},",
+						"          {Booked Time},",
+						"          {Creation Date},",
+						"          Attended,",
+						"          Urg,",
+						"          Modality,",
+						"          {No of Proc},",
+						"          {Planned Appointment Date},",
+						"          {Date First Verified},",
+						"          {Time First Verified},",
+						"          {Was Planned},",
+						"          {Was Scheduled},",
+						"          {Was Waiting},",
+						"          {Stat Date},",
+						"          {Status Date},",
+						"          {Status Time},",
+						"          Modality2,",
+						"          {Trust Name},",
+						"          Patient_Type,",
+						"          {Tat Type},",
+						"          Activity,",
+						"          {Count of Activty_Demand for Activity},",
+						"          {Status Time2},",
+						"          {Patient Type ID},",
+						"          {Modality ID},",
+						"          {Status ID},",
+						"          {Exam ID},",
+						"          {Exam Room ID},",
+						"          {Reported By},",
+						"          Rank",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RemoveColumns4",
+						"lookup6 select(mapColumn(",
+						"          {CRIS No},",
+						"          Accession,",
+						"          {Ref Src},",
+						"          Site,",
+						"          {Request Date},",
+						"          {Event Date},",
+						"          {Event Time},",
+						"          {On Call},",
+						"          PT,",
+						"          Examination,",
+						"          {Exam Name},",
+						"          Room,",
+						"          {ExamSite Code},",
+						"          {Start Time},",
+						"          {End Time},",
+						"          {Exam Key},",
+						"          {Event Key},",
+						"          {Status Code},",
+						"          {Booked Date},",
+						"          {Booked Time},",
+						"          {Creation Date},",
+						"          Attended,",
+						"          Urg,",
+						"          Modality,",
+						"          {No of Proc},",
+						"          {Planned Appointment Date},",
+						"          {Date First Verified},",
+						"          {Time First Verified},",
+						"          {Was Planned},",
+						"          {Was Scheduled},",
+						"          {Was Waiting},",
+						"          {Stat Date},",
+						"          {Status Date},",
+						"          {Status Time},",
+						"          Modality2,",
+						"          {Trust Name} = RemoveColumns4@{Trust Name},",
+						"          Patient_Type,",
+						"          {Tat Type},",
+						"          Activity,",
+						"          {Count of Activty_Demand for Activity},",
+						"          {Status Time2},",
+						"          {Patient Type ID},",
+						"          {Modality ID},",
+						"          {Status ID},",
+						"          {Exam ID},",
+						"          {Exam Room ID},",
+						"          {Trust ID},",
+						"          {Reported By},",
+						"          Rank",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select6",
+						"lookupReferralSource select(mapColumn(",
+						"          {CRIS No},",
+						"          Accession,",
+						"          {Ref Src},",
+						"          Site,",
+						"          {Request Date},",
+						"          {Event Date},",
+						"          {Event Time},",
+						"          {On Call},",
+						"          PT,",
+						"          Examination,",
+						"          {Exam Name},",
+						"          Room,",
+						"          {ExamSite Code},",
+						"          {Start Time},",
+						"          {End Time},",
+						"          {Exam Key},",
+						"          {Event Key},",
+						"          {Status Code},",
+						"          {Booked Date},",
+						"          {Booked Time},",
+						"          {Creation Date},",
+						"          Attended,",
+						"          Urg,",
+						"          Modality,",
+						"          {No of Proc},",
+						"          {Planned Appointment Date},",
+						"          {Date First Verified},",
+						"          {Time First Verified},",
+						"          {Was Planned},",
+						"          {Was Scheduled},",
+						"          {Was Waiting},",
+						"          {Stat Date},",
+						"          {Status Date},",
+						"          {Status Time},",
+						"          Modality2,",
+						"          {Trust Name},",
+						"          Patient_Type,",
+						"          {Tat Type},",
+						"          Activity,",
+						"          {Count of Activty_Demand for Activity},",
+						"          {Status Time2},",
+						"          {Patient Type ID},",
+						"          {Modality ID},",
+						"          {Status ID},",
+						"          {Exam ID},",
+						"          {Exam Room ID},",
+						"          {Trust ID},",
+						"          {Referral Source ID},",
+						"          {Reported By},",
+						"          Rank",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RemoveColumns5",
+						"MapDrifted4 derive({Status Time2} = lpad(toString({Status Time}),4,\"0\")) ~> DerivedColumn1",
+						"MapDrifted3 select(mapColumn(",
+						"          Patient_Type,",
+						"          {Patient Type ID}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RenameColumn",
+						"DerivedColumn1, RenameColumn lookup(AzureSQLCoreV3Staging@Patient_Type == RenameColumn@Patient_Type,",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> LookupPatientType",
+						"RemoveColumns1, Modality lookup(RemoveColumns1@Modality2 == Modality@Modality2,",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> lookupModality",
+						"lookupModality, Status lookup(RemoveColumns1@{Status Code} == Status@{Status Code},",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> lookupStatus",
+						"RemoveColumns2, Exam lookup(Examination == {Exam Code},",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> lookupExam",
+						"RemoveColumns3, MapDrifted2 lookup(RemoveColumns3@{ExamSite Code} == MapDrifted2@{ExamSite Code},",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> lookupExamSite",
+						"RemoveColumns4, Trust lookup(RemoveColumns4@{Trust Name} == Trust@{Trust Name},",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> lookup6",
+						"select6, ReferralSource lookup({Ref Src} == {Referral Source},",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> lookupReferralSource",
+						"RemoveColumns5, TatType lookup(RemoveColumns5@{Tat Type} == TatType@{Tat Type},",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> lookupTatType",
+						"MapDrifted2 select(mapColumn(",
+						"          {Exam Site},",
+						"          {Exam Room},",
+						"          {Exam Room ID},",
+						"          {ExamSite Code}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RenameColumn2",
+						"filter1 derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted4",
+						"MapDrifted1 derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted5",
+						"AzureSQLCoreV3Staging filter(Rank==1) ~> filter1",
+						"RemoveColumns6 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     saveOrder: 1,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          {CRIS No},",
+						"          Accession,",
+						"          {Ref Src},",
+						"          Site,",
+						"          {Request Date},",
+						"          {Event Date},",
+						"          {Event Time},",
+						"          {On Call},",
+						"          PT,",
+						"          Examination,",
+						"          {Exam Name},",
+						"          Room,",
+						"          {ExamSite Code},",
+						"          {Start Time},",
+						"          {End Time},",
+						"          {Exam Key},",
+						"          {Event Key},",
+						"          {Status Code},",
+						"          {Booked Date},",
+						"          {Booked Time},",
+						"          {Creation Date},",
+						"          Attended,",
+						"          Urg,",
+						"          Modality,",
+						"          {No of Proc},",
+						"          {Planned Appointment Date},",
+						"          {Date First Verified},",
+						"          {Time First Verified},",
+						"          {Was Planned},",
+						"          {Was Scheduled},",
+						"          {Was Waiting},",
+						"          {Stat Date},",
+						"          {Status Date},",
+						"          Modality2,",
+						"          {Trust Name},",
+						"          Patient_Type,",
+						"          {Tat Type},",
+						"          Activity,",
+						"          {Count of Activty_Demand for Activity},",
+						"          {Status Time2},",
+						"          {Patient Type ID},",
+						"          {Modality ID},",
+						"          {Status ID},",
+						"          {Exam ID},",
+						"          {Exam Room ID},",
+						"          {Trust ID},",
+						"          {Referral Source ID},",
+						"          {Tat Type ID},",
+						"          {Reported By},",
+						"          Rank",
+						"     )) ~> AzureSqlCOREV2"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Status')]",
+				"[concat(variables('factoryId'), '/datasets/Trust')]",
+				"[concat(variables('factoryId'), '/datasets/Tat_Type')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow4')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSql_STATUSES",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "RequestRecievedStatus",
+								"type": "DatasetReference"
+							},
+							"name": "sink1",
+							"description": "Export data to Request Received Status"
+						}
+					],
+					"transformations": [
+						{
+							"name": "window1"
+						},
+						{
+							"name": "filter1"
+						},
+						{
+							"name": "filter2"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          Accession as string,",
+						"          Referrer as string,",
+						"          {Referral Location} as string,",
+						"          {Referral Source} as string,",
+						"          Urg as string,",
+						"          Site as string,",
+						"          {Status Code} as string,",
+						"          {Status Date} as timestamp,",
+						"          {Status Time} as integer,",
+						"          {Referral Location Name} as string,",
+						"          {Referral Source Name} as string,",
+						"          {Referral Name} as string,",
+						"          {Examination Name} as string,",
+						"          Modality as string,",
+						"          {Status Code at State Date} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {D Status} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"filter1 window(over({Exam Key}),",
+						"     desc({Status Date}, false),",
+						"     desc({Status Time}, false),",
+						"     asc({Status Code at State Date}, false),",
+						"     asc(Referrer, true),",
+						"     asc({Referral Location}, true),",
+						"     asc({Referral Source}, true),",
+						"     asc(Urg, true),",
+						"     asc(Site, true),",
+						"     asc({Referral Location Name}, true),",
+						"     asc({Referral Source Name}, true),",
+						"     asc({Referral Name}, true),",
+						"     asc({Examination Name}, true),",
+						"     asc(Modality, true),",
+						"     asc({Stat Date}, true),",
+						"     asc({D Status}, true),",
+						"     Rank = denseRank()) ~> window1",
+						"source1 filter({Status Code}==\"RR\") ~> filter1",
+						"window1 filter(Rank==1) ~> filter2",
+						"filter2 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          Accession as string,",
+						"          Referrer as string,",
+						"          {Referral Location} as string,",
+						"          {Referral Source} as string,",
+						"          Urg as string,",
+						"          Site as string,",
+						"          {Status Code} as string,",
+						"          {Status Date} as timestamp,",
+						"          {Status Time} as integer,",
+						"          {Referral Location Name} as string,",
+						"          {Referral Source Name} as string,",
+						"          {Referral Name} as string,",
+						"          {Examination Name} as string,",
+						"          Modality as string,",
+						"          {Status Code at State Date} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {D Status} as string,",
+						"          Rank as integer",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     recreate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     saveOrder: 1,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Ingestion_RADFYF')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy_CORE",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "24:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "truncate table [dev].[FYF_ODBC_CORE]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "CRIS No",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "CRIS No",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Accession",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Accession",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Ref Src",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Ref Src",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referring Locat",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referring Locat",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referrer",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referrer",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Speciality",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Speciality",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "GP",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "GP",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Practice",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Practice",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Site",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Site",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Request Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										},
+										"sink": {
+											"name": "Request Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										},
+										"sink": {
+											"name": "Event Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Time",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Event Time",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "On Call",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "On Call",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PT",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "PT",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RC",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "RC",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Examination",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Examination",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Exam Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Exam Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Room",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Room",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Start Time",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Start Time",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "End Time",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "End Time",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Radiographer 1",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Radiographer 1",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Radiographer 2",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Radiographer 2",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Required Clinician",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Required Clinician",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Contrast Code",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Contrast Code",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Qty Used",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 6
+										},
+										"sink": {
+											"name": "Qty Used",
+											"type": "Decimal",
+											"physicalType": "decimal",
+											"scale": 2,
+											"precision": 6
+										}
+									},
+									{
+										"source": {
+											"name": "Exam Key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Exam Key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Event Key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Status Code",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Status Code",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Booked Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										},
+										"sink": {
+											"name": "Booked Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Booked Time",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Booked Time",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Creation Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										},
+										"sink": {
+											"name": "Creation Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Attended",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Attended",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Key2",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Event Key2",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Lead Clinician",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Lead Clinician",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Intended Radiologist",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Intended Radiologist",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Urg",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Urg",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referring Locat Name ",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referring Locat Name ",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referrer Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referrer Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Modality",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Modality",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "No of Proc",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "No of Proc",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "GP Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "GP Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Planned Appointment Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										},
+										"sink": {
+											"name": "Planned Appointment Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Date First Verified",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										},
+										"sink": {
+											"name": "Date First Verified",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Reported By",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Reported By",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Reported By2",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Reported By2",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Reported By2 Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Reported By2 Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Reported By Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Reported By Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Time First Verified",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Time First Verified",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Time Taken",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Time Taken",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Typed By",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Typed By",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Was Planned",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Was Planned",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Was Scheduled",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Was Scheduled",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Was Waiting",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Was Waiting",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CCG",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "CCG",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Day of Week",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Day of Week",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SqlServer_CORE",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSql_CORE",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy_ORDERS",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_CORE",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "24:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "truncate table [dev].[FYF_ODBC_ORDERS]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "CRIS No",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "CRIS No",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Exam Key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Exam Key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Order Key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Order Key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Creation Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Creation Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Ref Src",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Ref Src",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referrer",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referrer",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Lead Clinician",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Lead Clinician",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Required Date",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Required Date",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Required Time",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Required Time",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Order Id",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Order Id",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Order Source",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Order Source",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Episode No",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Episode No",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Order Type",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Order Type",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Examination",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Examination",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Urg",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Urg",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SqlServer_ORDERS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSql_ORDERS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy_REQUESTS",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_ORDERS",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "24:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "truncate table [dev].[FYF_ODBC_REQUESTS]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Accession",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Accession",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Exam Key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Exam Key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Event Key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Urg",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Urg",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Ref Src",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Ref Src",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referring Locat",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referring Locat",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referrer",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referrer",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Lead Clinician",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Lead Clinician",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Site",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Site",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Request Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Request Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Event Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Time",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Event Time",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "On Call",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "On Call",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PT",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "PT",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RC",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "RC",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Examination",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Examination",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Examination Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Examination Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Required Clinician",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Required Clinician",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Status Code",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Status Code",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Booked Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Booked Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Booked Time",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Booked Time",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Key2",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Event Key2",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Creation Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Creation Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Attended",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Attended",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referrer Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referrer Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Modality",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Modality",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Date at Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Event Date at Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Predicted Reset Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Predicted Reset Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Waiting Time Reset Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Waiting Time Reset Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Planned Appointment Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Planned Appointment Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Waiting Time Breach Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Waiting Time Breach Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SqlServer_REQUESTS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSql_REQUESTS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy_STATUSES",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_REQUESTS",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "24:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "truncate table [dev].[FYF_ODBC_STATUSES]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Exam Key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Exam Key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Event Key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Accession",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Accession",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referrer",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referrer",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referral Location",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referral Location",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referral Source",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referral Source",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Urg",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Urg",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Site",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Site",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Status Code",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Status Code",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Status Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Status Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Status Time",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Status Time",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Referral Location Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referral Location Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referral Source Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referral Source Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referral Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referral Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Examination Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Examination Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Modality",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Modality",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Status Code at State Date",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Status Code at State Date",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "D Status",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "D Status",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SqlServer_STATUSES",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSql_STATUSES",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy_APDNA",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Lastest status",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "24:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "truncate table [dev].[FYF_ODBC_APDNA]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Event Key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Event Key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Accession",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Accession",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Event Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Booked Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Booked Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Referring Locat",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referring Locat",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Examination",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Examination",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Room",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Room",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Status Code",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Status Code",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Lead Clincian ",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Lead Clincian ",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Examination Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Examination Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SqlServer_APDNA",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSql_APDNA",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy_Imports",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_APDNA",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "24:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "truncate table [dev].[FYF_ODBC_IMPORTS]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Site",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Site",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Room",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Room",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Room Description",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Room Description",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SqlServerTable1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Azure_Imports",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy_LUNGCa",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_Imports",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "24:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "truncate table [dev].[FYF_ODBC_LUNG_Ca_ALERTS]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Event key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Event key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Exam key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Exam key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Site",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Site",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Event Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Examination",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Examination",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Date Verified",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Date Verified",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Date Last Verified",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Date Last Verified",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Reported by",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Reported by",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referral Source",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referral Source",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referring Location",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referring Location",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Date Reported",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Date Reported",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SqlServer_LUNGCA",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSql_LUNGCa",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy_PATIENTS",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_LUNGCa",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "24:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "Truncate table [dev].[FYF_ODBC_PATIENTS]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "CRIS No",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "CRIS No",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Creation Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Creation Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Mutation Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Mutation Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Event Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "DOD",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "DOD",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Ethnic Origin",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Ethnic Origin",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "GP",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "GP",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "No of Attends",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "No of Attends",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "No of Events",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "No of Events",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Ref Src",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Ref Src",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referrer Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referrer Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Age at Event",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Age at Event",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "HIS ID",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "HIS ID",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CCG",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "CCG",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SqlServer_PATIENTS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSql_Patients",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy_PTL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_PATIENTS",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "24:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "truncate table [dev].[FYF_ODBC_PTL]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Event Key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Event Key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Exam Key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Exam Key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "CRIS Number",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "CRIS Number",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Status Category",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Status Category",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referrer",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referrer",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Ref Src",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Ref Src",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referring Location",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referring Location",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Examination",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Examination",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Site",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Site",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Request Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Request Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Event Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Booked Time",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Booked Time",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Booked Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Booked Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Ref Src2",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Ref Src2",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Creation Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Creation Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Key2",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Event Key2",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Attended",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Attended",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Modality",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Modality",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Room",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Room",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RC",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "RC",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Urg",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Urg",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Referrer Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referrer Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Exam Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Exam Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Date2",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Event Date2",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Days Waiting",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Days Waiting",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Predicted Reset Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Predicted Reset Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Waiting Time Reset Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Waiting Time Reset Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Weeks Waiting",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Weeks Waiting",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Planned Appointment Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Planned Appointment Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Waiting Breach Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Waiting Breach Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Was Planned",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Was Planned",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Was Scheduled",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Was Scheduled",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Was Waiting",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Was Waiting",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CCG",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "CCG",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "D Status",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "D Status",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SqlServer_PTL",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSql_PTL",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy_REPORT_TAT",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_PTL",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "24:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "truncate table [dev].[FYF_ODBC_REPORTING_TAT]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Accession",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Accession",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Event Key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Exam Key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Exam Key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Report Key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Report Key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Request Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Request Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Event Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Time",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Event Time",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Lead Clinician",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Lead Clinician",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referrer",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referrer",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referring Locat",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referring Locat",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Site",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Site",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Examination",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Examination",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Exam Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Exam Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Key2",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Event Key2",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Status Code",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Status Code",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Intended Radiologist",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Intended Radiologist",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Ref Src",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Ref Src",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Modality",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Modality",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Date First Addended",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Date First Addended",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Date First Verified",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Date First Verified",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Date Last Addended",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Date Last Addended",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Date LAst Verified",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Date LAst Verified",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Date Reported",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Date Reported",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Date Typed",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Date Typed",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "First Addended By",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "First Addended By",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "First Addended by Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "First Addended by Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "First Verified By",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "First Verified By",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "First Verified By Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "First Verified By Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Last Addended By",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Last Addended By",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Last Addended By Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Last Addended By Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Last Verified By",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Last Verified By",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Last Verified By Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Last Verified By Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Reported By",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Reported By",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Reported By2",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Reported By2",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Reported By Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Reported By Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Reported By2 Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Reported By2 Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "First Verified Time",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "First Verified Time",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Last Verified Time",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Last Verified Time",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Time Reported",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Time Reported",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Time Typed",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Time Typed",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Typed By",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Typed By",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Attend to First Verified Days",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Attend to First Verified Days",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Attend to Reported Days",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Attend to Reported Days",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SqlServer_REPO_TAT",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSql_REPORT_TAT",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy_REPORT_META",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_REPORT_TAT",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "24:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "truncate table [dev].[FYF_ODBC_REPORT_META]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Event Key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Event Key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Report Key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Report Key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Exam Key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Exam Key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Key2",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Event Key2",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Referral Source",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Referral Source",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Event Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Time",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Event Time",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Date of First Addendnum",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Date of First Addendnum",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Date First Verified",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Date First Verified",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Date of Last Addendnum",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Date of Last Addendnum",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Date Last Verified",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Date Last Verified",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Date Reported",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Date Reported",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Date Typed",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Date Typed",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Reported by",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Reported by",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Reported by2",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Reported by2",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Reported by2 Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Reported by2 Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Reported by Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Reported by Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Typed by",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Typed by",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Typed by Name",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Typed by Name",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SqlServer_REPO_META",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSql_REPORT_META",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy_TEST_PATIENTS",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Copy_REPORT_META",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "24:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "truncate table [dev].[FYF_ODBC_TEST_Patients]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "CRIS No",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "CRIS No",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Creation Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Creation Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Mutation Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Mutation Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									},
+									{
+										"source": {
+											"name": "Surname",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Surname",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Forename",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Forename",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										},
+										"sink": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SqlServer_TEST_PAT",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSql_TEST_PATIENTS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Add Columns Core",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Copy_TEST_PATIENTS",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"AzureSqlCORE": {},
+									"AzureSQLCoreV3Staging": {}
+								}
+							},
+							"staging": {},
+							"integrationRuntime": {
+								"referenceName": "AutoResolveAzureIR",
+								"type": "IntegrationRuntimeReference"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "CreateReferrenceTables",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "PopulateNewColumns",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow2",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"AzureSqlCOREV3Staging": {},
+									"AzureSqlPTL": {},
+									"TatType": {},
+									"Trust": {},
+									"sink4": {},
+									"Modality": {},
+									"Status": {},
+									"Exam": {},
+									"PatientType": {},
+									"ReferralSource": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "ReferenceLookupsCore",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "CreateReferrenceTables",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow3",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"AzureSQLCoreV3Staging": {},
+									"PatientType": {},
+									"Modality": {},
+									"Status": {},
+									"Exam": {},
+									"ExamSite": {},
+									"Trust": {},
+									"ReferralSource": {},
+									"TatType": {},
+									"AzureSqlCOREV2": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "ReferenceLookupsPTL",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "ReferenceLookupsCore",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow1_copy1",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"AzureSqlPTL": {},
+									"ReferralSource": {},
+									"Exam": {},
+									"Trust": {},
+									"Modality": {},
+									"ExamSite": {},
+									"AzureSqlPTLV2Staging": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "InsertPTL",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "ReferenceLookupsPTL",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Event Key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Event Key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Exam Key",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Exam Key",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "CRIS Number",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "CRIS Number",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Status Category",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Status Category",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Request Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										},
+										"sink": {
+											"name": "Request Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Event Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										},
+										"sink": {
+											"name": "Event Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Booked Date Time",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										},
+										"sink": {
+											"name": "Booked Date Time",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Creation Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										},
+										"sink": {
+											"name": "Creation Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Attended",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Attended",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Urg",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Urg",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Days Waiting",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Days Waiting",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Predicted Reset Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										},
+										"sink": {
+											"name": "Predicted Reset Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Waiting Time Reset Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										},
+										"sink": {
+											"name": "Waiting Time Reset Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Weeks Waiting",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Weeks Waiting",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Planned Appointment Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										},
+										"sink": {
+											"name": "Planned Appointment Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Waiting Breach Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										},
+										"sink": {
+											"name": "Waiting Breach Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "Was Planned",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Was Planned",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Was Scheduled",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Was Scheduled",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Was Waiting",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Was Waiting",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										},
+										"sink": {
+											"name": "Stat Date",
+											"type": "DateTime",
+											"physicalType": "datetime2"
+										}
+									},
+									{
+										"source": {
+											"name": "5 Weeks Wait",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "5 Weeks Wait",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Booked Datetime",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "Booked Datetime",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "6 Weeks Wait",
+											"type": "String",
+											"physicalType": "nvarchar"
+										},
+										"sink": {
+											"name": "6 Weeks Wait",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Referral Source ID",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Referral Source ID",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Exam ID",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Exam ID",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Modality ID",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Modality ID",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Exam Room ID",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Exam Room ID",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									},
+									{
+										"source": {
+											"name": "Trust ID",
+											"type": "Int32",
+											"physicalType": "int"
+										},
+										"sink": {
+											"name": "Trust ID",
+											"type": "Int32",
+											"physicalType": "int"
+										}
+									}
+								],
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSqlPTL_V2_Staging",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "ODBC_PTL_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "CreateAct_Dem",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "InsertPTL",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "CreateActDem",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"Core": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "Lastest status",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Copy_STATUSES",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow4",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "PopulateNewColumns",
+						"type": "ExecuteWranglingDataflow",
+						"dependsOn": [
+							{
+								"activity": "Add Columns Core",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PopulateNewColumns",
+								"type": "DataFlowReference",
+								"datasetParameters": {
+									"AzureSql_CoreV2Staging": {},
+									"AzureSqlTable2": {},
+									"UserQueryAzureSQLCoreV3Staging": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"queries": [
+								{
+									"queryName": "UserQuery",
+									"dataflowSinks": [
+										{
+											"name": "UserQueryAzureSQLCoreV3Staging",
+											"dataset": {
+												"referenceName": "AzureSQLCoreV3Staging",
+												"type": "DatasetReference",
+												"parameters": {}
+											},
+											"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\t{CRIS No} as integer,\n\t\tAccession as string,\n\t\t{Ref Src} as string,\n\t\tSite as string,\n\t\t{Request Date} as date,\n\t\t{Event Date} as date,\n\t\t{Event Time} as string,\n\t\t{On Call} as string,\n\t\tPT as string,\n\t\tExamination as string,\n\t\t{Exam Name} as string,\n\t\tRoom as string,\n\t\t{Start Time} as string,\n\t\t{End Time} as string,\n\t\t{Exam Key} as integer,\n\t\t{Event Key} as integer,\n\t\t{Status Code} as string,\n\t\t{Booked Date} as timestamp,\n\t\t{Booked Time} as string,\n\t\t{Creation Date} as timestamp,\n\t\tAttended as string,\n\t\tUrg as string,\n\t\tModality as string,\n\t\t{No of Proc} as integer,\n\t\t{Planned Appointment Date} as timestamp,\n\t\t{Date First Verified} as timestamp,\n\t\t{Time First Verified} as string,\n\t\t{Was Planned} as string,\n\t\t{Was Scheduled} as string,\n\t\t{Was Waiting} as string,\n\t\t{Stat Date} as timestamp,\n\t\t{Reported By} as string,\n\t\tRank as integer,\n\t\t{Status Code.1} as string,\n\t\t{Status Date} as timestamp,\n\t\t{Status Time} as string,\n\t\tModality2 as string,\n\t\t{Trust Name} as string,\n\t\tPatient_Type as string,\n\t\t{Tat Type} as string,\n\t\tActivity as integer,\n\t\t{Count of Activty_Demand for Activity} as long,\n\t\t{ExamSite Code} as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> UserQueryAzureSQLCoreV3Staging"
+										}
+									]
+								}
+							]
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "RADFYF"
+				},
+				"annotations": [],
+				"lastPublishTime": "2024-01-30T12:35:07Z"
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SqlServer_REQUESTS')]",
+				"[concat(variables('factoryId'), '/datasets/SqlServer_STATUSES')]",
+				"[concat(variables('factoryId'), '/datasets/SqlServer_REPO_TAT')]",
+				"[concat(variables('factoryId'), '/datasets/SqlServer_REPO_META')]",
+				"[concat(variables('factoryId'), '/datasets/SqlServer_TEST_PAT')]",
+				"[concat(variables('factoryId'), '/dataflows/dataflow1')]",
+				"[concat(variables('factoryId'), '/dataflows/dataflow2')]",
+				"[concat(variables('factoryId'), '/dataflows/dataflow3')]",
+				"[concat(variables('factoryId'), '/dataflows/dataflow1_copy1')]",
+				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
+				"[concat(variables('factoryId'), '/dataflows/dataflow4')]",
+				"[concat(variables('factoryId'), '/dataflows/PopulateNewColumns')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/trig_DM01_Weekly')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Move from ICB to CAMRIN",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Week",
+						"interval": 1,
+						"startTime": "2023-11-23T11:22:00",
+						"timeZone": "GMT Standard Time",
+						"schedule": {
+							"minutes": [
+								0
+							],
+							"hours": [
+								23
+							],
+							"weekDays": [
+								"Sunday"
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Move from ICB to CAMRIN')]"
 			]
 		}
 	]

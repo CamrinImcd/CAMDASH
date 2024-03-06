@@ -12602,7 +12602,7 @@
 								"parameters": {},
 								"datasetParameters": {
 									"AzureSqlCORE": {},
-									"AzureSqlCoreV2Staging": {}
+									"AzureSQLCoreV3Staging": {}
 								}
 							},
 							"staging": {},
@@ -14293,6 +14293,119 @@
 				"type": "AzureSqlTable",
 				"schema": [
 					{
+						"name": "CRIS No",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Accession",
+						"type": "varchar"
+					},
+					{
+						"name": "Ref Src",
+						"type": "varchar"
+					},
+					{
+						"name": "Referring Locat",
+						"type": "varchar"
+					},
+					{
+						"name": "Referrer",
+						"type": "varchar"
+					},
+					{
+						"name": "Speciality",
+						"type": "varchar"
+					},
+					{
+						"name": "GP",
+						"type": "varchar"
+					},
+					{
+						"name": "Practice",
+						"type": "varchar"
+					},
+					{
+						"name": "Postcode L",
+						"type": "varchar"
+					},
+					{
+						"name": "Postcode R",
+						"type": "varchar"
+					},
+					{
+						"name": "Site",
+						"type": "varchar"
+					},
+					{
+						"name": "Request Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Event Time",
+						"type": "varchar"
+					},
+					{
+						"name": "On Call",
+						"type": "varchar"
+					},
+					{
+						"name": "PT",
+						"type": "varchar"
+					},
+					{
+						"name": "RC",
+						"type": "varchar"
+					},
+					{
+						"name": "Examination",
+						"type": "varchar"
+					},
+					{
+						"name": "Exam Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Room",
+						"type": "varchar"
+					},
+					{
+						"name": "Start Time",
+						"type": "varchar"
+					},
+					{
+						"name": "End Time",
+						"type": "varchar"
+					},
+					{
+						"name": "Radiographer 1",
+						"type": "varchar"
+					},
+					{
+						"name": "Radiographer 2",
+						"type": "varchar"
+					},
+					{
+						"name": "Required Clinician",
+						"type": "varchar"
+					},
+					{
+						"name": "Contrast Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Qty Used",
+						"type": "decimal",
+						"precision": 6,
+						"scale": 2
+					},
+					{
 						"name": "Exam Key",
 						"type": "int",
 						"precision": 10
@@ -14303,85 +14416,138 @@
 						"precision": 10
 					},
 					{
-						"name": "Accession",
-						"type": "nvarchar"
+						"name": "Status Code",
+						"type": "varchar"
 					},
 					{
-						"name": "Referrer",
-						"type": "nvarchar"
+						"name": "Booked Date",
+						"type": "datetime2",
+						"scale": 7
 					},
 					{
-						"name": "Referral Location",
-						"type": "nvarchar"
+						"name": "Booked Time",
+						"type": "varchar"
 					},
 					{
-						"name": "Referral Source",
-						"type": "nvarchar"
+						"name": "Creation Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Attended",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Key2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Lead Clinician",
+						"type": "varchar"
+					},
+					{
+						"name": "Intended Radiologist",
+						"type": "varchar"
 					},
 					{
 						"name": "Urg",
-						"type": "nvarchar"
+						"type": "varchar"
 					},
 					{
-						"name": "Site",
-						"type": "nvarchar"
+						"name": "Referring Locat Name ",
+						"type": "varchar"
 					},
 					{
-						"name": "Status Code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Status Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Status Time",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Referral Location Name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Referral Source Name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Referral Name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Examination Name",
-						"type": "nvarchar"
+						"name": "Referrer Name",
+						"type": "varchar"
 					},
 					{
 						"name": "Modality",
-						"type": "nvarchar"
+						"type": "varchar"
 					},
 					{
-						"name": "Status Code at State Date",
-						"type": "nvarchar"
+						"name": "No of Proc",
+						"type": "int",
+						"precision": 10
 					},
 					{
-						"name": "Stat Date",
+						"name": "GP Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Planned Appointment Date",
 						"type": "datetime2",
 						"scale": 7
 					},
 					{
-						"name": "D Status",
-						"type": "nvarchar"
+						"name": "Date First Verified",
+						"type": "datetime2",
+						"scale": 7
 					},
 					{
-						"name": "Rank",
+						"name": "Reported By",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported By2",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported By2 Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported By Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Time First Verified",
+						"type": "varchar"
+					},
+					{
+						"name": "Time Taken",
 						"type": "int",
 						"precision": 10
+					},
+					{
+						"name": "Typed By",
+						"type": "varchar"
+					},
+					{
+						"name": "Was Planned",
+						"type": "varchar"
+					},
+					{
+						"name": "Was Scheduled",
+						"type": "varchar"
+					},
+					{
+						"name": "Was Waiting",
+						"type": "varchar"
+					},
+					{
+						"name": "CCG",
+						"type": "varchar"
+					},
+					{
+						"name": "Postcode",
+						"type": "varchar"
+					},
+					{
+						"name": "Day of Week",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
 					}
 				],
 				"typeProperties": {
 					"schema": "dev",
-					"table": "RequestRecievedStatus"
+					"table": "FYF_ODBC_CORE_Staging"
 				}
 			},
 			"dependsOn": [
@@ -14830,734 +14996,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSql_CORE_LUFT')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "CRIS No",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Accession",
-						"type": "varchar"
-					},
-					{
-						"name": "Ref Src",
-						"type": "varchar"
-					},
-					{
-						"name": "Referring Locat",
-						"type": "varchar"
-					},
-					{
-						"name": "Referrer",
-						"type": "varchar"
-					},
-					{
-						"name": "Speciality",
-						"type": "varchar"
-					},
-					{
-						"name": "GP",
-						"type": "varchar"
-					},
-					{
-						"name": "Practice",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode L",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode R",
-						"type": "varchar"
-					},
-					{
-						"name": "Site",
-						"type": "varchar"
-					},
-					{
-						"name": "Request Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Time",
-						"type": "varchar"
-					},
-					{
-						"name": "On Call",
-						"type": "varchar"
-					},
-					{
-						"name": "PT",
-						"type": "varchar"
-					},
-					{
-						"name": "RC",
-						"type": "varchar"
-					},
-					{
-						"name": "Examination",
-						"type": "varchar"
-					},
-					{
-						"name": "Exam Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Room",
-						"type": "varchar"
-					},
-					{
-						"name": "Start Time",
-						"type": "varchar"
-					},
-					{
-						"name": "End Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Radiographer 1",
-						"type": "varchar"
-					},
-					{
-						"name": "Radiographer 2",
-						"type": "varchar"
-					},
-					{
-						"name": "Required Clinician",
-						"type": "varchar"
-					},
-					{
-						"name": "Contrast Code",
-						"type": "varchar"
-					},
-					{
-						"name": "Qty Used",
-						"type": "decimal",
-						"precision": 6,
-						"scale": 2
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status Code",
-						"type": "varchar"
-					},
-					{
-						"name": "Booked Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Booked Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Creation Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Attended",
-						"type": "varchar"
-					},
-					{
-						"name": "Event Key2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Lead Clinician",
-						"type": "varchar"
-					},
-					{
-						"name": "Intended Radiologist",
-						"type": "varchar"
-					},
-					{
-						"name": "Urg",
-						"type": "varchar"
-					},
-					{
-						"name": "Referring Locat Name ",
-						"type": "varchar"
-					},
-					{
-						"name": "Referrer Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Modality",
-						"type": "varchar"
-					},
-					{
-						"name": "No of Proc",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "GP Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Planned Appointment Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Date First Verified",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Reported By",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By2",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By2 Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Time First Verified",
-						"type": "varchar"
-					},
-					{
-						"name": "Time Taken",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Typed By",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Planned",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Scheduled",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Waiting",
-						"type": "varchar"
-					},
-					{
-						"name": "CCG",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode",
-						"type": "varchar"
-					},
-					{
-						"name": "Day of Week",
-						"type": "varchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "luft",
-					"table": "FYF_ODBC_CORE"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSql_CORE_V2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "CRIS No",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Accession",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Ref Src",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Site",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Request Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Time",
-						"type": "nvarchar"
-					},
-					{
-						"name": "On Call",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PT",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Examination",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Exam Name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Room",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ExamSite Code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Start Time",
-						"type": "nvarchar"
-					},
-					{
-						"name": "End Time",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status Code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Booked Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Booked Time",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Creation Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Attended",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Urg",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Modality",
-						"type": "nvarchar"
-					},
-					{
-						"name": "No of Proc",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Planned Appointment Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Date First Verified",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Time First Verified",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Was Planned",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Was Scheduled",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Was Waiting",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Status Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Status Time",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Modality2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Trust Name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Patient_Type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Tat Type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Activity",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Count of Activty_Demand for Activity",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status Code2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Status Time2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Patient Type ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Modality ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Exam ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Exam Room ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Trust ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Referral Source ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Tat Type ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Reported By",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dev",
-					"table": "FYF_ODBC_CORE_v2"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSql_CORE_V2_Staging')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "CRIS No",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Accession",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Ref Src",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Site",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Request Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Time",
-						"type": "nvarchar"
-					},
-					{
-						"name": "On Call",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PT",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Examination",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Exam Name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Room",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ExamSite Code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Start Time",
-						"type": "nvarchar"
-					},
-					{
-						"name": "End Time",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status Code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Booked Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Booked Time",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Creation Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Attended",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Urg",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Modality",
-						"type": "nvarchar"
-					},
-					{
-						"name": "No of Proc",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Planned Appointment Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Date First Verified",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Time First Verified",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Was Planned",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Was Scheduled",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Was Waiting",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Status Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Status Time",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Modality2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Trust Name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Patient_Type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Tat Type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Activity",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Count of Activty_Demand for Activity",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status Code2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Reported By",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dev",
-					"table": "FYF_ODBC_CORE_v2_Staging"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/AzureSql_CoreV2Staging')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -15740,7 +15178,7 @@
 				],
 				"typeProperties": {
 					"schema": "dev",
-					"table": "AzureSql_COREV2Staging"
+					"table": "AzureSql_CoreV2Staging"
 				}
 			},
 			"dependsOn": [
@@ -18370,554 +17808,6 @@
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "FYF_ODBC_APDNA"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Azure_CORE_LUFT')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "RADFYF01_CRIS_PostgreSQL",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "CRIS No",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Accession",
-						"type": "varchar"
-					},
-					{
-						"name": "Ref Src",
-						"type": "varchar"
-					},
-					{
-						"name": "Referring Locat",
-						"type": "varchar"
-					},
-					{
-						"name": "Referrer",
-						"type": "varchar"
-					},
-					{
-						"name": "Speciality",
-						"type": "varchar"
-					},
-					{
-						"name": "GP",
-						"type": "varchar"
-					},
-					{
-						"name": "Practice",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode L",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode R",
-						"type": "varchar"
-					},
-					{
-						"name": "Site",
-						"type": "varchar"
-					},
-					{
-						"name": "Request Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Time",
-						"type": "varchar"
-					},
-					{
-						"name": "On Call",
-						"type": "varchar"
-					},
-					{
-						"name": "PT",
-						"type": "varchar"
-					},
-					{
-						"name": "RC",
-						"type": "varchar"
-					},
-					{
-						"name": "Examination",
-						"type": "varchar"
-					},
-					{
-						"name": "Exam Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Room",
-						"type": "varchar"
-					},
-					{
-						"name": "Start Time",
-						"type": "varchar"
-					},
-					{
-						"name": "End Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Radiographer 1",
-						"type": "varchar"
-					},
-					{
-						"name": "Radiographer 2",
-						"type": "varchar"
-					},
-					{
-						"name": "Required Clinician",
-						"type": "varchar"
-					},
-					{
-						"name": "Contrast Code",
-						"type": "varchar"
-					},
-					{
-						"name": "Qty Used",
-						"type": "decimal",
-						"precision": 6,
-						"scale": 2
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status Code",
-						"type": "varchar"
-					},
-					{
-						"name": "Booked Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Booked Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Creation Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Attended",
-						"type": "varchar"
-					},
-					{
-						"name": "Event Key2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Lead Clinician",
-						"type": "varchar"
-					},
-					{
-						"name": "Intended Radiologist",
-						"type": "varchar"
-					},
-					{
-						"name": "Urg",
-						"type": "varchar"
-					},
-					{
-						"name": "Referring Locat Name ",
-						"type": "varchar"
-					},
-					{
-						"name": "Referrer Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Modality",
-						"type": "varchar"
-					},
-					{
-						"name": "No of Proc",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "GP Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Planned Appointment Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Date First Verified",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Reported By",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By2",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By2 Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Time First Verified",
-						"type": "varchar"
-					},
-					{
-						"name": "Time Taken",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Typed By",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Planned",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Scheduled",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Waiting",
-						"type": "varchar"
-					},
-					{
-						"name": "CCG",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode",
-						"type": "varchar"
-					},
-					{
-						"name": "Day of Week",
-						"type": "varchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "FYF_ODBC_CORE"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/RADFYF01_CRIS_PostgreSQL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Azure_CORE_LUFT_v2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "CRIS No",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Accession",
-						"type": "varchar"
-					},
-					{
-						"name": "Ref Src",
-						"type": "varchar"
-					},
-					{
-						"name": "Referring Locat",
-						"type": "varchar"
-					},
-					{
-						"name": "Referrer",
-						"type": "varchar"
-					},
-					{
-						"name": "Speciality",
-						"type": "varchar"
-					},
-					{
-						"name": "GP",
-						"type": "varchar"
-					},
-					{
-						"name": "Practice",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode L",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode R",
-						"type": "varchar"
-					},
-					{
-						"name": "Site",
-						"type": "varchar"
-					},
-					{
-						"name": "Request Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Time",
-						"type": "varchar"
-					},
-					{
-						"name": "On Call",
-						"type": "varchar"
-					},
-					{
-						"name": "PT",
-						"type": "varchar"
-					},
-					{
-						"name": "RC",
-						"type": "varchar"
-					},
-					{
-						"name": "Examination",
-						"type": "varchar"
-					},
-					{
-						"name": "Exam Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Room",
-						"type": "varchar"
-					},
-					{
-						"name": "Start Time",
-						"type": "varchar"
-					},
-					{
-						"name": "End Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Radiographer 1",
-						"type": "varchar"
-					},
-					{
-						"name": "Radiographer 2",
-						"type": "varchar"
-					},
-					{
-						"name": "Required Clinician",
-						"type": "varchar"
-					},
-					{
-						"name": "Contrast Code",
-						"type": "varchar"
-					},
-					{
-						"name": "Qty Used",
-						"type": "decimal",
-						"precision": 6,
-						"scale": 2
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status Code",
-						"type": "varchar"
-					},
-					{
-						"name": "Booked Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Booked Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Creation Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Attended",
-						"type": "varchar"
-					},
-					{
-						"name": "Event Key2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Lead Clinician",
-						"type": "varchar"
-					},
-					{
-						"name": "Intended Radiologist",
-						"type": "varchar"
-					},
-					{
-						"name": "Urg",
-						"type": "varchar"
-					},
-					{
-						"name": "Referring Locat Name ",
-						"type": "varchar"
-					},
-					{
-						"name": "Referrer Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Modality",
-						"type": "varchar"
-					},
-					{
-						"name": "No of Proc",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "GP Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Planned Appointment Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Date First Verified",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Reported By",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By2",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By2 Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Time First Verified",
-						"type": "varchar"
-					},
-					{
-						"name": "Time Taken",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Typed By",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Planned",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Scheduled",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Waiting",
-						"type": "varchar"
-					},
-					{
-						"name": "CCG",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode",
-						"type": "varchar"
-					},
-					{
-						"name": "Day of Week",
-						"type": "varchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "dev",
-					"table": "FYF_ODBC_CORE"
 				}
 			},
 			"dependsOn": [
@@ -23897,6 +22787,114 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/RequestRecievedStatus')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Accession",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Referrer",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Referral Location",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Referral Source",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Urg",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Site",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Status Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Status Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Status Time",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Referral Location Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Referral Source Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Referral Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Examination Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Modality",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Status Code at State Date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "D Status",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rank",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "RequestRecievedStatus"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SqlServerTable1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -26232,7 +25230,7 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "AzureSql_CORE_V2",
+								"referenceName": "FYF_ODBC_CORE_v2",
 								"type": "DatasetReference"
 							},
 							"name": "Core"
@@ -26307,76 +25305,18 @@
 						},
 						{
 							"name": "filter2"
+						},
+						{
+							"name": "MapDrifted1",
+							"description": "Creates an explicit mapping for each drifted column"
 						}
 					],
 					"scriptLines": [
-						"source(output(",
-						"          {CRIS No} as integer,",
-						"          Accession as string,",
-						"          {Ref Src} as string,",
-						"          Site as string,",
-						"          {Request Date} as timestamp,",
-						"          {Event Date} as timestamp,",
-						"          {Event Time} as string,",
-						"          {On Call} as string,",
-						"          PT as string,",
-						"          Examination as string,",
-						"          {Exam Name} as string,",
-						"          Room as string,",
-						"          {ExamSite Code} as string,",
-						"          {Start Time} as string,",
-						"          {End Time} as string,",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          {Status Code} as string,",
-						"          {Booked Date} as timestamp,",
-						"          {Booked Time} as string,",
-						"          {Creation Date} as timestamp,",
-						"          Attended as string,",
-						"          Urg as string,",
-						"          Modality as string,",
-						"          {No of Proc} as integer,",
-						"          {Planned Appointment Date} as timestamp,",
-						"          {Date First Verified} as timestamp,",
-						"          {Time First Verified} as string,",
-						"          {Was Planned} as string,",
-						"          {Was Scheduled} as string,",
-						"          {Was Waiting} as string,",
-						"          {Stat Date} as timestamp,",
-						"          {Status Date} as timestamp,",
-						"          {Status Time} as integer,",
-						"          Modality2 as string,",
-						"          {Trust Name} as string,",
-						"          Patient_Type as string,",
-						"          {Tat Type} as string,",
-						"          Activity as integer,",
-						"          {Count of Activty_Demand for Activity} as integer,",
-						"          {Status Code2} as string,",
-						"          {Status Time2} as string,",
-						"          {Patient Type ID} as integer,",
-						"          {Modality ID} as integer,",
-						"          {Status ID} as integer,",
-						"          {Status Category} as string,",
-						"          {Exam Code} as string,",
-						"          {Exam ID} as integer,",
-						"          {Exam Site} as string,",
-						"          {Exam Room} as string,",
-						"          {Exam Site Code} as string,",
-						"          {Exam Room ID} as integer,",
-						"          {Trust ID} as integer,",
-						"          {Trust Name Group} as string,",
-						"          {Trust Name Group2} as string,",
-						"          {Trust Name Group3} as string,",
-						"          {Referral Source} as string,",
-						"          {Referral Source ID} as integer,",
-						"          {Tat Type ID} as integer,",
-						"          Target as integer",
-						"     ),",
-						"     allowSchemaDrift: true,",
+						"source(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> Core",
-						"Core derive(DNA = iif({Status Code}==\"CPDNA\", 1, iif({Status Code}==\"APDNA\", 1, 0))) ~> CreateDNAColumn",
+						"MapDrifted1 derive(DNA = iif({Status Code}==\"CPDNA\", 1, iif({Status Code}==\"APDNA\", 1, 0))) ~> CreateDNAColumn",
 						"CreateDNAColumn aggregate(groupBy({Event Date},",
 						"          {Modality ID},",
 						"          {Trust ID}),",
@@ -26481,6 +25421,56 @@
 						"          DNARate = DNA/(Activity+DNA)) ~> derivedColumn5",
 						"derivedColumn5 filter(isNull(ID)==false()) ~> filter1",
 						"derivedColumn1 filter(isNull(ID)==false()) ~> filter2",
+						"Core derive({CRIS No} = toInteger(byName('CRIS No')),",
+						"          Accession = toString(byName('Accession')),",
+						"          {Ref Src} = toString(byName('Ref Src')),",
+						"          Site = toString(byName('Site')),",
+						"          {Request Date} = toDate(byName('Request Date')),",
+						"          {Event Date} = toDate(byName('Event Date')),",
+						"          {Event Time} = toString(byName('Event Time')),",
+						"          {On Call} = toString(byName('On Call')),",
+						"          PT = toString(byName('PT')),",
+						"          Examination = toString(byName('Examination')),",
+						"          {Exam Name} = toString(byName('Exam Name')),",
+						"          Room = toString(byName('Room')),",
+						"          {ExamSite Code} = toString(byName('ExamSite Code')),",
+						"          {Start Time} = toString(byName('Start Time')),",
+						"          {End Time} = toString(byName('End Time')),",
+						"          {Exam Key} = toInteger(byName('Exam Key')),",
+						"          {Event Key} = toInteger(byName('Event Key')),",
+						"          {Status Code} = toString(byName('Status Code')),",
+						"          {Booked Date} = toTimestamp(byName('Booked Date')),",
+						"          {Booked Time} = toString(byName('Booked Time')),",
+						"          {Creation Date} = toTimestamp(byName('Creation Date')),",
+						"          Attended = toString(byName('Attended')),",
+						"          Urg = toString(byName('Urg')),",
+						"          Modality = toString(byName('Modality')),",
+						"          {No of Proc} = toInteger(byName('No of Proc')),",
+						"          {Planned Appointment Date} = toTimestamp(byName('Planned Appointment Date')),",
+						"          {Date First Verified} = toTimestamp(byName('Date First Verified')),",
+						"          {Time First Verified} = toString(byName('Time First Verified')),",
+						"          {Was Planned} = toString(byName('Was Planned')),",
+						"          {Was Scheduled} = toString(byName('Was Scheduled')),",
+						"          {Was Waiting} = toString(byName('Was Waiting')),",
+						"          {Stat Date} = toTimestamp(byName('Stat Date')),",
+						"          {Status Date} = toTimestamp(byName('Status Date')),",
+						"          Modality2 = toString(byName('Modality2')),",
+						"          {Trust Name} = toString(byName('Trust Name')),",
+						"          Patient_Type = toString(byName('Patient_Type')),",
+						"          {Tat Type} = toString(byName('Tat Type')),",
+						"          Activity = toInteger(byName('Activity')),",
+						"          {Count of Activty_Demand for Activity} = toLong(byName('Count of Activty_Demand for Activity')),",
+						"          {Status Time2} = toString(byName('Status Time2')),",
+						"          {Patient Type ID} = toLong(byName('Patient Type ID')),",
+						"          {Modality ID} = toInteger(byName('Modality ID')),",
+						"          {Status ID} = toInteger(byName('Status ID')),",
+						"          {Exam ID} = toInteger(byName('Exam ID')),",
+						"          {Exam Room ID} = toInteger(byName('Exam Room ID')),",
+						"          {Trust ID} = toInteger(byName('Trust ID')),",
+						"          {Referral Source ID} = toInteger(byName('Referral Source ID')),",
+						"          {Tat Type ID} = toInteger(byName('Tat Type ID')),",
+						"          {Reported By} = toString(byName('Reported By')),",
+						"          Rank = toInteger(byName('Rank'))) ~> MapDrifted1",
 						"filter1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
@@ -26526,7 +25516,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSql_CORE_V2')]",
+				"[concat(variables('factoryId'), '/datasets/FYF_ODBC_CORE_v2')]",
 				"[concat(variables('factoryId'), '/datasets/Act_Dem')]"
 			]
 		},
@@ -26583,10 +25573,10 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "AzureSql_CoreV2Staging",
+								"referenceName": "AzureSQLCoreV3Staging",
 								"type": "DatasetReference"
 							},
-							"name": "AzureSqlCoreV2Staging"
+							"name": "AzureSQLCoreV3Staging"
 						}
 					],
 					"transformations": [
@@ -26684,15 +25674,14 @@
 						"          Accession as string,",
 						"          {Ref Src} as string,",
 						"          Site as string,",
-						"          {Request Date} as timestamp,",
-						"          {Event Date} as timestamp,",
+						"          {Request Date} as date,",
+						"          {Event Date} as date,",
 						"          {Event Time} as string,",
 						"          {On Call} as string,",
 						"          PT as string,",
 						"          Examination as string,",
 						"          {Exam Name} as string,",
 						"          Room as string,",
-						"          {ExamSite Code} as string,",
 						"          {Start Time} as string,",
 						"          {End Time} as string,",
 						"          {Exam Key} as integer,",
@@ -26712,13 +25701,18 @@
 						"          {Was Scheduled} as string,",
 						"          {Was Waiting} as string,",
 						"          {Stat Date} as timestamp,",
+						"          {Reported By} as string,",
+						"          Rank as integer,",
+						"          {Status Code.1} as string,",
+						"          {Status Date} as timestamp,",
+						"          {Status Time} as string,",
 						"          Modality2 as string,",
 						"          {Trust Name} as string,",
 						"          Patient_Type as string,",
 						"          {Tat Type} as string,",
-						"          {Status Time} as string,",
-						"          {Reported By} as string,",
-						"          Rank as integer",
+						"          Activity as integer,",
+						"          {Count of Activty_Demand for Activity} as long,",
+						"          {ExamSite Code} as string",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -26770,13 +25764,13 @@
 						"          {Status Time} = {Status Time2},",
 						"          {Reported By},",
 						"          Rank",
-						"     )) ~> AzureSqlCoreV2Staging"
+						"     )) ~> AzureSQLCoreV3Staging"
 					]
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/AzureSql_CORE')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSql_CoreV2Staging')]"
+				"[concat(variables('factoryId'), '/datasets/AzureSQLCoreV3Staging')]"
 			]
 		},
 		{
@@ -27933,6 +26927,9 @@
 						{
 							"name": "MapDrifted5",
 							"description": "Creates an explicit mapping for each drifted column"
+						},
+						{
+							"name": "filter1"
 						}
 					],
 					"scriptLines": [
@@ -28470,8 +27467,9 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RenameColumn2",
-						"AzureSQLCoreV3Staging derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted4",
+						"filter1 derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted4",
 						"MapDrifted1 derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted5",
+						"AzureSQLCoreV3Staging filter(Rank==1) ~> filter1",
 						"RemoveColumns6 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
@@ -28570,10 +27568,11 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "AzureSqlTable2",
+								"referenceName": "RequestRecievedStatus",
 								"type": "DatasetReference"
 							},
-							"name": "sink1"
+							"name": "sink1",
+							"description": "Export data to Request Received Status"
 						}
 					],
 					"transformations": [
@@ -28671,7 +27670,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/AzureSql_STATUSES')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable2')]"
+				"[concat(variables('factoryId'), '/datasets/RequestRecievedStatus')]"
 			]
 		},
 		{

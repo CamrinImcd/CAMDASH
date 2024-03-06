@@ -13,466 +13,6 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/AzureSql_REPORT_META')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Report Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Event Key2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Referral Source",
-						"type": "varchar"
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Event Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Date of First Addendnum",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date First Verified",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date of Last Addendnum",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date Last Verified",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date Reported",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date Typed",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Reported by",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported by2",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported by2 Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported by Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Typed by",
-						"type": "varchar"
-					},
-					{
-						"name": "Typed by Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "dev",
-					"table": "FYF_ODBC_REPORT_META"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSql_REPORT_META_LUFT')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Report Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Event Key2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Referral Source",
-						"type": "varchar"
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Event Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Date of First Addendnum",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date First Verified",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date of Last Addendnum",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date Last Verified",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date Reported",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date Typed",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Reported by",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported by2",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported by2 Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported by Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Typed by",
-						"type": "varchar"
-					},
-					{
-						"name": "Typed by Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "luft",
-					"table": "FYF_ODBC_REPORT_META"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSql_REPORT_TAT')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Accession",
-						"type": "varchar"
-					},
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Report Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Request Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Event Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Lead Clinician",
-						"type": "varchar"
-					},
-					{
-						"name": "Referrer",
-						"type": "varchar"
-					},
-					{
-						"name": "Referring Locat",
-						"type": "varchar"
-					},
-					{
-						"name": "Site",
-						"type": "varchar"
-					},
-					{
-						"name": "Examination",
-						"type": "varchar"
-					},
-					{
-						"name": "Exam Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Event Key2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status Code",
-						"type": "varchar"
-					},
-					{
-						"name": "Intended Radiologist",
-						"type": "varchar"
-					},
-					{
-						"name": "Ref Src",
-						"type": "varchar"
-					},
-					{
-						"name": "Modality",
-						"type": "varchar"
-					},
-					{
-						"name": "Date First Addended",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date First Verified",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date Last Addended",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date LAst Verified",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date Reported",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date Typed",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "First Addended By",
-						"type": "varchar"
-					},
-					{
-						"name": "First Addended by Name",
-						"type": "varchar"
-					},
-					{
-						"name": "First Verified By",
-						"type": "varchar"
-					},
-					{
-						"name": "First Verified By Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Last Addended By",
-						"type": "varchar"
-					},
-					{
-						"name": "Last Addended By Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Last Verified By",
-						"type": "varchar"
-					},
-					{
-						"name": "Last Verified By Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By2",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By2 Name",
-						"type": "varchar"
-					},
-					{
-						"name": "First Verified Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Last Verified Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Time Reported",
-						"type": "varchar"
-					},
-					{
-						"name": "Time Typed",
-						"type": "varchar"
-					},
-					{
-						"name": "Typed By",
-						"type": "varchar"
-					},
-					{
-						"name": "Attend to First Verified Days",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Attend to Reported Days",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "dev",
-					"table": "FYF_ODBC_REPORTING_TAT"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/AzureSql_REPORT_TAT_LUFT')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1414,550 +954,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Azure_CORE_LUFT')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "RADFYF01_CRIS_PostgreSQL",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "CRIS No",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Accession",
-						"type": "varchar"
-					},
-					{
-						"name": "Ref Src",
-						"type": "varchar"
-					},
-					{
-						"name": "Referring Locat",
-						"type": "varchar"
-					},
-					{
-						"name": "Referrer",
-						"type": "varchar"
-					},
-					{
-						"name": "Speciality",
-						"type": "varchar"
-					},
-					{
-						"name": "GP",
-						"type": "varchar"
-					},
-					{
-						"name": "Practice",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode L",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode R",
-						"type": "varchar"
-					},
-					{
-						"name": "Site",
-						"type": "varchar"
-					},
-					{
-						"name": "Request Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Time",
-						"type": "varchar"
-					},
-					{
-						"name": "On Call",
-						"type": "varchar"
-					},
-					{
-						"name": "PT",
-						"type": "varchar"
-					},
-					{
-						"name": "RC",
-						"type": "varchar"
-					},
-					{
-						"name": "Examination",
-						"type": "varchar"
-					},
-					{
-						"name": "Exam Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Room",
-						"type": "varchar"
-					},
-					{
-						"name": "Start Time",
-						"type": "varchar"
-					},
-					{
-						"name": "End Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Radiographer 1",
-						"type": "varchar"
-					},
-					{
-						"name": "Radiographer 2",
-						"type": "varchar"
-					},
-					{
-						"name": "Required Clinician",
-						"type": "varchar"
-					},
-					{
-						"name": "Contrast Code",
-						"type": "varchar"
-					},
-					{
-						"name": "Qty Used",
-						"type": "decimal",
-						"precision": 6,
-						"scale": 2
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status Code",
-						"type": "varchar"
-					},
-					{
-						"name": "Booked Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Booked Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Creation Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Attended",
-						"type": "varchar"
-					},
-					{
-						"name": "Event Key2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Lead Clinician",
-						"type": "varchar"
-					},
-					{
-						"name": "Intended Radiologist",
-						"type": "varchar"
-					},
-					{
-						"name": "Urg",
-						"type": "varchar"
-					},
-					{
-						"name": "Referring Locat Name ",
-						"type": "varchar"
-					},
-					{
-						"name": "Referrer Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Modality",
-						"type": "varchar"
-					},
-					{
-						"name": "No of Proc",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "GP Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Planned Appointment Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Date First Verified",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Reported By",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By2",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By2 Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Time First Verified",
-						"type": "varchar"
-					},
-					{
-						"name": "Time Taken",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Typed By",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Planned",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Scheduled",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Waiting",
-						"type": "varchar"
-					},
-					{
-						"name": "CCG",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode",
-						"type": "varchar"
-					},
-					{
-						"name": "Day of Week",
-						"type": "varchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "FYF_ODBC_CORE"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Azure_CORE_LUFT_v2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "CRIS No",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Accession",
-						"type": "varchar"
-					},
-					{
-						"name": "Ref Src",
-						"type": "varchar"
-					},
-					{
-						"name": "Referring Locat",
-						"type": "varchar"
-					},
-					{
-						"name": "Referrer",
-						"type": "varchar"
-					},
-					{
-						"name": "Speciality",
-						"type": "varchar"
-					},
-					{
-						"name": "GP",
-						"type": "varchar"
-					},
-					{
-						"name": "Practice",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode L",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode R",
-						"type": "varchar"
-					},
-					{
-						"name": "Site",
-						"type": "varchar"
-					},
-					{
-						"name": "Request Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Time",
-						"type": "varchar"
-					},
-					{
-						"name": "On Call",
-						"type": "varchar"
-					},
-					{
-						"name": "PT",
-						"type": "varchar"
-					},
-					{
-						"name": "RC",
-						"type": "varchar"
-					},
-					{
-						"name": "Examination",
-						"type": "varchar"
-					},
-					{
-						"name": "Exam Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Room",
-						"type": "varchar"
-					},
-					{
-						"name": "Start Time",
-						"type": "varchar"
-					},
-					{
-						"name": "End Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Radiographer 1",
-						"type": "varchar"
-					},
-					{
-						"name": "Radiographer 2",
-						"type": "varchar"
-					},
-					{
-						"name": "Required Clinician",
-						"type": "varchar"
-					},
-					{
-						"name": "Contrast Code",
-						"type": "varchar"
-					},
-					{
-						"name": "Qty Used",
-						"type": "decimal",
-						"precision": 6,
-						"scale": 2
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status Code",
-						"type": "varchar"
-					},
-					{
-						"name": "Booked Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Booked Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Creation Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Attended",
-						"type": "varchar"
-					},
-					{
-						"name": "Event Key2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Lead Clinician",
-						"type": "varchar"
-					},
-					{
-						"name": "Intended Radiologist",
-						"type": "varchar"
-					},
-					{
-						"name": "Urg",
-						"type": "varchar"
-					},
-					{
-						"name": "Referring Locat Name ",
-						"type": "varchar"
-					},
-					{
-						"name": "Referrer Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Modality",
-						"type": "varchar"
-					},
-					{
-						"name": "No of Proc",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "GP Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Planned Appointment Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Date First Verified",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Reported By",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By2",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By2 Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Time First Verified",
-						"type": "varchar"
-					},
-					{
-						"name": "Time Taken",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Typed By",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Planned",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Scheduled",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Waiting",
-						"type": "varchar"
-					},
-					{
-						"name": "CCG",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode",
-						"type": "varchar"
-					},
-					{
-						"name": "Day of Week",
-						"type": "varchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "dev",
-					"table": "FYF_ODBC_CORE"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/Azure_Imports')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2632,6 +1628,703 @@
 						"type": "String"
 					},
 					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Asset_22_IT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "IT_Infrastructure",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Asset_file.xlsx",
+						"container": "nicd-asset-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "PACS_Upgrade",
+						"type": "String"
+					},
+					{
+						"name": "PACS1_Site_Code",
+						"type": "String"
+					},
+					{
+						"name": "PACS1_Manufacturer",
+						"type": "String"
+					},
+					{
+						"name": "PACS1_Version",
+						"type": "String"
+					},
+					{
+						"name": "PACS1_Implementation_Date",
+						"type": "String"
+					},
+					{
+						"name": "PACS1_Renewal_Date",
+						"type": "String"
+					},
+					{
+						"name": "PACS2_Site_Code",
+						"type": "String"
+					},
+					{
+						"name": "PACS2_Manufacturer",
+						"type": "String"
+					},
+					{
+						"name": "PACS2_Version",
+						"type": "String"
+					},
+					{
+						"name": "PACS2_Implementation_Date",
+						"type": "String"
+					},
+					{
+						"name": "PACS2_Renewal_Date",
+						"type": "String"
+					},
+					{
+						"name": "RIS_Upgrade",
+						"type": "String"
+					},
+					{
+						"name": "RIS1_Site_Code",
+						"type": "String"
+					},
+					{
+						"name": "RIS1_Manufacturer",
+						"type": "String"
+					},
+					{
+						"name": "RIS1_Version",
+						"type": "String"
+					},
+					{
+						"name": "RIS1_Implementation_Date",
+						"type": "String"
+					},
+					{
+						"name": "RIS1_Renewal_Date",
+						"type": "String"
+					},
+					{
+						"name": "RIS2_Site_Code",
+						"type": "String"
+					},
+					{
+						"name": "RIS2_Manufacturer",
+						"type": "String"
+					},
+					{
+						"name": "RIS2_Version",
+						"type": "String"
+					},
+					{
+						"name": "RIS2_Implementation_Date",
+						"type": "String"
+					},
+					{
+						"name": "RIS2_Renewal_Date",
+						"type": "String"
+					},
+					{
+						"name": "RIS3_Site_Code",
+						"type": "String"
+					},
+					{
+						"name": "RIS3_Manufacturer",
+						"type": "String"
+					},
+					{
+						"name": "RIS3_Version",
+						"type": "String"
+					},
+					{
+						"name": "RIS3_Implementation_Date",
+						"type": "String"
+					},
+					{
+						"name": "RIS3_Renewal_Date",
+						"type": "String"
+					},
+					{
+						"name": "RIS4_Site_Code",
+						"type": "String"
+					},
+					{
+						"name": "RIS4_Manufacturer",
+						"type": "String"
+					},
+					{
+						"name": "RIS4_Version",
+						"type": "String"
+					},
+					{
+						"name": "RIS4_Implementation_Date",
+						"type": "String"
+					},
+					{
+						"name": "RIS4_Renewal_Date",
+						"type": "String"
+					},
+					{
+						"name": "OC_Upgrade",
+						"type": "String"
+					},
+					{
+						"name": "OC1_Site_Code",
+						"type": "String"
+					},
+					{
+						"name": "OC1_Manufacturer",
+						"type": "String"
+					},
+					{
+						"name": "OC1_Version",
+						"type": "String"
+					},
+					{
+						"name": "OC1_Implementation_Date",
+						"type": "String"
+					},
+					{
+						"name": "OC1_Renewal_Date",
+						"type": "String"
+					},
+					{
+						"name": "OC2_Site_Code",
+						"type": "String"
+					},
+					{
+						"name": "OC2_Manufacturer",
+						"type": "String"
+					},
+					{
+						"name": "OC2_Version",
+						"type": "String"
+					},
+					{
+						"name": "OC2_Implementation_Date",
+						"type": "String"
+					},
+					{
+						"name": "OC2_Renewal_Date",
+						"type": "String"
+					},
+					{
+						"name": "AI_DS_System",
+						"type": "String"
+					},
+					{
+						"name": "AI_DS_System_Used_1",
+						"type": "String"
+					},
+					{
+						"name": "AI_DS_System_Used_Freetext_1",
+						"type": "String"
+					},
+					{
+						"name": "Trialing_AI",
+						"type": "String"
+					},
+					{
+						"name": "Trialing_AI_Used",
+						"type": "String"
+					},
+					{
+						"name": "CDS_Referrers",
+						"type": "String"
+					},
+					{
+						"name": "Percent_Paper_Requests",
+						"type": "String"
+					},
+					{
+						"name": "Online_Appointment_Access",
+						"type": "String"
+					},
+					{
+						"name": "Online_Results_Access",
+						"type": "String"
+					},
+					{
+						"name": "All_Referrers_Elec_Results",
+						"type": "String"
+					},
+					{
+						"name": "Joint_Procurement",
+						"type": "String"
+					},
+					{
+						"name": "Out_of_Hours_Rep",
+						"type": "String"
+					},
+					{
+						"name": "Specialist_Reporting",
+						"type": "String"
+					},
+					{
+						"name": "Backlog_Reporting",
+						"type": "String"
+					},
+					{
+						"name": "Shared_booking_/_Workload_Leveling",
+						"type": "String"
+					},
+					{
+						"name": "Interventional_Radiology",
+						"type": "String"
+					},
+					{
+						"name": "Out_of_hours_on_call_Scanning",
+						"type": "String"
+					},
+					{
+						"name": "Home_Reporting_Workstations",
+						"type": "String"
+					},
+					{
+						"name": "Reporting_workstations_on_Trust_premises",
+						"type": "String"
+					},
+					{
+						"name": "Nuclear_Medicine_Workstation",
+						"type": "String"
+					},
+					{
+						"name": "Total_Number_of_Workstations",
+						"type": "String"
+					},
+					{
+						"name": "Number_of_workstations_at_CDC",
+						"type": "String"
+					},
+					{
+						"name": "_Image_Exchange_Portal_Use?",
+						"type": "String"
+					},
+					{
+						"name": "Share_Within_Network",
+						"type": "String"
+					},
+					{
+						"name": "Share_Patient_History_network",
+						"type": "String"
+					},
+					{
+						"name": "share_images_within_network",
+						"type": "String"
+					},
+					{
+						"name": "share_reports_with_network",
+						"type": "String"
+					},
+					{
+						"name": "report_for_any_trust_network",
+						"type": "String"
+					},
+					{
+						"name": "use_ERostering",
+						"type": "String"
+					},
+					{
+						"name": "ERostering_staff_Groups",
+						"type": "String"
+					},
+					{
+						"name": "Admin_and_clerical",
+						"type": "String"
+					},
+					{
+						"name": "Managerial_and_IT/PACS_team",
+						"type": "String"
+					},
+					{
+						"name": "Imaging_practitioners",
+						"type": "String"
+					},
+					{
+						"name": "Clinical_Support_staff",
+						"type": "String"
+					},
+					{
+						"name": "Nursing_Staff",
+						"type": "String"
+					},
+					{
+						"name": "Medical_Staff",
+						"type": "String"
+					},
+					{
+						"name": "Medical_physics_staff",
+						"type": "String"
+					},
+					{
+						"name": "other_staff_group",
+						"type": "String"
+					},
+					{
+						"name": "level_of_attainment",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Asset_22_MES')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "MESCon",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Asset_file.xlsx",
+						"container": "nicd-asset-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Managed_Equipment_Service_Contract ",
+						"type": "String"
+					},
+					{
+						"name": "MES1_Contract_Number",
+						"type": "String"
+					},
+					{
+						"name": "MES1_Supplier",
+						"type": "String"
+					},
+					{
+						"name": "MES1_Contract_Start_Date",
+						"type": "String"
+					},
+					{
+						"name": "MES1_Contract_End_Date",
+						"type": "String"
+					},
+					{
+						"name": "MES1_Initial_Cost",
+						"type": "String"
+					},
+					{
+						"name": "MES1_Interest_Rate (%)",
+						"type": "String"
+					},
+					{
+						"name": "MES1_Consumables_included?",
+						"type": "String"
+					},
+					{
+						"name": "MES1_Accessories Included? ",
+						"type": "String"
+					},
+					{
+						"name": "MES1_Maintenance_Included?",
+						"type": "String"
+					},
+					{
+						"name": "Plain_X-Ray_Depreciation",
+						"type": "String"
+					},
+					{
+						"name": "CT_Depreciation",
+						"type": "String"
+					},
+					{
+						"name": "MRI_Depreciation",
+						"type": "String"
+					},
+					{
+						"name": "Ultrasound_Depreciation",
+						"type": "String"
+					},
+					{
+						"name": "DEXA_Depreciation",
+						"type": "String"
+					},
+					{
+						"name": "Nuclear_Medicine_Depreciation",
+						"type": "String"
+					},
+					{
+						"name": "Fluoroscopy_Depreciation",
+						"type": "String"
+					},
+					{
+						"name": "Interventional_Radiology_Depreciation",
+						"type": "String"
+					},
+					{
+						"name": "Mammography_Depreciation",
+						"type": "String"
+					},
+					{
+						"name": "Catheter_Laboratory_Depreciation",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Asset_22_Spec')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Asset_Spec",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Asset_file.xlsx",
+						"container": "nicd-asset-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "NIDC_Asset_ID",
+						"type": "String"
+					},
+					{
+						"name": "Local_Identifier",
+						"type": "String"
+					},
+					{
+						"name": "Trust_Site_Code",
+						"type": "String"
+					},
+					{
+						"name": "RIS_Room_Code",
+						"type": "String"
+					},
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Machine_Type",
+						"type": "String"
+					},
+					{
+						"name": "Modality",
+						"type": "String"
+					},
+					{
+						"name": "Equipment_Detail",
+						"type": "String"
+					},
+					{
+						"name": "Manufacturer",
+						"type": "String"
+					},
+					{
+						"name": "First_In_Service_Date",
+						"type": "String"
+					},
+					{
+						"name": "Age_of_Machine",
+						"type": "String"
+					},
+					{
+						"name": "Planned_Replacement_Date",
+						"type": "String"
+					},
+					{
+						"name": "Asset_Status",
+						"type": "String"
+					},
+					{
+						"name": "Installation_Replacement_Status",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_ActivityHDRep')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "ActivityHDRep",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Radiographers Job Plan Home Report",
+						"type": "String"
+					},
+					{
+						"name": "Radiologist Job Plan Home Report",
+						"type": "String"
+					},
+					{
+						"name": "Home Report Annual Pas",
+						"type": "String"
+					},
+					{
+						"name": "Average Radiographer Rostered Home Report Hours",
+						"type": "String"
+					},
+					{
+						"name": "Orthopaedic review of images in fracture clinic?",
+						"type": "String"
+					},
+					{
+						"name": "ICU Review - Chest X-ray for line position and changes in lung pathology?",
+						"type": "String"
+					},
+					{
+						"name": "Dental review - Orthopantomogram (OPG)?",
+						"type": "String"
+					},
+					{
+						"name": "Acute Medicine doctor performing and reporting a point of care ultrasound",
+						"type": "String"
+					},
+					{
+						"name": "Cardiologist reporting MRI / CT Cardiac Images?",
+						"type": "String"
+					},
+					{
+						"name": "Orthopaedic Theatre Fluoro Images?",
+						"type": "String"
+					},
+					{
+						"name": "Rheumatology follow up images?",
+						"type": "String"
+					},
+					{
+						"name": "ERCP",
+						"type": "String"
+					},
+					{
+						"name": "Speech and Language Therapists report Video Swallows",
+						"type": "String"
+					},
+					{
+						"name": "Imported images for review",
+						"type": "String"
+					},
+					{
+						"name": "Cardiac Pacemaker insertions",
+						"type": "String"
+					},
+					{
+						"name": "Deceased patient studies",
+						"type": "String"
+					},
+					{
+						"name": "Urology Reporting",
+						"type": "String"
+					},
+					{
+						"name": "Neonatal Ultrasound",
+						"type": "String"
+					},
+					{
+						"name": "Other",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_ActivityIA')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "ActivityIA",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Site",
+						"type": "String"
+					},
+					{
+						"name": "Code",
+						"type": "String"
+					},
+					{
+						"name": "Modality",
+						"type": "String"
+					},
+					{
+						"name": "Count",
 						"type": "String"
 					}
 				]
