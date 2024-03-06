@@ -1,0 +1,16 @@
+{
+	"name": "AzureSQLPTL_V3_Staging",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dev",
+			"table": "AzureSQLPTL_V3_Staging"
+		}
+	}
+}
