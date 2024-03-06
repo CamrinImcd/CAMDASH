@@ -10,6 +10,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "AzureSqlCORE"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSql_Patients",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
 				}
 			],
 			"sinks": [
@@ -27,6 +34,9 @@
 				},
 				{
 					"name": "window1"
+				},
+				{
+					"name": "lookup1"
 				}
 			],
 			"scriptLines": [
@@ -95,6 +105,32 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> AzureSqlCORE",
+				"source(output(",
+				"          {CRIS No} as integer,",
+				"          {Creation Date} as timestamp,",
+				"          {Mutation Date} as timestamp,",
+				"          DOB as timestamp,",
+				"          {Event Date} as timestamp,",
+				"          DOD as timestamp,",
+				"          {Ethnic Origin} as string,",
+				"          GP as string,",
+				"          {No of Attends} as integer,",
+				"          {No of Events} as integer,",
+				"          {Ref Src} as string,",
+				"          {Postcode L} as string,",
+				"          {Postcode R} as string,",
+				"          Gender as string,",
+				"          {Referrer Name} as string,",
+				"          {Age at Event} as integer,",
+				"          {HIS ID} as string,",
+				"          CCG as string,",
+				"          Postcode as string,",
+				"          {Stat Date} as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
 				"AzureSqlCORE derive({Status Code.1} = toString(null()),",
 				"          {Status Date} = toString(null()),",
 				"          {Status Time} = toString(null()),",
@@ -105,11 +141,16 @@
 				"          {Tat Type} = toString(null()),",
 				"          Activity = toString(null()),",
 				"          {Count of Activty_Demand for Activity} = toString(null()),",
-				"          {ExamSite Code} = toString(null())) ~> AddColumns",
+				"          {ExamSite Code} = toString(null()),",
+				"          {Age at Event} = toString(null())) ~> AddColumns",
 				"AddColumns window(over({Exam Key}),",
 				"     desc({Stat Date}, false),",
 				"     Rank = denseRank()) ~> window1",
-				"window1 sink(allowSchemaDrift: true,",
+				"window1, source1 lookup(AzureSqlCORE@{CRIS No} == source1@{CRIS No}",
+				"     && AzureSqlCORE@{Event Date} == source1@{Event Date},",
+				"     multiple: true,",
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          {CRIS No} as integer,",
@@ -124,6 +165,7 @@
 				"          Examination as string,",
 				"          {Exam Name} as string,",
 				"          Room as string,",
+				"          {ExamSite Code} as string,",
 				"          {Start Time} as string,",
 				"          {End Time} as string,",
 				"          {Exam Key} as integer,",
@@ -136,6 +178,7 @@
 				"          Urg as string,",
 				"          Modality as string,",
 				"          {No of Proc} as integer,",
+				"          {Age At Event} as integer,",
 				"          {Planned Appointment Date} as timestamp,",
 				"          {Date First Verified} as timestamp,",
 				"          {Time First Verified} as string,",
@@ -143,18 +186,13 @@
 				"          {Was Scheduled} as string,",
 				"          {Was Waiting} as string,",
 				"          {Stat Date} as timestamp,",
-				"          {Reported By} as string,",
-				"          Rank as integer,",
-				"          {Status Code.1} as string,",
-				"          {Status Date} as timestamp,",
-				"          {Status Time} as string,",
 				"          Modality2 as string,",
 				"          {Trust Name} as string,",
 				"          Patient_Type as string,",
 				"          {Tat Type} as string,",
-				"          Activity as integer,",
-				"          {Count of Activty_Demand for Activity} as long,",
-				"          {ExamSite Code} as string",
+				"          {Status Time} as string,",
+				"          {Reported By} as string,",
+				"          Rank as integer",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -205,7 +243,8 @@
 				"          {Tat Type},",
 				"          {Status Time} = {Status Time2},",
 				"          {Reported By},",
-				"          Rank",
+				"          Rank,",
+				"          {Age At Event} = {Age at Event}",
 				"     )) ~> AzureSQLCoreV3Staging"
 			]
 		}

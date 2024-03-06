@@ -58,6 +58,10 @@
 				"type": "nvarchar"
 			},
 			{
+				"name": "ExamSite Code",
+				"type": "nvarchar"
+			},
+			{
 				"name": "Start Time",
 				"type": "nvarchar"
 			},
@@ -111,6 +115,11 @@
 				"precision": 10
 			},
 			{
+				"name": "Age At Event",
+				"type": "int",
+				"precision": 10
+			},
+			{
 				"name": "Planned Appointment Date",
 				"type": "datetime2",
 				"scale": 7
@@ -142,28 +151,6 @@
 				"scale": 7
 			},
 			{
-				"name": "Reported By",
-				"type": "nvarchar"
-			},
-			{
-				"name": "Rank",
-				"type": "int",
-				"precision": 10
-			},
-			{
-				"name": "Status Code.1",
-				"type": "nvarchar"
-			},
-			{
-				"name": "Status Date",
-				"type": "datetime2",
-				"scale": 7
-			},
-			{
-				"name": "Status Time",
-				"type": "nvarchar"
-			},
-			{
 				"name": "Modality2",
 				"type": "nvarchar"
 			},
@@ -180,18 +167,17 @@
 				"type": "nvarchar"
 			},
 			{
-				"name": "Activity",
+				"name": "Status Time",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Reported By",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Rank",
 				"type": "int",
 				"precision": 10
-			},
-			{
-				"name": "Count of Activty_Demand for Activity",
-				"type": "bigint",
-				"precision": 19
-			},
-			{
-				"name": "ExamSite Code",
-				"type": "nvarchar"
 			}
 		],
 		"typeProperties": {
