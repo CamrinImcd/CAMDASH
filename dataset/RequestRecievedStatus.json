@@ -1,5 +1,5 @@
 {
-	"name": "AzureSqlTable2",
+	"name": "RequestRecievedStatus",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "camdashdevtest101",
