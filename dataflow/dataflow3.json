@@ -151,6 +151,9 @@
 				{
 					"name": "MapDrifted5",
 					"description": "Creates an explicit mapping for each drifted column"
+				},
+				{
+					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -688,8 +691,9 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> RenameColumn2",
-				"AzureSQLCoreV3Staging derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted4",
+				"filter1 derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted4",
 				"MapDrifted1 derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted5",
+				"AzureSQLCoreV3Staging filter(Rank==1) ~> filter1",
 				"RemoveColumns6 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
