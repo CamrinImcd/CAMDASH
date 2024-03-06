@@ -15,10 +15,10 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "AzureSql_CoreV2Staging",
+						"referenceName": "AzureSQLCoreV3Staging",
 						"type": "DatasetReference"
 					},
-					"name": "AzureSqlCoreV2Staging"
+					"name": "AzureSQLCoreV3Staging"
 				}
 			],
 			"transformations": [
@@ -116,15 +116,14 @@
 				"          Accession as string,",
 				"          {Ref Src} as string,",
 				"          Site as string,",
-				"          {Request Date} as timestamp,",
-				"          {Event Date} as timestamp,",
+				"          {Request Date} as date,",
+				"          {Event Date} as date,",
 				"          {Event Time} as string,",
 				"          {On Call} as string,",
 				"          PT as string,",
 				"          Examination as string,",
 				"          {Exam Name} as string,",
 				"          Room as string,",
-				"          {ExamSite Code} as string,",
 				"          {Start Time} as string,",
 				"          {End Time} as string,",
 				"          {Exam Key} as integer,",
@@ -144,13 +143,18 @@
 				"          {Was Scheduled} as string,",
 				"          {Was Waiting} as string,",
 				"          {Stat Date} as timestamp,",
+				"          {Reported By} as string,",
+				"          Rank as integer,",
+				"          {Status Code.1} as string,",
+				"          {Status Date} as timestamp,",
+				"          {Status Time} as string,",
 				"          Modality2 as string,",
 				"          {Trust Name} as string,",
 				"          Patient_Type as string,",
 				"          {Tat Type} as string,",
-				"          {Status Time} as string,",
-				"          {Reported By} as string,",
-				"          Rank as integer",
+				"          Activity as integer,",
+				"          {Count of Activty_Demand for Activity} as long,",
+				"          {ExamSite Code} as string",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -202,7 +206,7 @@
 				"          {Status Time} = {Status Time2},",
 				"          {Reported By},",
 				"          Rank",
-				"     )) ~> AzureSqlCoreV2Staging"
+				"     )) ~> AzureSQLCoreV3Staging"
 			]
 		}
 	}
