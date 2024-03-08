@@ -13,6 +13,142 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/dataflow5')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSQLCoreV3Staging",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSQLCoreV3Staging",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "filter1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          {CRIS No} as integer,",
+						"          Accession as string,",
+						"          {Ref Src} as string,",
+						"          Site as string,",
+						"          {Request Date} as date,",
+						"          {Event Date} as date,",
+						"          {Event Time} as string,",
+						"          {On Call} as string,",
+						"          PT as string,",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          Room as string,",
+						"          {ExamSite Code} as string,",
+						"          {Start Time} as string,",
+						"          {End Time} as string,",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          {Status Code} as string,",
+						"          {Booked Date} as timestamp,",
+						"          {Booked Time} as string,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          Urg as string,",
+						"          Modality as string,",
+						"          {No of Proc} as integer,",
+						"          {Age At Event} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Date First Verified} as timestamp,",
+						"          {Time First Verified} as string,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Stat Date} as timestamp,",
+						"          Modality2 as string,",
+						"          {Trust Name} as string,",
+						"          Patient_Type as string,",
+						"          {Tat Type} as string,",
+						"          {Status Time} as string,",
+						"          {Reported By} as string,",
+						"          Rank as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 filter({Exam Key}==26213771) ~> filter1",
+						"filter1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {CRIS No} as integer,",
+						"          Accession as string,",
+						"          {Ref Src} as string,",
+						"          Site as string,",
+						"          {Request Date} as date,",
+						"          {Event Date} as date,",
+						"          {Event Time} as string,",
+						"          {On Call} as string,",
+						"          PT as string,",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          Room as string,",
+						"          {ExamSite Code} as string,",
+						"          {Start Time} as string,",
+						"          {End Time} as string,",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          {Status Code} as string,",
+						"          {Booked Date} as timestamp,",
+						"          {Booked Time} as string,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          Urg as string,",
+						"          Modality as string,",
+						"          {No of Proc} as integer,",
+						"          {Age At Event} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Date First Verified} as timestamp,",
+						"          {Time First Verified} as string,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Stat Date} as timestamp,",
+						"          Modality2 as string,",
+						"          {Trust Name} as string,",
+						"          Patient_Type as string,",
+						"          {Tat Type} as string,",
+						"          {Status Time} as string,",
+						"          {Reported By} as string,",
+						"          Rank as integer",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     truncate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Ingestion_RADFYF')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -4639,7 +4775,7 @@
 								"datasetParameters": {
 									"AzureSQLCoreV3Staging": {},
 									"RequestRecievedStatus": {},
-									"UserQueryAzureSQLCoreV3Staging": {}
+									"UserQueryAzureSQLPTLV4Staging": {}
 								}
 							},
 							"staging": {},
@@ -4652,13 +4788,13 @@
 									"queryName": "UserQuery",
 									"dataflowSinks": [
 										{
-											"name": "UserQueryAzureSQLCoreV3Staging",
+											"name": "UserQueryAzureSQLPTLV4Staging",
 											"dataset": {
-												"referenceName": "AzureSQLCoreV3Staging",
+												"referenceName": "AzureSQLPTL_V4_Staging",
 												"type": "DatasetReference",
 												"parameters": {}
 											},
-											"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\t{CRIS No} as integer,\n\t\tAccession as string,\n\t\t{Ref Src} as string,\n\t\tSite as string,\n\t\t{Request Date} as date,\n\t\t{Event Date} as date,\n\t\t{Event Time} as string,\n\t\t{On Call} as string,\n\t\tPT as string,\n\t\tExamination as string,\n\t\t{Exam Name} as string,\n\t\tRoom as string,\n\t\t{ExamSite Code} as string,\n\t\t{Start Time} as string,\n\t\t{End Time} as string,\n\t\t{Exam Key} as integer,\n\t\t{Event Key} as integer,\n\t\t{Status Code} as string,\n\t\t{Booked Date} as timestamp,\n\t\t{Booked Time} as string,\n\t\t{Creation Date} as timestamp,\n\t\tAttended as string,\n\t\tUrg as string,\n\t\tModality as string,\n\t\t{No of Proc} as integer,\n\t\t{Age At Event} as integer,\n\t\t{Planned Appointment Date} as timestamp,\n\t\t{Date First Verified} as timestamp,\n\t\t{Time First Verified} as string,\n\t\t{Was Planned} as string,\n\t\t{Was Scheduled} as string,\n\t\t{Was Waiting} as string,\n\t\t{Stat Date} as timestamp,\n\t\tModality2 as string,\n\t\t{Trust Name} as string,\n\t\tPatient_Type as string,\n\t\t{Tat Type} as string,\n\t\t{Status Time} as string,\n\t\t{Reported By} as string,\n\t\tRank as integer\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> UserQueryAzureSQLCoreV3Staging"
+											"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tpostSQLs:['truncate table [dev].[AzureSQLPTL_V3_Staging]'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> UserQueryAzureSQLPTLV4Staging"
 										}
 									]
 								}

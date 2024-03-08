@@ -13240,7 +13240,7 @@
 								"datasetParameters": {
 									"AzureSQLCoreV3Staging": {},
 									"RequestRecievedStatus": {},
-									"UserQueryAzureSQLCoreV3Staging": {}
+									"UserQueryAzureSQLPTLV4Staging": {}
 								}
 							},
 							"staging": {},
@@ -13253,13 +13253,13 @@
 									"queryName": "UserQuery",
 									"dataflowSinks": [
 										{
-											"name": "UserQueryAzureSQLCoreV3Staging",
+											"name": "UserQueryAzureSQLPTLV4Staging",
 											"dataset": {
-												"referenceName": "AzureSQLCoreV3Staging",
+												"referenceName": "AzureSQLPTL_V4_Staging",
 												"type": "DatasetReference",
 												"parameters": {}
 											},
-											"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\t{CRIS No} as integer,\n\t\tAccession as string,\n\t\t{Ref Src} as string,\n\t\tSite as string,\n\t\t{Request Date} as date,\n\t\t{Event Date} as date,\n\t\t{Event Time} as string,\n\t\t{On Call} as string,\n\t\tPT as string,\n\t\tExamination as string,\n\t\t{Exam Name} as string,\n\t\tRoom as string,\n\t\t{ExamSite Code} as string,\n\t\t{Start Time} as string,\n\t\t{End Time} as string,\n\t\t{Exam Key} as integer,\n\t\t{Event Key} as integer,\n\t\t{Status Code} as string,\n\t\t{Booked Date} as timestamp,\n\t\t{Booked Time} as string,\n\t\t{Creation Date} as timestamp,\n\t\tAttended as string,\n\t\tUrg as string,\n\t\tModality as string,\n\t\t{No of Proc} as integer,\n\t\t{Age At Event} as integer,\n\t\t{Planned Appointment Date} as timestamp,\n\t\t{Date First Verified} as timestamp,\n\t\t{Time First Verified} as string,\n\t\t{Was Planned} as string,\n\t\t{Was Scheduled} as string,\n\t\t{Was Waiting} as string,\n\t\t{Stat Date} as timestamp,\n\t\tModality2 as string,\n\t\t{Trust Name} as string,\n\t\tPatient_Type as string,\n\t\t{Tat Type} as string,\n\t\t{Status Time} as string,\n\t\t{Reported By} as string,\n\t\tRank as integer\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\trecreate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> UserQueryAzureSQLCoreV3Staging"
+											"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tpostSQLs:['truncate table [dev].[AzureSQLPTL_V3_Staging]'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> UserQueryAzureSQLPTLV4Staging"
 										}
 									]
 								}
@@ -13311,7 +13311,7 @@
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow4')]",
 				"[concat(variables('factoryId'), '/dataflows/PopulateNewColumns')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSQLCoreV3Staging')]"
+				"[concat(variables('factoryId'), '/datasets/AzureSQLPTL_V4_Staging')]"
 			]
 		},
 		{
@@ -13927,6 +13927,27 @@
 				"typeProperties": {
 					"schema": "dev",
 					"table": "AzureSQLPTL_V3_Staging"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSQLPTL_V4_Staging')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "AzureSQLPTL_V4_Staging"
 				}
 			},
 			"dependsOn": [
