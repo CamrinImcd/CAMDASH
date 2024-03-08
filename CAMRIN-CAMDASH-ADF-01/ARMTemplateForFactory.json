@@ -12603,7 +12603,7 @@
 								"datasetParameters": {
 									"AzureSqlCORE": {},
 									"source1": {},
-									"AzureSQLCoreV3Staging": {}
+									"AzureSqlCOREStageStep1": {}
 								}
 							},
 							"staging": {},
@@ -12621,7 +12621,7 @@
 							{
 								"activity": "PopulateNewColumns",
 								"dependencyConditions": [
-									"Failed"
+									"Completed"
 								]
 							}
 						],
@@ -13221,7 +13221,7 @@
 							{
 								"activity": "Add Columns Core",
 								"dependencyConditions": [
-									"Completed"
+									"Failed"
 								]
 							}
 						],
@@ -13259,7 +13259,7 @@
 												"type": "DatasetReference",
 												"parameters": {}
 											},
-											"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tpostSQLs:['truncate table [dev].[AzureSQLPTL_V3_Staging]'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> UserQueryAzureSQLPTLV4Staging"
+											"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\t{CRIS No} as integer,\n\t\tAccession as string,\n\t\t{Ref Src} as string,\n\t\tSite as string,\n\t\t{Request Date} as date,\n\t\t{Event Date} as date,\n\t\t{Event Time} as string,\n\t\t{On Call} as string,\n\t\tPT as string,\n\t\tExamination as string,\n\t\t{Exam Name} as string,\n\t\tRoom as string,\n\t\t{Start Time} as string,\n\t\t{End Time} as string,\n\t\t{Exam Key} as integer,\n\t\t{Event Key} as integer,\n\t\t{Status Code} as string,\n\t\t{Booked Date} as timestamp,\n\t\t{Booked Time} as string,\n\t\t{Creation Date} as timestamp,\n\t\tAttended as string,\n\t\tUrg as string,\n\t\tModality as string,\n\t\t{No of Proc} as integer,\n\t\t{Age At Event} as integer,\n\t\t{Planned Appointment Date} as timestamp,\n\t\t{Date First Verified} as timestamp,\n\t\t{Time First Verified} as string,\n\t\t{Was Planned} as string,\n\t\t{Was Scheduled} as string,\n\t\t{Was Waiting} as string,\n\t\t{Stat Date} as timestamp,\n\t\t{Reported By} as string,\n\t\tRank as integer,\n\t\t{Status Code.2} as string,\n\t\t{Status Date.1} as timestamp,\n\t\t{Status Time} as string,\n\t\tModality2 as string,\n\t\t{Trust Name} as string,\n\t\tPatient_Type as string,\n\t\t{Tat Type} as string,\n\t\t{Activity.1} as integer,\n\t\t{Count of Activty_Demand for Activity.1} as long,\n\t\t{ExamSite Code} as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tpostSQLs:['truncate table [dev].[AzureSQLPTL_V3_Staging]'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> UserQueryAzureSQLPTLV4Staging"
 										}
 									]
 								}
@@ -13838,11 +13838,6 @@
 						"precision": 10
 					},
 					{
-						"name": "Age At Event",
-						"type": "int",
-						"precision": 10
-					},
-					{
 						"name": "Planned Appointment Date",
 						"type": "datetime2",
 						"scale": 7
@@ -13901,6 +13896,11 @@
 						"name": "Rank",
 						"type": "int",
 						"precision": 10
+					},
+					{
+						"name": "Age At Event",
+						"type": "int",
+						"precision": 10
 					}
 				],
 				"typeProperties": {
@@ -13944,10 +13944,222 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "CRIS No",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Accession",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Ref Src",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Site",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Request Date",
+						"type": "date"
+					},
+					{
+						"name": "Event Date",
+						"type": "date"
+					},
+					{
+						"name": "Event Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "On Call",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Examination",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Room",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Start Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "End Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Booked Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Booked Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Creation Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Attended",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Urg",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Modality",
+						"type": "nvarchar"
+					},
+					{
+						"name": "No of Proc",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Age At Event",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Planned Appointment Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Date First Verified",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Time First Verified",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Was Planned",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Was Scheduled",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Was Waiting",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Reported By",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rank",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status Code.2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Status Date.1",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Status Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Modality2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Trust Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Patient_Type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Tat Type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Activity.1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Count of Activty_Demand for Activity.1",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "ExamSite Code",
+						"type": "nvarchar"
+					}
+				],
 				"typeProperties": {
 					"schema": "dev",
 					"table": "AzureSQLPTL_V4_Staging"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlCOREStageStep1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "AzureSqlCOREStageStep1"
 				}
 			},
 			"dependsOn": [
@@ -25832,10 +26044,10 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "AzureSQLCoreV3Staging",
+								"referenceName": "AzureSqlCOREStageStep1",
 								"type": "DatasetReference"
 							},
-							"name": "AzureSQLCoreV3Staging"
+							"name": "AzureSqlCOREStageStep1"
 						}
 					],
 					"transformations": [
@@ -25962,48 +26174,6 @@
 						"     broadcast: 'auto')~> lookup1",
 						"lookup1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     input(",
-						"          {CRIS No} as integer,",
-						"          Accession as string,",
-						"          {Ref Src} as string,",
-						"          Site as string,",
-						"          {Request Date} as date,",
-						"          {Event Date} as date,",
-						"          {Event Time} as string,",
-						"          {On Call} as string,",
-						"          PT as string,",
-						"          Examination as string,",
-						"          {Exam Name} as string,",
-						"          Room as string,",
-						"          {ExamSite Code} as string,",
-						"          {Start Time} as string,",
-						"          {End Time} as string,",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          {Status Code} as string,",
-						"          {Booked Date} as timestamp,",
-						"          {Booked Time} as string,",
-						"          {Creation Date} as timestamp,",
-						"          Attended as string,",
-						"          Urg as string,",
-						"          Modality as string,",
-						"          {No of Proc} as integer,",
-						"          {Age At Event} as integer,",
-						"          {Planned Appointment Date} as timestamp,",
-						"          {Date First Verified} as timestamp,",
-						"          {Time First Verified} as string,",
-						"          {Was Planned} as string,",
-						"          {Was Scheduled} as string,",
-						"          {Was Waiting} as string,",
-						"          {Stat Date} as timestamp,",
-						"          Modality2 as string,",
-						"          {Trust Name} as string,",
-						"          Patient_Type as string,",
-						"          {Tat Type} as string,",
-						"          {Status Time} as string,",
-						"          {Reported By} as string,",
-						"          Rank as integer",
-						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
@@ -26055,14 +26225,14 @@
 						"          {Reported By},",
 						"          Rank,",
 						"          {Age At Event} = {Age at Event}",
-						"     )) ~> AzureSQLCoreV3Staging"
+						"     )) ~> AzureSqlCOREStageStep1"
 					]
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/AzureSql_CORE')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSql_Patients')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSQLCoreV3Staging')]"
+				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep1')]"
 			]
 		},
 		{
@@ -26509,7 +26679,7 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "AzureSQLCoreV3Staging",
+								"referenceName": "AzureSQLPTL_V4_Staging",
 								"type": "DatasetReference"
 							},
 							"name": "AzureSqlCOREV3Staging"
@@ -26747,6 +26917,7 @@
 						"          Urg as string,",
 						"          Modality as string,",
 						"          {No of Proc} as integer,",
+						"          {Age At Event} as integer,",
 						"          {Planned Appointment Date} as timestamp,",
 						"          {Date First Verified} as timestamp,",
 						"          {Time First Verified} as string,",
@@ -26756,15 +26927,15 @@
 						"          {Stat Date} as timestamp,",
 						"          {Reported By} as string,",
 						"          Rank as integer,",
-						"          {Status Code.1} as string,",
-						"          {Status Date} as timestamp,",
+						"          {Status Code.2} as string,",
+						"          {Status Date.1} as timestamp,",
 						"          {Status Time} as string,",
 						"          Modality2 as string,",
 						"          {Trust Name} as string,",
 						"          Patient_Type as string,",
 						"          {Tat Type} as string,",
-						"          Activity as integer,",
-						"          {Count of Activty_Demand for Activity} as long,",
+						"          {Activity.1} as integer,",
+						"          {Count of Activty_Demand for Activity.1} as long,",
 						"          {ExamSite Code} as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
@@ -27088,7 +27259,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSQLCoreV3Staging')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSQLPTL_V4_Staging')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSql_PTL')]",
 				"[concat(variables('factoryId'), '/datasets/Tat_Type')]",
 				"[concat(variables('factoryId'), '/datasets/Trust')]",
@@ -27277,6 +27448,7 @@
 						"          Examination as string,",
 						"          {Exam Name} as string,",
 						"          Room as string,",
+						"          {ExamSite Code} as string,",
 						"          {Start Time} as string,",
 						"          {End Time} as string,",
 						"          {Exam Key} as integer,",
@@ -27296,18 +27468,14 @@
 						"          {Was Scheduled} as string,",
 						"          {Was Waiting} as string,",
 						"          {Stat Date} as timestamp,",
-						"          {Reported By} as string,",
-						"          Rank as integer,",
-						"          {Status Code.1} as string,",
-						"          {Status Date} as timestamp,",
-						"          {Status Time} as string,",
 						"          Modality2 as string,",
 						"          {Trust Name} as string,",
 						"          Patient_Type as string,",
 						"          {Tat Type} as string,",
-						"          Activity as integer,",
-						"          {Count of Activty_Demand for Activity} as long,",
-						"          {ExamSite Code} as string",
+						"          {Status Time} as string,",
+						"          {Reported By} as string,",
+						"          Rank as integer,",
+						"          {Age At Event} as integer",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -27419,15 +27587,11 @@
 						"          {Was Planned},",
 						"          {Was Scheduled},",
 						"          {Was Waiting},",
-						"          {Stat Date},",
-						"          {Status Date},",
 						"          {Status Time},",
 						"          Modality2,",
 						"          {Trust Name},",
 						"          Patient_Type,",
 						"          {Tat Type} = RemoveColumns5@{Tat Type},",
-						"          Activity,",
-						"          {Count of Activty_Demand for Activity},",
 						"          {Status Time2},",
 						"          {Patient Type ID},",
 						"          {Modality ID},",
@@ -27476,14 +27640,11 @@
 						"          {Was Scheduled},",
 						"          {Was Waiting},",
 						"          {Stat Date},",
-						"          {Status Date},",
 						"          {Status Time},",
 						"          Modality2,",
 						"          {Trust Name},",
 						"          Patient_Type = AzureSQLCoreV3Staging@Patient_Type,",
 						"          {Tat Type},",
-						"          Activity,",
-						"          {Count of Activty_Demand for Activity},",
 						"          {Status Time2},",
 						"          {Patient Type ID},",
 						"          {Reported By},",
@@ -27524,14 +27685,11 @@
 						"          {Was Scheduled},",
 						"          {Was Waiting},",
 						"          {Stat Date},",
-						"          {Status Date},",
 						"          {Status Time},",
 						"          Modality2 = RemoveColumns1@Modality2,",
 						"          {Trust Name},",
 						"          Patient_Type,",
 						"          {Tat Type},",
-						"          Activity,",
-						"          {Count of Activty_Demand for Activity},",
 						"          {Status Time2},",
 						"          {Patient Type ID},",
 						"          {Modality ID},",
@@ -27573,15 +27731,11 @@
 						"          {Was Planned},",
 						"          {Was Scheduled},",
 						"          {Was Waiting},",
-						"          {Stat Date},",
-						"          {Status Date},",
 						"          {Status Time},",
 						"          Modality2,",
 						"          {Trust Name},",
 						"          Patient_Type,",
 						"          {Tat Type},",
-						"          Activity,",
-						"          {Count of Activty_Demand for Activity},",
 						"          {Status Time2},",
 						"          {Patient Type ID},",
 						"          {Modality ID},",
@@ -27624,15 +27778,11 @@
 						"          {Was Planned},",
 						"          {Was Scheduled},",
 						"          {Was Waiting},",
-						"          {Stat Date},",
-						"          {Status Date},",
 						"          {Status Time},",
 						"          Modality2,",
 						"          {Trust Name},",
 						"          Patient_Type,",
 						"          {Tat Type},",
-						"          Activity,",
-						"          {Count of Activty_Demand for Activity},",
 						"          {Status Time2},",
 						"          {Patient Type ID},",
 						"          {Modality ID},",
@@ -27676,15 +27826,11 @@
 						"          {Was Planned},",
 						"          {Was Scheduled},",
 						"          {Was Waiting},",
-						"          {Stat Date},",
-						"          {Status Date},",
 						"          {Status Time},",
 						"          Modality2,",
 						"          {Trust Name} = RemoveColumns4@{Trust Name},",
 						"          Patient_Type,",
 						"          {Tat Type},",
-						"          Activity,",
-						"          {Count of Activty_Demand for Activity},",
 						"          {Status Time2},",
 						"          {Patient Type ID},",
 						"          {Modality ID},",
@@ -27729,15 +27875,11 @@
 						"          {Was Planned},",
 						"          {Was Scheduled},",
 						"          {Was Waiting},",
-						"          {Stat Date},",
-						"          {Status Date},",
 						"          {Status Time},",
 						"          Modality2,",
 						"          {Trust Name},",
 						"          Patient_Type,",
 						"          {Tat Type},",
-						"          Activity,",
-						"          {Count of Activty_Demand for Activity},",
 						"          {Status Time2},",
 						"          {Patient Type ID},",
 						"          {Modality ID},",
@@ -27897,14 +28039,10 @@
 						"          {Was Planned},",
 						"          {Was Scheduled},",
 						"          {Was Waiting},",
-						"          {Stat Date},",
-						"          {Status Date},",
 						"          Modality2,",
 						"          {Trust Name},",
 						"          Patient_Type,",
 						"          {Tat Type},",
-						"          Activity,",
-						"          {Count of Activty_Demand for Activity},",
 						"          {Status Time2},",
 						"          {Patient Type ID},",
 						"          {Modality ID},",
@@ -28163,7 +28301,6 @@
 						"          Urg as string,",
 						"          Modality as string,",
 						"          {No of Proc} as integer,",
-						"          {Age At Event} as integer,",
 						"          {Planned Appointment Date} as timestamp,",
 						"          {Date First Verified} as timestamp,",
 						"          {Time First Verified} as string,",
@@ -28177,7 +28314,8 @@
 						"          {Tat Type} as string,",
 						"          {Status Time} as string,",
 						"          {Reported By} as string,",
-						"          Rank as integer",
+						"          Rank as integer,",
+						"          {Age At Event} as integer",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",

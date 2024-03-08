@@ -13,6 +13,126 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSql_REPORT_META')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Report Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Referral Source",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Event Time",
+						"type": "varchar"
+					},
+					{
+						"name": "Date of First Addendnum",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date First Verified",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date of Last Addendnum",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date Last Verified",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date Reported",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date Typed",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Reported by",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported by2",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported by2 Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported by Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Typed by",
+						"type": "varchar"
+					},
+					{
+						"name": "Typed by Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "FYF_ODBC_REPORT_META"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSql_REPORT_META_LUFT')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2434,87 +2554,6 @@
 					},
 					{
 						"name": "Catheter_Laboratory_Depreciation",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Asset_22_Spec')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "Asset_Spec",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "NIDC_Asset_file.xlsx",
-						"container": "nicd-asset-22"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "NIDC_Asset_ID",
-						"type": "String"
-					},
-					{
-						"name": "Local_Identifier",
-						"type": "String"
-					},
-					{
-						"name": "Trust_Site_Code",
-						"type": "String"
-					},
-					{
-						"name": "RIS_Room_Code",
-						"type": "String"
-					},
-					{
-						"name": "Location",
-						"type": "String"
-					},
-					{
-						"name": "Machine_Type",
-						"type": "String"
-					},
-					{
-						"name": "Modality",
-						"type": "String"
-					},
-					{
-						"name": "Equipment_Detail",
-						"type": "String"
-					},
-					{
-						"name": "Manufacturer",
-						"type": "String"
-					},
-					{
-						"name": "First_In_Service_Date",
-						"type": "String"
-					},
-					{
-						"name": "Age_of_Machine",
-						"type": "String"
-					},
-					{
-						"name": "Planned_Replacement_Date",
-						"type": "String"
-					},
-					{
-						"name": "Asset_Status",
-						"type": "String"
-					},
-					{
-						"name": "Installation_Replacement_Status",
 						"type": "String"
 					}
 				]

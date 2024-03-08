@@ -13,6 +13,127 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/dataflow4')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSql_STATUSES",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "RequestRecievedStatus",
+								"type": "DatasetReference"
+							},
+							"name": "sink1",
+							"description": "Export data to Request Received Status"
+						}
+					],
+					"transformations": [
+						{
+							"name": "window1"
+						},
+						{
+							"name": "filter1"
+						},
+						{
+							"name": "filter2"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          Accession as string,",
+						"          Referrer as string,",
+						"          {Referral Location} as string,",
+						"          {Referral Source} as string,",
+						"          Urg as string,",
+						"          Site as string,",
+						"          {Status Code} as string,",
+						"          {Status Date} as timestamp,",
+						"          {Status Time} as integer,",
+						"          {Referral Location Name} as string,",
+						"          {Referral Source Name} as string,",
+						"          {Referral Name} as string,",
+						"          {Examination Name} as string,",
+						"          Modality as string,",
+						"          {Status Code at State Date} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {D Status} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"filter1 window(over({Exam Key}),",
+						"     desc({Status Date}, false),",
+						"     desc({Status Time}, false),",
+						"     asc({Status Code at State Date}, false),",
+						"     asc(Referrer, true),",
+						"     asc({Referral Location}, true),",
+						"     asc({Referral Source}, true),",
+						"     asc(Urg, true),",
+						"     asc(Site, true),",
+						"     asc({Referral Location Name}, true),",
+						"     asc({Referral Source Name}, true),",
+						"     asc({Referral Name}, true),",
+						"     asc({Examination Name}, true),",
+						"     asc(Modality, true),",
+						"     asc({Stat Date}, true),",
+						"     asc({D Status}, true),",
+						"     Rank = denseRank()) ~> window1",
+						"source1 filter({Status Code}==\"RR\") ~> filter1",
+						"window1 filter(Rank==1) ~> filter2",
+						"filter2 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          Accession as string,",
+						"          Referrer as string,",
+						"          {Referral Location} as string,",
+						"          {Referral Source} as string,",
+						"          Urg as string,",
+						"          Site as string,",
+						"          {Status Code} as string,",
+						"          {Status Date} as timestamp,",
+						"          {Status Time} as integer,",
+						"          {Referral Location Name} as string,",
+						"          {Referral Source Name} as string,",
+						"          {Referral Name} as string,",
+						"          {Examination Name} as string,",
+						"          Modality as string,",
+						"          {Status Code at State Date} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {D Status} as string,",
+						"          Rank as integer",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     recreate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     saveOrder: 1,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/dataflow5')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -118,7 +239,6 @@
 						"          Urg as string,",
 						"          Modality as string,",
 						"          {No of Proc} as integer,",
-						"          {Age At Event} as integer,",
 						"          {Planned Appointment Date} as timestamp,",
 						"          {Date First Verified} as timestamp,",
 						"          {Time First Verified} as string,",
@@ -132,7 +252,8 @@
 						"          {Tat Type} as string,",
 						"          {Status Time} as string,",
 						"          {Reported By} as string,",
-						"          Rank as integer",
+						"          Rank as integer,",
+						"          {Age At Event} as integer",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -4138,7 +4259,7 @@
 								"datasetParameters": {
 									"AzureSqlCORE": {},
 									"source1": {},
-									"AzureSQLCoreV3Staging": {}
+									"AzureSqlCOREStageStep1": {}
 								}
 							},
 							"staging": {},
@@ -4156,7 +4277,7 @@
 							{
 								"activity": "PopulateNewColumns",
 								"dependencyConditions": [
-									"Failed"
+									"Completed"
 								]
 							}
 						],
@@ -4756,7 +4877,7 @@
 							{
 								"activity": "Add Columns Core",
 								"dependencyConditions": [
-									"Completed"
+									"Failed"
 								]
 							}
 						],
@@ -4794,7 +4915,7 @@
 												"type": "DatasetReference",
 												"parameters": {}
 											},
-											"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tpostSQLs:['truncate table [dev].[AzureSQLPTL_V3_Staging]'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> UserQueryAzureSQLPTLV4Staging"
+											"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\t{CRIS No} as integer,\n\t\tAccession as string,\n\t\t{Ref Src} as string,\n\t\tSite as string,\n\t\t{Request Date} as date,\n\t\t{Event Date} as date,\n\t\t{Event Time} as string,\n\t\t{On Call} as string,\n\t\tPT as string,\n\t\tExamination as string,\n\t\t{Exam Name} as string,\n\t\tRoom as string,\n\t\t{Start Time} as string,\n\t\t{End Time} as string,\n\t\t{Exam Key} as integer,\n\t\t{Event Key} as integer,\n\t\t{Status Code} as string,\n\t\t{Booked Date} as timestamp,\n\t\t{Booked Time} as string,\n\t\t{Creation Date} as timestamp,\n\t\tAttended as string,\n\t\tUrg as string,\n\t\tModality as string,\n\t\t{No of Proc} as integer,\n\t\t{Age At Event} as integer,\n\t\t{Planned Appointment Date} as timestamp,\n\t\t{Date First Verified} as timestamp,\n\t\t{Time First Verified} as string,\n\t\t{Was Planned} as string,\n\t\t{Was Scheduled} as string,\n\t\t{Was Waiting} as string,\n\t\t{Stat Date} as timestamp,\n\t\t{Reported By} as string,\n\t\tRank as integer,\n\t\t{Status Code.2} as string,\n\t\t{Status Date.1} as timestamp,\n\t\t{Status Time} as string,\n\t\tModality2 as string,\n\t\t{Trust Name} as string,\n\t\tPatient_Type as string,\n\t\t{Tat Type} as string,\n\t\t{Activity.1} as integer,\n\t\t{Count of Activty_Demand for Activity.1} as long,\n\t\t{ExamSite Code} as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\tformat: 'table',\n\tpostSQLs:['truncate table [dev].[AzureSQLPTL_V3_Staging]'],\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> UserQueryAzureSQLPTLV4Staging"
 										}
 									]
 								}
@@ -4811,7 +4932,9 @@
 				"annotations": [],
 				"lastPublishTime": "2024-01-30T12:35:07Z"
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow4')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/trig_DM01_Weekly')]",
