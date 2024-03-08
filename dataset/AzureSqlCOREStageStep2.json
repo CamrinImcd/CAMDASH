@@ -7,7 +7,197 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [],
+		"schema": [
+			{
+				"name": "CRIS No",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Accession",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Ref Src",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Site",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Request Date",
+				"type": "date"
+			},
+			{
+				"name": "Event Date",
+				"type": "date"
+			},
+			{
+				"name": "Event Time",
+				"type": "nvarchar"
+			},
+			{
+				"name": "On Call",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PT",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Examination",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Exam Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Room",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Start Time",
+				"type": "nvarchar"
+			},
+			{
+				"name": "End Time",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Exam Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Event Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Status Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Booked Date",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "Booked Time",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Creation Date",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "Attended",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Urg",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Modality",
+				"type": "nvarchar"
+			},
+			{
+				"name": "No of Proc",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Planned Appointment Date",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "Date First Verified",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "Time First Verified",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Was Planned",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Was Scheduled",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Was Waiting",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Stat Date",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "Reported By",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Rank",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Age At Event",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Status Code.2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Status Date.1",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "Status Time",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Modality2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Trust Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Patient_Type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Tat Type",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Activity.1",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Count of Activty_Demand for Activity.1",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "ExamSite Code",
+				"type": "nvarchar"
+			}
+		],
 		"typeProperties": {
 			"schema": "dev",
 			"table": "AzureSqlCOREStageStep2"
