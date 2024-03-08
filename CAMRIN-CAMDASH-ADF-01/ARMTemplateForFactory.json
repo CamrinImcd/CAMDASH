@@ -12694,8 +12694,7 @@
 									"ReferralSource": {},
 									"TatType": {},
 									"AzureSqlCOREV2": {}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -13222,7 +13221,7 @@
 							{
 								"activity": "Add Columns Core",
 								"dependencyConditions": [
-									"Completed"
+									"Failed"
 								]
 							}
 						],
@@ -13306,7 +13305,6 @@
 				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveAzureIR')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow2')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow3')]",
-				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow1_copy1')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSQLPTL_V3_Staging')]",
 				"[concat(variables('factoryId'), '/datasets/ODBC_PTL_v2')]",
@@ -27239,6 +27237,9 @@
 						},
 						{
 							"name": "filter1"
+						},
+						{
+							"name": "filter2"
 						}
 					],
 					"scriptLines": [
@@ -27778,7 +27779,8 @@
 						"     skipDuplicateMapOutputs: true) ~> RenameColumn2",
 						"filter1 derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted4",
 						"MapDrifted1 derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted5",
-						"AzureSQLCoreV3Staging filter(Rank==1) ~> filter1",
+						"filter2 filter(Rank==1) ~> filter1",
+						"AzureSQLCoreV3Staging filter({CRIS No}==1504479) ~> filter2",
 						"RemoveColumns6 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
