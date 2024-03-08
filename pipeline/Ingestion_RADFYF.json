@@ -3973,7 +3973,7 @@
 					{
 						"activity": "PopulateNewColumns",
 						"dependencyConditions": [
-							"Failed"
+							"Completed"
 						]
 					}
 				],
