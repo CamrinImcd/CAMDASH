@@ -22,10 +22,10 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "AzureSQLCoreV3Staging",
+						"referenceName": "AzureSqlCOREStageStep1",
 						"type": "DatasetReference"
 					},
-					"name": "AzureSQLCoreV3Staging"
+					"name": "AzureSqlCOREStageStep1"
 				}
 			],
 			"transformations": [
@@ -152,48 +152,6 @@
 				"     broadcast: 'auto')~> lookup1",
 				"lookup1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     input(",
-				"          {CRIS No} as integer,",
-				"          Accession as string,",
-				"          {Ref Src} as string,",
-				"          Site as string,",
-				"          {Request Date} as date,",
-				"          {Event Date} as date,",
-				"          {Event Time} as string,",
-				"          {On Call} as string,",
-				"          PT as string,",
-				"          Examination as string,",
-				"          {Exam Name} as string,",
-				"          Room as string,",
-				"          {ExamSite Code} as string,",
-				"          {Start Time} as string,",
-				"          {End Time} as string,",
-				"          {Exam Key} as integer,",
-				"          {Event Key} as integer,",
-				"          {Status Code} as string,",
-				"          {Booked Date} as timestamp,",
-				"          {Booked Time} as string,",
-				"          {Creation Date} as timestamp,",
-				"          Attended as string,",
-				"          Urg as string,",
-				"          Modality as string,",
-				"          {No of Proc} as integer,",
-				"          {Age At Event} as integer,",
-				"          {Planned Appointment Date} as timestamp,",
-				"          {Date First Verified} as timestamp,",
-				"          {Time First Verified} as string,",
-				"          {Was Planned} as string,",
-				"          {Was Scheduled} as string,",
-				"          {Was Waiting} as string,",
-				"          {Stat Date} as timestamp,",
-				"          Modality2 as string,",
-				"          {Trust Name} as string,",
-				"          Patient_Type as string,",
-				"          {Tat Type} as string,",
-				"          {Status Time} as string,",
-				"          {Reported By} as string,",
-				"          Rank as integer",
-				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
 				"     updateable:false,",
@@ -245,7 +203,7 @@
 				"          {Reported By},",
 				"          Rank,",
 				"          {Age At Event} = {Age at Event}",
-				"     )) ~> AzureSQLCoreV3Staging"
+				"     )) ~> AzureSqlCOREStageStep1"
 			]
 		}
 	}
