@@ -115,11 +115,6 @@
 				"precision": 10
 			},
 			{
-				"name": "Age At Event",
-				"type": "int",
-				"precision": 10
-			},
-			{
 				"name": "Planned Appointment Date",
 				"type": "datetime2",
 				"scale": 7
@@ -176,6 +171,11 @@
 			},
 			{
 				"name": "Rank",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Age At Event",
 				"type": "int",
 				"precision": 10
 			}
