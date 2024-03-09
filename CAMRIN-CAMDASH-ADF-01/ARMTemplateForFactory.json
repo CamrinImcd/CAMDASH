@@ -12711,7 +12711,7 @@
 							{
 								"activity": "ReferenceLookupsCore",
 								"dependencyConditions": [
-									"Failed"
+									"Completed"
 								]
 							}
 						],
@@ -27855,9 +27855,6 @@
 						},
 						{
 							"name": "filter1"
-						},
-						{
-							"name": "filter2"
 						}
 					],
 					"scriptLines": [
@@ -28372,8 +28369,7 @@
 						"     skipDuplicateMapOutputs: true) ~> RenameColumn2",
 						"filter1 derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted4",
 						"MapDrifted1 derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted5",
-						"filter2 filter(Rank==1) ~> filter1",
-						"AzureSQLCoreV3Staging filter({Exam Key}==26415317) ~> filter2",
+						"AzureSQLCoreV3Staging filter(Rank==1) ~> filter1",
 						"RemoveColumns6 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
