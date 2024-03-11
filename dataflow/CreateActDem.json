@@ -5,6 +5,10 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "FYF_ODBC_CORE_v2",
+						"type": "DatasetReference"
+					},
 					"name": "Core"
 				}
 			],
@@ -85,7 +89,9 @@
 			],
 			"scriptLines": [
 				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> Core",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> Core",
 				"MapDrifted1 derive(DNA = iif({Status Code}==\"CPDNA\", 1, iif({Status Code}==\"APDNA\", 1, 0))) ~> CreateDNAColumn",
 				"CreateDNAColumn aggregate(groupBy({Event Date},",
 				"          {Modality ID},",
