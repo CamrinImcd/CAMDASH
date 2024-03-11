@@ -21941,228 +21941,7 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "CRIS No",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Accession",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Ref Src",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Site",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Request Date",
-						"type": "date"
-					},
-					{
-						"name": "Event Date",
-						"type": "date"
-					},
-					{
-						"name": "Event Time",
-						"type": "nvarchar"
-					},
-					{
-						"name": "On Call",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PT",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Examination",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Exam Name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Room",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ExamSite Code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Start Time",
-						"type": "nvarchar"
-					},
-					{
-						"name": "End Time",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status Code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Booked Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Booked Time",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Creation Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Attended",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Urg",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Modality",
-						"type": "nvarchar"
-					},
-					{
-						"name": "No of Proc",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Planned Appointment Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Date First Verified",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Time First Verified",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Was Planned",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Was Scheduled",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Was Waiting",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Status Time",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Modality2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Trust Name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Patient_Type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Tat Type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Status Time2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Patient Type ID",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "Modality ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Exam ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Exam Room ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Trust ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Referral Source ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Tat Type ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Reported By",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Rank",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Activity",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Count of Activty_Demand for Activity",
-						"type": "bigint",
-						"precision": 19
-					}
-				],
+				"schema": [],
 				"typeProperties": {
 					"schema": "dev",
 					"table": "FYF_ODBC_CORE_v2"
@@ -26077,7 +25856,7 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "FYF_ODBC_CORE_v2",
+								"referenceName": "AzureSqlCOREStageStep2",
 								"type": "DatasetReference"
 							},
 							"name": "Core"
@@ -26159,7 +25938,53 @@
 						}
 					],
 					"scriptLines": [
-						"source(allowSchemaDrift: true,",
+						"source(output(",
+						"          {CRIS No} as integer,",
+						"          Accession as string,",
+						"          {Ref Src} as string,",
+						"          Site as string,",
+						"          {Request Date} as date,",
+						"          {Event Date} as date,",
+						"          {Event Time} as string,",
+						"          {On Call} as string,",
+						"          PT as string,",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          Room as string,",
+						"          {Start Time} as string,",
+						"          {End Time} as string,",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          {Status Code} as string,",
+						"          {Booked Date} as timestamp,",
+						"          {Booked Time} as string,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          Urg as string,",
+						"          Modality as string,",
+						"          {No of Proc} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Date First Verified} as timestamp,",
+						"          {Time First Verified} as string,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {Reported By} as string,",
+						"          Rank as integer,",
+						"          {Age At Event} as string,",
+						"          {Status Code.2} as string,",
+						"          {Status Date.1} as timestamp,",
+						"          {Status Time} as string,",
+						"          Modality2 as string,",
+						"          {Trust Name} as string,",
+						"          Patient_Type as string,",
+						"          {Tat Type} as string,",
+						"          {Activity.1} as integer,",
+						"          {Count of Activty_Demand for Activity.1} as long,",
+						"          {ExamSite Code} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> Core",
@@ -26363,7 +26188,7 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/FYF_ODBC_CORE_v2')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep2')]",
 				"[concat(variables('factoryId'), '/datasets/Act_Dem')]"
 			]
 		},
@@ -26712,7 +26537,7 @@
 						},
 						{
 							"dataset": {
-								"referenceName": "FYF_ODBC_CORE_v2",
+								"referenceName": "AzureSqlCOREStageStep2",
 								"type": "DatasetReference"
 							},
 							"name": "source1"
@@ -26887,7 +26712,6 @@
 						"          Examination as string,",
 						"          {Exam Name} as string,",
 						"          Room as string,",
-						"          {ExamSite Code} as string,",
 						"          {Start Time} as string,",
 						"          {End Time} as string,",
 						"          {Exam Key} as integer,",
@@ -26906,25 +26730,20 @@
 						"          {Was Planned} as string,",
 						"          {Was Scheduled} as string,",
 						"          {Was Waiting} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {Reported By} as string,",
+						"          Rank as integer,",
+						"          {Age At Event} as string,",
+						"          {Status Code.2} as string,",
+						"          {Status Date.1} as timestamp,",
 						"          {Status Time} as string,",
 						"          Modality2 as string,",
 						"          {Trust Name} as string,",
 						"          Patient_Type as string,",
 						"          {Tat Type} as string,",
-						"          {Status Time2} as string,",
-						"          {Patient Type ID} as long,",
-						"          {Modality ID} as integer,",
-						"          {Status ID} as integer,",
-						"          {Exam ID} as integer,",
-						"          {Exam Room ID} as integer,",
-						"          {Trust ID} as integer,",
-						"          {Referral Source ID} as integer,",
-						"          {Tat Type ID} as integer,",
-						"          {Reported By} as string,",
-						"          Rank as integer,",
-						"          {Status Date} as timestamp,",
-						"          Activity as integer,",
-						"          {Count of Activty_Demand for Activity} as long",
+						"          {Activity.1} as integer,",
+						"          {Count of Activty_Demand for Activity.1} as long,",
+						"          {ExamSite Code} as string",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
@@ -27050,15 +26869,15 @@
 						"          {Was Planned} = RemoveCols@{Was Planned},",
 						"          {Was Scheduled} = RemoveCols@{Was Scheduled},",
 						"          {Was Waiting} = RemoveCols@{Was Waiting},",
-						"          {Stat Date},",
+						"          {Stat Date} = RemoveCols@{Stat Date},",
 						"          {5 Weeks Wait},",
 						"          {Booked Datetime},",
 						"          {6 Weeks Wait},",
-						"          {Referral Source ID} = RemoveCols@{Referral Source ID},",
-						"          {Exam ID} = RemoveCols@{Exam ID},",
-						"          {Modality ID} = RemoveCols@{Modality ID},",
-						"          {Exam Room ID} = RemoveCols@{Exam Room ID},",
-						"          {Trust ID} = RemoveCols@{Trust ID},",
+						"          {Referral Source ID},",
+						"          {Exam ID},",
+						"          {Modality ID},",
+						"          {Exam Room ID},",
+						"          {Trust ID},",
 						"          {Status Code}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
@@ -27090,7 +26909,7 @@
 				"[concat(variables('factoryId'), '/datasets/Trust')]",
 				"[concat(variables('factoryId'), '/datasets/Modality')]",
 				"[concat(variables('factoryId'), '/datasets/Exam_Site')]",
-				"[concat(variables('factoryId'), '/datasets/FYF_ODBC_CORE_v2')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep2')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSQLPTL_V3_Staging')]"
 			]
 		},
@@ -28032,7 +27851,8 @@
 						"          {Status Code} = {Status Code.2},",
 						"          {Status Date} = {Status Date.1},",
 						"          Activity = {Activity.1},",
-						"          {Count of Activty_Demand for Activity} = {Count of Activty_Demand for Activity.1}",
+						"          {Count of Activty_Demand for Activity} = {Count of Activty_Demand for Activity.1},",
+						"          {Stat Date}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns6",
@@ -28082,7 +27902,8 @@
 						"          {Status Code.2},",
 						"          {Status Date.1},",
 						"          {Activity.1},",
-						"          {Count of Activty_Demand for Activity.1}",
+						"          {Count of Activty_Demand for Activity.1},",
+						"          {Stat Date}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns1",
@@ -28133,7 +27954,8 @@
 						"          {Status Code.2},",
 						"          {Status Date.1},",
 						"          {Activity.1},",
-						"          {Count of Activty_Demand for Activity.1}",
+						"          {Count of Activty_Demand for Activity.1},",
+						"          {Stat Date}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns2",
@@ -28184,7 +28006,8 @@
 						"          {Status Code.2},",
 						"          {Status Date.1},",
 						"          {Activity.1},",
-						"          {Count of Activty_Demand for Activity.1}",
+						"          {Count of Activty_Demand for Activity.1},",
+						"          {Stat Date}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns3",
@@ -28236,7 +28059,8 @@
 						"          {Status Code.2},",
 						"          {Status Date.1},",
 						"          {Activity.1},",
-						"          {Count of Activty_Demand for Activity.1}",
+						"          {Count of Activty_Demand for Activity.1},",
+						"          {Stat Date}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns4",
@@ -28289,7 +28113,8 @@
 						"          {Status Code.2},",
 						"          {Status Date.1},",
 						"          {Activity.1},",
-						"          {Count of Activty_Demand for Activity.1}",
+						"          {Count of Activty_Demand for Activity.1},",
+						"          {Stat Date}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select6",
@@ -28343,7 +28168,8 @@
 						"          {Status Code.2},",
 						"          {Status Date.1},",
 						"          {Activity.1},",
-						"          {Count of Activty_Demand for Activity.1}",
+						"          {Count of Activty_Demand for Activity.1},",
+						"          {Stat Date}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns5",
@@ -28399,119 +28225,18 @@
 						"AzureSQLCoreV3Staging filter(Rank==1) ~> filter1",
 						"RemoveColumns6 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     input(",
-						"          {CRIS No} as integer,",
-						"          Accession as string,",
-						"          {Ref Src} as string,",
-						"          Site as string,",
-						"          {Request Date} as date,",
-						"          {Event Date} as date,",
-						"          {Event Time} as string,",
-						"          {On Call} as string,",
-						"          PT as string,",
-						"          Examination as string,",
-						"          {Exam Name} as string,",
-						"          Room as string,",
-						"          {ExamSite Code} as string,",
-						"          {Start Time} as string,",
-						"          {End Time} as string,",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          {Status Code} as string,",
-						"          {Booked Date} as timestamp,",
-						"          {Booked Time} as string,",
-						"          {Creation Date} as timestamp,",
-						"          Attended as string,",
-						"          Urg as string,",
-						"          Modality as string,",
-						"          {No of Proc} as integer,",
-						"          {Planned Appointment Date} as timestamp,",
-						"          {Date First Verified} as timestamp,",
-						"          {Time First Verified} as string,",
-						"          {Was Planned} as string,",
-						"          {Was Scheduled} as string,",
-						"          {Was Waiting} as string,",
-						"          {Status Time} as string,",
-						"          Modality2 as string,",
-						"          {Trust Name} as string,",
-						"          Patient_Type as string,",
-						"          {Tat Type} as string,",
-						"          {Status Time2} as string,",
-						"          {Patient Type ID} as long,",
-						"          {Modality ID} as integer,",
-						"          {Status ID} as integer,",
-						"          {Exam ID} as integer,",
-						"          {Exam Room ID} as integer,",
-						"          {Trust ID} as integer,",
-						"          {Referral Source ID} as integer,",
-						"          {Tat Type ID} as integer,",
-						"          {Reported By} as string,",
-						"          Rank as integer,",
-						"          {Status Date} as timestamp,",
-						"          Activity as integer,",
-						"          {Count of Activty_Demand for Activity} as long",
-						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
-						"     truncate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     saveOrder: 1,",
 						"     errorHandlingOption: 'stopOnFirstError',",
 						"     mapColumn(",
-						"          {CRIS No},",
-						"          Accession,",
-						"          {Ref Src},",
-						"          Site,",
-						"          {Request Date},",
-						"          {Event Date},",
-						"          {Event Time},",
-						"          {On Call},",
-						"          PT,",
-						"          Examination,",
-						"          {Exam Name},",
-						"          Room,",
-						"          {ExamSite Code},",
-						"          {Start Time},",
-						"          {End Time},",
-						"          {Exam Key},",
-						"          {Event Key},",
-						"          {Status Code},",
-						"          {Booked Date},",
-						"          {Booked Time},",
-						"          {Creation Date},",
-						"          Attended,",
-						"          Urg,",
-						"          Modality,",
-						"          {No of Proc},",
-						"          {Planned Appointment Date},",
-						"          {Date First Verified},",
-						"          {Time First Verified},",
-						"          {Was Planned},",
-						"          {Was Scheduled},",
-						"          {Was Waiting},",
-						"          {Status Time},",
-						"          Modality2,",
-						"          {Trust Name},",
-						"          Patient_Type,",
-						"          {Tat Type},",
-						"          {Status Time2},",
-						"          {Patient Type ID},",
-						"          {Modality ID},",
-						"          {Status ID},",
-						"          {Exam ID},",
-						"          {Exam Room ID},",
-						"          {Trust ID},",
-						"          {Referral Source ID},",
-						"          {Tat Type ID},",
-						"          {Reported By},",
-						"          Rank,",
-						"          {Status Date},",
-						"          Activity,",
-						"          {Count of Activty_Demand for Activity}",
+						"          each(match(/* All input columns */true()),",
+						"               /* Input name */$$ = $$)",
 						"     )) ~> AzureSqlCOREV2"
 					]
 				}
