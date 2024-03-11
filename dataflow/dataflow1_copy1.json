@@ -47,10 +47,6 @@
 					"name": "ExamSite"
 				},
 				{
-					"dataset": {
-						"referenceName": "FYF_ODBC_CORE_v2",
-						"type": "DatasetReference"
-					},
 					"name": "source1"
 				}
 			],
@@ -263,9 +259,7 @@
 				"          Rank as integer",
 				"     ),",
 				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> source1",
+				"     validateSchema: false) ~> source1",
 				"AzureSqlPTL derive({5 Weeks Wait} = iif({Weeks Waiting}>=6,1,0),",
 				"          {Booked Datetime} = toString(null()),",
 				"          {6 Weeks Wait} = toString(null()),",
