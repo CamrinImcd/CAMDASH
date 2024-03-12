@@ -70,6 +70,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "FYF_ODBC_CORE_v2",
+						"type": "DatasetReference"
+					},
 					"name": "AzureSqlCOREV2"
 				}
 			],
@@ -709,9 +713,15 @@
 				"AzureSQLCoreV3Staging filter(Rank==1) ~> filter1",
 				"RemoveColumns6 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     saveOrder: 1,",
+				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          {CRIS No},",
 				"          Accession,",
@@ -765,8 +775,7 @@
 				"          {Count of Activty_Demand for Activity},",
 				"          {Stat Date},",
 				"          {Age At Event}",
-				"     ),",
-				"     format: 'table') ~> AzureSqlCOREV2"
+				"     )) ~> AzureSqlCOREV2"
 			]
 		}
 	}
