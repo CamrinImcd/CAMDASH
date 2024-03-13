@@ -244,7 +244,7 @@
 				"          {Status Time} = {Status Time2},",
 				"          {Reported By},",
 				"          Rank,",
-				"          {Age At Event} = {Age at Event}",
+				"          {Age At Event} = source1@{Age at Event}",
 				"     )) ~> AzureSqlCOREStageStep1"
 			]
 		}
