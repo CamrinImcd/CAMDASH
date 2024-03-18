@@ -7,7 +7,162 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [],
+		"schema": [
+			{
+				"name": "CRIS No",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Event Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Exam Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Trust ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Exam Room ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Event Date",
+				"type": "date"
+			},
+			{
+				"name": "Date First Verified",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "Reported By",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Patient Type ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "Age At Event",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Exam ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Auto",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Rep Rad",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Cons",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Outsource",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CX I-R",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Snapshot",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Abnormal",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CRIS No.1",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Event Key.1",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Exam Key.1",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Trust ID.1",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Exam Room ID.1",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Event Date.1",
+				"type": "date"
+			},
+			{
+				"name": "Date First Verified.1",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "Reported By.1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Patient Type ID.1",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "Age At Event.1",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Exam ID.1",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CXR-CCI.1",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CXI-CCR.1",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "CXI-CCI.1",
+				"type": "int",
+				"precision": 10
+			}
+		],
 		"typeProperties": {
 			"schema": "dev",
 			"table": "AIDF"
