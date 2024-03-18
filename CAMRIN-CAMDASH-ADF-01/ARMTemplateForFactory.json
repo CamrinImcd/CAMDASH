@@ -13492,7 +13492,162 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "CRIS No",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Trust ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Room ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Date",
+						"type": "date"
+					},
+					{
+						"name": "Date First Verified",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Reported By",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Patient Type ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "Age At Event",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Auto",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Rep Rad",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Cons",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Outsource",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CX I-R",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Snapshot",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Abnormal",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CRIS No.1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key.1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Key.1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Trust ID.1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Room ID.1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Date.1",
+						"type": "date"
+					},
+					{
+						"name": "Date First Verified.1",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Reported By.1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Patient Type ID.1",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "Age At Event.1",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam ID.1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CXR-CCI.1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CXI-CCR.1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CXI-CCI.1",
+						"type": "int",
+						"precision": 10
+					}
+				],
 				"typeProperties": {
 					"schema": "dev",
 					"table": "AIDF"
@@ -29080,15 +29235,50 @@
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
 						"     broadcast: 'right')~> join1",
-						"join1 derive({CXR-CCI} = toDate(select2@{Date First Verified})-select1@{Event Date},",
-						"          {CXI-CCR} = select2@{Event Date}-toDate(select1@{Date First Verified}),",
-						"          {CXI-CCI} = select2@{Event Date}-select1@{Event Date}) ~> derivedColumn3",
+						"join1 derive({CXR-CCI} = select1@{Event Date}-toDate(select2@{Date First Verified}),",
+						"          {CXI-CCR} = toDate(select1@{Date First Verified})-select2@{Event Date},",
+						"          {CXI-CCI} = select1@{Event Date}-select2@{Event Date}) ~> derivedColumn3",
 						"derivedColumn3 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     input(",
+						"          {CRIS No} as integer,",
+						"          {Event Key} as integer,",
+						"          {Exam Key} as integer,",
+						"          {Trust ID} as integer,",
+						"          {Exam Room ID} as integer,",
+						"          {Event Date} as date,",
+						"          {Date First Verified} as timestamp,",
+						"          {Reported By} as string,",
+						"          {Patient Type ID} as long,",
+						"          {Age At Event} as string,",
+						"          {Exam ID} as integer,",
+						"          Auto as integer,",
+						"          {Rep Rad} as integer,",
+						"          Cons as integer,",
+						"          Outsource as integer,",
+						"          {CX I-R} as integer,",
+						"          Snapshot as integer,",
+						"          Abnormal as integer,",
+						"          {CRIS No.1} as integer,",
+						"          {Event Key.1} as integer,",
+						"          {Exam Key.1} as integer,",
+						"          {Trust ID.1} as integer,",
+						"          {Exam Room ID.1} as integer,",
+						"          {Event Date.1} as date,",
+						"          {Date First Verified.1} as timestamp,",
+						"          {Reported By.1} as string,",
+						"          {Patient Type ID.1} as long,",
+						"          {Age At Event.1} as string,",
+						"          {Exam ID.1} as integer,",
+						"          {CXR-CCI.1} as integer,",
+						"          {CXI-CCR.1} as integer,",
+						"          {CXI-CCI.1} as integer",
+						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
+						"     truncate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
