@@ -13,6 +13,235 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSQLPTL_V3_Staging')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "AzureSQLPTL_V3_Staging"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSQLPTL_V4_Staging')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CRIS No",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Accession",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Ref Src",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Site",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Request Date",
+						"type": "date"
+					},
+					{
+						"name": "Event Date",
+						"type": "date"
+					},
+					{
+						"name": "Event Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "On Call",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Examination",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Room",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Start Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "End Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Booked Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Booked Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Creation Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Attended",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Urg",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Modality",
+						"type": "nvarchar"
+					},
+					{
+						"name": "No of Proc",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Age At Event",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Planned Appointment Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Date First Verified",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Time First Verified",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Was Planned",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Was Scheduled",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Was Waiting",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Reported By",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rank",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status Code.2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Status Date.1",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Status Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Modality2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Trust Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Patient_Type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Tat Type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Activity.1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Count of Activty_Demand for Activity.1",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "ExamSite Code",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "AzureSQLPTL_V4_Staging"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlCOREStageStep1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2324,404 +2553,6 @@
 				"typeProperties": {
 					"schema": "luft",
 					"table": "FYF_ODBC_PATIENTS"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSql_PTL')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "CRIS Number",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status Category",
-						"type": "varchar"
-					},
-					{
-						"name": "Referrer",
-						"type": "varchar"
-					},
-					{
-						"name": "Ref Src",
-						"type": "varchar"
-					},
-					{
-						"name": "Referring Location",
-						"type": "varchar"
-					},
-					{
-						"name": "Examination",
-						"type": "varchar"
-					},
-					{
-						"name": "Site",
-						"type": "varchar"
-					},
-					{
-						"name": "Request Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Booked Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Booked Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Ref Src2",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode L",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode R",
-						"type": "varchar"
-					},
-					{
-						"name": "Creation Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Event Key2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Attended",
-						"type": "varchar"
-					},
-					{
-						"name": "Modality",
-						"type": "varchar"
-					},
-					{
-						"name": "Room",
-						"type": "varchar"
-					},
-					{
-						"name": "RC",
-						"type": "varchar"
-					},
-					{
-						"name": "Urg",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Referrer Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Exam Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Event Date2",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Days Waiting",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Predicted Reset Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Waiting Time Reset Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Weeks Waiting",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Planned Appointment Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Waiting Breach Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Was Planned",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Scheduled",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Waiting",
-						"type": "varchar"
-					},
-					{
-						"name": "CCG",
-						"type": "varchar"
-					},
-					{
-						"name": "D Status",
-						"type": "varchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "dev",
-					"table": "FYF_ODBC_PTL"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSql_PTL_LUFT')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "CRIS Number",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status Category",
-						"type": "varchar"
-					},
-					{
-						"name": "Referrer",
-						"type": "varchar"
-					},
-					{
-						"name": "Ref Src",
-						"type": "varchar"
-					},
-					{
-						"name": "Referring Location",
-						"type": "varchar"
-					},
-					{
-						"name": "Examination",
-						"type": "varchar"
-					},
-					{
-						"name": "Site",
-						"type": "varchar"
-					},
-					{
-						"name": "Request Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Booked Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Booked Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Ref Src2",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode L",
-						"type": "varchar"
-					},
-					{
-						"name": "Postcode R",
-						"type": "varchar"
-					},
-					{
-						"name": "Creation Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Event Key2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Attended",
-						"type": "varchar"
-					},
-					{
-						"name": "Modality",
-						"type": "varchar"
-					},
-					{
-						"name": "Room",
-						"type": "varchar"
-					},
-					{
-						"name": "RC",
-						"type": "varchar"
-					},
-					{
-						"name": "Urg",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Referrer Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Exam Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Event Date2",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Days Waiting",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Predicted Reset Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Waiting Time Reset Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Weeks Waiting",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Planned Appointment Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Waiting Breach Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Was Planned",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Scheduled",
-						"type": "varchar"
-					},
-					{
-						"name": "Was Waiting",
-						"type": "varchar"
-					},
-					{
-						"name": "CCG",
-						"type": "varchar"
-					},
-					{
-						"name": "D Status",
-						"type": "varchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "luft",
-					"table": "FYF_ODBC_PTL"
 				}
 			},
 			"dependsOn": []

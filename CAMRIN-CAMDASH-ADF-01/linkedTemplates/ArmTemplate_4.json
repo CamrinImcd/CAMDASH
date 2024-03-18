@@ -13,6 +13,112 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_Breast_ScreenLeavers')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Breast_ScreenLeavers",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Staff Type",
+						"type": "String"
+					},
+					{
+						"name": "Staff Members Left Trust",
+						"type": "String"
+					},
+					{
+						"name": "Staff Members Promoted",
+						"type": "String"
+					},
+					{
+						"name": "Staff Members left breast screening",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_Breast_ScreenMedStaff')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Breast_ScreenMedStaff",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Staff Type",
+						"type": "String"
+					},
+					{
+						"name": "Headcount",
+						"type": "String"
+					},
+					{
+						"name": "FTE",
+						"type": "String"
+					},
+					{
+						"name": "Substantive Pay Costs",
+						"type": "String"
+					},
+					{
+						"name": "Extra Duty Payments(£)",
+						"type": "String"
+					},
+					{
+						"name": "Vacancy",
+						"type": "String"
+					},
+					{
+						"name": "Bank & Agency (FTE)",
+						"type": "String"
+					},
+					{
+						"name": "Bank & Agency Pay Costs (£)",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_Breast_ScreenPlacements')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1061,88 +1167,6 @@
 					},
 					{
 						"name": "Headcount  Internal/external  Bank",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_SubStaffSickness')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "SubStaffSickness",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "NIDC_Workforce.xlsx",
-						"container": "nidc-workforce-22"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Trust",
-						"type": "String"
-					},
-					{
-						"name": "Band",
-						"type": "String"
-					},
-					{
-						"name": "ClinicalStaffSick",
-						"type": "String"
-					},
-					{
-						"name": "NonClinicalStaffSick",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_SubStaffSkillmix')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "SubStaffSkillmix",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "NIDC_Workforce.xlsx",
-						"container": "nidc-workforce-22"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Trust",
-						"type": "String"
-					},
-					{
-						"name": "Staff Group",
-						"type": "String"
-					},
-					{
-						"name": "Modality",
-						"type": "String"
-					},
-					{
-						"name": "Count",
 						"type": "String"
 					}
 				]
