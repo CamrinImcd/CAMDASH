@@ -13292,8 +13292,7 @@
 								"parameters": {},
 								"datasetParameters": {
 									"source1": {},
-									"sink1": {},
-									"sink2": {}
+									"sink1": {}
 								}
 							},
 							"staging": {},
@@ -13483,7 +13482,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AIDFCC')]",
+			"name": "[concat(parameters('factoryName'), '/AIDF')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -13496,28 +13495,7 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "dev",
-					"table": "AIDFCC"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AIDFXC')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dev",
-					"table": "AIDFXC"
+					"table": "AIDF"
 				}
 			},
 			"dependsOn": [
@@ -28966,17 +28944,10 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "AIDFCC",
+								"referenceName": "AIDF",
 								"type": "DatasetReference"
 							},
 							"name": "sink1"
-						},
-						{
-							"dataset": {
-								"referenceName": "AIDFXC",
-								"type": "DatasetReference"
-							},
-							"name": "sink2"
 						}
 					],
 					"transformations": [
@@ -28997,6 +28968,9 @@
 						},
 						{
 							"name": "filter2"
+						},
+						{
+							"name": "join1"
 						}
 					],
 					"scriptLines": [
@@ -29097,7 +29071,13 @@
 						"          Snapshot = iif(isNull({Date First Verified})==false(),iif(toDate({Date First Verified})>=toDate(\"01/10/2023\"),1,0),0)) ~> derivedColumn1",
 						"derivedColumn1 derive(Abnormal = iif(between({CX I-R}, 0, 28)==true(),1,0)) ~> derivedColumn2",
 						"source1 filter(Examination == \"CCHES\") ~> filter2",
-						"select1 sink(allowSchemaDrift: true,",
+						"derivedColumn2, select1 join(select2@{CRIS No} == select1@{CRIS No}",
+						"     && select2@{Event Date} <= select1@{Event Date},",
+						"     joinType:'left',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'right')~> join1",
+						"join1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -29106,24 +29086,44 @@
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
-						"derivedColumn2 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink2"
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          {CRIS No} = select2@{CRIS No},",
+						"          {Event Key} = select2@{Event Key},",
+						"          {Exam Key} = select2@{Exam Key},",
+						"          {Trust ID} = select2@{Trust ID},",
+						"          {Exam Room ID} = select2@{Exam Room ID},",
+						"          {Event Date} = select2@{Event Date},",
+						"          {Date First Verified} = select2@{Date First Verified},",
+						"          {Reported By} = select2@{Reported By},",
+						"          {Patient Type ID} = select2@{Patient Type ID},",
+						"          {Age At Event} = select2@{Age At Event},",
+						"          {Exam ID} = select2@{Exam ID},",
+						"          Auto,",
+						"          {Rep Rad},",
+						"          Cons,",
+						"          Outsource,",
+						"          {CX I-R},",
+						"          Snapshot,",
+						"          Abnormal,",
+						"          {CRIS No.1} = select1@{CRIS No},",
+						"          {Event Key.1} = select1@{Event Key},",
+						"          {Exam Key.1} = select1@{Exam Key},",
+						"          {Trust ID.1} = select1@{Trust ID},",
+						"          {Exam Room ID.1} = select1@{Exam Room ID},",
+						"          {Event Date.1} = select1@{Event Date},",
+						"          {Date First Verified.1} = select1@{Date First Verified},",
+						"          {Reported By.1} = select1@{Reported By},",
+						"          {Patient Type ID.1} = select1@{Patient Type ID},",
+						"          {Age At Event.1} = select1@{Age At Event},",
+						"          {Exam ID.1} = select1@{Exam ID}",
+						"     )) ~> sink1"
 					]
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/FYF_ODBC_CORE_v2')]",
-				"[concat(variables('factoryId'), '/datasets/AIDFCC')]",
-				"[concat(variables('factoryId'), '/datasets/AIDFXC')]"
+				"[concat(variables('factoryId'), '/datasets/AIDF')]"
 			]
 		},
 		{

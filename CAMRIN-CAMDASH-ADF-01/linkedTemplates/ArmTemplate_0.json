@@ -294,7 +294,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/AIDFCC')]",
+			"name": "[concat(parameters('factoryName'), '/AIDF')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -307,28 +307,7 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "dev",
-					"table": "AIDFCC"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AIDFXC')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dev",
-					"table": "AIDFXC"
+					"table": "AIDF"
 				}
 			},
 			"dependsOn": [
@@ -798,6 +777,27 @@
 				"typeProperties": {
 					"schema": "dev",
 					"table": "AzureSQL_CoreV3Staging"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSQLPTL_V3_Staging')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "AzureSQLPTL_V3_Staging"
 				}
 			},
 			"dependsOn": [
