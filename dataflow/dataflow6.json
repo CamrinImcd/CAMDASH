@@ -15,17 +15,10 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "AIDFCC",
+						"referenceName": "AIDF",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
-				},
-				{
-					"dataset": {
-						"referenceName": "AIDFXC",
-						"type": "DatasetReference"
-					},
-					"name": "sink2"
 				}
 			],
 			"transformations": [
@@ -46,6 +39,9 @@
 				},
 				{
 					"name": "filter2"
+				},
+				{
+					"name": "join1"
 				}
 			],
 			"scriptLines": [
@@ -139,14 +135,20 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select2",
 				"select2 derive(Auto = iif({Reported By}==\"AUTO\", 1, 0),",
-				"          {Rep Rad} = iif(startsWith({Reported By},\"R\")==true(),1,0) ,",
-				"          Cons = iif(startsWith({Reported By},\"C\")==true(),1,0) ,",
+				"          {Rep Rad} = iif(startsWith({Reported By},\"R\")==true(),1,0),",
+				"          Cons = iif(startsWith({Reported By},\"C\")==true(),1,0),",
 				"          Outsource = iif(instr({Reported By},\"4way\")==0,0,iif(instr({Reported By},\"ext\")==0,0,1)),",
 				"          {CX I-R} = toDate({Date First Verified})-{Event Date},",
 				"          Snapshot = iif(isNull({Date First Verified})==false(),iif(toDate({Date First Verified})>=toDate(\"01/10/2023\"),1,0),0)) ~> derivedColumn1",
 				"derivedColumn1 derive(Abnormal = iif(between({CX I-R}, 0, 28)==true(),1,0)) ~> derivedColumn2",
 				"source1 filter(Examination == \"CCHES\") ~> filter2",
-				"select1 sink(allowSchemaDrift: true,",
+				"derivedColumn2, select1 join(select2@{CRIS No} == select1@{CRIS No}",
+				"     && select2@{Event Date} <= select1@{Event Date},",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'right')~> join1",
+				"join1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -155,17 +157,38 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
-				"derivedColumn2 sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     deletable:false,",
-				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:false,",
-				"     format: 'table',",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink2"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          {CRIS No} = select2@{CRIS No},",
+				"          {Event Key} = select2@{Event Key},",
+				"          {Exam Key} = select2@{Exam Key},",
+				"          {Trust ID} = select2@{Trust ID},",
+				"          {Exam Room ID} = select2@{Exam Room ID},",
+				"          {Event Date} = select2@{Event Date},",
+				"          {Date First Verified} = select2@{Date First Verified},",
+				"          {Reported By} = select2@{Reported By},",
+				"          {Patient Type ID} = select2@{Patient Type ID},",
+				"          {Age At Event} = select2@{Age At Event},",
+				"          {Exam ID} = select2@{Exam ID},",
+				"          Auto,",
+				"          {Rep Rad},",
+				"          Cons,",
+				"          Outsource,",
+				"          {CX I-R},",
+				"          Snapshot,",
+				"          Abnormal,",
+				"          {CRIS No} = select1@{CRIS No},",
+				"          {Event Key} = select1@{Event Key},",
+				"          {Exam Key} = select1@{Exam Key},",
+				"          {Trust ID} = select1@{Trust ID},",
+				"          {Exam Room ID} = select1@{Exam Room ID},",
+				"          {Event Date} = select1@{Event Date},",
+				"          {Date First Verified} = select1@{Date First Verified},",
+				"          {Reported By} = select1@{Reported By},",
+				"          {Patient Type ID} = select1@{Patient Type ID},",
+				"          {Age At Event} = select1@{Age At Event},",
+				"          {Exam ID} = select1@{Exam ID}",
+				"     )) ~> sink1"
 			]
 		}
 	}
