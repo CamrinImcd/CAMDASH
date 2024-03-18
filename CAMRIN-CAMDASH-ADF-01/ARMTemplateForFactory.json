@@ -28971,6 +28971,9 @@
 						},
 						{
 							"name": "join1"
+						},
+						{
+							"name": "derivedColumn3"
 						}
 					],
 					"scriptLines": [
@@ -29077,7 +29080,10 @@
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
 						"     broadcast: 'right')~> join1",
-						"join1 sink(allowSchemaDrift: true,",
+						"join1 derive({CXR-CCI} = toDate(select2@{Date First Verified})-select1@{Event Date},",
+						"          {CXI-CCR} = select2@{Event Date}-toDate(select1@{Date First Verified}),",
+						"          {CXI-CCI} = select2@{Event Date}-select1@{Event Date}) ~> derivedColumn3",
+						"derivedColumn3 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -29116,7 +29122,10 @@
 						"          {Reported By.1} = select1@{Reported By},",
 						"          {Patient Type ID.1} = select1@{Patient Type ID},",
 						"          {Age At Event.1} = select1@{Age At Event},",
-						"          {Exam ID.1} = select1@{Exam ID}",
+						"          {Exam ID.1} = select1@{Exam ID},",
+						"          {CXR-CCI.1} = {CXR-CCI},",
+						"          {CXI-CCR.1} = {CXI-CCR},",
+						"          {CXI-CCI.1} = {CXI-CCI}",
 						"     )) ~> sink1"
 					]
 				}
