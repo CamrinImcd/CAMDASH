@@ -1,0 +1,172 @@
+{
+	"name": "dataflow6",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "FYF_ODBC_CORE_v2",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AIDFCC",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "AIDFXC",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				}
+			],
+			"transformations": [
+				{
+					"name": "filter1"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "filter2"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {CRIS No} as integer,",
+				"          Accession as string,",
+				"          {Ref Src} as string,",
+				"          Site as string,",
+				"          {Request Date} as date,",
+				"          {Event Date} as date,",
+				"          {Event Time} as string,",
+				"          {On Call} as string,",
+				"          PT as string,",
+				"          Examination as string,",
+				"          {Exam Name} as string,",
+				"          Room as string,",
+				"          {ExamSite Code} as string,",
+				"          {Start Time} as string,",
+				"          {End Time} as string,",
+				"          {Exam Key} as integer,",
+				"          {Event Key} as integer,",
+				"          {Status Code} as string,",
+				"          {Booked Date} as timestamp,",
+				"          {Booked Time} as string,",
+				"          {Creation Date} as timestamp,",
+				"          Attended as string,",
+				"          Urg as string,",
+				"          Modality as string,",
+				"          {No of Proc} as integer,",
+				"          {Planned Appointment Date} as timestamp,",
+				"          {Date First Verified} as timestamp,",
+				"          {Time First Verified} as string,",
+				"          {Was Planned} as string,",
+				"          {Was Scheduled} as string,",
+				"          {Was Waiting} as string,",
+				"          {Status Time} as string,",
+				"          Modality2 as string,",
+				"          {Trust Name} as string,",
+				"          Patient_Type as string,",
+				"          {Tat Type} as string,",
+				"          {Status Time2} as string,",
+				"          {Patient Type ID} as long,",
+				"          {Modality ID} as integer,",
+				"          {Status ID} as integer,",
+				"          {Exam ID} as integer,",
+				"          {Exam Room ID} as integer,",
+				"          {Trust ID} as integer,",
+				"          {Referral Source ID} as integer,",
+				"          {Tat Type ID} as integer,",
+				"          {Reported By} as string,",
+				"          Rank as integer,",
+				"          {Status Date} as timestamp,",
+				"          Activity as integer,",
+				"          {Count of Activty_Demand for Activity} as long,",
+				"          {Stat Date} as timestamp,",
+				"          {Age At Event} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source1 filter(Examination == \"XCHES\") ~> filter1",
+				"filter2 select(mapColumn(",
+				"          {CRIS No},",
+				"          {Event Key},",
+				"          {Exam Key},",
+				"          {Trust ID},",
+				"          {Exam Room ID},",
+				"          {Event Date},",
+				"          {Date First Verified},",
+				"          {Reported By},",
+				"          {Patient Type ID},",
+				"          {Age At Event},",
+				"          {Exam ID}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"filter1 select(mapColumn(",
+				"          {CRIS No},",
+				"          {Event Key},",
+				"          {Exam Key},",
+				"          {Trust ID},",
+				"          {Exam Room ID},",
+				"          {Event Date},",
+				"          {Date First Verified},",
+				"          {Reported By},",
+				"          {Patient Type ID},",
+				"          {Age At Event},",
+				"          {Exam ID}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"select2 derive(Auto = iif({Reported By}==\"AUTO\", 1, 0),",
+				"          {Rep Rad} = iif(startsWith({Reported By},\"R\")==true(),1,0) ,",
+				"          Cons = iif(startsWith({Reported By},\"C\")==true(),1,0) ,",
+				"          Outsource = iif(instr({Reported By},\"4way\")==0,0,iif(instr({Reported By},\"ext\")==0,0,1)),",
+				"          {CX I-R} = toDate({Date First Verified})-{Event Date},",
+				"          Snapshot = iif(isNull({Date First Verified})==false(),iif(toDate({Date First Verified})>=toDate(\"01/10/2023\"),1,0),0)) ~> derivedColumn1",
+				"derivedColumn1 derive(Abnormal = iif(between({CX I-R}, 0, 28)==true(),1,0)) ~> derivedColumn2",
+				"source1 filter(Examination == \"CCHES\") ~> filter2",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
+				"derivedColumn2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink2"
+			]
+		}
+	}
+}
