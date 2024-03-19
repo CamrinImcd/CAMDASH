@@ -1749,9 +1749,6 @@
 						},
 						{
 							"name": "derivedColumn3"
-						},
-						{
-							"name": "sort1"
 						}
 					],
 					"scriptLines": [
@@ -1813,7 +1810,7 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> source1",
-						"sort1 filter(Examination == \"XCHES\") ~> filter1",
+						"source1 filter(Examination == \"XCHES\" && {Event Date} >= toDate('01/01/2022')) ~> filter1",
 						"filter2 select(mapColumn(",
 						"          {CRIS No},",
 						"          {Event Key},",
@@ -1862,7 +1859,6 @@
 						"join1 derive({CXR-CCI} = select1@{Event Date}-toDate(select2@{Date First Verified}),",
 						"          {CXI-CCR} = toDate(select1@{Date First Verified})-select2@{Event Date},",
 						"          {CXI-CCI} = select1@{Event Date}-select2@{Event Date}) ~> derivedColumn3",
-						"source1 sort(asc({Reported By}, false)) ~> sort1",
 						"derivedColumn3 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
