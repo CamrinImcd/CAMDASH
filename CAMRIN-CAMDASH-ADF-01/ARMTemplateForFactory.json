@@ -13273,7 +13273,7 @@
 							{
 								"activity": "CreateAct_Dem",
 								"dependencyConditions": [
-									"Succeeded"
+									"Completed"
 								]
 							}
 						],
