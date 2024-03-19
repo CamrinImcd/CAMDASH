@@ -137,7 +137,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select2",
-				"select2 derive(Auto = iif(instr({Reported By},'Auto')!=0, 1, 0),",
+				"select2 derive(Auto = instr({Reported By},'auto'),",
 				"          {Rep Rad} = iif(startsWith({Reported By},\"RA\")==true(),1,0),",
 				"          Cons = iif(startsWith({Reported By},\"C\")==true(),1,0),",
 				"          Outsource = iif(instr({Reported By},\"4way\")!=0,1,iif(instr({Reported By},\"ext\")!=0,1,0)),",
