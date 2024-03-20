@@ -1810,7 +1810,7 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> source1",
-						"source1 filter(Examination == \"XCHES\" && {Event Date} >= toDate('01/01/2022','MM/dd/yyyy') && toDate({Date First Verified}) >= toDate('01/01/2022','MM/dd/yyyy')) ~> filter1",
+						"source1 filter(Examination == \"XCHES\" && {Event Date} >= toDate('10/01/2022','MM/dd/yyyy') && toDate({Date First Verified}) >= toDate('10/01/2022','MM/dd/yyyy')) ~> filter1",
 						"filter2 select(mapColumn(",
 						"          {CRIS No},",
 						"          {Event Key},",
