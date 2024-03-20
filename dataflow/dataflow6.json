@@ -45,6 +45,15 @@
 				},
 				{
 					"name": "derivedColumn3"
+				},
+				{
+					"name": "filter3"
+				},
+				{
+					"name": "select3"
+				},
+				{
+					"name": "join2"
 				}
 			],
 			"scriptLines": [
@@ -155,7 +164,33 @@
 				"join1 derive({CXR-CCI} = select1@{Event Date}-toDate(select2@{Date First Verified}),",
 				"          {CXI-CCR} = toDate(select1@{Date First Verified})-select2@{Event Date},",
 				"          {CXI-CCI} = select1@{Event Date}-select2@{Event Date}) ~> derivedColumn3",
-				"derivedColumn3 sink(allowSchemaDrift: true,",
+				"select3 filter({CXR-CCI}<=28) ~> filter3",
+				"derivedColumn3 select(mapColumn(",
+				"          {CRIS No} = select1@{CRIS No},",
+				"          {Event Key} = select1@{Event Key},",
+				"          {Exam Key} = select1@{Exam Key},",
+				"          {Trust ID} = select1@{Trust ID},",
+				"          {Exam Room ID} = select1@{Exam Room ID},",
+				"          {Event Date} = select1@{Event Date},",
+				"          {Date First Verified} = select1@{Date First Verified},",
+				"          {Reported By} = select1@{Reported By},",
+				"          {Patient Type ID} = select1@{Patient Type ID},",
+				"          {Age At Event} = select1@{Age At Event},",
+				"          {Exam ID} = select1@{Exam ID},",
+				"          {CXR-CCI},",
+				"          {CXI-CCR},",
+				"          {CXI-CCI}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select3",
+				"derivedColumn2, filter3 join(select2@{CRIS No} == select3@{CRIS No}",
+				"     && select2@{Event Date} <= select3@{Event Date}",
+				"     && toDate(select2@{Date First Verified}) <= select3@{Event Date},",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'right')~> join2",
+				"join2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          {CRIS No} as integer,",
