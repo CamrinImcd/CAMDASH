@@ -2186,7 +2186,7 @@
 							"name": "join2"
 						},
 						{
-							"name": "rank1"
+							"name": "window1"
 						}
 					],
 					"scriptLines": [
@@ -2323,13 +2323,13 @@
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
 						"     broadcast: 'right')~> join2",
-						"filter3 rank(asc({Exam Key}, true),",
+						"filter3 window(over({Exam Key}),",
+						"     asc({Exam Key}, true),",
 						"     asc({CXR-CCI}, true),",
 						"     asc({CXI-CCR}, true),",
 						"     asc({CXI-CCI}, true),",
-						"     output(Rank as long),",
-						"     dense: true) ~> rank1",
-						"rank1 sink(allowSchemaDrift: true,",
+						"     Rank = denseRank()) ~> window1",
+						"window1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
