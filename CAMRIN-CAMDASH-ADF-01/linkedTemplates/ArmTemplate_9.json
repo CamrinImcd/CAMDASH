@@ -2582,7 +2582,7 @@
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
 						"     broadcast: 'right')~> join2",
-						"derivedColumn2 sink(allowSchemaDrift: true,",
+						"join1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
