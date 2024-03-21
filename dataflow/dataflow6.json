@@ -14,10 +14,6 @@
 			],
 			"sinks": [
 				{
-					"dataset": {
-						"referenceName": "testtable2",
-						"type": "DatasetReference"
-					},
 					"name": "sink1"
 				},
 				{
@@ -197,16 +193,10 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'right')~> join2",
-				"join1 sink(allowSchemaDrift: true,",
+				"derivedColumn3 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     deletable:false,",
-				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:false,",
-				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          {CRIS No} = select2@{CRIS No},",
 				"          {Event Key} = select2@{Event Key},",
@@ -236,8 +226,12 @@
 				"          {Reported By.1} = select1@{Reported By},",
 				"          {Patient Type ID.1} = select1@{Patient Type ID},",
 				"          {Age At Event.1} = select1@{Age At Event},",
-				"          {Exam ID.1} = select1@{Exam ID}",
-				"     )) ~> sink1",
+				"          {Exam ID.1} = select1@{Exam ID},",
+				"          {CXR-CCI},",
+				"          {CXI-CCR},",
+				"          {CXI-CCI}",
+				"     ),",
+				"     format: 'table') ~> sink1",
 				"join2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
