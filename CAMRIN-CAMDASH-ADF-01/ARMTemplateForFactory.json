@@ -29143,7 +29143,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "AIDF",
+								"referenceName": "testtable2",
 								"type": "DatasetReference"
 							},
 							"name": "sink1"
@@ -29157,7 +29157,7 @@
 						},
 						{
 							"dataset": {
-								"referenceName": "testtable2",
+								"referenceName": "AIDF",
 								"type": "DatasetReference"
 							},
 							"name": "sink3"
@@ -29334,6 +29334,27 @@
 						"     broadcast: 'right')~> join2",
 						"filter1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     truncate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
+						"filter2 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink2",
+						"join2 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
 						"     input(",
 						"          {CRIS No} as integer,",
 						"          {Event Key} as integer,",
@@ -29376,35 +29397,15 @@
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
-						"filter2 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink2",
-						"filter3 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
 						"     errorHandlingOption: 'stopOnFirstError') ~> sink3"
 					]
 				}
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/FYF_ODBC_CORE_v2')]",
-				"[concat(variables('factoryId'), '/datasets/AIDF')]",
+				"[concat(variables('factoryId'), '/datasets/testtable2')]",
 				"[concat(variables('factoryId'), '/datasets/testtable1')]",
-				"[concat(variables('factoryId'), '/datasets/testtable2')]"
+				"[concat(variables('factoryId'), '/datasets/AIDF')]"
 			]
 		},
 		{
