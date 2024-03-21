@@ -29332,7 +29332,7 @@
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
 						"     broadcast: 'right')~> join2",
-						"derivedColumn3 sink(allowSchemaDrift: true,",
+						"select3 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
