@@ -61,6 +61,9 @@
 				},
 				{
 					"name": "join2"
+				},
+				{
+					"name": "rank1"
 				}
 			],
 			"scriptLines": [
@@ -197,13 +200,18 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'right')~> join2",
-				"filter3 sink(allowSchemaDrift: true,",
+				"filter3 rank(asc({Exam Key}, true),",
+				"     asc({CXR-CCI}, true),",
+				"     asc({CXI-CCR}, true),",
+				"     asc({CXI-CCI}, true),",
+				"     output(Rank as long),",
+				"     dense: true) ~> rank1",
+				"rank1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",
 				"     updateable:false,",
 				"     upsertable:false,",
-				"     truncate:true,",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
@@ -222,7 +230,8 @@
 				"          {Exam ID},",
 				"          {CXR-CCI},",
 				"          {CXI-CCR},",
-				"          {CXI-CCI}",
+				"          {CXI-CCI},",
+				"          Rank",
 				"     )) ~> sink1",
 				"join2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
