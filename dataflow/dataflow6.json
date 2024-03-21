@@ -14,6 +14,10 @@
 			],
 			"sinks": [
 				{
+					"dataset": {
+						"referenceName": "testtable2",
+						"type": "DatasetReference"
+					},
 					"name": "sink1"
 				},
 				{
@@ -195,8 +199,14 @@
 				"     broadcast: 'right')~> join2",
 				"derivedColumn3 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError',",
 				"     mapColumn(",
 				"          {CRIS No} = select2@{CRIS No},",
 				"          {Event Key} = select2@{Event Key},",
@@ -230,8 +240,7 @@
 				"          {CXR-CCI},",
 				"          {CXI-CCR},",
 				"          {CXI-CCI}",
-				"     ),",
-				"     format: 'table') ~> sink1",
+				"     )) ~> sink1",
 				"join2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
