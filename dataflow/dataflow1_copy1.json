@@ -64,7 +64,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "AzureSQLPTL_V3_Staging",
+						"referenceName": "ODBC_PTL_v2",
 						"type": "DatasetReference"
 					},
 					"name": "AzureSqlPTLV2Staging"
@@ -124,9 +124,6 @@
 				},
 				{
 					"name": "filter1"
-				},
-				{
-					"name": "lookup2"
 				},
 				{
 					"name": "sort1"
@@ -436,19 +433,13 @@
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookup1",
 				"source1 filter(Rank==1) ~> filter1",
-				"RenameCols3, source2 lookup(RenameCols3@{Exam Key} == source2@{Exam Key},",
-				"     multiple: false,",
-				"     pickup: 'first',",
-				"     desc(source2@{Stat Date}, false),",
-				"     broadcast: 'auto')~> lookup2",
 				"source2 sort(desc({Status Date}, false)) ~> sort1",
-				"lookup2 sink(allowSchemaDrift: true,",
+				"RenameCols3 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",
 				"     updateable:false,",
 				"     upsertable:false,",
-				"     recreate:true,",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
