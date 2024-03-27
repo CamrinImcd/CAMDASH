@@ -52,6 +52,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSql_STATUSES",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
 				}
 			],
 			"sinks": [
@@ -117,6 +124,12 @@
 				},
 				{
 					"name": "filter1"
+				},
+				{
+					"name": "lookup2"
+				},
+				{
+					"name": "sort1"
 				}
 			],
 			"scriptLines": [
@@ -260,6 +273,31 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source1",
+				"source(output(",
+				"          {Exam Key} as integer,",
+				"          {Event Key} as integer,",
+				"          Accession as string,",
+				"          Referrer as string,",
+				"          {Referral Location} as string,",
+				"          {Referral Source} as string,",
+				"          Urg as string,",
+				"          Site as string,",
+				"          {Status Code} as string,",
+				"          {Status Date} as timestamp,",
+				"          {Status Time} as integer,",
+				"          {Referral Location Name} as string,",
+				"          {Referral Source Name} as string,",
+				"          {Referral Name} as string,",
+				"          {Examination Name} as string,",
+				"          Modality as string,",
+				"          {Status Code at State Date} as string,",
+				"          {Stat Date} as timestamp,",
+				"          {D Status} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source2",
 				"AzureSqlPTL derive({5 Weeks Wait} = iif({Weeks Waiting}>=6,1,0),",
 				"          {Booked Datetime} = toString(null()),",
 				"          {6 Weeks Wait} = toString(null()),",
@@ -398,7 +436,13 @@
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookup1",
 				"source1 filter(Rank==1) ~> filter1",
-				"RenameCols3 sink(allowSchemaDrift: true,",
+				"RenameCols3, source2 lookup(RenameCols3@{Exam Key} == source2@{Exam Key},",
+				"     multiple: false,",
+				"     pickup: 'first',",
+				"     desc(source2@{Stat Date}, false),",
+				"     broadcast: 'auto')~> lookup2",
+				"source2 sort(desc({Status Date}, false)) ~> sort1",
+				"lookup2 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",

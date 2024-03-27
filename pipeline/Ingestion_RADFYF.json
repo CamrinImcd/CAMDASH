@@ -4066,7 +4066,7 @@
 					{
 						"activity": "ReferenceLookupsPTL",
 						"dependencyConditions": [
-							"Completed"
+							"Failed"
 						]
 					}
 				],
@@ -4562,7 +4562,7 @@
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "CreateAct_Dem",
+						"activity": "Data flow2",
 						"dependencyConditions": [
 							"Completed"
 						]
@@ -4579,6 +4579,37 @@
 				"typeProperties": {
 					"dataflow": {
 						"referenceName": "dataflow6",
+						"type": "DataFlowReference"
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "Fine"
+				}
+			},
+			{
+				"name": "Data flow2",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [
+					{
+						"activity": "CreateAct_Dem",
+						"dependencyConditions": [
+							"Completed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "dataflow7",
 						"type": "DataFlowReference"
 					},
 					"compute": {
