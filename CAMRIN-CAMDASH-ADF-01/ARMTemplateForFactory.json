@@ -12879,7 +12879,7 @@
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
-								"activity": "CreateAct_Dem",
+								"activity": "Data flow2",
 								"dependencyConditions": [
 									"Completed"
 								]
@@ -12902,6 +12902,43 @@
 									"source1": {},
 									"sink1": {},
 									"sink3": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					},
+					{
+						"name": "Data flow2",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "CreateAct_Dem",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow7",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
 								}
 							},
 							"staging": {},
@@ -12956,6 +12993,7 @@
 				"[concat(variables('factoryId'), '/dataflows/dataflow4')]",
 				"[concat(variables('factoryId'), '/dataflows/PopulateNewColumns')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow6')]",
+				"[concat(variables('factoryId'), '/dataflows/dataflow7')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep2')]"
 			]
 		},
@@ -23059,7 +23097,144 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CRIS Number",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status Category",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Request Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Booked Date Time",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Creation Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Attended",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Urg",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Days Waiting",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Predicted Reset Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Waiting Time Reset Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Weeks Waiting",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Planned Appointment Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Waiting Breach Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Was Planned",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Was Scheduled",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Was Waiting",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "date"
+					},
+					{
+						"name": "5 Weeks Wait",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Booked Datetime",
+						"type": "nvarchar"
+					},
+					{
+						"name": "6 Weeks Wait",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Referral Source ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Modality ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Room ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Trust ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status Code",
+						"type": "nvarchar"
+					}
+				],
 				"typeProperties": {
 					"schema": "dev",
 					"table": "FYF_ODBC_PTL_v2"
@@ -23292,6 +23467,27 @@
 				"typeProperties": {
 					"schema": "dev",
 					"table": "Patient Type"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Patient_Waiting')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "Patient_Waiting"
 				}
 			},
 			"dependsOn": [
@@ -26871,6 +27067,37 @@
 						"source2 sort(desc({Status Date}, false)) ~> sort1",
 						"RenameCols3 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     input(",
+						"          {Event Key} as integer,",
+						"          {Exam Key} as integer,",
+						"          {CRIS Number} as integer,",
+						"          {Status Category} as string,",
+						"          {Request Date} as timestamp,",
+						"          {Event Date} as timestamp,",
+						"          {Booked Date Time} as timestamp,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          Urg as integer,",
+						"          {Days Waiting} as integer,",
+						"          {Predicted Reset Date} as timestamp,",
+						"          {Waiting Time Reset Date} as timestamp,",
+						"          {Weeks Waiting} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Waiting Breach Date} as timestamp,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Stat Date} as date,",
+						"          {5 Weeks Wait} as integer,",
+						"          {Booked Datetime} as string,",
+						"          {6 Weeks Wait} as string,",
+						"          {Referral Source ID} as integer,",
+						"          {Exam ID} as integer,",
+						"          {Modality ID} as integer,",
+						"          {Exam Room ID} as integer,",
+						"          {Trust ID} as integer,",
+						"          {Status Code} as string",
+						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
@@ -28904,6 +29131,110 @@
 				"[concat(variables('factoryId'), '/datasets/FYF_ODBC_CORE_v2')]",
 				"[concat(variables('factoryId'), '/datasets/testtable2')]",
 				"[concat(variables('factoryId'), '/datasets/AIDF')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow7')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODBC_PTL_v2",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Patient_Waiting",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "select1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          {Event Key} as integer,",
+						"          {Exam Key} as integer,",
+						"          {CRIS Number} as integer,",
+						"          {Status Category} as string,",
+						"          {Request Date} as timestamp,",
+						"          {Event Date} as timestamp,",
+						"          {Booked Date Time} as timestamp,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          Urg as integer,",
+						"          {Days Waiting} as integer,",
+						"          {Predicted Reset Date} as timestamp,",
+						"          {Waiting Time Reset Date} as timestamp,",
+						"          {Weeks Waiting} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Waiting Breach Date} as timestamp,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Stat Date} as date,",
+						"          {5 Weeks Wait} as integer,",
+						"          {Booked Datetime} as string,",
+						"          {6 Weeks Wait} as string,",
+						"          {Referral Source ID} as integer,",
+						"          {Exam ID} as integer,",
+						"          {Modality ID} as integer,",
+						"          {Exam Room ID} as integer,",
+						"          {Trust ID} as integer,",
+						"          {Status Code} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 select(mapColumn(",
+						"          {Event Key},",
+						"          {Exam Key},",
+						"          {Exam ID},",
+						"          {Exam Room ID},",
+						"          {Request Date},",
+						"          {Planned Appointment Date},",
+						"          {Waiting Time Reset Date},",
+						"          {Event Date},",
+						"          {Weeks Waiting},",
+						"          {Modality ID},",
+						"          {Was Planned},",
+						"          {Was Scheduled},",
+						"          {Was Waiting},",
+						"          {Referral Source ID},",
+						"          {Trust ID},",
+						"          {Status Code}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ODBC_PTL_v2')]",
+				"[concat(variables('factoryId'), '/datasets/Patient_Waiting')]"
 			]
 		},
 		{

@@ -194,7 +194,144 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CRIS Number",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status Category",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Request Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Booked Date Time",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Creation Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Attended",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Urg",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Days Waiting",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Predicted Reset Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Waiting Time Reset Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Weeks Waiting",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Planned Appointment Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Waiting Breach Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Was Planned",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Was Scheduled",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Was Waiting",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "date"
+					},
+					{
+						"name": "5 Weeks Wait",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Booked Datetime",
+						"type": "nvarchar"
+					},
+					{
+						"name": "6 Weeks Wait",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Referral Source ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Modality ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Room ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Trust ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status Code",
+						"type": "nvarchar"
+					}
+				],
 				"typeProperties": {
 					"schema": "dev",
 					"table": "FYF_ODBC_PTL_v2"
@@ -423,6 +560,25 @@
 				"typeProperties": {
 					"schema": "dev",
 					"table": "Patient Type"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Patient_Waiting')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "Patient_Waiting"
 				}
 			},
 			"dependsOn": []
@@ -1057,93 +1213,6 @@
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "FYF_ODBC_LUNG_Ca_ALERTS"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServer_NICOR')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "RADFYF01_CRIS_PostgreSQL",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "CRIS No",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Site",
-						"type": "varchar"
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Examination",
-						"type": "varchar"
-					},
-					{
-						"name": "Room",
-						"type": "varchar"
-					},
-					{
-						"name": "Dosage",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "Dosage typ",
-						"type": "varchar"
-					},
-					{
-						"name": "Screening time",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "Height",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "Weight",
-						"type": "float",
-						"precision": 15
-					},
-					{
-						"name": "Exam Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "FYF_ODBC_POST_PROCESSING"
 				}
 			},
 			"dependsOn": []
