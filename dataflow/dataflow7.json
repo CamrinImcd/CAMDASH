@@ -1,0 +1,98 @@
+{
+	"name": "dataflow7",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ODBC_PTL_v2",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Patient_Waiting",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          {Event Key} as integer,",
+				"          {Exam Key} as integer,",
+				"          {CRIS Number} as integer,",
+				"          {Status Category} as string,",
+				"          {Request Date} as timestamp,",
+				"          {Event Date} as timestamp,",
+				"          {Booked Date Time} as timestamp,",
+				"          {Creation Date} as timestamp,",
+				"          Attended as string,",
+				"          Urg as integer,",
+				"          {Days Waiting} as integer,",
+				"          {Predicted Reset Date} as timestamp,",
+				"          {Waiting Time Reset Date} as timestamp,",
+				"          {Weeks Waiting} as integer,",
+				"          {Planned Appointment Date} as timestamp,",
+				"          {Waiting Breach Date} as timestamp,",
+				"          {Was Planned} as string,",
+				"          {Was Scheduled} as string,",
+				"          {Was Waiting} as string,",
+				"          {Stat Date} as date,",
+				"          {5 Weeks Wait} as integer,",
+				"          {Booked Datetime} as string,",
+				"          {6 Weeks Wait} as string,",
+				"          {Referral Source ID} as integer,",
+				"          {Exam ID} as integer,",
+				"          {Modality ID} as integer,",
+				"          {Exam Room ID} as integer,",
+				"          {Trust ID} as integer,",
+				"          {Status Code} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source1 select(mapColumn(",
+				"          {Event Key},",
+				"          {Exam Key},",
+				"          {Exam ID},",
+				"          {Exam Room ID},",
+				"          {Request Date},",
+				"          {Planned Appointment Date},",
+				"          {Waiting Time Reset Date},",
+				"          {Event Date},",
+				"          {Weeks Waiting},",
+				"          {Modality ID},",
+				"          {Was Planned},",
+				"          {Was Scheduled},",
+				"          {Was Waiting},",
+				"          {Referral Source ID},",
+				"          {Trust ID},",
+				"          {Status Code}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}
