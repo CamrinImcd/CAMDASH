@@ -12736,6 +12736,7 @@
 									"Modality": {},
 									"ExamSite": {},
 									"source1": {},
+									"source2": {},
 									"AzureSqlPTLV2Staging": {}
 								}
 							},
@@ -12754,7 +12755,7 @@
 							{
 								"activity": "ReferenceLookupsPTL",
 								"dependencyConditions": [
-									"Completed"
+									"Failed"
 								]
 							}
 						],
@@ -12775,349 +12776,13 @@
 							"sink": {
 								"type": "AzureSqlSink",
 								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
 							"translator": {
 								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "Event Key",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "Event Key",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "Exam Key",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "Exam Key",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "CRIS Number",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "CRIS Number",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "Status Category",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "Status Category",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Request Date",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										},
-										"sink": {
-											"name": "Request Date",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										}
-									},
-									{
-										"source": {
-											"name": "Event Date",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										},
-										"sink": {
-											"name": "Event Date",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										}
-									},
-									{
-										"source": {
-											"name": "Booked Date Time",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										},
-										"sink": {
-											"name": "Booked Date Time",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										}
-									},
-									{
-										"source": {
-											"name": "Creation Date",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										},
-										"sink": {
-											"name": "Creation Date",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										}
-									},
-									{
-										"source": {
-											"name": "Attended",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "Attended",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Urg",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "Urg",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "Days Waiting",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "Days Waiting",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "Predicted Reset Date",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										},
-										"sink": {
-											"name": "Predicted Reset Date",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										}
-									},
-									{
-										"source": {
-											"name": "Waiting Time Reset Date",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										},
-										"sink": {
-											"name": "Waiting Time Reset Date",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										}
-									},
-									{
-										"source": {
-											"name": "Weeks Waiting",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "Weeks Waiting",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "Planned Appointment Date",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										},
-										"sink": {
-											"name": "Planned Appointment Date",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										}
-									},
-									{
-										"source": {
-											"name": "Waiting Breach Date",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										},
-										"sink": {
-											"name": "Waiting Breach Date",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										}
-									},
-									{
-										"source": {
-											"name": "Was Planned",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "Was Planned",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Was Scheduled",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "Was Scheduled",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Was Waiting",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "Was Waiting",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Stat Date",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										},
-										"sink": {
-											"name": "Stat Date",
-											"type": "DateTime",
-											"physicalType": "datetime2"
-										}
-									},
-									{
-										"source": {
-											"name": "5 Weeks Wait",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "5 Weeks Wait",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "Booked Datetime",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "Booked Datetime",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "6 Weeks Wait",
-											"type": "String",
-											"physicalType": "nvarchar"
-										},
-										"sink": {
-											"name": "6 Weeks Wait",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Referral Source ID",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "Referral Source ID",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "Exam ID",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "Exam ID",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "Modality ID",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "Modality ID",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "Exam Room ID",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "Exam Room ID",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "Trust ID",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "Trust ID",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									}
-								],
 								"typeConversion": true,
 								"typeConversionSettings": {
 									"allowDataTruncation": true,
@@ -23453,141 +23118,7 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "CRIS Number",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status Category",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Request Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Booked Date Time",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Creation Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Attended",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Urg",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Days Waiting",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Predicted Reset Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Waiting Time Reset Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Weeks Waiting",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Planned Appointment Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Waiting Breach Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Was Planned",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Was Scheduled",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Was Waiting",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "5 Weeks Wait",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Booked Datetime",
-						"type": "nvarchar"
-					},
-					{
-						"name": "6 Weeks Wait",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Referral Source ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Exam ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Modality ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Exam Room ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Trust ID",
-						"type": "int",
-						"precision": 10
-					}
-				],
+				"schema": [],
 				"typeProperties": {
 					"schema": "dev",
 					"table": "FYF_ODBC_PTL_v2"
@@ -27015,12 +26546,19 @@
 								"type": "DatasetReference"
 							},
 							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSql_STATUSES",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
 						}
 					],
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "AzureSQLPTL_V3_Staging",
+								"referenceName": "ODBC_PTL_v2",
 								"type": "DatasetReference"
 							},
 							"name": "AzureSqlPTLV2Staging"
@@ -27080,6 +26618,9 @@
 						},
 						{
 							"name": "filter1"
+						},
+						{
+							"name": "sort1"
 						}
 					],
 					"scriptLines": [
@@ -27223,6 +26764,31 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> source1",
+						"source(output(",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          Accession as string,",
+						"          Referrer as string,",
+						"          {Referral Location} as string,",
+						"          {Referral Source} as string,",
+						"          Urg as string,",
+						"          Site as string,",
+						"          {Status Code} as string,",
+						"          {Status Date} as timestamp,",
+						"          {Status Time} as integer,",
+						"          {Referral Location Name} as string,",
+						"          {Referral Source Name} as string,",
+						"          {Referral Name} as string,",
+						"          {Examination Name} as string,",
+						"          Modality as string,",
+						"          {Status Code at State Date} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {D Status} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source2",
 						"AzureSqlPTL derive({5 Weeks Wait} = iif({Weeks Waiting}>=6,1,0),",
 						"          {Booked Datetime} = toString(null()),",
 						"          {6 Weeks Wait} = toString(null()),",
@@ -27361,13 +26927,13 @@
 						"     pickup: 'any',",
 						"     broadcast: 'auto')~> lookup1",
 						"source1 filter(Rank==1) ~> filter1",
+						"source2 sort(desc({Status Date}, false)) ~> sort1",
 						"RenameCols3 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
-						"     recreate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
@@ -27384,7 +26950,8 @@
 				"[concat(variables('factoryId'), '/datasets/Modality')]",
 				"[concat(variables('factoryId'), '/datasets/Exam_Site')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep2')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSQLPTL_V3_Staging')]"
+				"[concat(variables('factoryId'), '/datasets/AzureSql_STATUSES')]",
+				"[concat(variables('factoryId'), '/datasets/ODBC_PTL_v2')]"
 			]
 		},
 		{
