@@ -12998,6 +12998,52 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Monthly')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow2",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow8",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow8')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Move from ICB to CAMRIN')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -23495,6 +23541,27 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Patient_Waiting_Monthly')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "Patient_Waiting_Monthly"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Referral_Source')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -25877,6 +25944,47 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/Ingestion_RADFYF')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Monthly')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"runtimeState": "Stopped",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "Monthly",
+							"type": "PipelineReference"
+						},
+						"parameters": {}
+					}
+				],
+				"type": "ScheduleTrigger",
+				"typeProperties": {
+					"recurrence": {
+						"frequency": "Month",
+						"interval": 15,
+						"startTime": "2024-04-01T03:30:00",
+						"timeZone": "GMT Standard Time",
+						"schedule": {
+							"minutes": [
+								30
+							],
+							"hours": [
+								3
+							],
+							"monthDays": [
+								1
+							]
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Monthly')]"
 			]
 		},
 		{
@@ -29237,6 +29345,112 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/ODBC_PTL_v2')]",
 				"[concat(variables('factoryId'), '/datasets/Patient_Waiting')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow8')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODBC_PTL_v2",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Patient_Waiting_Monthly",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "select1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          {Event Key} as integer,",
+						"          {Exam Key} as integer,",
+						"          {CRIS Number} as integer,",
+						"          {Status Category} as string,",
+						"          {Request Date} as timestamp,",
+						"          {Event Date} as timestamp,",
+						"          {Booked Date Time} as timestamp,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          Urg as integer,",
+						"          {Days Waiting} as integer,",
+						"          {Predicted Reset Date} as timestamp,",
+						"          {Waiting Time Reset Date} as timestamp,",
+						"          {Weeks Waiting} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Waiting Breach Date} as timestamp,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Stat Date} as date,",
+						"          {5 Weeks Wait} as integer,",
+						"          {Booked Datetime} as string,",
+						"          {6 Weeks Wait} as string,",
+						"          {Referral Source ID} as integer,",
+						"          {Exam ID} as integer,",
+						"          {Modality ID} as integer,",
+						"          {Exam Room ID} as integer,",
+						"          {Trust ID} as integer,",
+						"          {Status Code} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 select(mapColumn(",
+						"          {Event Key},",
+						"          {Exam Key},",
+						"          {Exam ID},",
+						"          {Exam Room ID},",
+						"          {Request Date},",
+						"          {Planned Appointment Date},",
+						"          {Waiting Time Reset Date},",
+						"          {Event Date},",
+						"          {Weeks Waiting},",
+						"          {Modality ID},",
+						"          {Was Planned},",
+						"          {Was Scheduled},",
+						"          {Was Waiting},",
+						"          {Referral Source ID},",
+						"          {Trust ID},",
+						"          {Status Code},",
+						"          {Stat Date}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     recreate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/ODBC_PTL_v2')]",
+				"[concat(variables('factoryId'), '/datasets/Patient_Waiting_Monthly')]"
 			]
 		},
 		{

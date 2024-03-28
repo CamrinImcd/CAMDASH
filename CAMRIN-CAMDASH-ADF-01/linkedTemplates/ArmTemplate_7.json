@@ -584,6 +584,25 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Patient_Waiting_Monthly')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "Patient_Waiting_Monthly"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Referral_Source')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1133,86 +1152,6 @@
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "FYF_ODBC_IMPORTS"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServer_LUNGCA')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "RADFYF01_CRIS_PostgreSQL",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "Event key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Exam key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Site",
-						"type": "varchar"
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Examination",
-						"type": "varchar"
-					},
-					{
-						"name": "Date Verified",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date Last Verified",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Reported by",
-						"type": "varchar"
-					},
-					{
-						"name": "Referral Source",
-						"type": "varchar"
-					},
-					{
-						"name": "Referring Location",
-						"type": "varchar"
-					},
-					{
-						"name": "Date Reported",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "FYF_ODBC_LUNG_Ca_ALERTS"
 				}
 			},
 			"dependsOn": []
