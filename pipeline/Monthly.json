@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow8 backlog",
+						"referenceName": "dataflow8",
 						"type": "DataFlowReference"
 					},
 					"compute": {
