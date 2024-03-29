@@ -2159,6 +2159,105 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Patients Waitingbacklogv2.csv",
+						"container": "patients-waiting-backlog"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "ImportDate",
+						"type": "String"
+					},
+					{
+						"name": "Event key",
+						"type": "String"
+					},
+					{
+						"name": "Exam key",
+						"type": "String"
+					},
+					{
+						"name": "Examination",
+						"type": "String"
+					},
+					{
+						"name": "Exam Name",
+						"type": "String"
+					},
+					{
+						"name": "Site",
+						"type": "String"
+					},
+					{
+						"name": "Request date",
+						"type": "String"
+					},
+					{
+						"name": "Planned App Date",
+						"type": "String"
+					},
+					{
+						"name": "Clock Reset Date",
+						"type": "String"
+					},
+					{
+						"name": "Event Date",
+						"type": "String"
+					},
+					{
+						"name": "Weeks",
+						"type": "String"
+					},
+					{
+						"name": "Modality",
+						"type": "String"
+					},
+					{
+						"name": "Planned",
+						"type": "String"
+					},
+					{
+						"name": "Referral Source Name",
+						"type": "String"
+					},
+					{
+						"name": "Trust Name",
+						"type": "String"
+					},
+					{
+						"name": "Status Cde",
+						"type": "String"
+					},
+					{
+						"name": "Room",
+						"type": "String"
+					},
+					{
+						"name": "Room Desc",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Exam')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2315,94 +2414,6 @@
 					},
 					{
 						"name": "Unscheduled_downtime_12M",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Asset_22_Cost')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "Asset_Cost_Contract",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "NIDC_Asset_file.xlsx",
-						"container": "nicd-asset-22"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
-						"type": "String"
-					},
-					{
 						"type": "String"
 					}
 				]

@@ -13,6 +13,44 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_Imports')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RADFYF01_CRIS_PostgreSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "Site",
+						"type": "varchar"
+					},
+					{
+						"name": "Room",
+						"type": "varchar"
+					},
+					{
+						"name": "Room Description",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FYF_ODBC_IMPORTS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SqlServer_LUNGCA')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -10154,357 +10192,6 @@
 				},
 				"annotations": [],
 				"lastPublishTime": "2023-11-23T11:22:55Z"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CreateActDem')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "FYF_ODBC_CORE_v2",
-								"type": "DatasetReference"
-							},
-							"name": "Core"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "Act_Dem",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "CreateDNAColumn"
-						},
-						{
-							"name": "GroupbyEvent"
-						},
-						{
-							"name": "GroupbyRequest"
-						},
-						{
-							"name": "RenameDate1"
-						},
-						{
-							"name": "RenameDate2"
-						},
-						{
-							"name": "derivedColumn1"
-						},
-						{
-							"name": "derivedColumn2"
-						},
-						{
-							"name": "join1"
-						},
-						{
-							"name": "derivedColumn3"
-						},
-						{
-							"name": "select1"
-						},
-						{
-							"name": "derivedColumn4"
-						},
-						{
-							"name": "aggregate1"
-						},
-						{
-							"name": "aggregate2"
-						},
-						{
-							"name": "join2"
-						},
-						{
-							"name": "join3"
-						},
-						{
-							"name": "select2"
-						},
-						{
-							"name": "select3"
-						},
-						{
-							"name": "derivedColumn5"
-						},
-						{
-							"name": "filter1"
-						},
-						{
-							"name": "filter2"
-						},
-						{
-							"name": "MapDrifted1",
-							"description": "Creates an explicit mapping for each drifted column"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          {CRIS No} as integer,",
-						"          Accession as string,",
-						"          {Ref Src} as string,",
-						"          Site as string,",
-						"          {Request Date} as date,",
-						"          {Event Date} as date,",
-						"          {Event Time} as string,",
-						"          {On Call} as string,",
-						"          PT as string,",
-						"          Examination as string,",
-						"          {Exam Name} as string,",
-						"          Room as string,",
-						"          {ExamSite Code} as string,",
-						"          {Start Time} as string,",
-						"          {End Time} as string,",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          {Status Code} as string,",
-						"          {Booked Date} as timestamp,",
-						"          {Booked Time} as string,",
-						"          {Creation Date} as timestamp,",
-						"          Attended as string,",
-						"          Urg as string,",
-						"          Modality as string,",
-						"          {No of Proc} as integer,",
-						"          {Planned Appointment Date} as timestamp,",
-						"          {Date First Verified} as timestamp,",
-						"          {Time First Verified} as string,",
-						"          {Was Planned} as string,",
-						"          {Was Scheduled} as string,",
-						"          {Was Waiting} as string,",
-						"          {Status Time} as string,",
-						"          Modality2 as string,",
-						"          {Trust Name} as string,",
-						"          Patient_Type as string,",
-						"          {Tat Type} as string,",
-						"          {Status Time2} as string,",
-						"          {Patient Type ID} as long,",
-						"          {Modality ID} as integer,",
-						"          {Status ID} as integer,",
-						"          {Exam ID} as integer,",
-						"          {Exam Room ID} as integer,",
-						"          {Trust ID} as integer,",
-						"          {Referral Source ID} as integer,",
-						"          {Tat Type ID} as integer,",
-						"          {Reported By} as string,",
-						"          Rank as integer,",
-						"          {Status Date} as timestamp,",
-						"          Activity as integer,",
-						"          {Count of Activty_Demand for Activity} as long,",
-						"          {Stat Date} as timestamp,",
-						"          {Age At Event} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> Core",
-						"MapDrifted1 derive(DNA = iif({Status Code}==\"CPDNA\", 1, iif({Status Code}==\"APDNA\", 1, 0))) ~> CreateDNAColumn",
-						"CreateDNAColumn aggregate(groupBy({Event Date},",
-						"          {Modality ID},",
-						"          {Trust ID}),",
-						"     Activity = sum(Activity),",
-						"          DNA = sum(DNA)) ~> GroupbyEvent",
-						"CreateDNAColumn aggregate(groupBy({Request Date},",
-						"          {Modality ID},",
-						"          {Trust ID}),",
-						"     Demand = count(Activity)) ~> GroupbyRequest",
-						"GroupbyRequest select(mapColumn(",
-						"          Date = {Request Date},",
-						"          {Modality ID},",
-						"          {Trust ID},",
-						"          Demand",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> RenameDate1",
-						"GroupbyEvent select(mapColumn(",
-						"          Date = {Event Date},",
-						"          {Modality ID},",
-						"          {Trust ID},",
-						"          Activity,",
-						"          DNA",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> RenameDate2",
-						"RenameDate1 derive(Date = toDate(toString(Date)),",
-						"          ID = concat(left(toString(Date),10), concat(toString({Modality ID}), toString({Trust ID})))) ~> derivedColumn1",
-						"RenameDate2 derive(Date = toDate(toString(Date)),",
-						"          ID = concat(left(toString(Date),10), concat(toString({Modality ID}), toString({Trust ID})))) ~> derivedColumn2",
-						"filter2, derivedColumn2 join(derivedColumn1@ID == derivedColumn2@ID,",
-						"     joinType:'outer',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> join1",
-						"join1 derive(Date = iifNull(derivedColumn1@Date,derivedColumn2@Date),",
-						"          {Modality ID} = iifNull(RenameDate1@{Modality ID},RenameDate2@{Modality ID}),",
-						"          {Trust ID} = iifNull(RenameDate1@{Trust ID},RenameDate2@{Trust ID}),",
-						"          ID = iifNull(derivedColumn1@ID, derivedColumn2@ID)) ~> derivedColumn3",
-						"derivedColumn4 select(mapColumn(",
-						"          Date,",
-						"          {Modality ID},",
-						"          {Trust ID},",
-						"          Demand,",
-						"          ID,",
-						"          Activity,",
-						"          DNA,",
-						"          Month",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select1",
-						"derivedColumn3 derive(Month = addMonths(addDays(lastDayOfMonth(Date),1),-1)) ~> derivedColumn4",
-						"derivedColumn4 aggregate(groupBy({Modality ID},",
-						"          {Trust ID},",
-						"          Month),",
-						"     {Monthly Activity Sum} = sum(Activity),",
-						"          {Monthly Demand Sum} = sum(Demand)) ~> aggregate1",
-						"aggregate1 aggregate(groupBy({Modality ID},",
-						"          {Trust ID},",
-						"          Month),",
-						"     {Monthly Demand Max} = iif(max({Monthly Demand Sum})>max({Monthly Activity Sum}), max({Monthly Demand Sum}), max({Monthly Activity Sum}))) ~> aggregate2",
-						"aggregate2, aggregate1 join(aggregate2@{Modality ID} == aggregate1@{Modality ID}",
-						"     && aggregate2@{Trust ID} == aggregate1@{Trust ID}",
-						"     && aggregate2@Month == aggregate1@Month,",
-						"     joinType:'outer',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> join2",
-						"select1, select2 join(select1@{Modality ID} == select2@{Modality ID}",
-						"     && select1@{Trust ID} == select2@{Trust ID}",
-						"     && select1@Month == select2@Month,",
-						"     joinType:'outer',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> join3",
-						"join2 select(mapColumn(",
-						"          {Modality ID} = aggregate2@{Modality ID},",
-						"          {Trust ID} = aggregate2@{Trust ID},",
-						"          Month = aggregate2@Month,",
-						"          {Monthly Demand Max},",
-						"          {Monthly Activity Sum},",
-						"          {Monthly Demand Sum}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select2",
-						"join3 select(mapColumn(",
-						"          Date,",
-						"          {Modality ID} = select1@{Modality ID},",
-						"          {Trust ID} = select1@{Trust ID},",
-						"          Demand,",
-						"          ID,",
-						"          Activity,",
-						"          DNA,",
-						"          Month = select1@Month,",
-						"          {Monthly Demand Max},",
-						"          {Monthly Activity Sum},",
-						"          {Monthly Demand Sum}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select3",
-						"select3 derive(Year = year(Date),",
-						"          DNARate = DNA/(Activity+DNA)) ~> derivedColumn5",
-						"derivedColumn5 filter(isNull(ID)==false()) ~> filter1",
-						"derivedColumn1 filter(isNull(ID)==false()) ~> filter2",
-						"Core derive({CRIS No} = toInteger(byName('CRIS No')),",
-						"          Accession = toString(byName('Accession')),",
-						"          {Ref Src} = toString(byName('Ref Src')),",
-						"          Site = toString(byName('Site')),",
-						"          {Request Date} = toDate(byName('Request Date')),",
-						"          {Event Date} = toDate(byName('Event Date')),",
-						"          {Event Time} = toString(byName('Event Time')),",
-						"          {On Call} = toString(byName('On Call')),",
-						"          PT = toString(byName('PT')),",
-						"          Examination = toString(byName('Examination')),",
-						"          {Exam Name} = toString(byName('Exam Name')),",
-						"          Room = toString(byName('Room')),",
-						"          {ExamSite Code} = toString(byName('ExamSite Code')),",
-						"          {Start Time} = toString(byName('Start Time')),",
-						"          {End Time} = toString(byName('End Time')),",
-						"          {Exam Key} = toInteger(byName('Exam Key')),",
-						"          {Event Key} = toInteger(byName('Event Key')),",
-						"          {Status Code} = toString(byName('Status Code')),",
-						"          {Booked Date} = toTimestamp(byName('Booked Date')),",
-						"          {Booked Time} = toString(byName('Booked Time')),",
-						"          {Creation Date} = toTimestamp(byName('Creation Date')),",
-						"          Attended = toString(byName('Attended')),",
-						"          Urg = toString(byName('Urg')),",
-						"          Modality = toString(byName('Modality')),",
-						"          {No of Proc} = toInteger(byName('No of Proc')),",
-						"          {Planned Appointment Date} = toTimestamp(byName('Planned Appointment Date')),",
-						"          {Date First Verified} = toTimestamp(byName('Date First Verified')),",
-						"          {Time First Verified} = toString(byName('Time First Verified')),",
-						"          {Was Planned} = toString(byName('Was Planned')),",
-						"          {Was Scheduled} = toString(byName('Was Scheduled')),",
-						"          {Was Waiting} = toString(byName('Was Waiting')),",
-						"          {Stat Date} = toTimestamp(byName('Stat Date')),",
-						"          {Status Date} = toTimestamp(byName('Status Date')),",
-						"          Modality2 = toString(byName('Modality2')),",
-						"          {Trust Name} = toString(byName('Trust Name')),",
-						"          Patient_Type = toString(byName('Patient_Type')),",
-						"          {Tat Type} = toString(byName('Tat Type')),",
-						"          Activity = toInteger(byName('Activity')),",
-						"          {Count of Activty_Demand for Activity} = toLong(byName('Count of Activty_Demand for Activity')),",
-						"          {Status Time2} = toString(byName('Status Time2')),",
-						"          {Patient Type ID} = toLong(byName('Patient Type ID')),",
-						"          {Modality ID} = toInteger(byName('Modality ID')),",
-						"          {Status ID} = toInteger(byName('Status ID')),",
-						"          {Exam ID} = toInteger(byName('Exam ID')),",
-						"          {Exam Room ID} = toInteger(byName('Exam Room ID')),",
-						"          {Trust ID} = toInteger(byName('Trust ID')),",
-						"          {Referral Source ID} = toInteger(byName('Referral Source ID')),",
-						"          {Tat Type ID} = toInteger(byName('Tat Type ID')),",
-						"          {Reported By} = toString(byName('Reported By')),",
-						"          Rank = toInteger(byName('Rank'))) ~> MapDrifted1",
-						"filter1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          Activity as integer,",
-						"          Date as date,",
-						"          Demand as decimal(19,4),",
-						"          ID as string,",
-						"          {Modality ID} as string,",
-						"          Month as string,",
-						"          {Monthly Activity Sum} as integer,",
-						"          {Monthly Demand Sum} as integer,",
-						"          {Monthly Max} as integer,",
-						"          {Trust ID} as string,",
-						"          Years as string,",
-						"          DNA as string,",
-						"          DNARate as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     truncate:true,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          Activity,",
-						"          Date,",
-						"          Demand,",
-						"          ID,",
-						"          {Modality ID},",
-						"          Month,",
-						"          {Monthly Activity Sum},",
-						"          {Monthly Demand Sum},",
-						"          {Monthly Max} = {Monthly Demand Max},",
-						"          {Trust ID},",
-						"          Years = Year,",
-						"          DNA,",
-						"          DNARate",
-						"     )) ~> sink1"
-					]
-				}
 			},
 			"dependsOn": []
 		}
