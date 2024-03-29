@@ -1,0 +1,96 @@
+{
+	"name": "DelimitedText1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Test_AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "Patients Waitingbacklogv2.csv",
+				"container": "patients-waiting-backlog"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "ImportDate",
+				"type": "String"
+			},
+			{
+				"name": "Event key",
+				"type": "String"
+			},
+			{
+				"name": "Exam key",
+				"type": "String"
+			},
+			{
+				"name": "Examination",
+				"type": "String"
+			},
+			{
+				"name": "Exam Name",
+				"type": "String"
+			},
+			{
+				"name": "Site",
+				"type": "String"
+			},
+			{
+				"name": "Request date",
+				"type": "String"
+			},
+			{
+				"name": "Planned App Date",
+				"type": "String"
+			},
+			{
+				"name": "Clock Reset Date",
+				"type": "String"
+			},
+			{
+				"name": "Event Date",
+				"type": "String"
+			},
+			{
+				"name": "Weeks",
+				"type": "String"
+			},
+			{
+				"name": "Modality",
+				"type": "String"
+			},
+			{
+				"name": "Planned",
+				"type": "String"
+			},
+			{
+				"name": "Referral Source Name",
+				"type": "String"
+			},
+			{
+				"name": "Trust Name",
+				"type": "String"
+			},
+			{
+				"name": "Status Cde",
+				"type": "String"
+			},
+			{
+				"name": "Room",
+				"type": "String"
+			},
+			{
+				"name": "Room Desc",
+				"type": "String"
+			}
+		]
+	}
+}
