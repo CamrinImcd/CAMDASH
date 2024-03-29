@@ -13017,11 +13017,16 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "dataflow8",
+								"referenceName": "dataflow8 backlog",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
 									"source1": {},
+									"source2": {},
+									"source3": {},
+									"source4": {},
+									"source5": {},
+									"source6": {},
 									"sink1": {}
 								}
 							},
@@ -13040,7 +13045,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dataflow8')]"
+				"[concat(variables('factoryId'), '/dataflows/dataflow8 backlog')]"
 			]
 		},
 		{
@@ -29530,17 +29535,17 @@
 					],
 					"scriptLines": [
 						"source(output(",
-						"          ImportDate as integer,",
+						"          ImportDate as string,",
 						"          {Event key} as string,",
 						"          {Exam key} as string,",
 						"          Examination as string,",
 						"          {Exam Name} as string,",
 						"          Site as string,",
-						"          {Request date} as date,",
-						"          {Planned App Date} as date,",
-						"          {Clock Reset Date} as date,",
-						"          {Event Date} as date,",
-						"          Weeks as integer,",
+						"          {Request date} as string,",
+						"          {Planned App Date} as string,",
+						"          {Clock Reset Date} as string,",
+						"          {Event Date} as string,",
+						"          Weeks as string,",
 						"          Modality as string,",
 						"          Planned as string,",
 						"          {Referral Source Name} as string,",
