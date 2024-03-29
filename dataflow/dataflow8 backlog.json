@@ -74,6 +74,9 @@
 				},
 				{
 					"name": "lookup5"
+				},
+				{
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -169,7 +172,7 @@
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookup1",
-				"lookup1, source3 lookup(Modality == Modality2,",
+				"derivedColumn1, source3 lookup(derivedColumn1@Modality2 == source3@Modality2,",
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookup2",
@@ -177,7 +180,7 @@
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookup3",
-				"lookup3, source5 lookup(source1@{Trust Name} == source5@{Trust Name},",
+				"lookup3, source5 lookup(source1@{Trust Name} == {Trust Name Group2},",
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookup4",
@@ -186,6 +189,21 @@
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookup5",
+				"lookup1 derive(Modality2 = iif(Modality==\"B\", \"Mammo\", \r",
+				"iif(Modality==\"E\", \"Endo\", \r",
+				"iif(Modality==\"H\", \"Cardio\", \r",
+				"iif(Modality==\"R\", \"Plain X-Ray\",\r",
+				"iif(Modality==\"Y\", \"Med Phys\", \r",
+				"iif(Modality==\"Z\", \"Additional Workload\", \r",
+				"iif(Modality==\"D\", \"Doppler\", \r",
+				"iif(Modality==\"C\", \"CT\",\r",
+				"iif(Modality==\"M\", \"MRI\",\r",
+				"iif(Modality==\"U\", \"NOUS\", \r",
+				"iif(Modality==\"N\", \"Nuc Med\",\r",
+				"iif(Modality==\"S\", \"DEXA\", \r",
+				"iif(Modality==\"O\", \"Obstetrics\", \r",
+				"iif(Modality==\"A\", \"IR\", \r",
+				"iif(Modality==\"F\", \"Fluoro\", \"Other\")))))))))))))))) ~> derivedColumn1",
 				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
