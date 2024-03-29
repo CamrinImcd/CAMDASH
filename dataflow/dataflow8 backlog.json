@@ -1,0 +1,203 @@
+{
+	"name": "dataflow8 backlog",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DelimitedText1",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "Exam",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				},
+				{
+					"dataset": {
+						"referenceName": "Modality",
+						"type": "DatasetReference"
+					},
+					"name": "source3"
+				},
+				{
+					"dataset": {
+						"referenceName": "Referral_Source",
+						"type": "DatasetReference"
+					},
+					"name": "source4"
+				},
+				{
+					"dataset": {
+						"referenceName": "Trust",
+						"type": "DatasetReference"
+					},
+					"name": "source5"
+				},
+				{
+					"dataset": {
+						"referenceName": "Exam_Site",
+						"type": "DatasetReference"
+					},
+					"name": "source6"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Patient_Waiting_Monthly",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "lookup1"
+				},
+				{
+					"name": "lookup2"
+				},
+				{
+					"name": "lookup3"
+				},
+				{
+					"name": "lookup4"
+				},
+				{
+					"name": "lookup5"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          ImportDate as integer,",
+				"          {Event key} as string,",
+				"          {Exam key} as string,",
+				"          Examination as string,",
+				"          {Exam Name} as string,",
+				"          Site as string,",
+				"          {Request date} as date,",
+				"          {Planned App Date} as date,",
+				"          {Clock Reset Date} as date,",
+				"          {Event Date} as date,",
+				"          Weeks as integer,",
+				"          Modality as string,",
+				"          Planned as string,",
+				"          {Referral Source Name} as string,",
+				"          {Trust Name} as string,",
+				"          {Status Cde} as string,",
+				"          Room as string,",
+				"          {Room Desc} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source(output(",
+				"          {Exam Name} as string,",
+				"          {Exam Code} as string,",
+				"          {Exam ID} as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source2",
+				"source(output(",
+				"          Modality2 as string,",
+				"          {Modality ID} as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source3",
+				"source(output(",
+				"          {Referral Source} as string,",
+				"          {Referral Source ID} as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source4",
+				"source(output(",
+				"          {Trust Name} as string,",
+				"          {Trust ID} as integer,",
+				"          {Trust Name Group} as string,",
+				"          {Trust Name Group2} as string,",
+				"          {Trust Name Group3} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source5",
+				"source(output(",
+				"          {Exam Site} as string,",
+				"          {Exam Room} as string,",
+				"          {Exam Site Code} as string,",
+				"          {Exam Room ID} as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source6",
+				"lookup5 select(mapColumn(",
+				"          {Event Key} = {Event key},",
+				"          {Exam Key} = {Exam key},",
+				"          {Exam ID},",
+				"          {Exam Room ID},",
+				"          {Request Date} = {Request date},",
+				"          {Planned Appointment Date} = {Planned App Date},",
+				"          {Waiting Time Reset Date} = {Clock Reset Date},",
+				"          {Event Date},",
+				"          {Weeks Waiting} = Weeks,",
+				"          {Modality ID},",
+				"          {Was Planned} = Planned,",
+				"          {Referral Source ID},",
+				"          {Trust ID},",
+				"          {Status Code} = {Status Cde},",
+				"          {Stat Date} = ImportDate",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"source1, source2 lookup(Examination == {Exam Code},",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup1",
+				"lookup1, source3 lookup(Modality == Modality2,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup2",
+				"lookup2, source4 lookup({Referral Source Name} == {Referral Source},",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup3",
+				"lookup3, source5 lookup(source1@{Trust Name} == source5@{Trust Name},",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup4",
+				"lookup4, source6 lookup(Site == {Exam Site}",
+				"     && Room == {Exam Room},",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup5",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     recreate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}
