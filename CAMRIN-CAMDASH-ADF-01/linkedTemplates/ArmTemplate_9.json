@@ -3298,6 +3298,9 @@
 						},
 						{
 							"name": "derivedColumn1"
+						},
+						{
+							"name": "derivedColumn2"
 						}
 					],
 					"scriptLines": [
@@ -3435,7 +3438,11 @@
 						"iif({Trust Name}==\"LIVERPOOL UNIVERSITY HOSPITALS NHS FOUNDATION TRUST\", \"LUHFT\", \r",
 						"iif({Trust Name}==\"SOUTHPORT AND ORMSKIRK HOSPITAL NHS TRUST\", \"S&O\", \r",
 						"iif({Trust Name}==\"WARRINGTON AND HALTON HOSPITALS NHS FOUNDATION TRUST\", \"WHH\", \"Other\"))))))))))) ~> derivedColumn1",
-						"select1 sink(allowSchemaDrift: true,",
+						"select1 derive({Request Date} = toDate({Request Date},\"dd/MM/yyyy\"),",
+						"          {Planned Appointment Date} = toDate({Planned Appointment Date},\"dd/MM/yyyy\"),",
+						"          {Waiting Time Reset Date} = toDate({Waiting Time Reset Date},\"dd/MM/yyyy\"),",
+						"          {Event Date} = toDate({Event Date},\"dd/MM/yyyy\")) ~> derivedColumn2",
+						"derivedColumn2 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -3445,7 +3452,24 @@
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          {Event Key},",
+						"          {Exam Key},",
+						"          {Exam ID},",
+						"          {Exam Room ID},",
+						"          {Request Date},",
+						"          {Planned Appointment Date} = {Event Date},",
+						"          {Waiting Time Reset Date},",
+						"          {Event Date} = {Weeks Waiting},",
+						"          {Weeks Waiting},",
+						"          {Modality ID},",
+						"          {Was Planned},",
+						"          {Referral Source ID},",
+						"          {Trust ID},",
+						"          {Status Code},",
+						"          {Stat Date}",
+						"     )) ~> sink1"
 					]
 				}
 			},
