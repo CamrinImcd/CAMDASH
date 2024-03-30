@@ -29688,24 +29688,7 @@
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          {Event Key},",
-						"          {Exam Key},",
-						"          {Exam ID},",
-						"          {Exam Room ID},",
-						"          {Request Date},",
-						"          {Planned Appointment Date} = {Event Date},",
-						"          {Waiting Time Reset Date},",
-						"          {Event Date} = {Weeks Waiting},",
-						"          {Weeks Waiting},",
-						"          {Modality ID},",
-						"          {Was Planned},",
-						"          {Referral Source ID},",
-						"          {Trust ID},",
-						"          {Status Code},",
-						"          {Stat Date}",
-						"     )) ~> sink1"
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 					]
 				}
 			},
