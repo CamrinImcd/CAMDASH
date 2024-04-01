@@ -7938,16 +7938,11 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "dataflow8 backlog",
+								"referenceName": "dataflow8",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
 									"source1": {},
-									"source2": {},
-									"source3": {},
-									"source4": {},
-									"source5": {},
-									"source6": {},
 									"sink1": {}
 								}
 							},
@@ -7966,7 +7961,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dataflow8 backlog')]"
+				"[concat(variables('factoryId'), '/dataflows/dataflow8')]"
 			]
 		},
 		{
@@ -8105,7 +8100,7 @@
 				"typeProperties": {
 					"recurrence": {
 						"frequency": "Month",
-						"interval": 15,
+						"interval": 1,
 						"startTime": "2024-04-01T03:30:00",
 						"timeZone": "GMT Standard Time",
 						"schedule": {
