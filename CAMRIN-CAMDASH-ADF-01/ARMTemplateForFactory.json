@@ -13040,8 +13040,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dataflow8')]",
-				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+				"[concat(variables('factoryId'), '/dataflows/dataflow8')]"
 			]
 		},
 		{
@@ -29180,7 +29179,7 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> source1",
-						"source1 filter(Examination == \"XCHES\" && {Event Date} >= toDate('10/01/2022','MM/dd/yyyy') && toDate({Date First Verified}) >= toDate('10/01/2022','MM/dd/yyyy')) ~> filter1",
+						"source1 filter(Examination == \"XCHES\" && {Event Date} >= toDate('01/01/2022','MM/dd/yyyy') && toDate({Date First Verified}) >= toDate('01/01/2022','MM/dd/yyyy')) ~> filter1",
 						"filter2 select(mapColumn(",
 						"          {CRIS No},",
 						"          {Event Key},",
@@ -29261,7 +29260,7 @@
 						"     asc({CXI-CCI}, true),",
 						"     Rank = denseRank()) ~> window1",
 						"window1 filter(Rank==1) ~> filter4",
-						"select3 sink(allowSchemaDrift: true,",
+						"join1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -29271,24 +29270,7 @@
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          {CRIS No},",
-						"          {Event Key},",
-						"          {CTExam Key},",
-						"          {Trust ID},",
-						"          {Exam Room ID},",
-						"          {Event Date},",
-						"          {Date First Verified},",
-						"          {Reported By},",
-						"          {Patient Type ID},",
-						"          {Age At Event},",
-						"          {Exam ID},",
-						"          {CXR-CCI},",
-						"          {CXI-CCR},",
-						"          {CXI-CCI},",
-						"          {XRExam Key}",
-						"     )) ~> sink1",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
 						"join2 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
