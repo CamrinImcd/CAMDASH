@@ -13,6 +13,131 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Move from ICB to CAMRIN')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Move to DEV_TEST",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "truncate table [Unify].[NAT_DM01]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CM_Sql_Unify_NAT_DM01",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CAMRIN_Unify_DM01",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Move to PROD",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Move to DEV_TEST",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "truncate table [Unify].[NAT_DM01]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "CM_Sql_Unify_NAT_DM01",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "PROD_Unity_DM01",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "Unify"
+				},
+				"annotations": [],
+				"lastPublishTime": "2023-11-23T11:22:55Z"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/CreateActDem')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -3046,7 +3171,38 @@
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          {CRIS No} = select2@{CRIS No},",
+						"          {Event Key} = select2@{Event Key},",
+						"          {Exam Key} = select2@{Exam Key},",
+						"          {Trust ID} = select2@{Trust ID},",
+						"          {Exam Room ID} = select2@{Exam Room ID},",
+						"          {Event Date} = select2@{Event Date},",
+						"          {Date First Verified} = select2@{Date First Verified},",
+						"          {Reported By} = select2@{Reported By},",
+						"          {Patient Type ID} = select2@{Patient Type ID},",
+						"          {Age At Event} = select2@{Age At Event},",
+						"          {Exam ID} = select2@{Exam ID},",
+						"          Auto,",
+						"          {Rep Rad},",
+						"          Cons,",
+						"          Outsource,",
+						"          {CX I-R},",
+						"          Snapshot,",
+						"          Abnormal,",
+						"          {CRIS No.1} = select1@{CRIS No},",
+						"          {Event Key.1} = select1@{Event Key},",
+						"          {Exam Key.1} = select1@{Exam Key},",
+						"          {Trust ID.1} = select1@{Trust ID},",
+						"          {Exam Room ID.1} = select1@{Exam Room ID},",
+						"          {Event Date.1} = select1@{Event Date},",
+						"          {Date First Verified.1} = select1@{Date First Verified},",
+						"          {Reported By.1} = select1@{Reported By},",
+						"          {Patient Type ID.1} = select1@{Patient Type ID},",
+						"          {Age At Event.1} = select1@{Age At Event},",
+						"          {Exam ID.1} = select1@{Exam ID}",
+						"     )) ~> sink1",
 						"join2 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
@@ -7984,7 +8140,9 @@
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/pipelines/Move from ICB to CAMRIN')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Daily')]",
