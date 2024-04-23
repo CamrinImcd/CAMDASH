@@ -29281,7 +29281,7 @@
 						"     asc({CXI-CCI}, true),",
 						"     Rank = denseRank()) ~> window1",
 						"window1 filter(Rank==1) ~> filter4",
-						"window1 sink(allowSchemaDrift: true,",
+						"filter4 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
