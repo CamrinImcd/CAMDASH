@@ -52,7 +52,8 @@
 								},
 								"sink": {
 									"name": "Trust",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -63,7 +64,8 @@
 								},
 								"sink": {
 									"name": "PACS_Upgrade",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -74,7 +76,8 @@
 								},
 								"sink": {
 									"name": "PACS1_Site_Code",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -85,7 +88,8 @@
 								},
 								"sink": {
 									"name": "PACS1_Manufacturer",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -96,7 +100,8 @@
 								},
 								"sink": {
 									"name": "PACS1_Version",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -107,7 +112,8 @@
 								},
 								"sink": {
 									"name": "PACS1_Implementation_Date",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -118,7 +124,8 @@
 								},
 								"sink": {
 									"name": "PACS1_Renewal_Date",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -129,7 +136,8 @@
 								},
 								"sink": {
 									"name": "PACS2_Site_Code",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -140,7 +148,8 @@
 								},
 								"sink": {
 									"name": "PACS2_Manufacturer",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -151,7 +160,8 @@
 								},
 								"sink": {
 									"name": "PACS2_Version",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -162,7 +172,8 @@
 								},
 								"sink": {
 									"name": "PACS2_Implementation_Date",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -173,7 +184,8 @@
 								},
 								"sink": {
 									"name": "PACS2_Renewal_Date",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -184,7 +196,8 @@
 								},
 								"sink": {
 									"name": "RIS_Upgrade",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -195,7 +208,8 @@
 								},
 								"sink": {
 									"name": "RIS1_Site_Code",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -206,7 +220,8 @@
 								},
 								"sink": {
 									"name": "RIS1_Manufacturer",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -217,7 +232,8 @@
 								},
 								"sink": {
 									"name": "RIS1_Version",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -228,7 +244,8 @@
 								},
 								"sink": {
 									"name": "RIS1_Implementation_Date",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -239,7 +256,8 @@
 								},
 								"sink": {
 									"name": "RIS1_Renewal_Date",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -250,7 +268,8 @@
 								},
 								"sink": {
 									"name": "RIS2_Site_Code",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -261,7 +280,8 @@
 								},
 								"sink": {
 									"name": "RIS2_Manufacturer",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -272,7 +292,8 @@
 								},
 								"sink": {
 									"name": "RIS2_Version",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -283,7 +304,8 @@
 								},
 								"sink": {
 									"name": "RIS2_Implementation_Date",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -294,7 +316,8 @@
 								},
 								"sink": {
 									"name": "RIS2_Renewal_Date",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -305,7 +328,8 @@
 								},
 								"sink": {
 									"name": "RIS3_Site_Code",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -316,7 +340,8 @@
 								},
 								"sink": {
 									"name": "RIS3_Manufacturer",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -327,7 +352,8 @@
 								},
 								"sink": {
 									"name": "RIS3_Version",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -338,7 +364,8 @@
 								},
 								"sink": {
 									"name": "RIS3_Implementation_Date",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -349,7 +376,8 @@
 								},
 								"sink": {
 									"name": "RIS3_Renewal_Date",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -360,7 +388,8 @@
 								},
 								"sink": {
 									"name": "RIS4_Site_Code",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -371,7 +400,8 @@
 								},
 								"sink": {
 									"name": "RIS4_Manufacturer",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -382,7 +412,8 @@
 								},
 								"sink": {
 									"name": "RIS4_Version",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -393,7 +424,8 @@
 								},
 								"sink": {
 									"name": "RIS4_Implementation_Date",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -404,7 +436,8 @@
 								},
 								"sink": {
 									"name": "RIS4_Renewal_Date",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -415,7 +448,8 @@
 								},
 								"sink": {
 									"name": "OC_Upgrade",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -426,7 +460,8 @@
 								},
 								"sink": {
 									"name": "OC1_Site_Code",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -437,7 +472,8 @@
 								},
 								"sink": {
 									"name": "OC1_Manufacturer",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -448,7 +484,8 @@
 								},
 								"sink": {
 									"name": "OC1_Version",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -459,7 +496,8 @@
 								},
 								"sink": {
 									"name": "OC1_Implementation_Date",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -470,7 +508,8 @@
 								},
 								"sink": {
 									"name": "OC1_Renewal_Date",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -481,7 +520,8 @@
 								},
 								"sink": {
 									"name": "OC2_Site_Code",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -492,7 +532,8 @@
 								},
 								"sink": {
 									"name": "OC2_Manufacturer",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -503,7 +544,8 @@
 								},
 								"sink": {
 									"name": "OC2_Version",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -514,7 +556,8 @@
 								},
 								"sink": {
 									"name": "OC2_Implementation_Date",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -525,7 +568,8 @@
 								},
 								"sink": {
 									"name": "OC2_Renewal_Date",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -536,7 +580,8 @@
 								},
 								"sink": {
 									"name": "AI_DS_System",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -547,7 +592,8 @@
 								},
 								"sink": {
 									"name": "AI_DS_System_Used_1",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -558,7 +604,8 @@
 								},
 								"sink": {
 									"name": "AI_DS_System_Used_Freetext_1",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -569,7 +616,8 @@
 								},
 								"sink": {
 									"name": "Trialing_AI",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -580,7 +628,8 @@
 								},
 								"sink": {
 									"name": "Trialing_AI_Used",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -591,7 +640,8 @@
 								},
 								"sink": {
 									"name": "CDS_Referrers",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -602,7 +652,8 @@
 								},
 								"sink": {
 									"name": "Percent_Paper_Requests",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -613,7 +664,8 @@
 								},
 								"sink": {
 									"name": "Online_Appointment_Access",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -624,7 +676,8 @@
 								},
 								"sink": {
 									"name": "Online_Results_Access",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -635,7 +688,8 @@
 								},
 								"sink": {
 									"name": "All_Referrers_Elec_Results",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -646,7 +700,8 @@
 								},
 								"sink": {
 									"name": "Joint_Procurement",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -657,7 +712,8 @@
 								},
 								"sink": {
 									"name": "Out_of_Hours_Rep",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -668,7 +724,8 @@
 								},
 								"sink": {
 									"name": "Specialist_Reporting",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -679,7 +736,8 @@
 								},
 								"sink": {
 									"name": "Backlog_Reporting",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -690,7 +748,8 @@
 								},
 								"sink": {
 									"name": "Shared_booking_/_Workload_Leveling",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -701,7 +760,8 @@
 								},
 								"sink": {
 									"name": "Interventional_Radiology",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -712,7 +772,8 @@
 								},
 								"sink": {
 									"name": "Out_of_hours_on_call_Scanning",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -723,7 +784,8 @@
 								},
 								"sink": {
 									"name": "Home_Reporting_Workstations",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -734,7 +796,8 @@
 								},
 								"sink": {
 									"name": "Reporting_workstations_on_Trust_premises",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -745,7 +808,8 @@
 								},
 								"sink": {
 									"name": "Nuclear_Medicine_Workstation",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -756,7 +820,8 @@
 								},
 								"sink": {
 									"name": "Total_Number_of_Workstations",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -767,7 +832,8 @@
 								},
 								"sink": {
 									"name": "Number_of_workstations_at_CDC",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -778,7 +844,8 @@
 								},
 								"sink": {
 									"name": "_Image_Exchange_Portal_Use?",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -789,7 +856,8 @@
 								},
 								"sink": {
 									"name": "Share_Within_Network",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -800,7 +868,8 @@
 								},
 								"sink": {
 									"name": "Share_Patient_History_network",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -811,7 +880,8 @@
 								},
 								"sink": {
 									"name": "share_images_within_network",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -822,7 +892,8 @@
 								},
 								"sink": {
 									"name": "share_reports_with_network",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -833,7 +904,8 @@
 								},
 								"sink": {
 									"name": "report_for_any_trust_network",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -844,7 +916,8 @@
 								},
 								"sink": {
 									"name": "use_ERostering",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -855,7 +928,8 @@
 								},
 								"sink": {
 									"name": "ERostering_staff_Groups",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -866,7 +940,8 @@
 								},
 								"sink": {
 									"name": "Admin_and_clerical",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -877,7 +952,8 @@
 								},
 								"sink": {
 									"name": "Managerial_and_IT/PACS_team",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -888,7 +964,8 @@
 								},
 								"sink": {
 									"name": "Imaging_practitioners",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -899,7 +976,8 @@
 								},
 								"sink": {
 									"name": "Clinical_Support_staff",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -910,7 +988,8 @@
 								},
 								"sink": {
 									"name": "Nursing_Staff",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -921,7 +1000,8 @@
 								},
 								"sink": {
 									"name": "Medical_Staff",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -932,7 +1012,8 @@
 								},
 								"sink": {
 									"name": "Medical_physics_staff",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -943,7 +1024,8 @@
 								},
 								"sink": {
 									"name": "other_staff_group",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -954,7 +1036,78 @@
 								},
 								"sink": {
 									"name": "level_of_attainment",
-									"type": "String"
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Year",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Year"
+								}
+							},
+							{
+								"source": {
+									"name": "Percent_OCS_Requests",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Percent_OCS_Requests"
+								}
+							},
+							{
+								"source": {
+									"name": "RIS_NHS_NUM",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "RIS_NHS_NUM"
+								}
+							},
+							{
+								"source": {
+									"name": "Text_ Appointment",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Text_ Appointment"
+								}
+							},
+							{
+								"source": {
+									"name": "Appiont_Letters",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Appiont_Letters"
+								}
+							},
+							{
+								"source": {
+									"name": "Restrict_Pat_Sharing",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "Restrict_Pat_Sharing"
+								}
+							},
+							{
+								"source": {
+									"name": "LLP_Support",
+									"type": "String",
+									"physicalType": "String"
+								},
+								"sink": {
+									"name": "LLP_Support"
 								}
 							}
 						],
@@ -1830,7 +1983,7 @@
 								"sink": {
 									"name": "Trust",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -1842,7 +1995,7 @@
 								"sink": {
 									"name": "Local_Identifier",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -1854,7 +2007,7 @@
 								"sink": {
 									"name": "Room_Code",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -1866,7 +2019,7 @@
 								"sink": {
 									"name": "Location",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -1878,7 +2031,7 @@
 								"sink": {
 									"name": "Equipment_Detail",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -1890,7 +2043,7 @@
 								"sink": {
 									"name": "Ownership_Structure",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -1902,7 +2055,7 @@
 								"sink": {
 									"name": "MES_Contract__Number",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -1914,7 +2067,7 @@
 								"sink": {
 									"name": "Asset_managed_Imaging_department",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -1926,7 +2079,7 @@
 								"sink": {
 									"name": "ownership_accounted_for",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -1938,7 +2091,7 @@
 								"sink": {
 									"name": "Capital_Purchase_Cost",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -1950,7 +2103,7 @@
 								"sink": {
 									"name": "Annual_Revenue_Cost",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -1962,7 +2115,7 @@
 								"sink": {
 									"name": "Annual_20/21_Maintenance",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -1974,7 +2127,7 @@
 								"sink": {
 									"name": "Included_in_Annual_Cost?",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -1986,7 +2139,7 @@
 								"sink": {
 									"name": "Maintenance_Type",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -1998,7 +2151,7 @@
 								"sink": {
 									"name": "Type_of_Cover",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -2010,7 +2163,7 @@
 								"sink": {
 									"name": "Non_Accidental_Replacement_Parts_included?",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -2022,7 +2175,7 @@
 								"sink": {
 									"name": "Level_of_Maintenance_Cover",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -2034,7 +2187,7 @@
 								"sink": {
 									"name": "Seven_Day_Cover_",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -2046,7 +2199,7 @@
 								"sink": {
 									"name": "Maintenance_cover_negotiated_at_the_point_of_sale",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -2058,7 +2211,7 @@
 								"sink": {
 									"name": "Service_Contract_Start_Date",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							},
 							{
@@ -2070,7 +2223,7 @@
 								"sink": {
 									"name": "Service_Contract_End_Date",
 									"type": "String",
-									"physicalType": "String"
+									"physicalType": "nvarchar"
 								}
 							}
 						],
