@@ -1686,1008 +1686,1010 @@
 								"mappings": [
 									{
 										"source": {
-											"name": "Trust",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Trust",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "PACS_Upgrade",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "PACS_Upgrade",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "PACS1_Site_Code",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "PACS1_Site_Code",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "PACS1_Manufacturer",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "PACS1_Manufacturer",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "PACS1_Version",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "PACS1_Version",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "PACS1_Implementation_Date",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "PACS1_Implementation_Date",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "PACS1_Renewal_Date",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "PACS1_Renewal_Date",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "PACS2_Site_Code",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "PACS2_Site_Code",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "PACS2_Manufacturer",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "PACS2_Manufacturer",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "PACS2_Version",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "PACS2_Version",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "PACS2_Implementation_Date",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "PACS2_Implementation_Date",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "PACS2_Renewal_Date",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "PACS2_Renewal_Date",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS_Upgrade",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS_Upgrade",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS1_Site_Code",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS1_Site_Code",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS1_Manufacturer",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS1_Manufacturer",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS1_Version",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS1_Version",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS1_Implementation_Date",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS1_Implementation_Date",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS1_Renewal_Date",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS1_Renewal_Date",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS2_Site_Code",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS2_Site_Code",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS2_Manufacturer",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS2_Manufacturer",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS2_Version",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS2_Version",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS2_Implementation_Date",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS2_Implementation_Date",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS2_Renewal_Date",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS2_Renewal_Date",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS3_Site_Code",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS3_Site_Code",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS3_Manufacturer",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS3_Manufacturer",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS3_Version",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS3_Version",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS3_Implementation_Date",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS3_Implementation_Date",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS3_Renewal_Date",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS3_Renewal_Date",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS4_Site_Code",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS4_Site_Code",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS4_Manufacturer",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS4_Manufacturer",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS4_Version",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS4_Version",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS4_Implementation_Date",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS4_Implementation_Date",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "RIS4_Renewal_Date",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "RIS4_Renewal_Date",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "OC_Upgrade",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "OC_Upgrade",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "OC1_Site_Code",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "OC1_Site_Code",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "OC1_Manufacturer",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "OC1_Manufacturer",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "OC1_Version",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "OC1_Version",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "OC1_Implementation_Date",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "OC1_Implementation_Date",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "OC1_Renewal_Date",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "OC1_Renewal_Date",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "OC2_Site_Code",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "OC2_Site_Code",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "OC2_Manufacturer",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "OC2_Manufacturer",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "OC2_Version",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "OC2_Version",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "OC2_Implementation_Date",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "OC2_Implementation_Date",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "OC2_Renewal_Date",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "OC2_Renewal_Date",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "AI_DS_System",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "AI_DS_System",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "AI_DS_System_Used_1",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "AI_DS_System_Used_1",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "AI_DS_System_Used_Freetext_1",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "AI_DS_System_Used_Freetext_1",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Trialing_AI",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Trialing_AI",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Trialing_AI_Used",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Trialing_AI_Used",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "CDS_Referrers",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "CDS_Referrers",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Percent_Paper_Requests",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Percent_Paper_Requests",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Online_Appointment_Access",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Online_Appointment_Access",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Online_Results_Access",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Online_Results_Access",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "All_Referrers_Elec_Results",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "All_Referrers_Elec_Results",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Joint_Procurement",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Joint_Procurement",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Out_of_Hours_Rep",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Out_of_Hours_Rep",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Specialist_Reporting",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Specialist_Reporting",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Backlog_Reporting",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Backlog_Reporting",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Shared_booking_/_Workload_Leveling",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Shared_booking_/_Workload_Leveling",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Interventional_Radiology",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Interventional_Radiology",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Out_of_hours_on_call_Scanning",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Out_of_hours_on_call_Scanning",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Home_Reporting_Workstations",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Home_Reporting_Workstations",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Reporting_workstations_on_Trust_premises",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Reporting_workstations_on_Trust_premises",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Nuclear_Medicine_Workstation",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Nuclear_Medicine_Workstation",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Total_Number_of_Workstations",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Total_Number_of_Workstations",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Number_of_workstations_at_CDC",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Number_of_workstations_at_CDC",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "_Image_Exchange_Portal_Use?",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "_Image_Exchange_Portal_Use?",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Share_Within_Network",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Share_Within_Network",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Share_Patient_History_network",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Share_Patient_History_network",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "share_images_within_network",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "share_images_within_network",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "share_reports_with_network",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "share_reports_with_network",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "report_for_any_trust_network",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "report_for_any_trust_network",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "use_ERostering",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "use_ERostering",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "ERostering_staff_Groups",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "ERostering_staff_Groups",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Admin_and_clerical",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Admin_and_clerical",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Managerial_and_IT/PACS_team",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Managerial_and_IT/PACS_team",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Imaging_practitioners",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Imaging_practitioners",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Clinical_Support_staff",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Clinical_Support_staff",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Nursing_Staff",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Nursing_Staff",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Medical_Staff",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Medical_Staff",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "Medical_physics_staff",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "Medical_physics_staff",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "other_staff_group",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "other_staff_group",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"name": "level_of_attainment",
-											"type": "String",
-											"physicalType": "String"
-										},
-										"sink": {
-											"name": "level_of_attainment",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
 											"name": "Year",
 											"type": "String",
 											"physicalType": "String"
 										},
 										"sink": {
-											"name": "Year"
+											"name": "Year",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Trust",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Trust",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PACS_Upgrade",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PACS_Upgrade",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PACS1_Site_Code",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PACS1_Site_Code",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PACS1_Manufacturer",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PACS1_Manufacturer",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PACS1_Version",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PACS1_Version",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PACS1_Implementation_Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PACS1_Implementation_Date",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PACS1_Renewal_Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PACS1_Renewal_Date",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PACS2_Site_Code",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PACS2_Site_Code",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PACS2_Manufacturer",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PACS2_Manufacturer",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PACS2_Version",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PACS2_Version",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PACS2_Implementation_Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PACS2_Implementation_Date",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "PACS2_Renewal_Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "PACS2_Renewal_Date",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS_Upgrade",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS_Upgrade",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS1_Site_Code",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS1_Site_Code",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS1_Manufacturer",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS1_Manufacturer",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS1_Version",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS1_Version",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS1_Implementation_Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS1_Implementation_Date",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS1_Renewal_Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS1_Renewal_Date",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS2_Site_Code",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS2_Site_Code",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS2_Manufacturer",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS2_Manufacturer",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS2_Version",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS2_Version",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS2_Implementation_Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS2_Implementation_Date",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS2_Renewal_Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS2_Renewal_Date",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS3_Site_Code",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS3_Site_Code",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS3_Manufacturer",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS3_Manufacturer",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS3_Version",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS3_Version",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS3_Implementation_Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS3_Implementation_Date",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS3_Renewal_Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS3_Renewal_Date",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS4_Site_Code",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS4_Site_Code",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS4_Manufacturer",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS4_Manufacturer",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS4_Version",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS4_Version",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS4_Implementation_Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS4_Implementation_Date",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "RIS4_Renewal_Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "RIS4_Renewal_Date",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OC_Upgrade",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "OC_Upgrade",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OC1_Site_Code",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "OC1_Site_Code",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OC1_Manufacturer",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "OC1_Manufacturer",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OC1_Version",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "OC1_Version",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OC1_Implementation_Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "OC1_Implementation_Date",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OC1_Renewal_Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "OC1_Renewal_Date",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OC2_Site_Code",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "OC2_Site_Code",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OC2_Manufacturer",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "OC2_Manufacturer",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OC2_Version",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "OC2_Version",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OC2_Implementation_Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "OC2_Implementation_Date",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "OC2_Renewal_Date",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "OC2_Renewal_Date",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AI_DS_System",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "AI_DS_System",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AI_DS_System_Used_1",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "AI_DS_System_Used_1",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "AI_DS_System_Used_Freetext_1",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "AI_DS_System_Used_Freetext_1",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Trialing_AI",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Trialing_AI",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Trialing_AI_Used",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Trialing_AI_Used",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "CDS_Referrers",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "CDS_Referrers",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Percent_Paper_Requests",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Percent_Paper_Requests",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Online_Appointment_Access",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Online_Appointment_Access",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Online_Results_Access",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Online_Results_Access",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "All_Referrers_Elec_Results",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "All_Referrers_Elec_Results",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Joint_Procurement",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Joint_Procurement",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Out_of_Hours_Rep",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Out_of_Hours_Rep",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Specialist_Reporting",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Specialist_Reporting",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Backlog_Reporting",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Backlog_Reporting",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Shared_booking_/_Workload_Leveling",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Shared_booking_/_Workload_Leveling",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Interventional_Radiology",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Interventional_Radiology",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Out_of_hours_on_call_Scanning",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Out_of_hours_on_call_Scanning",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Home_Reporting_Workstations",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Home_Reporting_Workstations",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Reporting_workstations_on_Trust_premises",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Reporting_workstations_on_Trust_premises",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Nuclear_Medicine_Workstation",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Nuclear_Medicine_Workstation",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Total_Number_of_Workstations",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Total_Number_of_Workstations",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Number_of_workstations_at_CDC",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Number_of_workstations_at_CDC",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "_Image_Exchange_Portal_Use?",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "_Image_Exchange_Portal_Use?",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Share_Within_Network",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Share_Within_Network",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Share_Patient_History_network",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Share_Patient_History_network",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "share_images_within_network",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "share_images_within_network",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "share_reports_with_network",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "share_reports_with_network",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "report_for_any_trust_network",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "report_for_any_trust_network",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "use_ERostering",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "use_ERostering",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "ERostering_staff_Groups",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "ERostering_staff_Groups",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Admin_and_clerical",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Admin_and_clerical",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Managerial_and_IT/PACS_team",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Managerial_and_IT/PACS_team",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Imaging_practitioners",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Imaging_practitioners",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Clinical_Support_staff",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Clinical_Support_staff",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Nursing_Staff",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Nursing_Staff",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Medical_Staff",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Medical_Staff",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Medical_physics_staff",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Medical_physics_staff",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "other_staff_group",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "other_staff_group",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "level_of_attainment",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "level_of_attainment",
+											"type": "String",
+											"physicalType": "nvarchar"
 										}
 									},
 									{
@@ -2697,7 +2699,9 @@
 											"physicalType": "String"
 										},
 										"sink": {
-											"name": "Percent_OCS_Requests"
+											"name": "Percent_OCS_Requests",
+											"type": "String",
+											"physicalType": "nvarchar"
 										}
 									},
 									{
@@ -2707,7 +2711,9 @@
 											"physicalType": "String"
 										},
 										"sink": {
-											"name": "RIS_NHS_NUM"
+											"name": "RIS_NHS_NUM",
+											"type": "String",
+											"physicalType": "nvarchar"
 										}
 									},
 									{
@@ -2717,7 +2723,9 @@
 											"physicalType": "String"
 										},
 										"sink": {
-											"name": "Text_ Appointment"
+											"name": "Text_ Appointment",
+											"type": "String",
+											"physicalType": "nvarchar"
 										}
 									},
 									{
@@ -2727,7 +2735,9 @@
 											"physicalType": "String"
 										},
 										"sink": {
-											"name": "Appiont_Letters"
+											"name": "Appiont_Letters",
+											"type": "String",
+											"physicalType": "nvarchar"
 										}
 									},
 									{
@@ -2737,7 +2747,9 @@
 											"physicalType": "String"
 										},
 										"sink": {
-											"name": "Restrict_Pat_Sharing"
+											"name": "Restrict_Pat_Sharing",
+											"type": "String",
+											"physicalType": "nvarchar"
 										}
 									},
 									{
@@ -2747,7 +2759,9 @@
 											"physicalType": "String"
 										},
 										"sink": {
-											"name": "LLP_Support"
+											"name": "LLP_Support",
+											"type": "String",
+											"physicalType": "nvarchar"
 										}
 									}
 								],

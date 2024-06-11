@@ -469,7 +469,7 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "dbo",
-					"table": "NIDC_Asset_IT1"
+					"table": "NIDC_Asset_IT"
 				}
 			},
 			"dependsOn": []
