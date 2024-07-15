@@ -2961,7 +2961,7 @@
 								"referenceName": "FYF_ODBC_CORE_v2",
 								"type": "DatasetReference"
 							},
-							"name": "source1"
+							"name": "FYFODBCCOREv2"
 						}
 					],
 					"sinks": [
@@ -2982,34 +2982,34 @@
 					],
 					"transformations": [
 						{
-							"name": "filter1"
+							"name": "XRFilter"
 						},
 						{
-							"name": "select1"
+							"name": "CTList"
 						},
 						{
-							"name": "select2"
+							"name": "XRColumnFix"
 						},
 						{
-							"name": "derivedColumn1"
+							"name": "XRFlags"
 						},
 						{
-							"name": "derivedColumn2"
+							"name": "XRlist"
 						},
 						{
-							"name": "filter2"
+							"name": "CTFilter"
 						},
 						{
-							"name": "join1"
+							"name": "CTXRJoin"
 						},
 						{
-							"name": "derivedColumn3"
+							"name": "datediffcols"
 						},
 						{
-							"name": "filter3"
+							"name": "t28dayfilter"
 						},
 						{
-							"name": "select3"
+							"name": "Mixcolfix"
 						},
 						{
 							"name": "join2"
@@ -3018,7 +3018,7 @@
 							"name": "window1"
 						},
 						{
-							"name": "filter4"
+							"name": "selectclosest"
 						}
 					],
 					"scriptLines": [
@@ -3079,9 +3079,9 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
-						"source1 filter(Examination == \"XCHES\" && {Event Date} >= toDate('01/01/2022','MM/dd/yyyy') && toDate({Date First Verified}) >= toDate('01/01/2022','MM/dd/yyyy')) ~> filter1",
-						"filter2 select(mapColumn(",
+						"     format: 'table') ~> FYFODBCCOREv2",
+						"FYFODBCCOREv2 filter(Examination == \"XCHES\" && {Event Date} >= toDate('01/01/2022','MM/dd/yyyy') && toDate({Date First Verified}) >= toDate('01/01/2022','MM/dd/yyyy')) ~> XRFilter",
+						"CTFilter select(mapColumn(",
 						"          {CRIS No},",
 						"          {Event Key},",
 						"          {Exam Key},",
@@ -3095,73 +3095,73 @@
 						"          {Exam ID}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select1",
-						"filter1 select(mapColumn(",
-						"          {CRIS No},",
-						"          {Event Key},",
-						"          {Exam Key},",
-						"          {Trust ID},",
-						"          {Exam Room ID},",
-						"          {Event Date},",
-						"          {Date First Verified},",
-						"          {Reported By},",
-						"          {Patient Type ID},",
-						"          {Age At Event},",
-						"          {Exam ID}",
+						"     skipDuplicateMapOutputs: true) ~> CTList",
+						"XRFilter select(mapColumn(",
+						"          {CRIS No.XR} = {CRIS No},",
+						"          {Event Key.XR} = {Event Key},",
+						"          {Exam Key.XR} = {Exam Key},",
+						"          {Trust ID.XR} = {Trust ID},",
+						"          {Exam Room ID.XR} = {Exam Room ID},",
+						"          {Event Date.XR} = {Event Date},",
+						"          {Date First Verified.XR} = {Date First Verified},",
+						"          {Reported By.XR} = {Reported By},",
+						"          {Patient Type ID.XR} = {Patient Type ID},",
+						"          {Age At Event.XR} = {Age At Event},",
+						"          {Exam ID.XR} = {Exam ID}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select2",
-						"select2 derive(Auto = iif(instr({Reported By},\"AUTO\")!=0, 1, 0),",
-						"          {Rep Rad} = iif(startsWith({Reported By},\"RA\")==true(),1,0),",
-						"          Cons = iif(startsWith({Reported By},\"C\")==true(),1,0),",
-						"          Outsource = iif(instr({Reported By},\"4way\")!=0,1,iif(instr({Reported By},\"EXT\")!=0,1,iif(instr({Reported By},\"4WAY\")!=0,1,0))),",
-						"          {CX I-R} = toDate({Date First Verified})-{Event Date},",
-						"          Snapshot = iif(isNull({Date First Verified})==false(),iif(toDate({Date First Verified})>=toDate('10/01/2023','MM/dd/yyyy'),iif({Event Date}<=toDate('10/01/2023','MM/dd/yyyy'),1,0),0),0)) ~> derivedColumn1",
-						"derivedColumn1 derive(Abnormal = iif(between({CX I-R}, 0, 28)==true(),1,0)) ~> derivedColumn2",
-						"source1 filter(Examination == \"CCHES\" && {Event Date} >= toDate('01/01/2022','MM/dd/yyyy') && toDate({Date First Verified}) >= toDate('01/01/2022','MM/dd/yyyy')) ~> filter2",
-						"derivedColumn2, select1 join(select2@{CRIS No} == select1@{CRIS No}",
-						"     && select2@{Event Date} <= select1@{Event Date}",
-						"     && toDate(select2@{Date First Verified}) <= select1@{Event Date},",
+						"     skipDuplicateMapOutputs: true) ~> XRColumnFix",
+						"XRColumnFix derive(Auto = iif(instr({Reported By.XR},\"AUTO\")!=0, 1, 0),",
+						"          {Rep Rad} = iif(startsWith({Reported By.XR},\"RA\")==true(),1,0),",
+						"          Cons = iif(startsWith({Reported By.XR},\"C\")==true(),1,0),",
+						"          Outsource = iif(instr({Reported By.XR},\"4way\")!=0,1,iif(instr({Reported By.XR},\"EXT\")!=0,1,iif(instr({Reported By.XR},\"4WAY\")!=0,1,0))),",
+						"          {CX I-R} = toDate({Date First Verified.XR})-{Event Date.XR},",
+						"          Snapshot = iif(isNull({Date First Verified.XR})==false(),iif(toDate({Date First Verified.XR})>=toDate('10/01/2023','MM/dd/yyyy'),iif({Event Date.XR}<=toDate('10/01/2023','MM/dd/yyyy'),1,0),0),0)) ~> XRFlags",
+						"XRFlags derive(Abnormal = iif(between({CX I-R}, 0, 28)==true(),1,0)) ~> XRlist",
+						"FYFODBCCOREv2 filter(Examination == \"CCHES\" && {Event Date} >= toDate('01/01/2022','MM/dd/yyyy') && toDate({Date First Verified}) >= toDate('01/01/2022','MM/dd/yyyy')) ~> CTFilter",
+						"XRlist, CTList join({CRIS No.XR} == {CRIS No}",
+						"     && {Event Date.XR} <= {Event Date}",
+						"     && toDate({Date First Verified.XR}) <= {Event Date},",
 						"     joinType:'left',",
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
-						"     broadcast: 'right')~> join1",
-						"join1 derive({CXR-CCI} = select1@{Event Date}-toDate(select2@{Date First Verified}),",
-						"          {CXI-CCR} = toDate(select1@{Date First Verified})-select2@{Event Date},",
-						"          {CXI-CCI} = select1@{Event Date}-select2@{Event Date}) ~> derivedColumn3",
-						"select3 filter({CXR-CCI}<=28) ~> filter3",
-						"derivedColumn3 select(mapColumn(",
-						"          {CRIS No} = select1@{CRIS No},",
-						"          {Event Key} = select1@{Event Key},",
-						"          {CTExam Key} = select1@{Exam Key},",
-						"          {Trust ID} = select1@{Trust ID},",
-						"          {Exam Room ID} = select1@{Exam Room ID},",
-						"          {Event Date} = select1@{Event Date},",
-						"          {Date First Verified} = select1@{Date First Verified},",
-						"          {Reported By} = select1@{Reported By},",
-						"          {Patient Type ID} = select1@{Patient Type ID},",
-						"          {Age At Event} = select1@{Age At Event},",
-						"          {Exam ID} = select1@{Exam ID},",
+						"     broadcast: 'right')~> CTXRJoin",
+						"CTXRJoin derive({CXR-CCI} = {Event Date}-toDate({Date First Verified.XR}),",
+						"          {CXI-CCR} = toDate({Date First Verified})-{Event Date.XR},",
+						"          {CXI-CCI} = {Event Date}-{Event Date.XR}) ~> datediffcols",
+						"Mixcolfix filter({CXR-CCI}<=28) ~> t28dayfilter",
+						"datediffcols select(mapColumn(",
+						"          {CRIS No.CT} = {CRIS No},",
+						"          {Event Key.CT} = {Event Key},",
+						"          {Exam Key.CT} = {Exam Key},",
+						"          {Trust ID.CT} = {Trust ID},",
+						"          {Exam Room ID.CT} = {Exam Room ID},",
+						"          {Event Date.CT} = {Event Date},",
+						"          {Date First Verified.CT} = {Date First Verified},",
+						"          {Reported By.CT} = {Reported By},",
+						"          {Patient Type ID.CT} = {Patient Type ID},",
+						"          {Age At Event.CT} = {Age At Event},",
+						"          {Exam ID.CT} = {Exam ID},",
 						"          {CXR-CCI},",
 						"          {CXI-CCR},",
 						"          {CXI-CCI},",
-						"          {XRExam Key} = select2@{Exam Key}",
+						"          {Exam Key.XR}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select3",
-						"derivedColumn2, filter4 join({Exam Key} == {XRExam Key},",
+						"     skipDuplicateMapOutputs: true) ~> Mixcolfix",
+						"XRlist, selectclosest join(XRColumnFix@{Exam Key.XR} == Mixcolfix@{Exam Key.XR},",
 						"     joinType:'left',",
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
 						"     broadcast: 'right')~> join2",
-						"filter3 window(over({Exam Key} = {CTExam Key}),",
-						"     asc({CTExam Key}, true),",
+						"t28dayfilter window(over({Exam Key.CT}),",
+						"     asc({Exam Key.CT}, true),",
 						"     asc({CXR-CCI}, true),",
 						"     asc({CXI-CCR}, true),",
 						"     asc({CXI-CCI}, true),",
 						"     Rank = denseRank()) ~> window1",
-						"window1 filter(Rank==1) ~> filter4",
-						"filter4 sink(allowSchemaDrift: true,",
+						"window1 filter(Rank==1) ~> selectclosest",
+						"selectclosest sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -7954,7 +7954,7 @@
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
-									"source1": {},
+									"FYFODBCCOREv2": {},
 									"sink1": {},
 									"sink3": {}
 								}
@@ -8221,7 +8221,7 @@
 								3
 							],
 							"monthDays": [
-								1
+								2
 							]
 						}
 					}
