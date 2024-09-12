@@ -7,25 +7,7 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [
-			{
-				"name": "Exam Site",
-				"type": "nvarchar"
-			},
-			{
-				"name": "Exam Room",
-				"type": "nvarchar"
-			},
-			{
-				"name": "Exam Site Code",
-				"type": "nvarchar"
-			},
-			{
-				"name": "Exam Room ID",
-				"type": "int",
-				"precision": 10
-			}
-		],
+		"schema": [],
 		"typeProperties": {
 			"schema": "dev",
 			"table": "Exam Site"
