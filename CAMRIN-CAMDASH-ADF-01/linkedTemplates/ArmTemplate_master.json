@@ -18,7 +18,7 @@
 		"RADFYF01_CRIS_PostgreSQL_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'RADFYF01_CRIS_PostgreSQL'",
-			"defaultValue": "Integrated Security=True;Data Source=LHCH-RADFYF01;Initial Catalog=_CRIS_PostgreSQL"
+			"defaultValue": "integrated security=True;Data Source=LHCH-RADFYF01;Initial Catalog=_CRIS_PostgreSQL"
 		},
 		"RADFYF01_CRIS_PostgreSQL_password": {
 			"type": "secureString",

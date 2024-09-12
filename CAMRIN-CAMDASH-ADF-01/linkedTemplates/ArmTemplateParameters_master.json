@@ -12,7 +12,7 @@
 			"value": ""
 		},
 		"RADFYF01_CRIS_PostgreSQL_connectionString": {
-			"value": "Integrated Security=True;Data Source=LHCH-RADFYF01;Initial Catalog=_CRIS_PostgreSQL"
+			"value": "integrated security=True;Data Source=LHCH-RADFYF01;Initial Catalog=_CRIS_PostgreSQL"
 		},
 		"RADFYF01_CRIS_PostgreSQL_password": {
 			"value": ""
