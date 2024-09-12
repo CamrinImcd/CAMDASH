@@ -682,7 +682,7 @@
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookupExam",
-				"RemoveColumns3, MapDrifted2 lookup(RemoveColumns3@{ExamSite Code} == MapDrifted2@{ExamSite Code},",
+				"RemoveColumns3, MapDrifted6 lookup(RemoveColumns3@{ExamSite Code} == RenameColumn2@{ExamSite Code},",
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookupExamSite",
