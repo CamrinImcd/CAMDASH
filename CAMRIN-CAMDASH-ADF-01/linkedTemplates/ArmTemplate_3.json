@@ -13,6 +13,99 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Asset_22_Avail')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Asset_availability",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Asset_file.xlsx",
+						"container": "nicd-asset-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Local_Identifier",
+						"type": "String"
+					},
+					{
+						"name": "Room_Code",
+						"type": "String"
+					},
+					{
+						"name": "Location",
+						"type": "String"
+					},
+					{
+						"name": "Equipment_Detail",
+						"type": "String"
+					},
+					{
+						"name": "Avg_core_staffed_operational_hours_Weekday",
+						"type": "String"
+					},
+					{
+						"name": "Main_use_core_hours_Weekday",
+						"type": "String"
+					},
+					{
+						"name": "avg_OOHs_Weekday",
+						"type": "String"
+					},
+					{
+						"name": "Avg_core_staffed_operational_hours_Sat",
+						"type": "String"
+					},
+					{
+						"name": "Main_use_core_hours_Sat",
+						"type": "String"
+					},
+					{
+						"name": "avg_OOHs_Sat",
+						"type": "String"
+					},
+					{
+						"name": "Avg_core_staffed_operational_hours_Sun",
+						"type": "String"
+					},
+					{
+						"name": "Main_use_core_hours_Sun",
+						"type": "String"
+					},
+					{
+						"name": "avg_OOHs_Sun",
+						"type": "String"
+					},
+					{
+						"name": "Research",
+						"type": "String"
+					},
+					{
+						"name": "Avg_Research_Hours_per_week",
+						"type": "String"
+					},
+					{
+						"name": "Unscheduled_downtime_12M",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Asset_22_Cost')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1460,63 +1553,6 @@
 					},
 					{
 						"name": "Cost",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_Breast_ScreenAFC')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "Breast_ScreenAFC",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "NIDC_Workforce.xlsx",
-						"container": "nidc-workforce-22"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Trust",
-						"type": "String"
-					},
-					{
-						"name": "Staff Type",
-						"type": "String"
-					},
-					{
-						"name": "Band",
-						"type": "String"
-					},
-					{
-						"name": "FTE",
-						"type": "String"
-					},
-					{
-						"name": " Substantive Pay Costs(£)",
-						"type": "String"
-					},
-					{
-						"name": "Extra Duty Payments (£)",
-						"type": "String"
-					},
-					{
-						"name": "Vacancies",
-						"type": "String"
-					},
-					{
-						"name": "Bank & Agency Headcount",
 						"type": "String"
 					}
 				]

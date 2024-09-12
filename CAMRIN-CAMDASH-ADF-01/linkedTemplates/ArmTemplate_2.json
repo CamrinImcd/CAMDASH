@@ -2301,25 +2301,7 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Exam Site",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Exam Room",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Exam Site Code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Exam Room ID",
-						"type": "int",
-						"precision": 10
-					}
-				],
+				"schema": [],
 				"typeProperties": {
 					"schema": "dev",
 					"table": "Exam Site"
@@ -2328,95 +2310,21 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Asset_22_Avail')]",
+			"name": "[concat(parameters('factoryName'), '/Exam_Site_2')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
+					"referenceName": "camdashdevtest101",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
-				"type": "Excel",
+				"type": "AzureSqlTable",
+				"schema": [],
 				"typeProperties": {
-					"sheetName": "Asset_availability",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "NIDC_Asset_file.xlsx",
-						"container": "nicd-asset-22"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Trust",
-						"type": "String"
-					},
-					{
-						"name": "Local_Identifier",
-						"type": "String"
-					},
-					{
-						"name": "Room_Code",
-						"type": "String"
-					},
-					{
-						"name": "Location",
-						"type": "String"
-					},
-					{
-						"name": "Equipment_Detail",
-						"type": "String"
-					},
-					{
-						"name": "Avg_core_staffed_operational_hours_Weekday",
-						"type": "String"
-					},
-					{
-						"name": "Main_use_core_hours_Weekday",
-						"type": "String"
-					},
-					{
-						"name": "avg_OOHs_Weekday",
-						"type": "String"
-					},
-					{
-						"name": "Avg_core_staffed_operational_hours_Sat",
-						"type": "String"
-					},
-					{
-						"name": "Main_use_core_hours_Sat",
-						"type": "String"
-					},
-					{
-						"name": "avg_OOHs_Sat",
-						"type": "String"
-					},
-					{
-						"name": "Avg_core_staffed_operational_hours_Sun",
-						"type": "String"
-					},
-					{
-						"name": "Main_use_core_hours_Sun",
-						"type": "String"
-					},
-					{
-						"name": "avg_OOHs_Sun",
-						"type": "String"
-					},
-					{
-						"name": "Research",
-						"type": "String"
-					},
-					{
-						"name": "Avg_Research_Hours_per_week",
-						"type": "String"
-					},
-					{
-						"name": "Unscheduled_downtime_12M",
-						"type": "String"
-					}
-				]
+					"schema": "dev",
+					"table": "Exam_Site_2"
+				}
 			},
 			"dependsOn": []
 		}
