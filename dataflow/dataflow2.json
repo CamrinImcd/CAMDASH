@@ -36,7 +36,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "Exam_Site",
+						"referenceName": "Exam_Site_2",
 						"type": "DatasetReference"
 					},
 					"name": "sink4"
@@ -597,12 +597,6 @@
 				"     errorHandlingOption: 'stopOnFirstError') ~> Trust",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     input(",
-				"          {Exam Site} as string,",
-				"          {Exam Room} as string,",
-				"          {Exam Site Code} as string,",
-				"          {Exam Room ID} as integer",
-				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
 				"     updateable:false,",
