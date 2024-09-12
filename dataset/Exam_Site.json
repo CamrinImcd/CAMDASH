@@ -1,5 +1,5 @@
 {
-	"name": "Exam_Site",
+	"name": "Exam_Site_2",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "camdashdevtest101",
@@ -10,8 +10,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "dev",
-			"table": "Exam Site"
+			"table": "Exam_Site_2"
 		}
-	},
-	"type": "Microsoft.DataFactory/factories/datasets"
+	}
 }
