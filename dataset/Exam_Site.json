@@ -1,5 +1,5 @@
 {
-	"name": "Exam_Site_2",
+	"name": "Exam_Site",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "camdashdevtest101",

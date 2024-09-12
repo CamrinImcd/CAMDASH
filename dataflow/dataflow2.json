@@ -36,7 +36,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "Exam_Site_2",
+						"referenceName": "Exam_Site",
 						"type": "DatasetReference"
 					},
 					"name": "sink4"
