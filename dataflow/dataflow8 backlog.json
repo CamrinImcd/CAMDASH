@@ -145,7 +145,7 @@
 				"source(output(",
 				"          {Exam Site} as string,",
 				"          {Exam Room} as string,",
-				"          {Exam Site Code} as string,",
+				"          {ExamSite Code} as string,",
 				"          {Exam Room ID} as integer",
 				"     ),",
 				"     allowSchemaDrift: true,",
