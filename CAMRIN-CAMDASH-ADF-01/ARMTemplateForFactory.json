@@ -7275,7 +7275,7 @@
 							{
 								"activity": "ReferenceLookupsCore",
 								"dependencyConditions": [
-									"Failed"
+									"Completed"
 								]
 							}
 						],
@@ -7552,7 +7552,6 @@
 				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveAzureIR')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow2')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow3')]",
-				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow1_copy1')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow4')]",
@@ -13496,7 +13495,7 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "dev",
-					"table": "Exam Site"
+					"table": "Exam_Site_2"
 				}
 			},
 			"dependsOn": [
@@ -13504,7 +13503,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Exam_Site_2')]",
+			"name": "[concat(parameters('factoryName'), '/Exam_Site_1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -13517,7 +13516,7 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "dev",
-					"table": "Exam_Site_2"
+					"table": "Exam Site"
 				}
 			},
 			"dependsOn": [
@@ -21470,7 +21469,7 @@
 						},
 						{
 							"dataset": {
-								"referenceName": "Exam_Site",
+								"referenceName": "Exam_Site_1",
 								"type": "DatasetReference"
 							},
 							"name": "ExamSite"
@@ -21915,7 +21914,7 @@
 				"[concat(variables('factoryId'), '/datasets/Exam')]",
 				"[concat(variables('factoryId'), '/datasets/Trust')]",
 				"[concat(variables('factoryId'), '/datasets/Modality')]",
-				"[concat(variables('factoryId'), '/datasets/Exam_Site')]",
+				"[concat(variables('factoryId'), '/datasets/Exam_Site_1')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep2')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSql_STATUSES')]",
 				"[concat(variables('factoryId'), '/datasets/ODBC_PTL_v2')]"
@@ -21961,7 +21960,7 @@
 						},
 						{
 							"dataset": {
-								"referenceName": "Exam_Site_2",
+								"referenceName": "Exam_Site",
 								"type": "DatasetReference"
 							},
 							"name": "sink4"
@@ -22616,7 +22615,7 @@
 				"[concat(variables('factoryId'), '/datasets/AzureSql_PTL')]",
 				"[concat(variables('factoryId'), '/datasets/Tat_Type')]",
 				"[concat(variables('factoryId'), '/datasets/Trust')]",
-				"[concat(variables('factoryId'), '/datasets/Exam_Site_2')]",
+				"[concat(variables('factoryId'), '/datasets/Exam_Site')]",
 				"[concat(variables('factoryId'), '/datasets/Modality')]",
 				"[concat(variables('factoryId'), '/datasets/Status')]",
 				"[concat(variables('factoryId'), '/datasets/Exam')]",
@@ -22782,6 +22781,10 @@
 						},
 						{
 							"name": "filter1"
+						},
+						{
+							"name": "MapDrifted6",
+							"description": "Creates an explicit mapping for each drifted column"
 						}
 					],
 					"scriptLines": [
@@ -22869,13 +22872,7 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> Exam",
-						"source(output(",
-						"          {Exam Site} as string,",
-						"          {Exam Room} as string,",
-						"          {Exam Site Code} as string,",
-						"          {Exam Room ID} as integer",
-						"     ),",
-						"     allowSchemaDrift: true,",
+						"source(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> ExamSite",
@@ -23312,7 +23309,7 @@
 						"     multiple: false,",
 						"     pickup: 'any',",
 						"     broadcast: 'auto')~> lookupExam",
-						"RemoveColumns3, MapDrifted2 lookup(RemoveColumns3@{ExamSite Code} == MapDrifted2@{ExamSite Code},",
+						"RemoveColumns3, MapDrifted6 lookup(RemoveColumns3@{ExamSite Code} == RenameColumn2@{ExamSite Code},",
 						"     multiple: false,",
 						"     pickup: 'any',",
 						"     broadcast: 'auto')~> lookupExamSite",
@@ -23328,17 +23325,15 @@
 						"     multiple: false,",
 						"     pickup: 'any',",
 						"     broadcast: 'auto')~> lookupTatType",
-						"MapDrifted2 select(mapColumn(",
-						"          {Exam Site},",
-						"          {Exam Room},",
-						"          {Exam Room ID},",
-						"          {ExamSite Code}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
+						"MapDrifted2 select(skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RenameColumn2",
 						"filter1 derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted4",
 						"MapDrifted1 derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted5",
 						"AzureSQLCoreV3Staging filter(Rank==1) ~> filter1",
+						"RenameColumn2 derive({Exam Site} = toString(byName('Exam Site')),",
+						"          {Exam Room} = toString(byName('Exam Room')),",
+						"          {Exam Room ID} = toLong(byName('Exam Room ID')),",
+						"          Description = toString(byName('Description'))) ~> MapDrifted6",
 						"RemoveColumns6 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
@@ -24200,7 +24195,7 @@
 						},
 						{
 							"dataset": {
-								"referenceName": "Exam_Site",
+								"referenceName": "Exam_Site_1",
 								"type": "DatasetReference"
 							},
 							"name": "source6"
@@ -24400,7 +24395,7 @@
 				"[concat(variables('factoryId'), '/datasets/Modality')]",
 				"[concat(variables('factoryId'), '/datasets/Referral_Source')]",
 				"[concat(variables('factoryId'), '/datasets/Trust')]",
-				"[concat(variables('factoryId'), '/datasets/Exam_Site')]",
+				"[concat(variables('factoryId'), '/datasets/Exam_Site_1')]",
 				"[concat(variables('factoryId'), '/datasets/Patient_Waiting_Monthly')]"
 			]
 		},

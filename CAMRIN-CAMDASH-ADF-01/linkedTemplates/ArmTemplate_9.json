@@ -3518,7 +3518,7 @@
 						},
 						{
 							"dataset": {
-								"referenceName": "Exam_Site",
+								"referenceName": "Exam_Site_1",
 								"type": "DatasetReference"
 							},
 							"name": "ExamSite"
@@ -3999,7 +3999,7 @@
 						},
 						{
 							"dataset": {
-								"referenceName": "Exam_Site_2",
+								"referenceName": "Exam_Site",
 								"type": "DatasetReference"
 							},
 							"name": "sink4"
@@ -4809,6 +4809,10 @@
 						},
 						{
 							"name": "filter1"
+						},
+						{
+							"name": "MapDrifted6",
+							"description": "Creates an explicit mapping for each drifted column"
 						}
 					],
 					"scriptLines": [
@@ -4896,13 +4900,7 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> Exam",
-						"source(output(",
-						"          {Exam Site} as string,",
-						"          {Exam Room} as string,",
-						"          {Exam Site Code} as string,",
-						"          {Exam Room ID} as integer",
-						"     ),",
-						"     allowSchemaDrift: true,",
+						"source(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> ExamSite",
@@ -5339,7 +5337,7 @@
 						"     multiple: false,",
 						"     pickup: 'any',",
 						"     broadcast: 'auto')~> lookupExam",
-						"RemoveColumns3, MapDrifted2 lookup(RemoveColumns3@{ExamSite Code} == MapDrifted2@{ExamSite Code},",
+						"RemoveColumns3, MapDrifted6 lookup(RemoveColumns3@{ExamSite Code} == RenameColumn2@{ExamSite Code},",
 						"     multiple: false,",
 						"     pickup: 'any',",
 						"     broadcast: 'auto')~> lookupExamSite",
@@ -5355,17 +5353,15 @@
 						"     multiple: false,",
 						"     pickup: 'any',",
 						"     broadcast: 'auto')~> lookupTatType",
-						"MapDrifted2 select(mapColumn(",
-						"          {Exam Site},",
-						"          {Exam Room},",
-						"          {Exam Room ID},",
-						"          {ExamSite Code}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
+						"MapDrifted2 select(skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RenameColumn2",
 						"filter1 derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted4",
 						"MapDrifted1 derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted5",
 						"AzureSQLCoreV3Staging filter(Rank==1) ~> filter1",
+						"RenameColumn2 derive({Exam Site} = toString(byName('Exam Site')),",
+						"          {Exam Room} = toString(byName('Exam Room')),",
+						"          {Exam Room ID} = toLong(byName('Exam Room ID')),",
+						"          Description = toString(byName('Description'))) ~> MapDrifted6",
 						"RemoveColumns6 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
@@ -6204,7 +6200,7 @@
 						},
 						{
 							"dataset": {
-								"referenceName": "Exam_Site",
+								"referenceName": "Exam_Site_1",
 								"type": "DatasetReference"
 							},
 							"name": "source6"
@@ -10600,7 +10596,7 @@
 							{
 								"activity": "ReferenceLookupsCore",
 								"dependencyConditions": [
-									"Failed"
+									"Completed"
 								]
 							}
 						],
