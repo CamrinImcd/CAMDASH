@@ -11678,22 +11678,9 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
-								"sqlReaderStoredProcedureName": "[[dev].[usp_Core_Update]",
-								"storedProcedureParameters": {
-									"LastModifiedtime": {
-										"type": "Datetime",
-										"value": {
-											"value": "@{activity('Latest stat date').output.firstRow.CoreUpdateValue}\n",
-											"type": "Expression"
-										}
-									},
-									"TableName": {
-										"type": "String",
-										"value": {
-											"value": "@{activity('Prev Latest stat date').output.firstRow.TableName}\n",
-											"type": "Expression"
-										}
-									}
+								"sqlReaderQuery": {
+									"value": "UPDATE [dev].[CoreUpdatetable]\nSET [CoreUpdateValue] = @{activity('Latest stat date').output.firstRow.CoreUpdateValue}\nWHERE [TableName] = @{activity('Prev Latest stat date').output.firstRow.TableName};\nSELECT 0 AS DummyValue;",
+									"type": "Expression"
 								},
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
