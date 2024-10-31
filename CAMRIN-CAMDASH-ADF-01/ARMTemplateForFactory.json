@@ -3212,7 +3212,7 @@
 							"source": {
 								"type": "SqlServerSource",
 								"sqlReaderQuery": {
-									"value": "select * from dbo.FYF_ODBC_CORE where LastModifytime > '@{activity('Prev Latest stat date').output.firstRow.WatermarkValue}' and LastModifytime <= '@{activity('Latest stat date').output.firstRow.NewWatermarkvalue}'\n",
+									"value": "select * from dbo.FYF_ODBC_CORE where LastModifytime > '@{activity('Prev Latest stat date').output.firstRow.CoreUpdateValue}' and LastModifytime <= '@{activity('Latest stat date').output.firstRow.CoreUpdateValue}'\n",
 									"type": "Expression"
 								},
 								"queryTimeout": "24:00:00",
