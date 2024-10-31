@@ -11632,8 +11632,33 @@
 						}
 					},
 					{
+						"name": "Prev Latest stat date",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
 						"name": "StoredProceduretoWriteCoreUpdateActivity",
-						"type": "SqlServerStoredProcedure",
+						"type": "Lookup",
 						"dependsOn": [
 							{
 								"activity": "Copy_CORE",
@@ -11651,44 +11676,25 @@
 						},
 						"userProperties": [],
 						"typeProperties": {
-							"storedProcedureName": "[[dev].[usp_Core_Update]",
-							"storedProcedureParameters": {
-								"LastModifiedtime": {
-									"value": {
-										"value": "@{activity('Latest stat date').output.firstRow.CoreUpdateValue}\n",
-										"type": "Expression"
-									},
-									"type": "Datetime"
-								},
-								"TableName": {
-									"value": {
-										"value": "@{activity('Prev Latest stat date').output.firstRow.TableName}\n",
-										"type": "Expression"
-									},
-									"type": "String"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "camdashdevtest101",
-							"type": "LinkedServiceReference"
-						}
-					},
-					{
-						"name": "Prev Latest stat date",
-						"type": "Lookup",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
+								"sqlReaderStoredProcedureName": "[[dev].[usp_Core_Update]",
+								"storedProcedureParameters": {
+									"LastModifiedtime": {
+										"type": "Datetime",
+										"value": {
+											"value": "@{activity('Latest stat date').output.firstRow.CoreUpdateValue}\n",
+											"type": "Expression"
+										}
+									},
+									"TableName": {
+										"type": "String",
+										"value": {
+											"value": "@{activity('Prev Latest stat date').output.firstRow.TableName}\n",
+											"type": "Expression"
+										}
+									}
+								},
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
