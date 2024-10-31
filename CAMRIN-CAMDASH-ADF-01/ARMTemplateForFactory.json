@@ -3186,7 +3186,20 @@
 					{
 						"name": "Copy_CORE",
 						"type": "Copy",
-						"dependsOn": [],
+						"dependsOn": [
+							{
+								"activity": "Latest stat date",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Prev Latest stat date",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -3198,12 +3211,20 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_CORE where LastModifytime > '@{activity('Prev Latest stat date').output.firstRow.WatermarkValue}' and LastModifytime <= '@{activity('Latest stat date').output.firstRow.NewWatermarkvalue}'\n",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
-								"partitionOption": "None"
+								"partitionOption": "DynamicRange",
+								"partitionSettings": {
+									"partitionColumnName": "Stat Date",
+									"partitionUpperBound": "",
+									"partitionLowerBound": ""
+								}
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "truncate table [dev].[FYF_ODBC_CORE]",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
@@ -3914,14 +3935,7 @@
 					{
 						"name": "Copy_ORDERS",
 						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "Copy_CORE",
-								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
+						"dependsOn": [],
 						"policy": {
 							"timeout": "0.12:00:00",
 							"retry": 0,
@@ -7513,6 +7527,100 @@
 							},
 							"traceLevel": "Fine"
 						}
+					},
+					{
+						"name": "Latest stat date",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "SELECT Max([Stat Date]) as [Max Stat Date]\n  FROM dbo.FYF_ODBC_CORE",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SqlServer_CORE",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "StoredProceduretoWriteCoreUpdateActivity",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [
+							{
+								"activity": "Copy_CORE",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dev].[usp_Core_Update]",
+							"storedProcedureParameters": {
+								"LastModifiedtime": {
+									"value": {
+										"value": "@{activity('Latest Stat Date').output.firstRow.NewWatermarkvalue}\n",
+										"type": "Expression"
+									},
+									"type": "Datetime"
+								},
+								"TableName": {
+									"value": {
+										"value": "@{activity('Prev Latest stat date').output.firstRow.TableName}\n",
+										"type": "Expression"
+									},
+									"type": "String"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "camdashdevtest101",
+							"type": "LinkedServiceReference"
+						}
+					},
+					{
+						"name": "Prev Latest stat date",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
 					}
 				],
 				"policy": {
@@ -7559,6 +7667,8 @@
 				"[concat(variables('factoryId'), '/dataflows/PopulateNewColumns')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow6')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow7')]",
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]",
+				"[concat(variables('factoryId'), '/datasets/CoreUpdateTable')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep2')]"
 			]
 		},
@@ -13344,6 +13454,38 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/sql_nw_dme_01')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CoreUpdateTable')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "TableName",
+						"type": "varchar"
+					},
+					{
+						"name": "CoreUpdateValue",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "CoreUpdatetable"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
 			]
 		},
 		{
