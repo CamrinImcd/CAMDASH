@@ -9,7 +9,13 @@
 					{
 						"activity": "Latest stat date",
 						"dependencyConditions": [
-							"Completed"
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Prev Latest stat date",
+						"dependencyConditions": [
+							"Succeeded"
 						]
 					}
 				],
@@ -25,7 +31,7 @@
 					"source": {
 						"type": "SqlServerSource",
 						"sqlReaderQuery": {
-							"value": "select * from data_source_table where [Stat Date] <= '@{activity('Latest Stat Date').output.firstRow.NewWatermarkvalue}",
+							"value": "select * from dbo.FYF_ODBC_CORE where LastModifytime > '@{activity('Prev Latest stat date').output.firstRow.WatermarkValue}' and LastModifytime <= '@{activity('Latest stat date').output.firstRow.NewWatermarkvalue}'\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "24:00:00",
@@ -746,14 +752,7 @@
 			{
 				"name": "Copy_ORDERS",
 				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Copy_CORE",
-						"dependencyConditions": [
-							"Completed"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -4298,7 +4297,10 @@
 							"type": "Datetime"
 						},
 						"TableName": {
-							"value": "",
+							"value": {
+								"value": "@{activity('Prev Latest stat date').output.firstRow.TableName}\n",
+								"type": "Expression"
+							},
 							"type": "String"
 						}
 					}
