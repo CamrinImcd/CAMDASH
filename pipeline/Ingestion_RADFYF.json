@@ -4264,7 +4264,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [Max Stat Date]\n  FROM dbo.FYF_ODBC_CORE",
+						"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_CORE",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
