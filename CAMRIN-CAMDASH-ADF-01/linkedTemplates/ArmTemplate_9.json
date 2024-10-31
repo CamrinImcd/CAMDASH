@@ -11660,7 +11660,7 @@
 							"storedProcedureParameters": {
 								"LastModifiedtime": {
 									"value": {
-										"value": "@{activity('Latest Stat Date').output.firstRow.NewWatermarkvalue}\n",
+										"value": "@{activity('Latest Stat Date').output.firstRow.CoreUpdateValue}\n",
 										"type": "Expression"
 									},
 									"type": "Datetime"
