@@ -751,7 +751,7 @@
 					{
 						"activity": "StoredProceduretoWriteCoreUpdateActivity",
 						"dependencyConditions": [
-							"Failed"
+							"Skipped"
 						]
 					}
 				],
