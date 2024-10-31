@@ -11679,7 +11679,7 @@
 							"source": {
 								"type": "AzureSqlSource",
 								"sqlReaderQuery": {
-									"value": "UPDATE [dev].[CoreUpdatetable]\nSET [CoreUpdateValue] = concat('''',@{activity('Latest stat date').output.firstRow.CoreUpdateValue},'''')\nWHERE [TableName] = concat('''',@{activity('Prev Latest stat date').output.firstRow.TableName},'''');\nSELECT 0 AS DummyValue;",
+									"value": "UPDATE [dev].[CoreUpdatetable]\nSET [CoreUpdateValue] = concat('''',formatDateTime(@{activity('Latest stat date').output.firstRow.CoreUpdateValue},'MM/dd/yyyy'),'''')\nWHERE [TableName] = concat('''',@{activity('Prev Latest stat date').output.firstRow.TableName},'''');\nSELECT 0 AS DummyValue;",
 									"type": "Expression"
 								},
 								"queryTimeout": "02:00:00",
