@@ -4293,7 +4293,7 @@
 					"storedProcedureParameters": {
 						"LastModifiedtime": {
 							"value": {
-								"value": "@{activity('Latest Stat Date').output.firstRow.CoreUpdateValue}\n",
+								"value": "@{activity('Latest stat date').output.firstRow.CoreUpdateValue}\n",
 								"type": "Expression"
 							},
 							"type": "Datetime"
