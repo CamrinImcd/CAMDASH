@@ -31,7 +31,7 @@
 					"source": {
 						"type": "SqlServerSource",
 						"sqlReaderQuery": {
-							"value": "select * from dbo.FYF_ODBC_CORE where [Stat Date] > '@{activity('Prev Latest stat date').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date').output.firstRow.CoreUpdateValue}'",
+							"value": "select * from dbo.FYF_ODBC_CORE where [Stat Date] >= '@{activity('Latest stat date').output.firstRow.CoreUpdateValue}'",
 							"type": "Expression"
 						},
 						"queryTimeout": "24:00:00",
