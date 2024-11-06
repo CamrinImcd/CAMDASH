@@ -13,6 +13,66 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/TestTable3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "TestTable3"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Trust')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Trust Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Trust ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Trust Name Group",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Trust Name Group2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Trust Name Group3",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "Trust"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/testtable2')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -3325,7 +3385,8 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> Core",
+						"     query: 'Select * from [dev].[FYF_ODBC_CORE_v2] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'core\\')',",
+						"     format: 'query') ~> Core",
 						"derivedColumn6 derive(DNA = iif({Status Code}==\"CPDNA\", 1, iif({Status Code}==\"APDNA\", 1, 0))) ~> CreateDNAColumn",
 						"CreateDNAColumn aggregate(groupBy({Event Date},",
 						"          {Modality ID},",
@@ -3981,7 +4042,6 @@
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
-						"     truncate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
@@ -4144,8 +4204,10 @@
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     waterMarkColumn: 'Stat Date',",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> AzureSqlCORE",
+						"     query: 'Select * from [dev].[FYF_ODBC_CORE] where [Stat Date] >(Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'Core\\')',",
+						"     format: 'query') ~> AzureSqlCORE",
 						"source(output(",
 						"          {CRIS No} as integer,",
 						"          {Creation Date} as timestamp,",
@@ -4469,7 +4531,8 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> AzureSqlPTL",
+						"     query: 'Select * from [dev].[FYF_ODBC_PTL] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'ptl\\')',",
+						"     format: 'query') ~> AzureSqlPTL",
 						"source(output(",
 						"          {Referral Source} as string,",
 						"          {Referral Source ID} as integer",
@@ -4767,7 +4830,6 @@
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
-						"     truncate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
@@ -4776,7 +4838,9 @@
 					]
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Trust')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dataflow2')]",
@@ -5401,7 +5465,9 @@
 					]
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Trust')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dataflow3')]",
@@ -6174,7 +6240,6 @@
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
-						"     truncate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
@@ -6237,7 +6302,9 @@
 					]
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Trust')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dataflow4')]",
@@ -6300,6 +6367,7 @@
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     waterMarkColumn: 'Stat Date',",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> source1",
 						"filter1 window(over({Exam Key}),",
@@ -6871,7 +6939,8 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
+						"     query: 'Select * from [dev].[FYF_ODBC_PTL_v2] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'ptl\\')',",
+						"     format: 'query') ~> source1",
 						"source1 select(mapColumn(",
 						"          {Event Key},",
 						"          {Exam Key},",
@@ -7148,7 +7217,9 @@
 					]
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Trust')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/dataflow8')]",
@@ -7263,13 +7334,13 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Latest stat date",
+								"activity": "Latest stat date core",
 								"dependencyConditions": [
 									"Succeeded"
 								]
 							},
 							{
-								"activity": "Prev Latest stat date",
+								"activity": "Prev Latest stat date core",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -7287,7 +7358,7 @@
 							"source": {
 								"type": "SqlServerSource",
 								"sqlReaderQuery": {
-									"value": "select * from dbo.FYF_ODBC_CORE where [Stat Date] >= '@{activity('Latest stat date').output.firstRow.CoreUpdateValue}'",
+									"value": "select * from dbo.FYF_ODBC_CORE where [Stat Date] > '@{activity('Prev Latest stat date core').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date core').output.firstRow.CoreUpdateValue}'",
 									"type": "Expression"
 								},
 								"queryTimeout": "24:00:00",
@@ -8007,9 +8078,15 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "StoredProceduretoWriteCoreUpdateActivity",
+								"activity": "Latest stat date orders",
 								"dependencyConditions": [
-									"Skipped"
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Prev Latest stat date orders",
+								"dependencyConditions": [
+									"Succeeded"
 								]
 							}
 						],
@@ -8024,12 +8101,15 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_ORDERS where [Stat Date] > '@{activity('Prev Latest stat date orders').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date orders').output.firstRow.CoreUpdateValue}'",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "truncate table [dev].[FYF_ODBC_ORDERS]",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
@@ -8258,9 +8338,15 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Copy_ORDERS",
+								"activity": "Latest stat date request",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Prev Latest stat date request",
+								"dependencyConditions": [
+									"Succeeded"
 								]
 							}
 						],
@@ -8275,12 +8361,15 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_REQUESTS where [Stat Date] > '@{activity('Prev Latest stat date request').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date request').output.firstRow.CoreUpdateValue}'",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "truncate table [dev].[FYF_ODBC_REQUESTS]",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
@@ -8701,9 +8790,15 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Copy_REQUESTS",
+								"activity": "Latest stat date statuses",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Prev Latest stat date statuses",
+								"dependencyConditions": [
+									"Succeeded"
 								]
 							}
 						],
@@ -8718,12 +8813,15 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_STATUSES where [Stat Date] > '@{activity('Prev Latest stat date statuses').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date statuses').output.firstRow.CoreUpdateValue}'and [Status Date] > '@{activity('Prev Latest stat date statuses').output.firstRow.CoreUpdateValue}' ",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "truncate table [dev].[FYF_ODBC_STATUSES]",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
@@ -8988,9 +9086,15 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Lastest status",
+								"activity": "Latest stat date apdna",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Prev Latest stat date apdna",
+								"dependencyConditions": [
+									"Succeeded"
 								]
 							}
 						],
@@ -9005,12 +9109,15 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_APDNA where [Stat Date] > '@{activity('Prev Latest stat date apdna').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date apdna').output.firstRow.CoreUpdateValue}'",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "truncate table [dev].[FYF_ODBC_APDNA]",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
@@ -9179,9 +9286,15 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Copy_APDNA",
+								"activity": "Latest stat date Imports",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Prev Latest stat date Imports",
+								"dependencyConditions": [
+									"Succeeded"
 								]
 							}
 						],
@@ -9196,12 +9309,15 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_IMPORTS where [Stat Date] > '@{activity('Prev Latest stat date imports').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date imports').output.firstRow.CoreUpdateValue}'",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "truncate table [dev].[FYF_ODBC_IMPORTS]",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
@@ -9286,9 +9402,15 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Copy_Imports",
+								"activity": "Latest stat date lungca",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Prev Latest stat date lungca",
+								"dependencyConditions": [
+									"Succeeded"
 								]
 							}
 						],
@@ -9303,12 +9425,15 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_LUNG_Ca_ALERTS where [Stat Date] > '@{activity('Prev Latest stat date lungca').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date lungca').output.firstRow.CoreUpdateValue}'",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "truncate table [dev].[FYF_ODBC_LUNG_Ca_ALERTS]",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
@@ -9489,9 +9614,15 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Copy_LUNGCa",
+								"activity": "Latest stat patients",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Prev Latest stat patients",
+								"dependencyConditions": [
+									"Succeeded"
 								]
 							}
 						],
@@ -9506,12 +9637,15 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_PATIENTS where [Stat Date] > '@{activity('Prev Latest stat patients').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat patients').output.firstRow.CoreUpdateValue}'",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "Truncate table [dev].[FYF_ODBC_PATIENTS]",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
@@ -9728,9 +9862,15 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Copy_PATIENTS",
+								"activity": "Latest stat date ptl",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Prev Latest stat date ptl",
+								"dependencyConditions": [
+									"Succeeded"
 								]
 							}
 						],
@@ -9745,12 +9885,15 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_PTL where [Stat Date] > '@{activity('Prev Latest stat date ptl').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date ptl').output.firstRow.CoreUpdateValue}'",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "truncate table [dev].[FYF_ODBC_PTL]",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
@@ -10219,9 +10362,15 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Copy_PTL",
+								"activity": "Latest stat date Report TAT",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Prev Latest stat date Report TAT",
+								"dependencyConditions": [
+									"Succeeded"
 								]
 							}
 						],
@@ -10236,12 +10385,15 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_REPORTING_TAT where [Stat Date] > '@{activity('Prev Latest stat date Report TAT').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date Report TAT').output.firstRow.CoreUpdateValue}'",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "truncate table [dev].[FYF_ODBC_REPORTING_TAT]",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
@@ -10806,9 +10958,15 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Copy_REPORT_TAT",
+								"activity": "Latest stat date report_meta",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Prev Latest stat date report_meta",
+								"dependencyConditions": [
+									"Succeeded"
 								]
 							}
 						],
@@ -10823,12 +10981,15 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_REPORT_META where [Stat Date] > '@{activity('Prev Latest stat date report_meta').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date report_meta').output.firstRow.CoreUpdateValue}'",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "truncate table [dev].[FYF_ODBC_REPORT_META]",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
@@ -11105,9 +11266,15 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Copy_REPORT_META",
+								"activity": "Latest stat date test_patients",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Prev Latest stat date test_patients",
+								"dependencyConditions": [
+									"Succeeded"
 								]
 							}
 						],
@@ -11122,12 +11289,15 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_TEST_Patients where [Stat Date] > '@{activity('Prev Latest stat date test_patients').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date test_patients').output.firstRow.CoreUpdateValue}'",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "truncate table [dev].[FYF_ODBC_TEST_Patients]",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
@@ -11236,9 +11406,9 @@
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
-								"activity": "Copy_TEST_PATIENTS",
+								"activity": "Copy_CORE",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
 								]
 							}
 						],
@@ -11270,59 +11440,13 @@
 						}
 					},
 					{
-						"name": "CreateReferrenceTables",
+						"name": "ReferenceLookupsCore",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
 								"activity": "PopulateNewColumns",
 								"dependencyConditions": [
-									"Completed"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "dataflow2",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"AzureSqlCOREV3Staging": {},
-									"AzureSqlPTL": {},
-									"source1": {},
-									"TatType": {},
-									"Trust": {},
-									"sink4": {},
-									"Modality": {},
-									"Status": {},
-									"Exam": {},
-									"PatientType": {},
-									"ReferralSource": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "ReferenceLookupsCore",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "CreateReferrenceTables",
-								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
 								]
 							}
 						],
@@ -11365,9 +11489,15 @@
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
+								"activity": "Copy_PTL",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
 								"activity": "ReferenceLookupsCore",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
 								]
 							}
 						],
@@ -11411,7 +11541,7 @@
 							{
 								"activity": "ReferenceLookupsPTL",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
 								]
 							}
 						],
@@ -11448,7 +11578,7 @@
 							{
 								"activity": "Copy_STATUSES",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
 								]
 							}
 						],
@@ -11475,7 +11605,10 @@
 								"coreCount": 8,
 								"computeType": "General"
 							},
-							"traceLevel": "Fine"
+							"traceLevel": "Fine",
+							"continuationSettings": {
+								"customizedCheckpointKey": "73601c5c-bf4f-48d3-b657-77e8224f66d1"
+							}
 						}
 					},
 					{
@@ -11485,7 +11618,7 @@
 							{
 								"activity": "Add Columns Core",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
 								]
 							}
 						],
@@ -11537,7 +11670,7 @@
 							{
 								"activity": "Data flow2",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
 								]
 							}
 						],
@@ -11575,7 +11708,7 @@
 							{
 								"activity": "CreateAct_Dem",
 								"dependencyConditions": [
-									"Completed"
+									"Succeeded"
 								]
 							}
 						],
@@ -11606,7 +11739,7 @@
 						}
 					},
 					{
-						"name": "Latest stat date",
+						"name": "Latest stat date core",
 						"type": "Lookup",
 						"dependsOn": [],
 						"policy": {
@@ -11620,7 +11753,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_CORE",
+								"sqlReaderQuery": "SELECT Max([Stat Date])as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_CORE",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -11632,7 +11765,7 @@
 						}
 					},
 					{
-						"name": "Prev Latest stat date",
+						"name": "Prev Latest stat date core",
 						"type": "Lookup",
 						"dependsOn": [],
 						"policy": {
@@ -11646,6 +11779,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [TableName]\r\n      ,[CoreUpdateValue]\r\n  FROM [dev].[CoreUpdatetable]\r\n  Where [TableName] = 'Core'",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -11653,15 +11787,16 @@
 								"referenceName": "CoreUpdateTable",
 								"type": "DatasetReference",
 								"parameters": {}
-							}
+							},
+							"firstRowOnly": true
 						}
 					},
 					{
-						"name": "StoredProceduretoWriteCoreUpdateActivity",
+						"name": "New Latest stat date core",
 						"type": "Lookup",
 						"dependsOn": [
 							{
-								"activity": "Copy_CORE",
+								"activity": "CreateAct_Dem",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -11679,7 +11814,986 @@
 							"source": {
 								"type": "AzureSqlSource",
 								"sqlReaderQuery": {
-									"value": "UPDATE [dev].[CoreUpdatetable]\nSET [CoreUpdateValue] = @{concat('''',activity('Latest stat date').output.firstRow.CoreUpdateValue,'''')}\nWHERE [TableName] = @{concat('''',activity('Prev Latest stat date').output.firstRow.TableName,'''')};\nSELECT 0 AS DummyValue;",
+									"value": "UPDATE [dev].[CoreUpdatetable]\nSET [CoreUpdateValue] = @{concat('''',activity('Latest stat date core').output.firstRow.CoreUpdateValue,'''')}\nWHERE [TableName] = @{concat('''',activity('Prev Latest stat date core').output.firstRow.TableName,'''')};\nSELECT 0 AS DummyValue;",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Latest stat date request",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_REQUESTS",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SqlServer_REQUESTS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Latest stat date statuses",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_STATUSES",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SqlServer_STATUSES",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Latest stat date Imports",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_IMPORTS",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SqlServer_Imports",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Latest stat date Report TAT",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_REPORTING_TAT",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SqlServer_REPO_TAT",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Latest stat patients",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_PATIENTS",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SqlServer_PATIENTS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Latest stat date lungca",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_LUNG_Ca_ALERTS",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SqlServer_LUNGCA",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Latest stat date orders",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_ORDERS",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SqlServer_ORDERS",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Latest stat date apdna",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_APDNA",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SqlServer_APDNA",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Latest stat date report_meta",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_REPORT_META",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SqlServer_REPO_META",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Latest stat date test_patients",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_TEST_Patients",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SqlServer_TEST_PAT",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Latest stat date ptl",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_PTL",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "SqlServer_PTL",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "Prev Latest stat date statuses",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [TableName]\n      ,[CoreUpdateValue]\n  FROM [dev].[CoreUpdatetable]\n  Where [TableName] = 'Statuses'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": true
+						}
+					},
+					{
+						"name": "Prev Latest stat date request",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [TableName]\n      ,[CoreUpdateValue]\n  FROM [dev].[CoreUpdatetable]\n  Where [TableName] = 'Requests'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": true
+						}
+					},
+					{
+						"name": "Prev Latest stat date Imports",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [TableName]\n      ,[CoreUpdateValue]\n  FROM [dev].[CoreUpdatetable]\n  Where [TableName] = 'Imports'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": true
+						}
+					},
+					{
+						"name": "Prev Latest stat date Report TAT",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [TableName]\n      ,[CoreUpdateValue]\n  FROM [dev].[CoreUpdatetable]\n  Where [TableName] = 'Report_TAT'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": true
+						}
+					},
+					{
+						"name": "Prev Latest stat patients",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [TableName]\n      ,[CoreUpdateValue]\n  FROM [dev].[CoreUpdatetable]\n  Where [TableName] = 'Patients'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": true
+						}
+					},
+					{
+						"name": "Prev Latest stat date lungca",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [TableName]\n      ,[CoreUpdateValue]\n  FROM [dev].[CoreUpdatetable]\n  Where [TableName] = 'lungca'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": true
+						}
+					},
+					{
+						"name": "Prev Latest stat date orders",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [TableName]\n      ,[CoreUpdateValue]\n  FROM [dev].[CoreUpdatetable]\n  Where [TableName] = 'Orders'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": true
+						}
+					},
+					{
+						"name": "Prev Latest stat date test_patients",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [TableName]\n      ,[CoreUpdateValue]\n  FROM [dev].[CoreUpdatetable]\n  Where [TableName] = 'TEST_PAT'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": true
+						}
+					},
+					{
+						"name": "Prev Latest stat date report_meta",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [TableName]\n      ,[CoreUpdateValue]\n  FROM [dev].[CoreUpdatetable]\n  Where [TableName] = 'REPO_META'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": true
+						}
+					},
+					{
+						"name": "Prev Latest stat date apdna",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [TableName]\n      ,[CoreUpdateValue]\n  FROM [dev].[CoreUpdatetable]\n  Where [TableName] = 'APDNA'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": true
+						}
+					},
+					{
+						"name": "Prev Latest stat date ptl",
+						"type": "Lookup",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [TableName]\n      ,[CoreUpdateValue]\n  FROM [dev].[CoreUpdatetable]\n  Where [TableName] = 'ptl'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							},
+							"firstRowOnly": true
+						}
+					},
+					{
+						"name": "New Latest stat date ptl",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Data flow2",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "UPDATE [dev].[CoreUpdatetable]\nSET [CoreUpdateValue] = @{concat('''',activity('Latest stat date ptl').output.firstRow.CoreUpdateValue,'''')}\nWHERE [TableName] = @{concat('''',activity('Prev Latest stat date ptl').output.firstRow.TableName,'''')};\nSELECT 0 AS DummyValue;",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "New Latest stat statuses",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Copy_STATUSES",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "UPDATE [dev].[CoreUpdatetable]\nSET [CoreUpdateValue] = @{concat('''',activity('Latest stat date statuses').output.firstRow.CoreUpdateValue,'''')}\nWHERE [TableName] = @{concat('''',activity('Prev Latest stat date statuses').output.firstRow.TableName,'''')};\nSELECT 0 AS DummyValue;",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "New Latest stat requests",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Copy_REQUESTS",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "UPDATE [dev].[CoreUpdatetable]\nSET [CoreUpdateValue] = @{concat('''',activity('Latest stat date request').output.firstRow.CoreUpdateValue,'''')}\nWHERE [TableName] = @{concat('''',activity('Prev Latest stat date request').output.firstRow.TableName,'''')};\nSELECT 0 AS DummyValue;",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "New Latest stat Import",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Copy_Imports",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "UPDATE [dev].[CoreUpdatetable]\nSET [CoreUpdateValue] = @{concat('''',activity('Latest stat date imports').output.firstRow.CoreUpdateValue,'''')}\nWHERE [TableName] = @{concat('''',activity('Prev Latest stat date imports').output.firstRow.TableName,'''')};\nSELECT 0 AS DummyValue;",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "New Latest stat report TAT",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Copy_REPORT_TAT",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "UPDATE [dev].[CoreUpdatetable]\nSET [CoreUpdateValue] = @{concat('''',activity('Latest stat date Report TAT').output.firstRow.CoreUpdateValue,'''')}\nWHERE [TableName] = @{concat('''',activity('Prev Latest stat date Report TAT').output.firstRow.TableName,'''')};\nSELECT 0 AS DummyValue;",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "New Latest stat patients",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Copy_PATIENTS",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "UPDATE [dev].[CoreUpdatetable]\nSET [CoreUpdateValue] = @{concat('''',activity('Latest stat patients').output.firstRow.CoreUpdateValue,'''')}\nWHERE [TableName] = @{concat('''',activity('Prev Latest stat patients').output.firstRow.TableName,'''')};\nSELECT 0 AS DummyValue;",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "New Latest stat date lungca",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Copy_LUNGCa",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "UPDATE [dev].[CoreUpdatetable]\nSET [CoreUpdateValue] = @{concat('''',activity('Latest stat date lungca').output.firstRow.CoreUpdateValue,'''')}\nWHERE [TableName] = @{concat('''',activity('Prev Latest stat date lungca').output.firstRow.TableName,'''')};\nSELECT 0 AS DummyValue;",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "New Latest stat date orders",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Copy_ORDERS",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "UPDATE [dev].[CoreUpdatetable]\nSET [CoreUpdateValue] = @{concat('''',activity('Latest stat date orders').output.firstRow.CoreUpdateValue,'''')}\nWHERE [TableName] = @{concat('''',activity('Prev Latest stat date orders').output.firstRow.TableName,'''')};\nSELECT 0 AS DummyValue;",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "New Latest stat date apdna",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Copy_APDNA",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "UPDATE [dev].[CoreUpdatetable]\nSET [CoreUpdateValue] = @{concat('''',activity('Latest stat date apdna').output.firstRow.CoreUpdateValue,'''')}\nWHERE [TableName] = @{concat('''',activity('Prev Latest stat date apdna').output.firstRow.TableName,'''')};\nSELECT 0 AS DummyValue;",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "New Latest stat date report_meta",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Copy_REPORT_META",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "UPDATE [dev].[CoreUpdatetable]\nSET [CoreUpdateValue] = @{concat('''',activity('Latest stat date report_meta').output.firstRow.CoreUpdateValue,'''')}\nWHERE [TableName] = @{concat('''',activity('Prev Latest stat date report_meta').output.firstRow.TableName,'''')};\nSELECT 0 AS DummyValue;",
+									"type": "Expression"
+								},
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"dataset": {
+								"referenceName": "CoreUpdateTable",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						}
+					},
+					{
+						"name": "New Latest stat date test_patients",
+						"type": "Lookup",
+						"dependsOn": [
+							{
+								"activity": "Copy_TEST_PATIENTS",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": {
+									"value": "UPDATE [dev].[CoreUpdatetable]\nSET [CoreUpdateValue] = @{concat('''',activity('Latest stat date test_patients').output.firstRow.CoreUpdateValue,'''')}\nWHERE [TableName] = @{concat('''',activity('Prev Latest stat date test_patients').output.firstRow.TableName,'''')};\nSELECT 0 AS DummyValue;",
 									"type": "Expression"
 								},
 								"queryTimeout": "02:00:00",
@@ -11704,7 +12818,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dataflow1')]",
-				"[concat(variables('factoryId'), '/dataflows/dataflow2')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow3')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow1_copy1')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
@@ -11758,85 +12871,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dataflow8')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/trig_DM01_Weekly')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Move from ICB to CAMRIN",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Week",
-						"interval": 1,
-						"startTime": "2023-11-23T11:22:00",
-						"timeZone": "GMT Standard Time",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								23
-							],
-							"weekDays": [
-								"Sunday"
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Move from ICB to CAMRIN')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Daily')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Ingestion_RADFYF",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2023-08-09T08:00:00",
-						"timeZone": "GMT Standard Time",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								1
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Ingestion_RADFYF')]"
 			]
 		}
 	]
