@@ -11842,7 +11842,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_REQUESTS",
+								"sqlReaderQuery": "SELECT Max([Stat Date]) as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_REQUESTS",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -11868,7 +11868,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_STATUSES",
+								"sqlReaderQuery": "SELECT Max([Stat Date]) as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_STATUSES",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -11894,7 +11894,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_IMPORTS",
+								"sqlReaderQuery": "SELECT Max([Stat Date]) as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_IMPORTS",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -11920,7 +11920,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_REPORTING_TAT",
+								"sqlReaderQuery": "SELECT Max([Stat Date]) as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_REPORTING_TAT",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -11946,7 +11946,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_PATIENTS",
+								"sqlReaderQuery": "SELECT Max([Stat Date]) as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_PATIENTS",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -11972,7 +11972,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_LUNG_Ca_ALERTS",
+								"sqlReaderQuery": "SELECT Max([Stat Date]) as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_LUNG_Ca_ALERTS",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -11998,7 +11998,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_ORDERS",
+								"sqlReaderQuery": "SELECT Max([Stat Date]) as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_ORDERS",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -12024,7 +12024,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_APDNA",
+								"sqlReaderQuery": "SELECT Max([Stat Date]) as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_APDNA",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -12050,7 +12050,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_REPORT_META",
+								"sqlReaderQuery": "SELECT Max([Stat Date]) as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_REPORT_META",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -12076,7 +12076,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_TEST_Patients",
+								"sqlReaderQuery": "SELECT Max([Stat Date]) as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_TEST_Patients",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -12102,7 +12102,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "SELECT Max(convert(Date,[Stat Date]))as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_PTL",
+								"sqlReaderQuery": "SELECT Max([Stat Date])as [CoreUpdateValue]\n  FROM dbo.FYF_ODBC_PTL",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
