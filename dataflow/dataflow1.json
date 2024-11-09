@@ -37,6 +37,9 @@
 				},
 				{
 					"name": "lookup1"
+				},
+				{
+					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -148,10 +151,11 @@
 				"AddColumns window(over({Exam Key}),",
 				"     desc({Stat Date}, false),",
 				"     Rank = denseRank()) ~> window1",
-				"window1, source1 lookup(AzureSqlCORE@{CRIS No} == source1@{CRIS No}",
+				"filter1, source1 lookup(AzureSqlCORE@{CRIS No} == source1@{CRIS No}",
 				"     && AzureSqlCORE@{Event Date} == source1@{Event Date},",
 				"     multiple: true,",
 				"     broadcast: 'auto')~> lookup1",
+				"window1 filter(Rank==1) ~> filter1",
 				"lookup1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
