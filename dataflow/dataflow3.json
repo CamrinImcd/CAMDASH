@@ -323,7 +323,6 @@
 				"          {Referral Source ID},",
 				"          {Tat Type ID},",
 				"          {Reported By},",
-				"          Rank,",
 				"          {Status Code} = {Status Code.2},",
 				"          {Status Date} = {Status Date.1},",
 				"          Activity = {Activity.1},",
