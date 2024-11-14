@@ -88,6 +88,9 @@
 				},
 				{
 					"name": "derivedColumn6"
+				},
+				{
+					"name": "filter4"
 				}
 			],
 			"scriptLines": [
@@ -148,8 +151,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'Select * from [dev].[FYF_ODBC_CORE_v2] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'core\\')',",
-				"     format: 'query') ~> Core",
+				"     format: 'table') ~> Core",
 				"derivedColumn6 derive(DNA = iif({Status Code}==\"CPDNA\", 1, iif({Status Code}==\"APDNA\", 1, 0))) ~> CreateDNAColumn",
 				"CreateDNAColumn aggregate(groupBy({Event Date},",
 				"          {Modality ID},",
@@ -181,7 +183,7 @@
 				"          ID = concat(left(toString(Date),10), concat(toString({Modality ID}), toString({Trust ID})))) ~> derivedColumn1",
 				"RenameDate2 derive(Date = toDate(toString(Date)),",
 				"          ID = concat(left(toString(Date),10), concat(toString({Modality ID}), toString({Trust ID})))) ~> derivedColumn2",
-				"filter2, derivedColumn2 join(derivedColumn1@ID == derivedColumn2@ID,",
+				"filter2, filter4 join(derivedColumn1@ID == derivedColumn2@ID,",
 				"     joinType:'outer',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
@@ -784,6 +786,7 @@
 				"'IRCPM',\r",
 				"'FTTCH',\r",
 				"'FVENJU'], {Examination}), 8, {Modality ID})))))) ~> derivedColumn6",
+				"derivedColumn2 filter(isNull(ID)==false()) ~> filter4",
 				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
