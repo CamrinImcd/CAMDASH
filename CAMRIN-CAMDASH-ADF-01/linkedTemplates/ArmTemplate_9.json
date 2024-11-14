@@ -3385,7 +3385,8 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> Core",
+						"     query: 'Select * from [dev].[FYF_ODBC_CORE_v2] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'core\\')',",
+						"     format: 'query') ~> Core",
 						"derivedColumn6 derive(DNA = iif({Status Code}==\"CPDNA\", 1, iif({Status Code}==\"APDNA\", 1, 0))) ~> CreateDNAColumn",
 						"CreateDNAColumn aggregate(groupBy({Event Date},",
 						"          {Modality ID},",
@@ -4041,7 +4042,6 @@
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
-						"     truncate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
@@ -7558,9 +7558,15 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "CreateAct_Dem",
+								"activity": "Latest stat date core",
 								"dependencyConditions": [
-									"Failed"
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Prev Latest stat date core",
+								"dependencyConditions": [
+									"Succeeded"
 								]
 							}
 						],
@@ -11757,13 +11763,7 @@
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
-								"activity": "Latest stat date core",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							},
-							{
-								"activity": "Prev Latest stat date core",
+								"activity": "ReferenceLookupsPTL",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -11930,7 +11930,7 @@
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
-								"activity": "ReferenceLookupsPTL",
+								"activity": "CreateAct_Dem",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -12020,7 +12020,7 @@
 						"type": "Lookup",
 						"dependsOn": [
 							{
-								"activity": "ReferenceLookupsPTL",
+								"activity": "CreateAct_Dem",
 								"dependencyConditions": [
 									"Succeeded"
 								]
