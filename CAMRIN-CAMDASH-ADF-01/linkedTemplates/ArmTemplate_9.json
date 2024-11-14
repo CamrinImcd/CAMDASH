@@ -3325,6 +3325,9 @@
 						},
 						{
 							"name": "derivedColumn6"
+						},
+						{
+							"name": "filter4"
 						}
 					],
 					"scriptLines": [
@@ -3385,8 +3388,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'Select * from [dev].[FYF_ODBC_CORE_v2] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'core\\')',",
-						"     format: 'query') ~> Core",
+						"     format: 'table') ~> Core",
 						"derivedColumn6 derive(DNA = iif({Status Code}==\"CPDNA\", 1, iif({Status Code}==\"APDNA\", 1, 0))) ~> CreateDNAColumn",
 						"CreateDNAColumn aggregate(groupBy({Event Date},",
 						"          {Modality ID},",
@@ -3418,7 +3420,7 @@
 						"          ID = concat(left(toString(Date),10), concat(toString({Modality ID}), toString({Trust ID})))) ~> derivedColumn1",
 						"RenameDate2 derive(Date = toDate(toString(Date)),",
 						"          ID = concat(left(toString(Date),10), concat(toString({Modality ID}), toString({Trust ID})))) ~> derivedColumn2",
-						"filter2, derivedColumn2 join(derivedColumn1@ID == derivedColumn2@ID,",
+						"filter2, filter4 join(derivedColumn1@ID == derivedColumn2@ID,",
 						"     joinType:'outer',",
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
@@ -4021,6 +4023,7 @@
 						"'IRCPM',\r",
 						"'FTTCH',\r",
 						"'FVENJU'], {Examination}), 8, {Modality ID})))))) ~> derivedColumn6",
+						"derivedColumn2 filter(isNull(ID)==false()) ~> filter4",
 						"filter1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
@@ -4042,6 +4045,7 @@
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
+						"     truncate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
@@ -7417,7 +7421,8 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
+						"     query: 'select * FROM [dev].[FYF_ODBC_CORE_v2]  Where [Exam Key]=32782697',",
+						"     format: 'query') ~> source1",
 						"select1 window(over({Exam Key}),",
 						"     desc({Stat Date}, false),",
 						"     Rank = denseRank()) ~> window1",
@@ -11668,7 +11673,7 @@
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
-								"activity": "PopulateNewColumns",
+								"activity": "Data flow3",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -13029,6 +13034,43 @@
 								"parameters": {}
 							}
 						}
+					},
+					{
+						"name": "Data flow3",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "PopulateNewColumns",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow9",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
 					}
 				],
 				"policy": {
@@ -13048,7 +13090,8 @@
 				"[concat(variables('factoryId'), '/dataflows/dataflow4')]",
 				"[concat(variables('factoryId'), '/dataflows/PopulateNewColumns')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow6')]",
-				"[concat(variables('factoryId'), '/dataflows/dataflow7')]"
+				"[concat(variables('factoryId'), '/dataflows/dataflow7')]",
+				"[concat(variables('factoryId'), '/dataflows/dataflow9')]"
 			]
 		}
 	]
