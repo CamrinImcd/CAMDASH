@@ -7,15 +7,9 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Latest stat date core",
+						"activity": "CreateAct_Dem",
 						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
-						"activity": "Prev Latest stat date core",
-						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					}
 				],
@@ -4152,7 +4146,20 @@
 			{
 				"name": "CreateAct_Dem",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Latest stat date core",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "Prev Latest stat date core",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -4286,7 +4293,14 @@
 			{
 				"name": "Data flow2",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "ReferenceLookupsPTL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -4310,14 +4324,7 @@
 			{
 				"name": "Latest stat date core",
 				"type": "Lookup",
-				"dependsOn": [
-					{
-						"activity": "CreateAct_Dem",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -4342,14 +4349,7 @@
 			{
 				"name": "Prev Latest stat date core",
 				"type": "Lookup",
-				"dependsOn": [
-					{
-						"activity": "CreateAct_Dem",
-						"dependencyConditions": [
-							"Failed"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -4375,7 +4375,14 @@
 			{
 				"name": "New Latest stat date core",
 				"type": "Lookup",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "ReferenceLookupsPTL",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
