@@ -4152,14 +4152,7 @@
 			{
 				"name": "CreateAct_Dem",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [
-					{
-						"activity": "ReferenceLookupsPTL",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -4293,14 +4286,7 @@
 			{
 				"name": "Data flow2",
 				"type": "ExecuteDataFlow",
-				"dependsOn": [
-					{
-						"activity": "CreateAct_Dem",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -4324,7 +4310,14 @@
 			{
 				"name": "Latest stat date core",
 				"type": "Lookup",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "CreateAct_Dem",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -4349,7 +4342,14 @@
 			{
 				"name": "Prev Latest stat date core",
 				"type": "Lookup",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "CreateAct_Dem",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
@@ -4375,14 +4375,7 @@
 			{
 				"name": "New Latest stat date core",
 				"type": "Lookup",
-				"dependsOn": [
-					{
-						"activity": "CreateAct_Dem",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
+				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
