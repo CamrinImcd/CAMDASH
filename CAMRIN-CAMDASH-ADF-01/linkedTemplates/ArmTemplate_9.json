@@ -7558,15 +7558,9 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Latest stat date core",
+								"activity": "CreateAct_Dem",
 								"dependencyConditions": [
-									"Succeeded"
-								]
-							},
-							{
-								"activity": "Prev Latest stat date core",
-								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -11763,7 +11757,13 @@
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
-								"activity": "ReferenceLookupsPTL",
+								"activity": "Latest stat date core",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							},
+							{
+								"activity": "Prev Latest stat date core",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -11930,7 +11930,7 @@
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
-								"activity": "CreateAct_Dem",
+								"activity": "ReferenceLookupsPTL",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -12020,7 +12020,7 @@
 						"type": "Lookup",
 						"dependsOn": [
 							{
-								"activity": "CreateAct_Dem",
+								"activity": "ReferenceLookupsPTL",
 								"dependencyConditions": [
 									"Succeeded"
 								]
