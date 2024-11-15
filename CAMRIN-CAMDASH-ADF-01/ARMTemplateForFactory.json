@@ -3211,6 +3211,10 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_CORE where [Stat Date] > '@{activity('Prev Latest stat date core').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date core').output.firstRow.CoreUpdateValue}'",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
@@ -22195,7 +22199,8 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> Core",
+						"     query: 'Select * from [dev].[FYF_ODBC_CORE_v2] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'core\\')',",
+						"     format: 'query') ~> Core",
 						"derivedColumn6 derive(DNA = iif({Status Code}==\"CPDNA\", 1, iif({Status Code}==\"APDNA\", 1, 0))) ~> CreateDNAColumn",
 						"CreateDNAColumn aggregate(groupBy({Event Date},",
 						"          {Modality ID},",
@@ -22852,7 +22857,6 @@
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
-						"     truncate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
@@ -23026,7 +23030,8 @@
 						"     validateSchema: false,",
 						"     waterMarkColumn: 'Stat Date',",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> AzureSqlCORE",
+						"     query: 'Select * from [dev].[FYF_ODBC_CORE] where [Stat Date] >(Select Max([Stat Date]) as [Stat Date] from [dev].[FYF_ODBC_CORE_v2])',",
+						"     format: 'query') ~> AzureSqlCORE",
 						"source(output(",
 						"          {CRIS No} as integer,",
 						"          {Creation Date} as timestamp,",
