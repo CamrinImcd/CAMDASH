@@ -8745,6 +8745,59 @@
 							},
 							"traceLevel": "Fine"
 						}
+					},
+					{
+						"name": "Data flow3",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Data flow2",
+								"dependencyConditions": [
+									"Completed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow2",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"AzureSqlPTL": {},
+									"source1": {},
+									"RefSrc": {},
+									"PatientTypeIn": {},
+									"Examination": {},
+									"STATUSES": {},
+									"ModalityIN": {},
+									"SiteRoom": {},
+									"TatTypeIn": {},
+									"TrustIn": {},
+									"TatType": {},
+									"Trust": {},
+									"SiteRoomOut": {},
+									"Modality": {},
+									"Status": {},
+									"Exam": {},
+									"PatientType": {},
+									"ReferralSource": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
 					}
 				],
 				"policy": {
@@ -8753,7 +8806,9 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dataflow8')]"
+				"[concat(variables('factoryId'), '/dataflows/dataflow8')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
+				"[concat(variables('factoryId'), '/dataflows/dataflow2')]"
 			]
 		},
 		{
@@ -23689,13 +23744,6 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "AzureSQLPTL_V4_Staging",
-								"type": "DatasetReference"
-							},
-							"name": "AzureSqlCOREV3Staging"
-						},
-						{
-							"dataset": {
 								"referenceName": "AzureSql_PTL",
 								"type": "DatasetReference"
 							},
@@ -23707,6 +23755,62 @@
 								"type": "DatasetReference"
 							},
 							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSql_CORE",
+								"type": "DatasetReference"
+							},
+							"name": "RefSrc"
+						},
+						{
+							"dataset": {
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference"
+							},
+							"name": "PatientTypeIn"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSql_CORE",
+								"type": "DatasetReference"
+							},
+							"name": "Examination"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSql_STATUSES",
+								"type": "DatasetReference"
+							},
+							"name": "STATUSES"
+						},
+						{
+							"dataset": {
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference"
+							},
+							"name": "ModalityIN"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSql_CORE",
+								"type": "DatasetReference"
+							},
+							"name": "SiteRoom"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSql_CORE",
+								"type": "DatasetReference"
+							},
+							"name": "TatTypeIn"
+						},
+						{
+							"dataset": {
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference"
+							},
+							"name": "TrustIn"
 						}
 					],
 					"sinks": [
@@ -23729,7 +23833,7 @@
 								"referenceName": "Exam_Site",
 								"type": "DatasetReference"
 							},
-							"name": "sink4"
+							"name": "SiteRoomOut"
 						},
 						{
 							"dataset": {
@@ -23769,28 +23873,10 @@
 					],
 					"transformations": [
 						{
-							"name": "RenameColumns8"
-						},
-						{
-							"name": "RemoveDupes8"
-						},
-						{
 							"name": "RankColumns8"
 						},
 						{
-							"name": "DropColumns8"
-						},
-						{
 							"name": "DeriveColumn8"
-						},
-						{
-							"name": "RenameColumns7"
-						},
-						{
-							"name": "RemoveDupes7"
-						},
-						{
-							"name": "DropColumns7"
 						},
 						{
 							"name": "RankColumns7"
@@ -23802,37 +23888,13 @@
 							"name": "RenameColumns6"
 						},
 						{
-							"name": "RemoveDupes6"
-						},
-						{
-							"name": "DropColumns6"
-						},
-						{
 							"name": "JointColumn6"
 						},
 						{
 							"name": "RankColumns6"
 						},
 						{
-							"name": "RenameColumns5"
-						},
-						{
-							"name": "RemoveDupes5"
-						},
-						{
-							"name": "DropColumns5"
-						},
-						{
 							"name": "RankColumns5"
-						},
-						{
-							"name": "RenameColumns4"
-						},
-						{
-							"name": "RemoveDupes4"
-						},
-						{
-							"name": "DropColumns4"
 						},
 						{
 							"name": "RankColumns4"
@@ -23844,22 +23906,7 @@
 							"name": "RenameColumns3"
 						},
 						{
-							"name": "RemoveDupes3"
-						},
-						{
-							"name": "DropColumns3"
-						},
-						{
 							"name": "RankColumns3"
-						},
-						{
-							"name": "RenameColumns2"
-						},
-						{
-							"name": "RemoveDupes2"
-						},
-						{
-							"name": "DropColumns2"
 						},
 						{
 							"name": "RankColumns2"
@@ -23868,38 +23915,7 @@
 							"name": "RenameColumns1"
 						},
 						{
-							"name": "RemoveDupes1"
-						},
-						{
-							"name": "DropColumns1"
-						},
-						{
 							"name": "RankColumns1"
-						},
-						{
-							"name": "SortColumns1"
-						},
-						{
-							"name": "SortColumns2"
-						},
-						{
-							"name": "SortColumns3"
-						},
-						{
-							"name": "SortColumns4"
-						},
-						{
-							"name": "SortColumns5"
-						},
-						{
-							"name": "SortColumns6",
-							"description": "Sorting rows on columns 'Exam Room ID'"
-						},
-						{
-							"name": "SortColumns7"
-						},
-						{
-							"name": "SortColumns8"
 						},
 						{
 							"name": "RenameColumns9"
@@ -23912,103 +23928,22 @@
 						},
 						{
 							"name": "select1"
+						},
+						{
+							"name": "aggregate1"
 						}
 					],
 					"scriptLines": [
 						"source(output(",
-						"          {CRIS No} as integer,",
-						"          Accession as string,",
-						"          {Ref Src} as string,",
 						"          Site as string,",
-						"          {Request Date} as date,",
-						"          {Event Date} as date,",
-						"          {Event Time} as string,",
-						"          {On Call} as string,",
-						"          PT as string,",
-						"          Examination as string,",
-						"          {Exam Name} as string,",
 						"          Room as string,",
-						"          {Start Time} as string,",
-						"          {End Time} as string,",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          {Status Code} as string,",
-						"          {Booked Date} as timestamp,",
-						"          {Booked Time} as string,",
-						"          {Creation Date} as timestamp,",
-						"          Attended as string,",
-						"          Urg as string,",
-						"          Modality as string,",
-						"          {No of Proc} as integer,",
-						"          {Age At Event} as integer,",
-						"          {Planned Appointment Date} as timestamp,",
-						"          {Date First Verified} as timestamp,",
-						"          {Time First Verified} as string,",
-						"          {Was Planned} as string,",
-						"          {Was Scheduled} as string,",
-						"          {Was Waiting} as string,",
-						"          {Stat Date} as timestamp,",
-						"          {Reported By} as string,",
-						"          Rank as integer,",
-						"          {Status Code.2} as string,",
-						"          {Status Date.1} as timestamp,",
-						"          {Status Time} as string,",
-						"          Modality2 as string,",
-						"          {Trust Name} as string,",
-						"          Patient_Type as string,",
-						"          {Tat Type} as string,",
-						"          {Activity.1} as integer,",
-						"          {Count of Activty_Demand for Activity.1} as long,",
-						"          {ExamSite Code} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> AzureSqlCOREV3Staging",
-						"source(output(",
-						"          {Event Key} as integer,",
-						"          {Exam Key} as integer,",
-						"          {CRIS Number} as integer,",
-						"          {Status Category} as string,",
-						"          Referrer as string,",
-						"          {Ref Src} as string,",
-						"          {Referring Location} as string,",
-						"          Examination as string,",
-						"          Site as string,",
-						"          {Request Date} as timestamp,",
-						"          {Event Date} as timestamp,",
-						"          {Booked Time} as string,",
-						"          {Booked Date} as timestamp,",
-						"          {Ref Src2} as string,",
-						"          {Postcode L} as string,",
-						"          {Postcode R} as string,",
-						"          {Creation Date} as timestamp,",
-						"          {Event Key2} as integer,",
-						"          Attended as string,",
-						"          Modality as string,",
-						"          Room as string,",
-						"          RC as string,",
-						"          Urg as integer,",
-						"          {Referrer Name} as string,",
-						"          {Exam Name} as string,",
-						"          {Event Date2} as timestamp,",
-						"          {Days Waiting} as integer,",
-						"          {Predicted Reset Date} as timestamp,",
-						"          {Waiting Time Reset Date} as timestamp,",
-						"          {Weeks Waiting} as integer,",
-						"          {Planned Appointment Date} as timestamp,",
-						"          {Waiting Breach Date} as timestamp,",
-						"          {Was Planned} as string,",
-						"          {Was Scheduled} as string,",
-						"          {Was Waiting} as string,",
-						"          CCG as string,",
-						"          {D Status} as string,",
 						"          {Stat Date} as timestamp",
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> AzureSqlPTL",
+						"     query: 'SELECT [Site],[Room]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_PTL]\\n  Group by [Site],[Room]',",
+						"     format: 'query') ~> AzureSqlPTL",
 						"source(output(",
 						"          Site as string,",
 						"          Room as string,",
@@ -24017,140 +23952,124 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     ignoreNoFilesFound: false) ~> source1",
-						"AzureSqlCOREV3Staging select(mapColumn(",
-						"          {Tat Type}",
+						"source(output(",
+						"          {Ref Src} as string,",
+						"          {Stat Date} as timestamp",
 						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> RenameColumns8",
-						"RenameColumns8 aggregate(groupBy({Tat Type}),",
-						"     First = first({Tat Type})) ~> RemoveDupes8",
-						"DropColumns8 rank(asc({Tat Type}, true),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT Distinct([Ref Src]) as [Ref Src]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE]\\n  Group by [Ref Src]',",
+						"     format: 'query') ~> RefSrc",
+						"source(output(",
+						"          Patient_Type as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT Distinct([Patient_Type]) as [Patient_Type]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE_v2]\\n  Group by [Patient_Type]',",
+						"     format: 'query') ~> PatientTypeIn",
+						"source(output(",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT [Examination], [Exam Name]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE]\\n  Group by [Examination],[Exam Name]',",
+						"     format: 'query') ~> Examination",
+						"source(output(",
+						"          {Status Code} as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT [Status Code]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_STATUSES]\\n  Group by [Status Code]',",
+						"     format: 'query') ~> STATUSES",
+						"source(output(",
+						"          Modality2 as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT Distinct([Modality2]) as [Modality2]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE_v2]\\n  Group by [Modality2]',",
+						"     format: 'query') ~> ModalityIN",
+						"source(output(",
+						"          Site as string,",
+						"          Room as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT [Site],[Room]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE]\\n  Group by [Site],[Room]',",
+						"     format: 'query') ~> SiteRoom",
+						"source(output(",
+						"          {Tat Type} as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT [Tat Type]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE_v2]\\n  Group by [Tat Type]',",
+						"     format: 'query') ~> TatTypeIn",
+						"source(output(",
+						"          {Trust Name} as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT Distinct([Trust Name]) as [Trust Name]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE_v2]\\n  Group by [Trust Name]',",
+						"     format: 'query') ~> TrustIn",
+						"TatTypeIn rank(asc({Tat Type}, true),",
 						"     output({Tat Type ID} as long),",
 						"     dense: true) ~> RankColumns8",
-						"RemoveDupes8 select(mapColumn(",
-						"          {Tat Type}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> DropColumns8",
 						"RankColumns8 derive(Target = iif({Tat Type} == \"Urgent Inpatients\",\"12 hours\",iif({Tat Type} == \"Non-Urgent Inpatients\", \"24 hours\",iif({Tat Type} == \"Outpatient Faster Diagnosis Standard Cancer Pathway\", \"3 days\",iif({Tat Type} == \"Urgent GP and Outpatients\", \"7 days\",iif({Tat Type} == \"All Other Routine Outpatient and GP Studies\", \"28 days\",iif({Tat Type} == \"Acutely Unwell/ED Patients\", \"12 hours\",iif({Tat Type} == \"Other Inpatients\" , \"7 days\",iif({Tat Type} == \"Urgent GP/Urgent Outpatients\", \"7 days\",iif({Tat Type} == \"Routine GP and outpatients\", \"28 days\",iif({Tat Type} == \"Ultrasound and interventional Radiology\", \"3 hours\",\"0\"))))))))))) ~> DeriveColumn8",
-						"AzureSqlCOREV3Staging select(mapColumn(",
-						"          {Trust Name}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> RenameColumns7",
-						"RenameColumns7 aggregate(groupBy({Trust Name}),",
-						"     First = first({Trust Name})) ~> RemoveDupes7",
-						"RemoveDupes7 select(mapColumn(",
-						"          {Trust Name}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> DropColumns7",
-						"DropColumns7 rank(asc({Trust Name}, true),",
+						"TrustIn rank(asc({Trust Name}, true),",
 						"     output({Trust ID} as long),",
 						"     dense: true) ~> RankColumns7",
 						"RankColumns7 derive({Trust Name Group} = iif( {Trust Name} == \"Womens\", \"REP\", iif( {Trust Name} == \"LUHFT\", \"REM\", iif( {Trust Name} == \"WUTH\", \"RBL\", iif( {Trust Name} == \"STHK\", \"RBN\", iif( {Trust Name} == \"S&O\", \"RVY\", iif( {Trust Name} == \"LHCH\", \"RBQ\", iif( {Trust Name} == \"Alder Hey\", \"RBS\", iif( {Trust Name} == \"MCH\", \"RBT\", iif( {Trust Name} == \"CCC\", \"REN\", iif( {Trust Name} == \"TWC\", \"RET\", iif( {Trust Name} == \"COCH\", \"RJR\", iif( {Trust Name} == \"WHH\", \"RWW\", iif( {Trust Name} == \"5M501\", \"REM\", iif( {Trust Name} == \"NTD05\", \"REM\", \"Other\")))))))))))))),",
 						"          {Trust Name Group2} = iif( {Trust Name} == \"Womens\", \"Womens\", iif( {Trust Name} == \"LUHFT\", \"LUHFT\", iif( {Trust Name} == \"WUTH\", \"WUTH\", iif( {Trust Name} == \"STHK\", \"STHK\", iif( {Trust Name} == \"S&O\", \"S&O\", iif( {Trust Name} == \"LHCH\", \"LHCH\", iif( {Trust Name} == \"Alder Hey\", \"Alder Hey\", iif( {Trust Name} == \"MCH\", \"MCH\", iif( {Trust Name} == \"CCC\", \"CCC\", iif( {Trust Name} == \"TWC\", \"TWC\", iif( {Trust Name} == \"COCH\", \"COCH\", iif( {Trust Name} == \"WHH\", \"WHH\", iif( {Trust Name} == \"5M501\", \"LUHFT\", iif( {Trust Name} == \"NTD05\", \"LUHFT\", \"Other\")))))))))))))),",
 						"          {Trust Name Group3} = iif( {Trust Name} == \"Womens\", \"REP\", iif( {Trust Name} == \"LUHFT\", \"REM\", iif( {Trust Name} == \"WUTH\", \"WUTH\", iif( {Trust Name} == \"STHK\", \"RBN\", iif( {Trust Name} == \"S&O\", \"RVY\", iif( {Trust Name} == \"LHCH\", \"RBQ\", iif( {Trust Name} == \"Alder Hey\", \"RBS\", iif( {Trust Name} == \"MCH\", \"RBT\", iif( {Trust Name} == \"CCC\", \"REN\", iif( {Trust Name} == \"TWC\", \"RET\", iif( {Trust Name} == \"COCH\", \"COCH\", iif( {Trust Name} == \"WHH\", \"RWW\", \"Other\"))))))))))))) ~> DeriveColumn7",
-						"AzureSqlCOREV3Staging select(mapColumn(",
+						"SiteRoom select(mapColumn(",
 						"          {Exam Site} = Site,",
-						"          {Exam Room} = Room",
+						"          {Exam Room} = Room,",
+						"          {Stat Date}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RenameColumns6",
-						"CombineCOREPTL6 aggregate(groupBy({Exam Site},",
-						"          {Exam Room}),",
-						"     First = first({Exam Room})) ~> RemoveDupes6",
-						"RemoveDupes6 select(mapColumn(",
-						"          {Exam Site},",
-						"          {Exam Room}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> DropColumns6",
-						"DropColumns6 derive({ExamSite Code} = iifNull({Exam Site},'\\n',{Exam Site})+iifNull({Exam Room},'\\n',{Exam Room})) ~> JointColumn6",
-						"JointColumn6 rank(asc({ExamSite Code}, true),",
+						"CombineCOREPTL6 derive({ExamSite Code} = iifNull({Exam Site},'\\n',{Exam Site})+iifNull({Exam Room},'\\n',{Exam Room})) ~> JointColumn6",
+						"aggregate1 rank(asc({ExamSite Code}, true),",
 						"     output({Exam Room ID} as long)) ~> RankColumns6",
-						"AzureSqlCOREV3Staging select(mapColumn(",
-						"          Modality2",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> RenameColumns5",
-						"RenameColumns5 aggregate(groupBy(Modality2),",
-						"     First = first({Modality2})) ~> RemoveDupes5",
-						"RemoveDupes5 select(mapColumn(",
-						"          Modality2",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> DropColumns5",
-						"DropColumns5 rank(asc(Modality2, true),",
+						"ModalityIN rank(asc(Modality2, true),",
 						"     output({Modality ID} as long)) ~> RankColumns5",
-						"AzureSqlCOREV3Staging select(mapColumn(",
-						"          {Status Code}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> RenameColumns4",
-						"RenameColumns4 aggregate(groupBy({Status Code}),",
-						"     First = first({Status Code})) ~> RemoveDupes4",
-						"RemoveDupes4 select(mapColumn(",
-						"          {Status Code}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> DropColumns4",
-						"DropColumns4 rank(asc({Status Code}, true),",
+						"STATUSES rank(asc({Status Code}, true),",
 						"     output({Status ID} as long)) ~> RankColumns4",
 						"RankColumns4 derive({Status Category} = iif(startsWith({Status Code}, \"AP\"), \"AP\", iif(startsWith({Status Code}, \"AS\"), \"AS\", iif(startsWith({Status Code}, \"AT\"), \"AT\", iif(startsWith({Status Code}, \"C\"), \"C\", iif(startsWith({Status Code}, \"D\"), \"D\", iif(startsWith({Status Code}, \"E\"), \"E\", iif(startsWith({Status Code}, \"P\"), \"P\", iif(startsWith({Status Code}, \"R\"), \"R\", iif(startsWith({Status Code}, \"V\"), \"V\", iif(startsWith({Status Code}, \"W\"), \"W\", iif({Status Code} == \"BHSRAI\", \"ST\", iif({Status Code} == \"ACNCLI\", \"W\", iif({Status Code} == \"SRREPC\", \"ST\", \"0\")))))))))))))) ~> DeriveColumn4",
-						"AzureSqlCOREV3Staging select(mapColumn(",
+						"Examination select(mapColumn(",
 						"          {Exam Code} = Examination,",
-						"          {Exam Name}",
+						"          {Exam Name},",
+						"          {Stat Date}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RenameColumns3",
-						"RenameColumns3 aggregate(groupBy({Exam Code},",
-						"          {Exam Name}),",
-						"     first = first({Exam Code})) ~> RemoveDupes3",
-						"RemoveDupes3 select(mapColumn(",
-						"          {Exam Code},",
-						"          {Exam Name}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> DropColumns3",
-						"DropColumns3 rank(asc({Exam Code}, true),",
+						"RenameColumns3 rank(asc({Exam Code}, true),",
 						"     output({Exam ID} as long)) ~> RankColumns3",
-						"AzureSqlCOREV3Staging select(mapColumn(",
-						"          Patient_Type",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> RenameColumns2",
-						"RenameColumns2 aggregate(groupBy(Patient_Type),",
-						"     first = first({Patient_Type})) ~> RemoveDupes2",
-						"RemoveDupes2 select(mapColumn(",
-						"          Patient_Type",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> DropColumns2",
-						"DropColumns2 rank(asc(Patient_Type, true),",
+						"PatientTypeIn rank(asc(Patient_Type, true),",
 						"     output({Patient Type ID} as long)) ~> RankColumns2",
-						"AzureSqlCOREV3Staging select(mapColumn(",
-						"          {Referral Source} = {Ref Src}",
+						"RefSrc select(mapColumn(",
+						"          {Referral Source} = {Ref Src},",
+						"          {Stat Date}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RenameColumns1",
-						"RenameColumns1 aggregate(groupBy({Referral Source}),",
-						"     first = first({Referral Source})) ~> RemoveDupes1",
-						"RemoveDupes1 select(mapColumn(",
-						"          {Referral Source}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> DropColumns1",
-						"DropColumns1 rank(asc({Referral Source}, true),",
+						"RenameColumns1 rank(asc({Referral Source}, true),",
 						"     output({Referral Source ID} as long)) ~> RankColumns1",
-						"RankColumns1 sort(asc({Referral Source ID}, true)) ~> SortColumns1",
-						"RankColumns2 sort(asc({Patient Type ID}, true)) ~> SortColumns2",
-						"RankColumns3 sort(asc({Exam ID}, true)) ~> SortColumns3",
-						"DeriveColumn4 sort(asc({Status ID}, true)) ~> SortColumns4",
-						"RankColumns5 sort(asc({Modality ID}, true)) ~> SortColumns5",
-						"RankColumns6 sort(asc({Exam Room ID}, true)) ~> SortColumns6",
-						"DeriveColumn7 sort(asc({Trust ID}, true)) ~> SortColumns7",
-						"DeriveColumn8 sort(asc({Tat Type ID}, true)) ~> SortColumns8",
 						"AzureSqlPTL select(mapColumn(",
 						"          {Exam Site} = Site,",
 						"          {Exam Room} = Room",
@@ -24158,7 +24077,7 @@
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RenameColumns9",
 						"RenameColumns6, RenameColumns9 union(byName: true)~> CombineCOREPTL6",
-						"SortColumns6, source1 lookup({ExamSite Code} == concat(Site,Room),",
+						"RankColumns6, source1 lookup({ExamSite Code} == concat(Site,Room),",
 						"     multiple: true,",
 						"     broadcast: 'auto')~> lookup1",
 						"lookup1 select(mapColumn(",
@@ -24170,7 +24089,11 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select1",
-						"SortColumns8 sink(allowSchemaDrift: true,",
+						"JointColumn6 aggregate(groupBy({ExamSite Code},",
+						"          {Exam Site},",
+						"          {Exam Room}),",
+						"     {Stat Date} = min({Stat Date})) ~> aggregate1",
+						"DeriveColumn8 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          {Tat Type} as string,",
@@ -24186,7 +24109,7 @@
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     errorHandlingOption: 'stopOnFirstError') ~> TatType",
-						"SortColumns7 sink(allowSchemaDrift: true,",
+						"DeriveColumn7 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          {Trust Name} as string,",
@@ -24221,8 +24144,8 @@
 						"          {ExamSite Code},",
 						"          {Exam Room ID},",
 						"          Description",
-						"     )) ~> sink4",
-						"SortColumns5 sink(allowSchemaDrift: true,",
+						"     )) ~> SiteRoomOut",
+						"RankColumns5 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          Modality2 as string,",
@@ -24237,7 +24160,7 @@
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     errorHandlingOption: 'stopOnFirstError') ~> Modality",
-						"SortColumns4 sink(allowSchemaDrift: true,",
+						"DeriveColumn4 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          {Status Code} as string,",
@@ -24253,7 +24176,7 @@
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     errorHandlingOption: 'stopOnFirstError') ~> Status",
-						"SortColumns3 sink(allowSchemaDrift: true,",
+						"RankColumns3 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          {Exam Name} as string,",
@@ -24269,7 +24192,7 @@
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     errorHandlingOption: 'stopOnFirstError') ~> Exam",
-						"SortColumns2 sink(allowSchemaDrift: true,",
+						"RankColumns2 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          Patient_Type as string,",
@@ -24284,7 +24207,7 @@
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     errorHandlingOption: 'stopOnFirstError') ~> PatientType",
-						"SortColumns1 sink(allowSchemaDrift: true,",
+						"RankColumns1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
 						"          {Referral Source} as string,",
@@ -24303,9 +24226,11 @@
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSQLPTL_V4_Staging')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSql_PTL')]",
 				"[concat(variables('factoryId'), '/datasets/Excel1')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSql_CORE')]",
+				"[concat(variables('factoryId'), '/datasets/FYF_ODBC_CORE_v2')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSql_STATUSES')]",
 				"[concat(variables('factoryId'), '/datasets/Tat_Type')]",
 				"[concat(variables('factoryId'), '/datasets/Trust')]",
 				"[concat(variables('factoryId'), '/datasets/Exam_Site')]",
