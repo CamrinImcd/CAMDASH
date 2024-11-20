@@ -173,7 +173,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'Select * from [dev].[FYF_ODBC_PTL] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'ptl\\')',",
+				"     query: '',",
 				"     format: 'query') ~> AzureSqlPTL",
 				"source(output(",
 				"          {Referral Source} as string,",
