@@ -41,7 +41,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "Exam_Site_1",
+						"referenceName": "Exam_Site",
 						"type": "DatasetReference"
 					},
 					"name": "ExamSite"
@@ -173,8 +173,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: '',",
-				"     format: 'query') ~> AzureSqlPTL",
+				"     format: 'table') ~> AzureSqlPTL",
 				"source(output(",
 				"          {Referral Source} as string,",
 				"          {Referral Source ID} as integer",
@@ -215,7 +214,9 @@
 				"          {Exam Site} as string,",
 				"          {Exam Room} as string,",
 				"          {ExamSite Code} as string,",
-				"          {Exam Room ID} as integer",
+				"          {Exam Room ID} as long,",
+				"          Description as string,",
+				"          {Stat Date} as timestamp",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -383,7 +384,7 @@
 				"          {Was Planned},",
 				"          {Was Scheduled},",
 				"          {Was Waiting},",
-				"          {Stat Date},",
+				"          {Stat Date} = RenameandRemoveCols@{Stat Date},",
 				"          {5 Weeks Wait},",
 				"          {Booked Datetime},",
 				"          {6 Weeks Wait},",
