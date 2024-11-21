@@ -8698,8 +8698,8 @@
 				"[concat(variables('factoryId'), '/dataflows/dataflow1')]",
 				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveAzureIR')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow3')]",
-				"[concat(variables('factoryId'), '/dataflows/dataflow1_copy1')]",
 				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
+				"[concat(variables('factoryId'), '/dataflows/dataflow1_copy1')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow4')]",
 				"[concat(variables('factoryId'), '/dataflows/PopulateNewColumns')]",
@@ -8815,7 +8815,8 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dataflow8')]",
-				"[concat(variables('factoryId'), '/dataflows/dataflow2')]"
+				"[concat(variables('factoryId'), '/dataflows/dataflow2')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
 			]
 		},
 		{
@@ -24105,7 +24106,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'SELECT [Site],[Room]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE]\\nwhere CONCAT([Site],[Room]) not in (SELECT CONCAT([Site],[Room]) FROM [dev].[Exam_Site_2])\\n  Group by [Site],[Room]',",
+						"     query: 'SELECT [Site],[Room]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE]\\n  Group by [Site],[Room]',",
 						"     format: 'query') ~> SiteRoom",
 						"source(output(",
 						"          {Tat Type} as string,",
@@ -24216,7 +24217,7 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RenameColumns6",
-						"CombineCOREPTL6 derive({ExamSite Code} = iifNull({Exam Site},'\\n',{Exam Site})+iifNull({Exam Room},'\\n',{Exam Room})) ~> JointColumn6",
+						"CombineCOREPTL6 derive({ExamSite Code} = iifNull({Exam Site},'NULL')+iifNull({Exam Room},'NULL')) ~> JointColumn6",
 						"aggregate1 rank(asc({ExamSite Code}, true),",
 						"     output({Exam Room ID} as long)) ~> RankColumns6",
 						"ModalityIN rank(asc(Modality2, true),",
@@ -24246,7 +24247,8 @@
 						"     output({Referral Source ID} as long)) ~> RankColumns1",
 						"AzureSqlPTL select(mapColumn(",
 						"          {Exam Site} = Site,",
-						"          {Exam Room} = Room",
+						"          {Exam Room} = Room,",
+						"          {Stat Date}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RenameColumns9",
@@ -24280,7 +24282,6 @@
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
-						"     recreate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
