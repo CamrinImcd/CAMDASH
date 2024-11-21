@@ -4213,8 +4213,7 @@
 						"     validateSchema: false,",
 						"     waterMarkColumn: 'Stat Date',",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: '\\nSelect * from [dev].[FYF_ODBC_CORE] where [Stat Date] >(Select Max([Stat Date]) as [Stat Date] from [dev].[FYF_ODBC_CORE_v2])',",
-						"     format: 'query') ~> AzureSqlCORE",
+						"     format: 'table') ~> AzureSqlCORE",
 						"source(output(",
 						"          {CRIS No} as integer,",
 						"          {Creation Date} as timestamp,",
@@ -4539,8 +4538,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'Select * from [dev].[FYF_ODBC_PTL] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'ptl\\')',",
-						"     format: 'query') ~> AzureSqlPTL",
+						"     format: 'table') ~> AzureSqlPTL",
 						"source(output(",
 						"          {Referral Source} as string,",
 						"          {Referral Source ID} as integer",
@@ -4936,55 +4934,6 @@
 								"type": "DatasetReference"
 							},
 							"name": "ReferralSourceRef"
-						},
-						{
-							"dataset": {
-								"referenceName": "Patient_Type",
-								"type": "DatasetReference"
-							},
-							"name": "source3"
-						},
-						{
-							"dataset": {
-								"referenceName": "Exam",
-								"type": "DatasetReference"
-							},
-							"name": "source4"
-						},
-						{
-							"dataset": {
-								"referenceName": "Status",
-								"type": "DatasetReference"
-							},
-							"name": "source5"
-						},
-						{
-							"dataset": {
-								"referenceName": "Modality",
-								"type": "DatasetReference"
-							},
-							"name": "source6"
-						},
-						{
-							"dataset": {
-								"referenceName": "Exam_Site",
-								"type": "DatasetReference"
-							},
-							"name": "source7"
-						},
-						{
-							"dataset": {
-								"referenceName": "Tat_Type",
-								"type": "DatasetReference"
-							},
-							"name": "source8"
-						},
-						{
-							"dataset": {
-								"referenceName": "Trust",
-								"type": "DatasetReference"
-							},
-							"name": "source9"
 						}
 					],
 					"sinks": [
@@ -5213,72 +5162,6 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> ReferralSourceRef",
-						"source(output(",
-						"          Patient_Type as string,",
-						"          Patient_Type_ID as integer",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source3",
-						"source(output(",
-						"          {Exam Name} as string,",
-						"          {Exam Code} as string,",
-						"          {Exam ID} as integer",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source4",
-						"source(output(",
-						"          {Status Code} as string,",
-						"          {Status ID} as integer,",
-						"          {Status Category} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source5",
-						"source(output(",
-						"          Modality2 as string,",
-						"          {Modality ID} as integer",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source6",
-						"source(output(",
-						"          {Exam Site} as string,",
-						"          {Exam Room} as string,",
-						"          {ExamSite Code} as string,",
-						"          {Exam Room ID} as long,",
-						"          Description as string,",
-						"          {Stat Date} as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source7",
-						"source(output(",
-						"          {Tat Type} as string,",
-						"          {Tat Type ID} as integer,",
-						"          Target as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source8",
-						"source(output(",
-						"          {Trust Name} as string,",
-						"          {Trust ID} as integer,",
-						"          {Trust Name Group} as string,",
-						"          {Trust Name Group2} as string,",
-						"          {Trust Name Group3} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source9",
 						"TatTypeIn rank(asc({Tat Type}, true),",
 						"     output({Tat Type ID} as long)) ~> RankColumns8",
 						"RankColumns8 derive(Target = iif({Tat Type} == \"Urgent Inpatients\",\"12 hours\",iif({Tat Type} == \"Non-Urgent Inpatients\", \"24 hours\",iif({Tat Type} == \"Outpatient Faster Diagnosis Standard Cancer Pathway\", \"3 days\",iif({Tat Type} == \"Urgent GP and Outpatients\", \"7 days\",iif({Tat Type} == \"All Other Routine Outpatient and GP Studies\", \"28 days\",iif({Tat Type} == \"Acutely Unwell/ED Patients\", \"12 hours\",iif({Tat Type} == \"Other Inpatients\" , \"7 days\",iif({Tat Type} == \"Urgent GP/Urgent Outpatients\", \"7 days\",iif({Tat Type} == \"Routine GP and outpatients\", \"28 days\",iif({Tat Type} == \"Ultrasound and interventional Radiology\", \"3 hours\",\"0\"))))))))))) ~> DeriveColumn8",
