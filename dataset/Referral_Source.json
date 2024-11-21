@@ -13,6 +13,11 @@
 				"type": "nvarchar"
 			},
 			{
+				"name": "Stat Date",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
 				"name": "Referral Source ID",
 				"type": "int",
 				"precision": 10
