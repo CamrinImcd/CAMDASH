@@ -2331,7 +2331,34 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "Exam Site",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam Room",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ExamSite Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam Room ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "Description",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime2",
+						"scale": 7
+					}
+				],
 				"typeProperties": {
 					"schema": "dev",
 					"table": "Exam_Site_2"
