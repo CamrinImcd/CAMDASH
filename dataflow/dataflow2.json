@@ -129,9 +129,6 @@
 						"type": "DatasetReference"
 					},
 					"name": "source9"
-				},
-				{
-					"name": "source10"
 				}
 			],
 			"sinks": [
@@ -426,8 +423,6 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source9",
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source10",
 				"TatTypeIn rank(asc({Tat Type}, true),",
 				"     output({Tat Type ID} as long)) ~> RankColumns8",
 				"RankColumns8 derive(Target = iif({Tat Type} == \"Urgent Inpatients\",\"12 hours\",iif({Tat Type} == \"Non-Urgent Inpatients\", \"24 hours\",iif({Tat Type} == \"Outpatient Faster Diagnosis Standard Cancer Pathway\", \"3 days\",iif({Tat Type} == \"Urgent GP and Outpatients\", \"7 days\",iif({Tat Type} == \"All Other Routine Outpatient and GP Studies\", \"28 days\",iif({Tat Type} == \"Acutely Unwell/ED Patients\", \"12 hours\",iif({Tat Type} == \"Other Inpatients\" , \"7 days\",iif({Tat Type} == \"Urgent GP/Urgent Outpatients\", \"7 days\",iif({Tat Type} == \"Routine GP and outpatients\", \"28 days\",iif({Tat Type} == \"Ultrasound and interventional Radiology\", \"3 hours\",\"0\"))))))))))) ~> DeriveColumn8",
