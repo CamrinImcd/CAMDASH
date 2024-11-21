@@ -8698,8 +8698,8 @@
 				"[concat(variables('factoryId'), '/dataflows/dataflow1')]",
 				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveAzureIR')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow3')]",
-				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow1_copy1')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow4')]",
 				"[concat(variables('factoryId'), '/dataflows/PopulateNewColumns')]",
@@ -8815,8 +8815,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dataflow8')]",
-				"[concat(variables('factoryId'), '/dataflows/dataflow2')]",
-				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
+				"[concat(variables('factoryId'), '/dataflows/dataflow2')]"
 			]
 		},
 		{
@@ -23125,7 +23124,8 @@
 						"     validateSchema: false,",
 						"     waterMarkColumn: 'Stat Date',",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> AzureSqlCORE",
+						"     query: '\\nSelect * from [dev].[FYF_ODBC_CORE] where [Stat Date] >(Select Max([Stat Date]) as [Stat Date] from [dev].[FYF_ODBC_CORE_v2])',",
+						"     format: 'query') ~> AzureSqlCORE",
 						"source(output(",
 						"          {CRIS No} as integer,",
 						"          {Creation Date} as timestamp,",
@@ -23454,7 +23454,8 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> AzureSqlPTL",
+						"     query: 'Select * from [dev].[FYF_ODBC_PTL] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'ptl\\')',",
+						"     format: 'query') ~> AzureSqlPTL",
 						"source(output(",
 						"          {Referral Source} as string,",
 						"          {Referral Source ID} as integer",
