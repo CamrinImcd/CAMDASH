@@ -358,7 +358,7 @@
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookupModality",
-				"lookupModality derive(Room = concat({Site},{Room})) ~> derivedEamsiteCode",
+				"lookupModality derive(Room = iifNull({Site},'NULL')+iifNull({Room},'NULL')) ~> derivedEamsiteCode",
 				"derivedEamsiteCode, ExamSite lookup(Room == {ExamSite Code},",
 				"     multiple: false,",
 				"     pickup: 'any',",
