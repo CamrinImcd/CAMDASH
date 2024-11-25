@@ -30,22 +30,12 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
-						"sqlReaderQuery": {
-							"value": "select * from dbo.FYF_ODBC_CORE where [Stat Date] > '@{activity('Prev Latest stat date core').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date core').output.firstRow.CoreUpdateValue}'",
-							"type": "Expression"
-						},
 						"queryTimeout": "24:00:00",
 						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"writeBehavior": "upsert",
-						"upsertSettings": {
-							"useTempDB": true,
-							"keys": [
-								"Exam Key"
-							]
-						},
+						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"disableMetricsCollection": false
 					},
