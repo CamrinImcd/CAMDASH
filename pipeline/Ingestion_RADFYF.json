@@ -30,8 +30,58 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
+						"additionalColumns": [
+							{
+								"name": "Status Code.1",
+								"value": ""
+							},
+							{
+								"name": "Status Date",
+								"value": ""
+							},
+							{
+								"name": "Status Time",
+								"value": ""
+							},
+							{
+								"name": "Status Time2",
+								"value": ""
+							},
+							{
+								"name": "Modality2",
+								"value": ""
+							},
+							{
+								"name": "Trust Name",
+								"value": ""
+							},
+							{
+								"name": "Patient_Type",
+								"value": ""
+							},
+							{
+								"name": "Tat Type",
+								"value": ""
+							},
+							{
+								"name": "Activity",
+								"value": ""
+							},
+							{
+								"name": "Count of Activty_Demand for Activity",
+								"value": ""
+							},
+							{
+								"name": "ExamSite Code",
+								"value": ""
+							},
+							{
+								"name": "Age at Event",
+								"value": ""
+							}
+						],
 						"sqlReaderQuery": {
-							"value": "select * from dbo.FYF_ODBC_Core where [Stat Date] > '@{activity('Prev Latest stat date core').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date core').output.firstRow.CoreUpdateValue}'\nOrder by [Stat Date]",
+							"value": "select * from dbo.FYF_ODBC_Core where [Stat Date] > '@{activity('Prev Latest stat date core').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date core').output.firstRow.CoreUpdateValue}'\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "24:00:00",
@@ -39,6 +89,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE [dev].[AzureSqlCOREStageStep2]\n\nTRUNCATE TABLE [dev].[AzureSqlCOREStageStep1]",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"disableMetricsCollection": false
@@ -145,6 +196,30 @@
 							},
 							{
 								"source": {
+									"name": "Postcode L",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Postcode L",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Postcode R",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Postcode R",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
 									"name": "Site",
 									"type": "String",
 									"physicalType": "varchar"
@@ -695,6 +770,18 @@
 								},
 								"sink": {
 									"name": "CCG",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Postcode",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Postcode",
 									"type": "String",
 									"physicalType": "varchar"
 								}
@@ -4221,7 +4308,7 @@
 					{
 						"activity": "Add Columns Core",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					}
 				],
@@ -4343,7 +4430,8 @@
 					"dataset": {
 						"referenceName": "SqlServer_CORE",
 						"type": "DatasetReference"
-					}
+					},
+					"firstRowOnly": true
 				}
 			},
 			{
