@@ -4183,7 +4183,7 @@
 					{
 						"activity": "PopulateNewColumns",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					}
 				],
@@ -4316,7 +4316,7 @@
 					{
 						"activity": "Add Columns Core",
 						"dependencyConditions": [
-							"Failed"
+							"Succeeded"
 						]
 					}
 				],
