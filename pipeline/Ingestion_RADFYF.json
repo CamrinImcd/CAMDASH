@@ -85,7 +85,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "TRUNCATE TABLE [dev].[FYF_ODBC_CORE]\n\nTRUNCATE TABLE [dev].[AzureSqlCOREStageStep2]\n\nTRUNCATE TABLE [dev].[AzureSqlCOREStageStep1]",
+						"preCopyScript": "TRUNCATE TABLE [dev].[AzureSqlCOREStageStep2]\n\nTRUNCATE TABLE [dev].[AzureSqlCOREStageStep1]",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate",
