@@ -80,7 +80,10 @@
 								"value": ""
 							}
 						],
-						"sqlReaderQuery": "select * from dbo.FYF_ODBC_Core where [Stat Date]> '@{activity('Prev Latest stat date core').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date core').output.firstRow.CoreUpdateValue}'",
+						"sqlReaderQuery": {
+							"value": "select * from dbo.FYF_ODBC_Core where [Stat Date]> '@{activity('Prev Latest stat date core').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date core').output.firstRow.CoreUpdateValue}'",
+							"type": "Expression"
+						},
 						"queryTimeout": "24:00:00",
 						"partitionOption": "None"
 					},
@@ -4306,7 +4309,7 @@
 					{
 						"activity": "Add Columns Core",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					}
 				],
