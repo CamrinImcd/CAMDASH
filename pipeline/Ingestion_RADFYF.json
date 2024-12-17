@@ -81,7 +81,7 @@
 							}
 						],
 						"sqlReaderQuery": {
-							"value": "select * from dbo.FYF_ODBC_Core where [Stat Date] > '@{activity('Prev Latest stat date core').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date core').output.firstRow.CoreUpdateValue}'\n",
+							"value": "select * from dbo.FYF_ODBC_Core where [Stat Date]> '@{activity('Prev Latest stat date core').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date core').output.firstRow.CoreUpdateValue}'\n",
 							"type": "Expression"
 						},
 						"queryTimeout": "24:00:00",
@@ -89,9 +89,10 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "TRUNCATE TABLE [dev].[AzureSqlCOREStageStep2]\n\nTRUNCATE TABLE [dev].[AzureSqlCOREStageStep1]",
+						"preCopyScript": "TRUNCATE TABLE [dev].[FYF_ODBC_CORE]\n\nTRUNCATE TABLE [dev].[AzureSqlCOREStageStep2]\n\nTRUNCATE TABLE [dev].[AzureSqlCOREStageStep1]",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
 					},
 					"enableStaging": false,
@@ -4212,7 +4213,7 @@
 					{
 						"activity": "ReferenceLookupsCore",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					}
 				],
