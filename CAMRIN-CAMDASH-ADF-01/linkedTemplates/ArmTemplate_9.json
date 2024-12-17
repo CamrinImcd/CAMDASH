@@ -4210,7 +4210,7 @@
 						"     validateSchema: false,",
 						"     waterMarkColumn: 'Stat Date',",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'Select * from [dev].[FYF_ODBC_Core] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'Core\\')',",
+						"     query: 'Select * from [dev].[FYF_ODBC_Core] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'Core\\') and [Exam Key]=33836431\\n',",
 						"     format: 'query') ~> AzureSqlCORE",
 						"source(output(",
 						"          {CRIS No} as integer,",
@@ -9833,7 +9833,14 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"CRIS No",
+										"Event Date"
+									]
+								},
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
