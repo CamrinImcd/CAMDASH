@@ -105,7 +105,7 @@
 				"     validateSchema: false,",
 				"     waterMarkColumn: 'Stat Date',",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'Select * from [dev].[FYF_ODBC_Core] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'Core\\') and [Exam Key]=33836431\\n',",
+				"     query: 'Select * from [dev].[FYF_ODBC_Core] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'Core\\')\\n',",
 				"     format: 'query') ~> AzureSqlCORE",
 				"source(output(",
 				"          {CRIS No} as integer,",
