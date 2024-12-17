@@ -4095,7 +4095,7 @@
 							}
 						}
 					],
-					"script": "section Section1;\r\nshared RequestRecievedStatus = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dev\",Item=\"RequestRecievedStatus\"]}[Data] in InputTable;\r\nshared AzureSqlCOREStageStep1 = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dev\",Item=\"AzureSqlCOREStageStep1\"]}[Data] in InputTable;\r\nshared UserQuery = let Source = #\"AzureSqlCOREStageStep1\",\r\n  #\"Removed duplicates\" = Table.Distinct(Source, {\"Event Key\"}),\r\n  #\"Removed columns\" = Table.RemoveColumns(#\"Removed duplicates\", {\"ExamSite Code\", \"Status Time\", \"Modality2\", \"Trust Name\", \"Patient_Type\", \"Tat Type\"}),\r\n  #\"Replaced value\" = Table.ReplaceValue(#\"Removed columns\", null, \"NULL\", Replacer.ReplaceValue, {\"Room\"}),\r\n  #\"Replaced value 1\" = Table.ReplaceValue(#\"Replaced value\", null, \"NULL\", Replacer.ReplaceValue, {\"Site\"}),\r\n  #\"Inserted merged column\" = Table.AddColumn(#\"Replaced value 1\", \"ExamSite Code\", each Text.Combine({[Site], [Room]}, \"\"), type text),\r\n  #\"Merged queries\" = Table.NestedJoin(#\"Inserted merged column\", {\"Exam Key\"}, Table.SelectRows(RequestRecievedStatus, each [Status Code] = \"RR\"), {\"Exam Key\"}, \"RequestRecievedStatus\", JoinKind.LeftOuter),\r\n  #\"Expanded RequestRecievedStatus 1\" = Table.ExpandTableColumn(#\"Merged queries\", \"RequestRecievedStatus\", {\"Status Code\", \"Status Date\", \"Status Time\"}, {\"Status Code.2\", \"Status Date.1\", \"Status Time\"}),\r\n  #\"Date Time Change\" = Table.TransformColumnTypes(#\"Expanded RequestRecievedStatus 1\", {{\"Request Date\", type date}, {\"Event Date\", type date}, {\"Status Time\", type text}}),\r\n  Modality = Table.TransformColumnTypes(Table.AddColumn(#\"Date Time Change\", \"Modality2\", each if [Modality] = \"R\" then \"Plain X-Ray\" else if [Modality] = \"A\" then \"IR\" else if [Modality] = \"B\" then \"Mammo\" else if [Modality] = \"C\" then \"CT\" else if[Modality] = \"M\" then \"MRI\" else if [Modality] = \"F\" then \"Fluoro\" else if [Modality] = \"U\" then \"NOUS\"  else if [Modality] = \"N\" then \"Nuc Med\" else if[Modality] = \"S\" then \"DEXA\" else if[Modality] = \"Z\" then \"Additional Workload\" else if[Modality] = \"H\" then \"Cardio\" else if[Modality] = \"D\" then \"Doppler\" else if[Modality] = \"E\" then \"Endo\" else if[Modality] = \"Y\" then \"Med Phys\" else if[Modality] = \"O\" then \"Obstetrics\" else \"other\"), {{\"Modality2\", type text}}),\r\n  Trust = Table.TransformColumnTypes(Table.AddColumn(Modality, \"Trust Name\", each if [Site] = \"5HA16\" then \"LUHFT\" else if [Site] = \"5NL93\" then \"LUHFT\" else if Text.Start([Site],3) = \"REM\" then \"LUHFT\" else if Text.Start([Site],3) = \"RQ6\" then \"LUHFT\" else if Text.Start([Site],3) = \"RBL\" then \"WUTH\" else if Text.Start([Site],3) = \"RBN\" then \"STHK\" else if Text.Start([Site],3) = \"RBQ\" then \"LHCH\" else if Text.Start([Site],3) = \"RBS\" then \"Alder Hey\" else if Text.Start([Site],3) = \"RBT\" then \"MCH\" else if Text.Start([Site],3) = \"REN\" then \"CCC\" else if Text.Start([Site],3) = \"REP\" then \"Womens\" else if Text.Start([Site],3) = \"RET\" then \"TWC\" else if Text.Start([Site],3) = \"RJR\" then \"COCH\" else if Text.Start([Site],3) = \"RVY\" then \"S&O\" else if Text.Start([Site],3) = \"RWW\" then \"WHH\" else [Site]), {{\"Trust Name\", type text}}),\r\n  #\"Patient Type\" = Table.TransformColumnTypes(Table.AddColumn(Trust, \"Patient_Type\", each if [PT] = \"A\" then \"In Patient\" else if [PT] = \"B\" then \"Out Patient\" else if [PT] = \"C\" then \"A&E Attender\" else if [PT] = \"D\" then \"Out Patient\" else if [PT] = \"E\" then \"Out Patient\" else if [PT] = \"F\" then \"Other\" else if [PT] = \"G\" then \"GP Direct Access Patient\"  else if [PT] = \"H\" then \"In Patient\" else if[PT] = \"J\" then \"A&E Attender\" else if[PT] = \"K\" then \"Tertiary Referral\" else if[PT] = \"N\" then \"In Patient\" else if[PT] = \"R\" then \"Research\" else if[PT] = \"T\" then \"Dental\" else if[Modality] = \"X\" then \"Other\" else \"Other\"), {{\"Patient_Type\", type text}}),\r\n  #\"Tat Type\" = Table.TransformColumnTypes(Table.AddColumn(#\"Patient Type\", \"Tat Type\", each if ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\") and (([PT]=\"A\" and [Urg]=\"5\") or [PT]=\"C\") then \"Urgent Inpatients\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\") and ([PT]=\"A\" and ([Urg]=\"1\" or [Urg]=\"3\")) then \"Non-Urgent Inpatients\" else  \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Plain X-Ray\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\") and ([PT]=\"B\" or [PT]=\"G\") and [Urg]=\"7\" then \"Outpatient Faster Diagnosis Standard Cancer Pathway\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\") and ([PT]=\"B\" or [PT]=\"G\" or [PT]=\"D\") and ([Urg]=\"3\" or [Urg]=\"5\") then \"Urgent GP and Outpatients\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\") and ([PT]=\"B\" or [PT]=\"G\" or [PT]=\"D\") and [Urg]=\"1\" then \"All Other Routine Outpatient and GP Studies\" else \r\n\r\nif [Modality2]=\"Plain X-Ray\" and ([PT]=\"A\" and ([Urg]=\"1\" or [Urg]=\"3\")) then \"Other Inpatients\" else \r\n\r\nif [Modality2]=\"Plain X-Ray\" and (([PT]=\"A\" and [Urg]=\"5\") or [PT]=\"C\") then \"Acutely Unwell/ED Patients\" else \r\n\r\nif [Modality2]=\"Plain X-Ray\" and ([PT]=\"B\" or [PT]=\"D\" or [PT]=\"G\") and ([Urg]=\"5\" or [Urg]=\"3\") then \"Urgent GP/Urgent Outpatients\" else \r\n\r\nif ([Modality2]=\"Plain X-Ray\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\") and ([PT]=\"B\" or [PT]=\"D\" or [PT]=\"G\") and [Urg]=\"1\" then \"Routine GP and outpatients\" else  \r\n\r\nif [Modality2]=\"NOUS\" or [Modality2]=\"IR\" then \"Ultrasound and interventional Radiology\" else \"Other\"), {{\"Tat Type\", type text}}),\r\n  Activity = Table.TransformColumnTypes(Table.AddColumn(#\"Tat Type\", \"Activity.1\", each if([Status Code]=\"ASACK\" or [Status Code]=\"ASRMS\" or [Status Code]=\"ASRQS\" or [Status Code]=\"ATN\" or  [Status Code]=\"ATP\" or [Status Code]=\"CHBU\" or  [Status Code]=\"CHE\" or [Status Code]=\"CHEC\" or [Status Code]=\"CPC\" or [Status Code]=\"CPDNA\" or [Status Code]=\"CPMP\" or [Status Code]=\"CPPG\" or [Status Code]=\"CPPR\" or [Status Code]=\"CPR\" or [Status Code]=\"DVR\" or [Status Code]=\"PRTRPT\") then 1 else 0), {{\"Activity.1\", type number}}),\r\n  #\"Activity 2\" = Table.TransformColumnTypes(Table.AddColumn(Activity, \"Count of Activty_Demand for Activity.1\", each [Activity.1]), {{\"Count of Activty_Demand for Activity.1\", Int64.Type}}) in #\"Activity 2\";\r\n",
+					"script": "section Section1;\r\nshared RequestRecievedStatus = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dev\",Item=\"RequestRecievedStatus\"]}[Data] in InputTable;\r\nshared AzureSqlCOREStageStep1 = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dev\",Item=\"AzureSqlCOREStageStep1\"]}[Data] in InputTable;\r\nshared UserQuery = let Source = #\"AzureSqlCOREStageStep1\",\r\n  #\"Filtered rows\" = Table.SelectRows(Source, each ([Stat Date] = #datetime(2023, 1, 16, 9, 45, 33.367))),\r\n  #\"Removed duplicates\" = Table.Distinct(#\"Filtered rows\", {\"Event Key\"}),\r\n  #\"Removed columns\" = Table.RemoveColumns(#\"Removed duplicates\", {\"ExamSite Code\", \"Status Time\", \"Modality2\", \"Trust Name\", \"Patient_Type\", \"Tat Type\"}),\r\n  #\"Replaced value\" = Table.ReplaceValue(#\"Removed columns\", null, \"NULL\", Replacer.ReplaceValue, {\"Room\"}),\r\n  #\"Replaced value 1\" = Table.ReplaceValue(#\"Replaced value\", null, \"NULL\", Replacer.ReplaceValue, {\"Site\"}),\r\n  #\"Inserted merged column\" = Table.AddColumn(#\"Replaced value 1\", \"ExamSite Code\", each Text.Combine({[Site], [Room]}, \"\"), type text),\r\n  #\"Merged queries\" = Table.NestedJoin(#\"Inserted merged column\", {\"Exam Key\"}, Table.SelectRows(RequestRecievedStatus, each [Status Code] = \"RR\"), {\"Exam Key\"}, \"RequestRecievedStatus\", JoinKind.LeftOuter),\r\n  #\"Expanded RequestRecievedStatus 1\" = Table.ExpandTableColumn(#\"Merged queries\", \"RequestRecievedStatus\", {\"Status Code\", \"Status Date\", \"Status Time\"}, {\"Status Code.2\", \"Status Date.1\", \"Status Time\"}),\r\n  #\"Date Time Change\" = Table.TransformColumnTypes(#\"Expanded RequestRecievedStatus 1\", {{\"Request Date\", type date}, {\"Event Date\", type date}, {\"Status Time\", type text}}),\r\n  Modality = Table.TransformColumnTypes(Table.AddColumn(#\"Date Time Change\", \"Modality2\", each if [Modality] = \"R\" then \"Plain X-Ray\" else if [Modality] = \"A\" then \"IR\" else if [Modality] = \"B\" then \"Mammo\" else if [Modality] = \"C\" then \"CT\" else if[Modality] = \"M\" then \"MRI\" else if [Modality] = \"F\" then \"Fluoro\" else if [Modality] = \"U\" then \"NOUS\"  else if [Modality] = \"N\" then \"Nuc Med\" else if[Modality] = \"S\" then \"DEXA\" else if[Modality] = \"Z\" then \"Additional Workload\" else if[Modality] = \"H\" then \"Cardio\" else if[Modality] = \"D\" then \"Doppler\" else if[Modality] = \"E\" then \"Endo\" else if[Modality] = \"Y\" then \"Med Phys\" else if[Modality] = \"O\" then \"Obstetrics\" else \"other\"), {{\"Modality2\", type text}}),\r\n  Trust = Table.TransformColumnTypes(Table.AddColumn(Modality, \"Trust Name\", each if [Site] = \"5HA16\" then \"LUHFT\" else if [Site] = \"5NL93\" then \"LUHFT\" else if Text.Start([Site],3) = \"REM\" then \"LUHFT\" else if Text.Start([Site],3) = \"RQ6\" then \"LUHFT\" else if Text.Start([Site],3) = \"RBL\" then \"WUTH\" else if Text.Start([Site],3) = \"RBN\" then \"STHK\" else if Text.Start([Site],3) = \"RBQ\" then \"LHCH\" else if Text.Start([Site],3) = \"RBS\" then \"Alder Hey\" else if Text.Start([Site],3) = \"RBT\" then \"MCH\" else if Text.Start([Site],3) = \"REN\" then \"CCC\" else if Text.Start([Site],3) = \"REP\" then \"Womens\" else if Text.Start([Site],3) = \"RET\" then \"TWC\" else if Text.Start([Site],3) = \"RJR\" then \"COCH\" else if Text.Start([Site],3) = \"RVY\" then \"S&O\" else if Text.Start([Site],3) = \"RWW\" then \"WHH\" else [Site]), {{\"Trust Name\", type text}}),\r\n  #\"Patient Type\" = Table.TransformColumnTypes(Table.AddColumn(Trust, \"Patient_Type\", each if [PT] = \"A\" then \"In Patient\" else if [PT] = \"B\" then \"Out Patient\" else if [PT] = \"C\" then \"A&E Attender\" else if [PT] = \"D\" then \"Out Patient\" else if [PT] = \"E\" then \"Out Patient\" else if [PT] = \"F\" then \"Other\" else if [PT] = \"G\" then \"GP Direct Access Patient\"  else if [PT] = \"H\" then \"In Patient\" else if[PT] = \"J\" then \"A&E Attender\" else if[PT] = \"K\" then \"Tertiary Referral\" else if[PT] = \"N\" then \"In Patient\" else if[PT] = \"R\" then \"Research\" else if[PT] = \"T\" then \"Dental\" else if[Modality] = \"X\" then \"Other\" else \"Other\"), {{\"Patient_Type\", type text}}),\r\n  #\"Tat Type\" = Table.TransformColumnTypes(Table.AddColumn(#\"Patient Type\", \"Tat Type\", each if ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\" or [Modality2]=\"Plain X-Ray\") and ([PT]=\"A\" and [Urg]=\"5\") then \"Urgent Inpatients\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\" or [Modality2]=\"Plain X-Ray\") and ([PT]=\"C\") then \"Emergency Department\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\" or [Modality2]=\"Plain X-Ray\") and ([PT]=\"A\" and ([Urg]<>\"5\")) then \"Non-Urgent Inpatients\" else  \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Plain X-Ray\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\") and ([PT]=\"B\" or [PT]=\"G\") and [Urg]=\"7\" then \"Outpatient Faster Diagnosis Standard Cancer Pathway\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\" or [Modality2]=\"Plain X-Ray\") and ([PT]=\"B\" or [PT]=\"G\" or [PT]=\"D\") and ([Urg]=\"5\") then \"Urgent GP and Outpatients\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Plain X-Ray\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\") and ([PT]=\"B\" or [PT]=\"D\" or [PT]=\"G\") and [Urg]=\"1\" then \"Routine GP and Outpatients\" else  \r\n  \r\n\r\nif [Modality2]=\"NOUS\" or [Modality2]=\"IR\" then \"Ultrasound and Interventional Radiology\" else \"Other\"), {{\"Tat Type\", type text}}),\r\n  Activity = Table.TransformColumnTypes(Table.AddColumn(#\"Tat Type\", \"Activity.1\", each if([Status Code]=\"ASACK\" or [Status Code]=\"ASRMS\" or [Status Code]=\"ASRQS\" or [Status Code]=\"ATN\" or  [Status Code]=\"ATP\" or [Status Code]=\"CHBU\" or  [Status Code]=\"CHE\" or [Status Code]=\"CHEC\" or [Status Code]=\"CPC\" or [Status Code]=\"CPDNA\" or [Status Code]=\"CPMP\" or [Status Code]=\"CPPG\" or [Status Code]=\"CPPR\" or [Status Code]=\"CPR\" or [Status Code]=\"DVR\" or [Status Code]=\"PRTRPT\") then 1 else 0), {{\"Activity.1\", type number}}),\r\n  #\"Activity 2\" = Table.TransformColumnTypes(Table.AddColumn(Activity, \"Count of Activty_Demand for Activity.1\", each [Activity.1]), {{\"Count of Activty_Demand for Activity.1\", Int64.Type}}) in #\"Activity 2\";\r\n",
 					"documentLocale": "en-us"
 				}
 			},
@@ -4134,9 +4134,6 @@
 						}
 					],
 					"transformations": [
-						{
-							"name": "AddColumns"
-						},
 						{
 							"name": "window1"
 						},
@@ -4213,7 +4210,8 @@
 						"     validateSchema: false,",
 						"     waterMarkColumn: 'Stat Date',",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> AzureSqlCORE",
+						"     query: 'Select * from [dev].[FYF_ODBC_Core] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'Core\\')',",
+						"     format: 'query') ~> AzureSqlCORE",
 						"source(output(",
 						"          {CRIS No} as integer,",
 						"          {Creation Date} as timestamp,",
@@ -4240,19 +4238,7 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> source1",
-						"AzureSqlCORE derive({Status Code.1} = toString(null()),",
-						"          {Status Date} = toString(null()),",
-						"          {Status Time} = toString(null()),",
-						"          {Status Time2} = lpad(toString(null()),4,\"0\"),",
-						"          Modality2 = toString(null()),",
-						"          {Trust Name} = toString(null()),",
-						"          Patient_Type = toString(null()),",
-						"          {Tat Type} = toString(null()),",
-						"          Activity = toString(null()),",
-						"          {Count of Activty_Demand for Activity} = toString(null()),",
-						"          {ExamSite Code} = toString(null()),",
-						"          {Age at Event} = toString(null())) ~> AddColumns",
-						"AddColumns window(over({Exam Key}),",
+						"AzureSqlCORE window(over({Exam Key}),",
 						"     desc({Stat Date}, false),",
 						"     Rank = denseRank()) ~> window1",
 						"filter2, source1 lookup(AzureSqlCORE@{CRIS No} == source1@{CRIS No}",
@@ -4310,8 +4296,6 @@
 						"     upsertable:false,",
 						"     truncate:true,",
 						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
 						"     saveOrder: 1,",
 						"     errorHandlingOption: 'stopOnFirstError',",
 						"     mapColumn(",
@@ -4327,7 +4311,6 @@
 						"          Examination,",
 						"          {Exam Name},",
 						"          Room,",
-						"          {ExamSite Code},",
 						"          {Start Time},",
 						"          {End Time},",
 						"          {Exam Key},",
@@ -4347,14 +4330,9 @@
 						"          {Was Scheduled},",
 						"          {Was Waiting},",
 						"          {Stat Date} = AzureSqlCORE@{Stat Date},",
-						"          Modality2,",
-						"          {Trust Name},",
-						"          Patient_Type,",
-						"          {Tat Type},",
-						"          {Status Time} = {Status Time2},",
 						"          {Reported By},",
 						"          Rank,",
-						"          {Age At Event} = source1@{Age at Event}",
+						"          {Age At Event} = {Age at Event}",
 						"     )) ~> AzureSqlCOREStageStep1"
 					]
 				}
@@ -4538,7 +4516,8 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> AzureSqlPTL",
+						"     query: 'Select * from [dev].[FYF_ODBC_PTL] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'ptl\\')',",
+						"     format: 'query') ~> AzureSqlPTL",
 						"source(output(",
 						"          {Referral Source} as string,",
 						"          {Referral Source ID} as integer",
@@ -5385,7 +5364,7 @@
 								"referenceName": "AzureSqlCOREStageStep2",
 								"type": "DatasetReference"
 							},
-							"name": "AzureSQLCoreV3Staging"
+							"name": "AzureSQLCoreV2Staging"
 						},
 						{
 							"dataset": {
@@ -5455,10 +5434,6 @@
 					],
 					"transformations": [
 						{
-							"name": "MapDrifted1",
-							"description": "Creates an explicit mapping for each drifted column"
-						},
-						{
 							"name": "MapDrifted2",
 							"description": "Creates an explicit mapping for each drifted column"
 						},
@@ -5521,16 +5496,17 @@
 							"name": "RenameColumn2"
 						},
 						{
-							"name": "MapDrifted4",
-							"description": "Creates an explicit mapping for each drifted column"
-						},
-						{
-							"name": "MapDrifted5",
-							"description": "Creates an explicit mapping for each drifted column"
-						},
-						{
 							"name": "MapDrifted6",
 							"description": "Creates an explicit mapping for each drifted column"
+						},
+						{
+							"name": "select7"
+						},
+						{
+							"name": "window1"
+						},
+						{
+							"name": "filter1"
 						}
 					],
 					"scriptLines": [
@@ -5583,7 +5559,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> AzureSQLCoreV3Staging",
+						"     format: 'table') ~> AzureSQLCoreV2Staging",
 						"source(output(",
 						"          Patient_Type as string,",
 						"          Patient_Type_ID as integer",
@@ -5650,7 +5626,6 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> TatType",
-						"LookupPatientType derive({Patient Type ID} = toLong(byName('Patient Type ID'))) ~> MapDrifted1",
 						"ExamSite derive({ExamSite Code} = toString(byName('ExamSite Code'))) ~> MapDrifted2",
 						"lookupTatType select(mapColumn(",
 						"          {CRIS No},",
@@ -5710,7 +5685,7 @@
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns6",
 						"PatientType derive({Patient Type ID} = toLong(byName('Patient Type ID'))) ~> MapDrifted3",
-						"MapDrifted5 select(mapColumn(",
+						"LookupPatientType select(mapColumn(",
 						"          {CRIS No},",
 						"          Accession,",
 						"          {Ref Src},",
@@ -5746,7 +5721,7 @@
 						"          {Status Time},",
 						"          Modality2,",
 						"          {Trust Name},",
-						"          Patient_Type = AzureSQLCoreV3Staging@Patient_Type,",
+						"          Patient_Type = select7@Patient_Type,",
 						"          {Tat Type},",
 						"          {Status Time2},",
 						"          {Patient Type ID},",
@@ -6032,14 +6007,14 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveColumns5",
-						"MapDrifted4 derive({Status Time2} = lpad(toString({Status Time}),4,\"0\")) ~> DerivedColumn1",
+						"filter1 derive({Status Time2} = lpad(toString({Status Time}),4,\"0\")) ~> DerivedColumn1",
 						"MapDrifted3 select(mapColumn(",
 						"          Patient_Type,",
 						"          {Patient Type ID}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RenameColumn",
-						"DerivedColumn1, RenameColumn lookup(AzureSQLCoreV3Staging@Patient_Type == RenameColumn@Patient_Type,",
+						"DerivedColumn1, RenameColumn lookup(select7@Patient_Type == RenameColumn@Patient_Type,",
 						"     multiple: false,",
 						"     pickup: 'any',",
 						"     broadcast: 'auto')~> LookupPatientType",
@@ -6073,12 +6048,61 @@
 						"     broadcast: 'auto')~> lookupTatType",
 						"MapDrifted2 select(skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RenameColumn2",
-						"AzureSQLCoreV3Staging derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted4",
-						"MapDrifted1 derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted5",
 						"RenameColumn2 derive({Exam Site} = toString(byName('Exam Site')),",
 						"          {Exam Room} = toString(byName('Exam Room')),",
 						"          {Exam Room ID} = toLong(byName('Exam Room ID')),",
 						"          Description = toString(byName('Description'))) ~> MapDrifted6",
+						"AzureSQLCoreV2Staging select(mapColumn(",
+						"          {CRIS No},",
+						"          Accession,",
+						"          {Ref Src},",
+						"          Site,",
+						"          {Request Date},",
+						"          {Event Date},",
+						"          {Event Time},",
+						"          {On Call},",
+						"          PT,",
+						"          Examination,",
+						"          {Exam Name},",
+						"          Room,",
+						"          {Start Time},",
+						"          {End Time},",
+						"          {Exam Key},",
+						"          {Event Key},",
+						"          {Status Code},",
+						"          {Booked Date},",
+						"          {Booked Time},",
+						"          {Creation Date},",
+						"          Attended,",
+						"          Urg,",
+						"          Modality,",
+						"          {No of Proc},",
+						"          {Planned Appointment Date},",
+						"          {Date First Verified},",
+						"          {Time First Verified},",
+						"          {Was Planned},",
+						"          {Was Scheduled},",
+						"          {Was Waiting},",
+						"          {Stat Date},",
+						"          {Reported By},",
+						"          {Age At Event},",
+						"          {Status Code.2},",
+						"          {Status Date.1},",
+						"          {Status Time},",
+						"          Modality2,",
+						"          {Trust Name},",
+						"          Patient_Type,",
+						"          {Tat Type},",
+						"          {Activity.1},",
+						"          {Count of Activty_Demand for Activity.1},",
+						"          {ExamSite Code}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select7",
+						"select7 window(over({Exam Key}),",
+						"     desc({Stat Date}, true),",
+						"     Rank = denseRank()) ~> window1",
+						"window1 filter(Rank==1) ~> filter1",
 						"RemoveColumns6 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
@@ -6146,58 +6170,8 @@
 						"     saveOrder: 1,",
 						"     errorHandlingOption: 'stopOnFirstError',",
 						"     mapColumn(",
-						"          {CRIS No},",
-						"          Accession,",
-						"          {Ref Src},",
-						"          Site,",
-						"          {Request Date},",
-						"          {Event Date},",
-						"          {Event Time},",
-						"          {On Call},",
-						"          PT,",
-						"          Examination,",
-						"          {Exam Name},",
-						"          Room,",
-						"          {ExamSite Code},",
-						"          {Start Time},",
-						"          {End Time},",
-						"          {Exam Key},",
-						"          {Event Key},",
-						"          {Status Code},",
-						"          {Booked Date},",
-						"          {Booked Time},",
-						"          {Creation Date},",
-						"          Attended,",
-						"          Urg,",
-						"          Modality,",
-						"          {No of Proc},",
-						"          {Planned Appointment Date},",
-						"          {Date First Verified},",
-						"          {Time First Verified},",
-						"          {Was Planned},",
-						"          {Was Scheduled},",
-						"          {Was Waiting},",
-						"          {Status Time},",
-						"          Modality2,",
-						"          {Trust Name},",
-						"          Patient_Type,",
-						"          {Tat Type},",
-						"          {Status Time2},",
-						"          {Patient Type ID},",
-						"          {Modality ID},",
-						"          {Status ID},",
-						"          {Exam ID},",
-						"          {Exam Room ID},",
-						"          {Trust ID},",
-						"          {Referral Source ID},",
-						"          {Tat Type ID},",
-						"          {Reported By},",
-						"          Rank,",
-						"          {Status Date},",
-						"          Activity,",
-						"          {Count of Activty_Demand for Activity},",
-						"          {Stat Date},",
-						"          {Age At Event}",
+						"          each(match(/* All input columns */true()),",
+						"               /* Input name */$$ = $$)",
 						"     )) ~> AzureSqlCOREV2"
 					]
 				}
@@ -7482,13 +7456,69 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
+								"additionalColumns": [
+									{
+										"name": "Status Code.1",
+										"value": ""
+									},
+									{
+										"name": "Status Date",
+										"value": ""
+									},
+									{
+										"name": "Status Time",
+										"value": ""
+									},
+									{
+										"name": "Status Time2",
+										"value": ""
+									},
+									{
+										"name": "Modality2",
+										"value": ""
+									},
+									{
+										"name": "Trust Name",
+										"value": ""
+									},
+									{
+										"name": "Patient_Type",
+										"value": ""
+									},
+									{
+										"name": "Tat Type",
+										"value": ""
+									},
+									{
+										"name": "Activity",
+										"value": ""
+									},
+									{
+										"name": "Count of Activty_Demand for Activity",
+										"value": ""
+									},
+									{
+										"name": "ExamSite Code",
+										"value": ""
+									},
+									{
+										"name": "Age at Event",
+										"value": ""
+									}
+								],
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_Core where [Stat Date]> '@{activity('Prev Latest stat date core').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date core').output.firstRow.CoreUpdateValue}'\n",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
+								"preCopyScript": "TRUNCATE TABLE [dev].[FYF_ODBC_CORE]\n\nTRUNCATE TABLE [dev].[AzureSqlCOREStageStep2]\n\nTRUNCATE TABLE [dev].[AzureSqlCOREStageStep1]",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
 								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
@@ -7593,6 +7623,30 @@
 									},
 									{
 										"source": {
+											"name": "Postcode L",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Postcode L",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Postcode R",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Postcode R",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
 											"name": "Site",
 											"type": "String",
 											"physicalType": "varchar"
@@ -8143,6 +8197,18 @@
 										},
 										"sink": {
 											"name": "CCG",
+											"type": "String",
+											"physicalType": "varchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Postcode",
+											"type": "String",
+											"physicalType": "varchar"
+										},
+										"sink": {
+											"name": "Postcode",
 											"type": "String",
 											"physicalType": "varchar"
 										}
@@ -11529,7 +11595,7 @@
 							{
 								"activity": "Copy_CORE",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -11585,7 +11651,7 @@
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
-									"AzureSQLCoreV3Staging": {},
+									"AzureSQLCoreV2Staging": {},
 									"PatientType": {},
 									"Modality": {},
 									"Status": {},
@@ -11618,7 +11684,7 @@
 							{
 								"activity": "ReferenceLookupsCore",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -11882,7 +11948,8 @@
 								"referenceName": "SqlServer_CORE",
 								"type": "DatasetReference",
 								"parameters": {}
-							}
+							},
+							"firstRowOnly": true
 						}
 					},
 					{
