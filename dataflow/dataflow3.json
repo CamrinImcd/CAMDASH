@@ -9,7 +9,7 @@
 						"referenceName": "AzureSqlCOREStageStep2",
 						"type": "DatasetReference"
 					},
-					"name": "AzureSQLCoreV3Staging"
+					"name": "AzureSQLCoreV2Staging"
 				},
 				{
 					"dataset": {
@@ -79,10 +79,6 @@
 			],
 			"transformations": [
 				{
-					"name": "MapDrifted1",
-					"description": "Creates an explicit mapping for each drifted column"
-				},
-				{
 					"name": "MapDrifted2",
 					"description": "Creates an explicit mapping for each drifted column"
 				},
@@ -145,16 +141,17 @@
 					"name": "RenameColumn2"
 				},
 				{
-					"name": "MapDrifted4",
-					"description": "Creates an explicit mapping for each drifted column"
-				},
-				{
-					"name": "MapDrifted5",
-					"description": "Creates an explicit mapping for each drifted column"
-				},
-				{
 					"name": "MapDrifted6",
 					"description": "Creates an explicit mapping for each drifted column"
+				},
+				{
+					"name": "select7"
+				},
+				{
+					"name": "window1"
+				},
+				{
+					"name": "filter1"
 				}
 			],
 			"scriptLines": [
@@ -207,7 +204,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     format: 'table') ~> AzureSQLCoreV3Staging",
+				"     format: 'table') ~> AzureSQLCoreV2Staging",
 				"source(output(",
 				"          Patient_Type as string,",
 				"          Patient_Type_ID as integer",
@@ -274,7 +271,6 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> TatType",
-				"LookupPatientType derive({Patient Type ID} = toLong(byName('Patient Type ID'))) ~> MapDrifted1",
 				"ExamSite derive({ExamSite Code} = toString(byName('ExamSite Code'))) ~> MapDrifted2",
 				"lookupTatType select(mapColumn(",
 				"          {CRIS No},",
@@ -334,7 +330,7 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> RemoveColumns6",
 				"PatientType derive({Patient Type ID} = toLong(byName('Patient Type ID'))) ~> MapDrifted3",
-				"MapDrifted5 select(mapColumn(",
+				"LookupPatientType select(mapColumn(",
 				"          {CRIS No},",
 				"          Accession,",
 				"          {Ref Src},",
@@ -370,7 +366,7 @@
 				"          {Status Time},",
 				"          Modality2,",
 				"          {Trust Name},",
-				"          Patient_Type = AzureSQLCoreV3Staging@Patient_Type,",
+				"          Patient_Type = AzureSQLCoreV2Staging@Patient_Type,",
 				"          {Tat Type},",
 				"          {Status Time2},",
 				"          {Patient Type ID},",
@@ -656,14 +652,14 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> RemoveColumns5",
-				"MapDrifted4 derive({Status Time2} = lpad(toString({Status Time}),4,\"0\")) ~> DerivedColumn1",
+				"filter1 derive({Status Time2} = lpad(toString({Status Time}),4,\"0\")) ~> DerivedColumn1",
 				"MapDrifted3 select(mapColumn(",
 				"          Patient_Type,",
 				"          {Patient Type ID}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> RenameColumn",
-				"DerivedColumn1, RenameColumn lookup(AzureSQLCoreV3Staging@Patient_Type == RenameColumn@Patient_Type,",
+				"DerivedColumn1, RenameColumn lookup(select7@Patient_Type == RenameColumn@Patient_Type,",
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> LookupPatientType",
@@ -697,12 +693,61 @@
 				"     broadcast: 'auto')~> lookupTatType",
 				"MapDrifted2 select(skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> RenameColumn2",
-				"AzureSQLCoreV3Staging derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted4",
-				"MapDrifted1 derive({Reported By} = toString(byName('Reported By'))) ~> MapDrifted5",
 				"RenameColumn2 derive({Exam Site} = toString(byName('Exam Site')),",
 				"          {Exam Room} = toString(byName('Exam Room')),",
 				"          {Exam Room ID} = toLong(byName('Exam Room ID')),",
 				"          Description = toString(byName('Description'))) ~> MapDrifted6",
+				"AzureSQLCoreV2Staging select(mapColumn(",
+				"          {CRIS No},",
+				"          Accession,",
+				"          {Ref Src},",
+				"          Site,",
+				"          {Request Date},",
+				"          {Event Date},",
+				"          {Event Time},",
+				"          {On Call},",
+				"          PT,",
+				"          Examination,",
+				"          {Exam Name},",
+				"          Room,",
+				"          {Start Time},",
+				"          {End Time},",
+				"          {Exam Key},",
+				"          {Event Key},",
+				"          {Status Code},",
+				"          {Booked Date},",
+				"          {Booked Time},",
+				"          {Creation Date},",
+				"          Attended,",
+				"          Urg,",
+				"          Modality,",
+				"          {No of Proc},",
+				"          {Planned Appointment Date},",
+				"          {Date First Verified},",
+				"          {Time First Verified},",
+				"          {Was Planned},",
+				"          {Was Scheduled},",
+				"          {Was Waiting},",
+				"          {Stat Date},",
+				"          {Reported By},",
+				"          {Age At Event},",
+				"          {Status Code.2},",
+				"          {Status Date.1},",
+				"          {Status Time},",
+				"          Modality2,",
+				"          {Trust Name},",
+				"          Patient_Type,",
+				"          {Tat Type},",
+				"          {Activity.1},",
+				"          {Count of Activty_Demand for Activity.1},",
+				"          {ExamSite Code}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select7",
+				"select7 window(over({Exam Key}),",
+				"     desc({Stat Date}, true),",
+				"     Rank = denseRank()) ~> window1",
+				"window1 filter(Rank==1) ~> filter1",
 				"RemoveColumns6 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
