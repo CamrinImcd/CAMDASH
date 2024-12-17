@@ -4145,7 +4145,7 @@
 					{
 						"activity": "Copy_CORE",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					}
 				],
