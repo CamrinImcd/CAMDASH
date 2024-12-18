@@ -4052,7 +4052,13 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"Exam Key"
+									]
+								},
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
@@ -4312,7 +4318,14 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"Exam Key",
+										"Stat Date"
+									]
+								},
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
@@ -4764,7 +4777,14 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"Exam Key",
+										"Stat Date"
+									]
+								},
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
@@ -5060,7 +5080,13 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"Event Key"
+									]
+								},
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
@@ -5251,10 +5277,6 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": {
-									"value": "select * from dbo.FYF_ODBC_IMPORTS where [Stat Date] > '@{activity('Prev Latest stat date imports').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date imports').output.firstRow.CoreUpdateValue}'",
-									"type": "Expression"
-								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
@@ -5376,7 +5398,13 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"Exam key"
+									]
+								},
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
@@ -5592,8 +5620,7 @@
 								"upsertSettings": {
 									"useTempDB": true,
 									"keys": [
-										"CRIS No",
-										"Event Date"
+										"CRIS No"
 									]
 								},
 								"sqlWriterUseTableLock": false,
@@ -6343,7 +6370,13 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"Exam Key"
+									]
+								},
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
@@ -6939,7 +6972,14 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"Exam Key",
+										"Stat Date"
+									]
+								},
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
@@ -7247,7 +7287,13 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"CRIS No"
+									]
+								},
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
@@ -7446,7 +7492,7 @@
 							{
 								"activity": "ReferenceLookupsCore",
 								"dependencyConditions": [
-									"Failed"
+									"Succeeded"
 								]
 							}
 						],
@@ -7490,7 +7536,7 @@
 							{
 								"activity": "ReferenceLookupsPTL",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -8794,7 +8840,6 @@
 				"[concat(variables('factoryId'), '/dataflows/dataflow1')]",
 				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveAzureIR')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow3')]",
-				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow1_copy1')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
 				"[concat(variables('factoryId'), '/dataflows/dataflow4')]",
@@ -25324,7 +25369,7 @@
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
-						"     recreate:true,",
+						"     truncate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
