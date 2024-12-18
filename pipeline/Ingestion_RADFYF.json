@@ -2425,7 +2425,8 @@
 						"upsertSettings": {
 							"useTempDB": true,
 							"keys": [
-								"CRIS No"
+								"CRIS No",
+								"Event Date"
 							]
 						},
 						"sqlWriterUseTableLock": false,
