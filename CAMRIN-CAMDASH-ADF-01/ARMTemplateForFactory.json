@@ -4043,22 +4043,13 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": {
-									"value": "select * from dbo.FYF_ODBC_ORDERS where [Stat Date] > '@{activity('Prev Latest stat date orders').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date orders').output.firstRow.CoreUpdateValue}'",
-									"type": "Expression"
-								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "upsert",
-								"upsertSettings": {
-									"useTempDB": true,
-									"keys": [
-										"Exam Key"
-									]
-								},
+								"preCopyScript": "Truncate table [dev].[ORDERS]",
+								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
@@ -4309,23 +4300,13 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": {
-									"value": "select * from dbo.FYF_ODBC_REQUESTS where [Stat Date] > '@{activity('Prev Latest stat date request').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date request').output.firstRow.CoreUpdateValue}'",
-									"type": "Expression"
-								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "upsert",
-								"upsertSettings": {
-									"useTempDB": true,
-									"keys": [
-										"Exam Key",
-										"Stat Date"
-									]
-								},
+								"preCopyScript": "Truncate table [dev].[FYF_ODBC_REQUESTS]",
+								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
@@ -4768,23 +4749,13 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": {
-									"value": "select * from dbo.FYF_ODBC_STATUSES where [Stat Date] > '@{activity('Prev Latest stat date statuses').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date statuses').output.firstRow.CoreUpdateValue}'and [Status Date] > '@{activity('Prev Latest stat date statuses').output.firstRow.CoreUpdateValue}' ",
-									"type": "Expression"
-								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "upsert",
-								"upsertSettings": {
-									"useTempDB": true,
-									"keys": [
-										"Exam Key",
-										"Stat Date"
-									]
-								},
+								"preCopyScript": "Truncate table [dev].[RequestRecievedStatus]\n\nTruncate table [dev].[FYF_ODBC_STATUSES]",
+								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
@@ -5071,22 +5042,13 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": {
-									"value": "select * from dbo.FYF_ODBC_APDNA where [Stat Date] > '@{activity('Prev Latest stat date apdna').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date apdna').output.firstRow.CoreUpdateValue}'",
-									"type": "Expression"
-								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "upsert",
-								"upsertSettings": {
-									"useTempDB": true,
-									"keys": [
-										"Event Key"
-									]
-								},
+								"preCopyScript": "Truncate Table [dev].[FYF_ODBC_APDNA]",
+								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
@@ -5282,6 +5244,7 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
+								"preCopyScript": "Truncate table [dev].[FYF_ODBC_IMPORTS]",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
@@ -5389,22 +5352,13 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": {
-									"value": "select * from dbo.FYF_ODBC_LUNG_Ca_ALERTS where [Stat Date] > '@{activity('Prev Latest stat date lungca').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date lungca').output.firstRow.CoreUpdateValue}'",
-									"type": "Expression"
-								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "upsert",
-								"upsertSettings": {
-									"useTempDB": true,
-									"keys": [
-										"Exam key"
-									]
-								},
+								"preCopyScript": "Truncate table [dev].[FYF_ODBC_LUNG_Ca_ALERTS]",
+								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
@@ -5607,22 +5561,13 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": {
-									"value": "select * from dbo.FYF_ODBC_PATIENTS where [Stat Date] > '@{activity('Prev Latest stat patients').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat patients').output.firstRow.CoreUpdateValue}'",
-									"type": "Expression"
-								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "upsert",
-								"upsertSettings": {
-									"useTempDB": true,
-									"keys": [
-										"CRIS No"
-									]
-								},
+								"preCopyScript": "Truncate table [dev].[FYF_ODBC_PATIENTS]",
+								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
@@ -6361,22 +6306,13 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": {
-									"value": "select * from dbo.FYF_ODBC_REPORTING_TAT where [Stat Date] > '@{activity('Prev Latest stat date Report TAT').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date Report TAT').output.firstRow.CoreUpdateValue}'",
-									"type": "Expression"
-								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "upsert",
-								"upsertSettings": {
-									"useTempDB": true,
-									"keys": [
-										"Exam Key"
-									]
-								},
+								"preCopyScript": "Truncate Table [dev].[FYF_ODBC_REPORTING_TAT]",
+								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
@@ -6963,23 +6899,13 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": {
-									"value": "select * from dbo.FYF_ODBC_REPORT_META where [Stat Date] > '@{activity('Prev Latest stat date report_meta').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date report_meta').output.firstRow.CoreUpdateValue}'",
-									"type": "Expression"
-								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "upsert",
-								"upsertSettings": {
-									"useTempDB": true,
-									"keys": [
-										"Exam Key",
-										"Stat Date"
-									]
-								},
+								"preCopyScript": "Truncate Table [dev].[FYF_ODBC_REPORT_META]",
+								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
@@ -7278,22 +7204,13 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": {
-									"value": "select * from dbo.FYF_ODBC_TEST_Patients where [Stat Date] > '@{activity('Prev Latest stat date test_patients').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date test_patients').output.firstRow.CoreUpdateValue}'",
-									"type": "Expression"
-								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "upsert",
-								"upsertSettings": {
-									"useTempDB": true,
-									"keys": [
-										"CRIS No"
-									]
-								},
+								"preCopyScript": "Truncate table [dev].[FYF_ODBC_TEST_Patients]",
+								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
@@ -7536,7 +7453,7 @@
 							{
 								"activity": "ReferenceLookupsPTL",
 								"dependencyConditions": [
-									"Failed"
+									"Succeeded"
 								]
 							}
 						],
