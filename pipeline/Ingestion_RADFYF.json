@@ -865,7 +865,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "Truncate table [dev].[ORDERS]",
+						"preCopyScript": "Truncate table [dev].[FYF_ODBC_ORDERS]",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"disableMetricsCollection": false
