@@ -3280,7 +3280,6 @@
 									]
 								},
 								"sqlWriterUseTableLock": false,
-								"tableOption": "autoCreate",
 								"disableMetricsCollection": false
 							},
 							"enableStaging": false,
@@ -5880,7 +5879,14 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "insert",
+								"writeBehavior": "upsert",
+								"upsertSettings": {
+									"useTempDB": true,
+									"keys": [
+										"Exam Key",
+										"Status Category"
+									]
+								},
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
@@ -8848,7 +8854,6 @@
 				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveAzureIR')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRefColumns')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRefColumnsPTL')]",
-				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRequestRecieveddataset')]",
 				"[concat(variables('factoryId'), '/dataflows/PopulateNewColumns')]",
@@ -22281,6 +22286,318 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AIDFDataset')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference"
+							},
+							"name": "FYFODBCCOREv2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "testtable2",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						},
+						{
+							"dataset": {
+								"referenceName": "AIDF",
+								"type": "DatasetReference"
+							},
+							"name": "sink3"
+						}
+					],
+					"transformations": [
+						{
+							"name": "XRFilter"
+						},
+						{
+							"name": "CTList"
+						},
+						{
+							"name": "XRColumnFix"
+						},
+						{
+							"name": "XRFlags"
+						},
+						{
+							"name": "XRlist"
+						},
+						{
+							"name": "CTFilter"
+						},
+						{
+							"name": "CTXRJoin"
+						},
+						{
+							"name": "datediffcols"
+						},
+						{
+							"name": "t28dayfilter"
+						},
+						{
+							"name": "Mixcolfix"
+						},
+						{
+							"name": "join2"
+						},
+						{
+							"name": "window1"
+						},
+						{
+							"name": "selectclosest"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          {CRIS No} as integer,",
+						"          Accession as string,",
+						"          {Ref Src} as string,",
+						"          Site as string,",
+						"          {Request Date} as date,",
+						"          {Event Date} as date,",
+						"          {Event Time} as string,",
+						"          {On Call} as string,",
+						"          PT as string,",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          Room as string,",
+						"          {ExamSite Code} as string,",
+						"          {Start Time} as string,",
+						"          {End Time} as string,",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          {Status Code} as string,",
+						"          {Booked Date} as timestamp,",
+						"          {Booked Time} as string,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          Urg as string,",
+						"          Modality as string,",
+						"          {No of Proc} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Date First Verified} as timestamp,",
+						"          {Time First Verified} as string,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Status Time} as string,",
+						"          Modality2 as string,",
+						"          {Trust Name} as string,",
+						"          Patient_Type as string,",
+						"          {Tat Type} as string,",
+						"          {Status Time2} as string,",
+						"          {Patient Type ID} as long,",
+						"          {Modality ID} as integer,",
+						"          {Status ID} as integer,",
+						"          {Exam ID} as integer,",
+						"          {Exam Room ID} as integer,",
+						"          {Trust ID} as integer,",
+						"          {Referral Source ID} as integer,",
+						"          {Tat Type ID} as integer,",
+						"          {Reported By} as string,",
+						"          Rank as integer,",
+						"          {Status Date} as timestamp,",
+						"          Activity as integer,",
+						"          {Count of Activty_Demand for Activity} as long,",
+						"          {Stat Date} as timestamp,",
+						"          {Age At Event} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> FYFODBCCOREv2",
+						"FYFODBCCOREv2 filter(Examination == \"XCHES\" && {Event Date} >= toDate('01/01/2022','MM/dd/yyyy') && toDate({Date First Verified}) >= toDate('01/01/2022','MM/dd/yyyy')) ~> XRFilter",
+						"CTFilter select(mapColumn(",
+						"          {CRIS No},",
+						"          {Event Key},",
+						"          {Exam Key},",
+						"          {Trust ID},",
+						"          {Exam Room ID},",
+						"          {Event Date},",
+						"          {Date First Verified},",
+						"          {Reported By},",
+						"          {Patient Type ID},",
+						"          {Age At Event},",
+						"          {Exam ID}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> CTList",
+						"XRFilter select(mapColumn(",
+						"          {CRIS No.XR} = {CRIS No},",
+						"          {Event Key.XR} = {Event Key},",
+						"          {Exam Key.XR} = {Exam Key},",
+						"          {Trust ID.XR} = {Trust ID},",
+						"          {Exam Room ID.XR} = {Exam Room ID},",
+						"          {Event Date.XR} = {Event Date},",
+						"          {Date First Verified.XR} = {Date First Verified},",
+						"          {Reported By.XR} = {Reported By},",
+						"          {Patient Type ID.XR} = {Patient Type ID},",
+						"          {Age At Event.XR} = {Age At Event},",
+						"          {Exam ID.XR} = {Exam ID}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> XRColumnFix",
+						"XRColumnFix derive(Auto = iif(instr({Reported By.XR},\"AUTO\")!=0, 1, 0),",
+						"          {Rep Rad} = iif(startsWith({Reported By.XR},\"RA\")==true(),1,0),",
+						"          Cons = iif(startsWith({Reported By.XR},\"C\")==true(),1,0),",
+						"          Outsource = iif(instr({Reported By.XR},\"4way\")!=0,1,iif(instr({Reported By.XR},\"EXT\")!=0,1,iif(instr({Reported By.XR},\"4WAY\")!=0,1,0))),",
+						"          {CX I-R} = toDate({Date First Verified.XR})-{Event Date.XR},",
+						"          Snapshot = iif(isNull({Date First Verified.XR})==false(),iif(toDate({Date First Verified.XR})>=toDate('10/01/2023','MM/dd/yyyy'),iif({Event Date.XR}<=toDate('10/01/2023','MM/dd/yyyy'),1,0),0),0)) ~> XRFlags",
+						"XRFlags derive(Abnormal = iif(between({CX I-R}, 0, 28)==true(),1,0)) ~> XRlist",
+						"FYFODBCCOREv2 filter(Examination == \"CCHES\" && {Event Date} >= toDate('01/01/2022','MM/dd/yyyy') && toDate({Date First Verified}) >= toDate('01/01/2022','MM/dd/yyyy')) ~> CTFilter",
+						"XRlist, CTList join({CRIS No.XR} == {CRIS No}",
+						"     && {Event Date.XR} <= {Event Date}",
+						"     && toDate({Date First Verified.XR}) <= {Event Date},",
+						"     joinType:'left',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'right')~> CTXRJoin",
+						"CTXRJoin derive({CXR-CCI} = {Event Date}-toDate({Date First Verified.XR}),",
+						"          {CXI-CCR} = toDate({Date First Verified})-{Event Date.XR},",
+						"          {CXI-CCI} = {Event Date}-{Event Date.XR}) ~> datediffcols",
+						"Mixcolfix filter({CXR-CCI}<=28) ~> t28dayfilter",
+						"datediffcols select(mapColumn(",
+						"          {CRIS No.CT} = {CRIS No},",
+						"          {Event Key.CT} = {Event Key},",
+						"          {Exam Key.CT} = {Exam Key},",
+						"          {Trust ID.CT} = {Trust ID},",
+						"          {Exam Room ID.CT} = {Exam Room ID},",
+						"          {Event Date.CT} = {Event Date},",
+						"          {Date First Verified.CT} = {Date First Verified},",
+						"          {Reported By.CT} = {Reported By},",
+						"          {Patient Type ID.CT} = {Patient Type ID},",
+						"          {Age At Event.CT} = {Age At Event},",
+						"          {Exam ID.CT} = {Exam ID},",
+						"          {CXR-CCI},",
+						"          {CXI-CCR},",
+						"          {CXI-CCI},",
+						"          {Exam Key.XR}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> Mixcolfix",
+						"XRlist, selectclosest join(XRColumnFix@{Exam Key.XR} == Mixcolfix@{Exam Key.XR},",
+						"     joinType:'left',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'right')~> join2",
+						"t28dayfilter window(over({Exam Key.CT}),",
+						"     asc({Exam Key.CT}, true),",
+						"     asc({CXR-CCI}, true),",
+						"     asc({CXI-CCR}, true),",
+						"     asc({CXI-CCI}, true),",
+						"     Rank = denseRank()) ~> window1",
+						"window1 filter(Rank==1) ~> selectclosest",
+						"selectclosest sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     recreate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
+						"join2 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {CRIS No} as integer,",
+						"          {Event Key} as integer,",
+						"          {Exam Key} as integer,",
+						"          {Trust ID} as integer,",
+						"          {Exam Room ID} as integer,",
+						"          {Event Date} as date,",
+						"          {Date First Verified} as timestamp,",
+						"          {Reported By} as string,",
+						"          {Patient Type ID} as long,",
+						"          {Age At Event} as string,",
+						"          {Exam ID} as integer,",
+						"          Auto as integer,",
+						"          {Rep Rad} as integer,",
+						"          Cons as integer,",
+						"          Outsource as integer,",
+						"          {CX I-R} as integer,",
+						"          Snapshot as integer,",
+						"          Abnormal as integer,",
+						"          {CRIS No.1} as integer,",
+						"          {Event Key.1} as integer,",
+						"          {Exam Key.1} as integer,",
+						"          {Trust ID.1} as integer,",
+						"          {Exam Room ID.1} as integer,",
+						"          {Event Date.1} as date,",
+						"          {Date First Verified.1} as timestamp,",
+						"          {Reported By.1} as string,",
+						"          {Patient Type ID.1} as long,",
+						"          {Age At Event.1} as string,",
+						"          {Exam ID.1} as integer,",
+						"          {CXR-CCI.1} as integer,",
+						"          {CXI-CCR.1} as integer,",
+						"          {CXI-CCI.1} as integer",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     truncate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          {CRIS No} = {CRIS No.XR},",
+						"          {Event Key} = {Event Key.XR},",
+						"          {Exam Key} = XRColumnFix@{Exam Key.XR},",
+						"          {Trust ID} = {Trust ID.XR},",
+						"          {Exam Room ID} = {Exam Room ID.XR},",
+						"          {Event Date} = {Event Date.XR},",
+						"          {Date First Verified} = {Date First Verified.XR},",
+						"          {Reported By} = {Reported By.XR},",
+						"          {Patient Type ID} = {Patient Type ID.XR},",
+						"          {Age At Event} = {Age At Event.XR},",
+						"          {Exam ID} = {Exam ID.XR},",
+						"          Auto,",
+						"          {Rep Rad},",
+						"          Cons,",
+						"          Outsource,",
+						"          {CX I-R},",
+						"          Snapshot,",
+						"          Abnormal,",
+						"          {CRIS No.1} = {CRIS No.CT},",
+						"          {Event Key.1} = {Event Key.CT},",
+						"          {Exam Key.1} = {Exam Key.CT},",
+						"          {Trust ID.1} = {Trust ID.CT},",
+						"          {Exam Room ID.1} = {Exam Room ID.CT},",
+						"          {Event Date.1} = {Event Date.CT},",
+						"          {Date First Verified.1} = {Date First Verified.CT},",
+						"          {Reported By.1} = {Reported By.CT},",
+						"          {Patient Type ID.1} = {Patient Type ID.CT},",
+						"          {Age At Event.1} = {Age At Event.CT},",
+						"          {Exam ID.1} = {Exam ID.CT},",
+						"          {CXR-CCI.1} = {CXR-CCI},",
+						"          {CXI-CCR.1} = {CXI-CCR},",
+						"          {CXI-CCI.1} = {CXI-CCI}",
+						"     )) ~> sink3"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/FYF_ODBC_CORE_v2')]",
+				"[concat(variables('factoryId'), '/datasets/testtable2')]",
+				"[concat(variables('factoryId'), '/datasets/AIDF')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/CreateActDem')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -23121,41 +23438,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PopulateNewColumns')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "WranglingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"name": "RequestRecievedStatus",
-							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> RequestRecievedStatus",
-							"dataset": {
-								"referenceName": "RequestRecievedStatus",
-								"type": "DatasetReference"
-							}
-						},
-						{
-							"name": "AzureSqlCOREStageStep1",
-							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> AzureSqlCOREStageStep1",
-							"dataset": {
-								"referenceName": "AzureSqlCOREStageStep1",
-								"type": "DatasetReference"
-							}
-						}
-					],
-					"script": "section Section1;\r\nshared RequestRecievedStatus = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dev\",Item=\"RequestRecievedStatus\"]}[Data] in InputTable;\r\nshared AzureSqlCOREStageStep1 = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dev\",Item=\"AzureSqlCOREStageStep1\"]}[Data] in InputTable;\r\nshared UserQuery = let Source = #\"AzureSqlCOREStageStep1\",\r\n  #\"Removed duplicates\" = Table.Distinct(Source, {\"Event Key\"}),\r\n  #\"Removed columns\" = Table.RemoveColumns(#\"Removed duplicates\", {\"ExamSite Code\", \"Status Time\", \"Modality2\", \"Trust Name\", \"Patient_Type\", \"Tat Type\"}),\r\n  #\"Replaced value\" = Table.ReplaceValue(#\"Removed columns\", null, \"NULL\", Replacer.ReplaceValue, {\"Room\"}),\r\n  #\"Replaced value 1\" = Table.ReplaceValue(#\"Replaced value\", null, \"NULL\", Replacer.ReplaceValue, {\"Site\"}),\r\n  #\"Inserted merged column\" = Table.AddColumn(#\"Replaced value 1\", \"ExamSite Code\", each Text.Combine({[Site], [Room]}, \"\"), type text),\r\n  #\"Merged queries\" = Table.NestedJoin(#\"Inserted merged column\", {\"Exam Key\"}, Table.SelectRows(RequestRecievedStatus, each [Status Code] = \"RR\"), {\"Exam Key\"}, \"RequestRecievedStatus\", JoinKind.LeftOuter),\r\n  #\"Expanded RequestRecievedStatus 1\" = Table.ExpandTableColumn(#\"Merged queries\", \"RequestRecievedStatus\", {\"Status Code\", \"Status Date\", \"Status Time\"}, {\"Status Code.2\", \"Status Date.1\", \"Status Time\"}),\r\n  #\"Date Time Change\" = Table.TransformColumnTypes(#\"Expanded RequestRecievedStatus 1\", {{\"Request Date\", type date}, {\"Event Date\", type date}, {\"Status Time\", type text}}),\r\n  Modality = Table.TransformColumnTypes(Table.AddColumn(#\"Date Time Change\", \"Modality2\", each if [Modality] = \"R\" then \"Plain X-Ray\" else if [Modality] = \"A\" then \"IR\" else if [Modality] = \"B\" then \"Mammo\" else if [Modality] = \"C\" then \"CT\" else if[Modality] = \"M\" then \"MRI\" else if [Modality] = \"F\" then \"Fluoro\" else if [Modality] = \"U\" then \"NOUS\"  else if [Modality] = \"N\" then \"Nuc Med\" else if[Modality] = \"S\" then \"DEXA\" else if[Modality] = \"Z\" then \"Additional Workload\" else if[Modality] = \"H\" then \"Cardio\" else if[Modality] = \"D\" then \"Doppler\" else if[Modality] = \"E\" then \"Endo\" else if[Modality] = \"Y\" then \"Med Phys\" else if[Modality] = \"O\" then \"Obstetrics\" else \"other\"), {{\"Modality2\", type text}}),\r\n  Trust = Table.TransformColumnTypes(Table.AddColumn(Modality, \"Trust Name\", each if [Site] = \"5HA16\" then \"LUHFT\" else if [Site] = \"5NL93\" then \"LUHFT\" else if Text.Start([Site],3) = \"REM\" then \"LUHFT\" else if Text.Start([Site],3) = \"RQ6\" then \"LUHFT\" else if Text.Start([Site],3) = \"RBL\" then \"WUTH\" else if Text.Start([Site],3) = \"RBN\" then \"STHK\" else if Text.Start([Site],3) = \"RBQ\" then \"LHCH\" else if Text.Start([Site],3) = \"RBS\" then \"Alder Hey\" else if Text.Start([Site],3) = \"RBT\" then \"MCH\" else if Text.Start([Site],3) = \"REN\" then \"CCC\" else if Text.Start([Site],3) = \"REP\" then \"Womens\" else if Text.Start([Site],3) = \"RET\" then \"TWC\" else if Text.Start([Site],3) = \"RJR\" then \"COCH\" else if Text.Start([Site],3) = \"RVY\" then \"S&O\" else if Text.Start([Site],3) = \"RWW\" then \"WHH\" else [Site]), {{\"Trust Name\", type text}}),\r\n  #\"Patient Type\" = Table.TransformColumnTypes(Table.AddColumn(Trust, \"Patient_Type\", each if [PT] = \"A\" then \"In Patient\" else if [PT] = \"B\" then \"Out Patient\" else if [PT] = \"C\" then \"A&E Attender\" else if [PT] = \"D\" then \"Out Patient\" else if [PT] = \"E\" then \"Out Patient\" else if [PT] = \"F\" then \"Other\" else if [PT] = \"G\" then \"GP Direct Access Patient\"  else if [PT] = \"H\" then \"In Patient\" else if[PT] = \"J\" then \"A&E Attender\" else if[PT] = \"K\" then \"Tertiary Referral\" else if[PT] = \"N\" then \"In Patient\" else if[PT] = \"R\" then \"Research\" else if[PT] = \"T\" then \"Dental\" else if[Modality] = \"X\" then \"Other\" else \"Other\"), {{\"Patient_Type\", type text}}),\r\n  #\"Tat Type\" = Table.TransformColumnTypes(Table.AddColumn(#\"Patient Type\", \"Tat Type\", each if ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\" or [Modality2]=\"Plain X-Ray\") and ([PT]=\"A\" and [Urg]=\"5\") then \"Urgent Inpatients\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\" or [Modality2]=\"Plain X-Ray\") and ([PT]=\"C\") then \"Emergency Department\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\" or [Modality2]=\"Plain X-Ray\") and ([PT]=\"A\" and ([Urg]<>\"5\")) then \"Non-Urgent Inpatients\" else  \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Plain X-Ray\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\") and ([PT]=\"B\" or [PT]=\"G\") and [Urg]=\"7\" then \"Outpatient Faster Diagnosis Standard Cancer Pathway\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\" or [Modality2]=\"Plain X-Ray\") and ([PT]=\"B\" or [PT]=\"G\" or [PT]=\"D\") and ([Urg]=\"5\") then \"Urgent GP and Outpatients\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Plain X-Ray\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\") and ([PT]=\"B\" or [PT]=\"D\" or [PT]=\"G\") and [Urg]=\"1\" then \"Routine GP and Outpatients\" else  \r\n  \r\n\r\nif [Modality2]=\"NOUS\" or [Modality2]=\"IR\" then \"Ultrasound and Interventional Radiology\" else \"Other\"), {{\"Tat Type\", type text}}),\r\n  Activity = Table.TransformColumnTypes(Table.AddColumn(#\"Tat Type\", \"Activity.1\", each if([Status Code]=\"ASACK\" or [Status Code]=\"ASRMS\" or [Status Code]=\"ASRQS\" or [Status Code]=\"ATN\" or  [Status Code]=\"ATP\" or [Status Code]=\"CHBU\" or  [Status Code]=\"CHE\" or [Status Code]=\"CHEC\" or [Status Code]=\"CPC\" or [Status Code]=\"CPDNA\" or [Status Code]=\"CPMP\" or [Status Code]=\"CPPG\" or [Status Code]=\"CPPR\" or [Status Code]=\"CPR\" or [Status Code]=\"DVR\" or [Status Code]=\"PRTRPT\") then 1 else 0), {{\"Activity.1\", type number}}),\r\n  #\"Activity 2\" = Table.TransformColumnTypes(Table.AddColumn(Activity, \"Count of Activty_Demand for Activity.1\", each [Activity.1]), {{\"Count of Activty_Demand for Activity.1\", Int64.Type}}) in #\"Activity 2\";\r\n",
-					"documentLocale": "en-us"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/RequestRecievedStatus')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Remove_Dupes_Core')]",
+			"name": "[concat(parameters('factoryName'), '/CreatePatientWaiting')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -23164,14 +23447,7 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "AzureSql_CORE",
-								"type": "DatasetReference"
-							},
-							"name": "AzureSqlCORE"
-						},
-						{
-							"dataset": {
-								"referenceName": "AzureSql_Patients",
+								"referenceName": "ODBC_PTL_v2",
 								"type": "DatasetReference"
 							},
 							"name": "source1"
@@ -23180,242 +23456,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "AzureSqlCOREStageStep1",
-								"type": "DatasetReference"
-							},
-							"name": "AzureSqlCOREStageStep1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "window1"
-						},
-						{
-							"name": "lookup1"
-						},
-						{
-							"name": "filter2"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          {CRIS No} as integer,",
-						"          Accession as string,",
-						"          {Ref Src} as string,",
-						"          {Referring Locat} as string,",
-						"          Referrer as string,",
-						"          Speciality as string,",
-						"          GP as string,",
-						"          Practice as string,",
-						"          {Postcode L} as string,",
-						"          {Postcode R} as string,",
-						"          Site as string,",
-						"          {Request Date} as timestamp,",
-						"          {Event Date} as timestamp,",
-						"          {Event Time} as string,",
-						"          {On Call} as string,",
-						"          PT as string,",
-						"          RC as string,",
-						"          Examination as string,",
-						"          {Exam Name} as string,",
-						"          Room as string,",
-						"          {Start Time} as string,",
-						"          {End Time} as string,",
-						"          {Radiographer 1} as string,",
-						"          {Radiographer 2} as string,",
-						"          {Required Clinician} as string,",
-						"          {Contrast Code} as string,",
-						"          {Qty Used} as decimal(6,2),",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          {Status Code} as string,",
-						"          {Booked Date} as timestamp,",
-						"          {Booked Time} as string,",
-						"          {Creation Date} as timestamp,",
-						"          Attended as string,",
-						"          {Event Key2} as integer,",
-						"          {Lead Clinician} as string,",
-						"          {Intended Radiologist} as string,",
-						"          Urg as string,",
-						"          {Referring Locat Name } as string,",
-						"          {Referrer Name} as string,",
-						"          Modality as string,",
-						"          {No of Proc} as integer,",
-						"          {GP Name} as string,",
-						"          {Planned Appointment Date} as timestamp,",
-						"          {Date First Verified} as timestamp,",
-						"          {Reported By} as string,",
-						"          {Reported By2} as string,",
-						"          {Reported By2 Name} as string,",
-						"          {Reported By Name} as string,",
-						"          {Time First Verified} as string,",
-						"          {Time Taken} as integer,",
-						"          {Typed By} as string,",
-						"          {Was Planned} as string,",
-						"          {Was Scheduled} as string,",
-						"          {Was Waiting} as string,",
-						"          CCG as string,",
-						"          Postcode as string,",
-						"          {Day of Week} as string,",
-						"          {Stat Date} as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     waterMarkColumn: 'Stat Date',",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'Select * from [dev].[FYF_ODBC_Core] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'Core\\')\\n',",
-						"     format: 'query') ~> AzureSqlCORE",
-						"source(output(",
-						"          {CRIS No} as integer,",
-						"          {Creation Date} as timestamp,",
-						"          {Mutation Date} as timestamp,",
-						"          DOB as timestamp,",
-						"          {Event Date} as timestamp,",
-						"          DOD as timestamp,",
-						"          {Ethnic Origin} as string,",
-						"          GP as string,",
-						"          {No of Attends} as integer,",
-						"          {No of Events} as integer,",
-						"          {Ref Src} as string,",
-						"          {Postcode L} as string,",
-						"          {Postcode R} as string,",
-						"          Gender as string,",
-						"          {Referrer Name} as string,",
-						"          {Age at Event} as integer,",
-						"          {HIS ID} as string,",
-						"          CCG as string,",
-						"          Postcode as string,",
-						"          {Stat Date} as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
-						"AzureSqlCORE window(over({Exam Key}),",
-						"     desc({Stat Date}, false),",
-						"     Rank = denseRank()) ~> window1",
-						"filter2, source1 lookup(AzureSqlCORE@{CRIS No} == source1@{CRIS No}",
-						"     && AzureSqlCORE@{Event Date} == source1@{Event Date},",
-						"     multiple: true,",
-						"     broadcast: 'auto')~> lookup1",
-						"window1 filter(Rank==1) ~> filter2",
-						"lookup1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          {CRIS No} as integer,",
-						"          Accession as string,",
-						"          {Ref Src} as string,",
-						"          Site as string,",
-						"          {Request Date} as timestamp,",
-						"          {Event Date} as timestamp,",
-						"          {Event Time} as string,",
-						"          {On Call} as string,",
-						"          PT as string,",
-						"          Examination as string,",
-						"          {Exam Name} as string,",
-						"          Room as string,",
-						"          {ExamSite Code} as string,",
-						"          {Start Time} as string,",
-						"          {End Time} as string,",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          {Status Code} as string,",
-						"          {Booked Date} as timestamp,",
-						"          {Booked Time} as string,",
-						"          {Creation Date} as timestamp,",
-						"          Attended as string,",
-						"          Urg as string,",
-						"          Modality as string,",
-						"          {No of Proc} as integer,",
-						"          {Planned Appointment Date} as timestamp,",
-						"          {Date First Verified} as timestamp,",
-						"          {Time First Verified} as string,",
-						"          {Was Planned} as string,",
-						"          {Was Scheduled} as string,",
-						"          {Was Waiting} as string,",
-						"          {Stat Date} as timestamp,",
-						"          Modality2 as string,",
-						"          {Trust Name} as string,",
-						"          Patient_Type as string,",
-						"          {Tat Type} as string,",
-						"          {Status Time} as string,",
-						"          {Reported By} as string,",
-						"          Rank as integer,",
-						"          {Age At Event} as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     truncate:true,",
-						"     format: 'table',",
-						"     saveOrder: 1,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          {CRIS No} = AzureSqlCORE@{CRIS No},",
-						"          Accession,",
-						"          {Ref Src} = AzureSqlCORE@{Ref Src},",
-						"          Site,",
-						"          {Request Date},",
-						"          {Event Date} = AzureSqlCORE@{Event Date},",
-						"          {Event Time},",
-						"          {On Call},",
-						"          PT,",
-						"          Examination,",
-						"          {Exam Name},",
-						"          Room,",
-						"          {Start Time},",
-						"          {End Time},",
-						"          {Exam Key},",
-						"          {Event Key},",
-						"          {Status Code},",
-						"          {Booked Date},",
-						"          {Booked Time},",
-						"          {Creation Date} = AzureSqlCORE@{Creation Date},",
-						"          Attended,",
-						"          Urg,",
-						"          Modality,",
-						"          {No of Proc},",
-						"          {Planned Appointment Date},",
-						"          {Date First Verified},",
-						"          {Time First Verified},",
-						"          {Was Planned},",
-						"          {Was Scheduled},",
-						"          {Was Waiting},",
-						"          {Stat Date} = AzureSqlCORE@{Stat Date},",
-						"          {Reported By},",
-						"          Rank,",
-						"          {Age At Event} = {Age at Event}",
-						"     )) ~> AzureSqlCOREStageStep1"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSql_CORE')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSql_Patients')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CreateRequestRecieveddataset')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "AzureSql_STATUSES",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "RequestRecievedStatus",
+								"referenceName": "Patient_Waiting",
 								"type": "DatasetReference"
 							},
 							"name": "sink1"
@@ -23423,520 +23464,11 @@
 					],
 					"transformations": [
 						{
-							"name": "filter1"
+							"name": "select1"
 						}
 					],
 					"scriptLines": [
 						"source(output(",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          Accession as string,",
-						"          Referrer as string,",
-						"          {Referral Location} as string,",
-						"          {Referral Source} as string,",
-						"          Urg as string,",
-						"          Site as string,",
-						"          {Status Code} as string,",
-						"          {Status Date} as timestamp,",
-						"          {Status Time} as integer,",
-						"          {Referral Location Name} as string,",
-						"          {Referral Source Name} as string,",
-						"          {Referral Name} as string,",
-						"          {Examination Name} as string,",
-						"          Modality as string,",
-						"          {Status Code at State Date} as string,",
-						"          {Stat Date} as timestamp,",
-						"          {D Status} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
-						"source1 filter({Status Code}=='RR') ~> filter1",
-						"filter1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          Accession as string,",
-						"          Referrer as string,",
-						"          {Referral Location} as string,",
-						"          {Referral Source} as string,",
-						"          Urg as string,",
-						"          Site as string,",
-						"          {Status Code} as string,",
-						"          {Status Date} as timestamp,",
-						"          {Status Time} as integer,",
-						"          {Referral Location Name} as string,",
-						"          {Referral Source Name} as string,",
-						"          {Referral Name} as string,",
-						"          {Examination Name} as string,",
-						"          Modality as string,",
-						"          {Status Code at State Date} as string,",
-						"          {Stat Date} as timestamp,",
-						"          {D Status} as string,",
-						"          Rank as integer",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSql_STATUSES')]",
-				"[concat(variables('factoryId'), '/datasets/RequestRecievedStatus')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CreateRefColumnsPTL')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "AzureSql_PTL",
-								"type": "DatasetReference"
-							},
-							"name": "AzureSqlPTL"
-						},
-						{
-							"dataset": {
-								"referenceName": "Referral_Source",
-								"type": "DatasetReference"
-							},
-							"name": "ReferralSource"
-						},
-						{
-							"dataset": {
-								"referenceName": "Exam",
-								"type": "DatasetReference"
-							},
-							"name": "Exam"
-						},
-						{
-							"dataset": {
-								"referenceName": "Trust",
-								"type": "DatasetReference"
-							},
-							"name": "Trust"
-						},
-						{
-							"dataset": {
-								"referenceName": "Modality",
-								"type": "DatasetReference"
-							},
-							"name": "Modality"
-						},
-						{
-							"dataset": {
-								"referenceName": "Exam_Site",
-								"type": "DatasetReference"
-							},
-							"name": "ExamSite"
-						},
-						{
-							"dataset": {
-								"referenceName": "AzureSqlCOREStageStep2",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						},
-						{
-							"dataset": {
-								"referenceName": "AzureSql_STATUSES",
-								"type": "DatasetReference"
-							},
-							"name": "source2"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "ODBC_PTL_v2",
-								"type": "DatasetReference"
-							},
-							"name": "AzureSqlPTLV2Staging"
-						}
-					],
-					"transformations": [
-						{
-							"name": "AddColumns"
-						},
-						{
-							"name": "SelectMostRecent"
-						},
-						{
-							"name": "SortColumns"
-						},
-						{
-							"name": "CreateID"
-						},
-						{
-							"name": "RenameandRemoveCols"
-						},
-						{
-							"name": "lookupReferralSource"
-						},
-						{
-							"name": "lookupExam"
-						},
-						{
-							"name": "DeriveTrust"
-						},
-						{
-							"name": "lookupTrust"
-						},
-						{
-							"name": "deriveModlaityCode"
-						},
-						{
-							"name": "lookupModality"
-						},
-						{
-							"name": "derivedEamsiteCode"
-						},
-						{
-							"name": "lookupExamSite"
-						},
-						{
-							"name": "RemoveCols"
-						},
-						{
-							"name": "deriveBookedDateTime"
-						},
-						{
-							"name": "RenameCols3"
-						},
-						{
-							"name": "lookup1"
-						},
-						{
-							"name": "filter1"
-						},
-						{
-							"name": "sort1"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          {Event Key} as integer,",
-						"          {Exam Key} as integer,",
-						"          {CRIS Number} as integer,",
-						"          {Status Category} as string,",
-						"          Referrer as string,",
-						"          {Ref Src} as string,",
-						"          {Referring Location} as string,",
-						"          Examination as string,",
-						"          Site as string,",
-						"          {Request Date} as timestamp,",
-						"          {Event Date} as timestamp,",
-						"          {Booked Time} as string,",
-						"          {Booked Date} as timestamp,",
-						"          {Ref Src2} as string,",
-						"          {Postcode L} as string,",
-						"          {Postcode R} as string,",
-						"          {Creation Date} as timestamp,",
-						"          {Event Key2} as integer,",
-						"          Attended as string,",
-						"          Modality as string,",
-						"          Room as string,",
-						"          RC as string,",
-						"          Urg as integer,",
-						"          {Referrer Name} as string,",
-						"          {Exam Name} as string,",
-						"          {Event Date2} as timestamp,",
-						"          {Days Waiting} as integer,",
-						"          {Predicted Reset Date} as timestamp,",
-						"          {Waiting Time Reset Date} as timestamp,",
-						"          {Weeks Waiting} as integer,",
-						"          {Planned Appointment Date} as timestamp,",
-						"          {Waiting Breach Date} as timestamp,",
-						"          {Was Planned} as string,",
-						"          {Was Scheduled} as string,",
-						"          {Was Waiting} as string,",
-						"          CCG as string,",
-						"          {D Status} as string,",
-						"          {Stat Date} as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'Select * from [dev].[FYF_ODBC_PTL] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'ptl\\')',",
-						"     format: 'query') ~> AzureSqlPTL",
-						"source(output(",
-						"          {Referral Source} as string,",
-						"          {Referral Source ID} as integer",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> ReferralSource",
-						"source(output(",
-						"          {Exam Name} as string,",
-						"          {Exam Code} as string,",
-						"          {Exam ID} as integer",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> Exam",
-						"source(output(",
-						"          {Trust Name} as string,",
-						"          {Trust ID} as integer,",
-						"          {Trust Name Group} as string,",
-						"          {Trust Name Group2} as string,",
-						"          {Trust Name Group3} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> Trust",
-						"source(output(",
-						"          Modality2 as string,",
-						"          {Modality ID} as integer",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> Modality",
-						"source(output(",
-						"          {Exam Site} as string,",
-						"          {Exam Room} as string,",
-						"          {ExamSite Code} as string,",
-						"          {Exam Room ID} as long,",
-						"          Description as string,",
-						"          {Stat Date} as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> ExamSite",
-						"source(output(",
-						"          {CRIS No} as integer,",
-						"          Accession as string,",
-						"          {Ref Src} as string,",
-						"          Site as string,",
-						"          {Request Date} as date,",
-						"          {Event Date} as date,",
-						"          {Event Time} as string,",
-						"          {On Call} as string,",
-						"          PT as string,",
-						"          Examination as string,",
-						"          {Exam Name} as string,",
-						"          Room as string,",
-						"          {Start Time} as string,",
-						"          {End Time} as string,",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          {Status Code} as string,",
-						"          {Booked Date} as timestamp,",
-						"          {Booked Time} as string,",
-						"          {Creation Date} as timestamp,",
-						"          Attended as string,",
-						"          Urg as string,",
-						"          Modality as string,",
-						"          {No of Proc} as integer,",
-						"          {Planned Appointment Date} as timestamp,",
-						"          {Date First Verified} as timestamp,",
-						"          {Time First Verified} as string,",
-						"          {Was Planned} as string,",
-						"          {Was Scheduled} as string,",
-						"          {Was Waiting} as string,",
-						"          {Stat Date} as timestamp,",
-						"          {Reported By} as string,",
-						"          Rank as integer,",
-						"          {Age At Event} as string,",
-						"          {Status Code.2} as string,",
-						"          {Status Date.1} as timestamp,",
-						"          {Status Time} as string,",
-						"          Modality2 as string,",
-						"          {Trust Name} as string,",
-						"          Patient_Type as string,",
-						"          {Tat Type} as string,",
-						"          {Activity.1} as integer,",
-						"          {Count of Activty_Demand for Activity.1} as long,",
-						"          {ExamSite Code} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
-						"source(output(",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          Accession as string,",
-						"          Referrer as string,",
-						"          {Referral Location} as string,",
-						"          {Referral Source} as string,",
-						"          Urg as string,",
-						"          Site as string,",
-						"          {Status Code} as string,",
-						"          {Status Date} as timestamp,",
-						"          {Status Time} as integer,",
-						"          {Referral Location Name} as string,",
-						"          {Referral Source Name} as string,",
-						"          {Referral Name} as string,",
-						"          {Examination Name} as string,",
-						"          Modality as string,",
-						"          {Status Code at State Date} as string,",
-						"          {Stat Date} as timestamp,",
-						"          {D Status} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source2",
-						"AzureSqlPTL derive({5 Weeks Wait} = iif({Weeks Waiting}>=6,1,0),",
-						"          {Booked Datetime} = toString(null()),",
-						"          {6 Weeks Wait} = toString(null()),",
-						"          {Stat Date} = toDate({Stat Date})) ~> AddColumns",
-						"CreateID filter(rank==1) ~> SelectMostRecent",
-						"AddColumns sort(desc({Stat Date}, true)) ~> SortColumns",
-						"SortColumns rank(desc({Stat Date}, true),",
-						"     output(rank as long)) ~> CreateID",
-						"SelectMostRecent select(mapColumn(",
-						"          {Event Key},",
-						"          {Exam Key},",
-						"          {CRIS Number},",
-						"          {Status Category},",
-						"          {Ref Src},",
-						"          Examination,",
-						"          Site,",
-						"          {Request Date},",
-						"          {Event Date},",
-						"          {Booked Time},",
-						"          {Booked Date},",
-						"          {Ref Src2},",
-						"          {Creation Date},",
-						"          Attended,",
-						"          Modality,",
-						"          Room,",
-						"          Urg,",
-						"          {Exam Name},",
-						"          {Days Waiting},",
-						"          {Predicted Reset Date},",
-						"          {Waiting Time Reset Date},",
-						"          {Weeks Waiting},",
-						"          {Planned Appointment Date},",
-						"          {Waiting Breach Date},",
-						"          {Was Planned},",
-						"          {Was Scheduled},",
-						"          {Was Waiting},",
-						"          {Stat Date},",
-						"          {5 Weeks Wait},",
-						"          {Booked Datetime},",
-						"          {6 Weeks Wait}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> RenameandRemoveCols",
-						"RenameandRemoveCols, ReferralSource lookup({Ref Src} == {Referral Source},",
-						"     multiple: false,",
-						"     pickup: 'any',",
-						"     broadcast: 'auto')~> lookupReferralSource",
-						"lookupReferralSource, Exam lookup(Examination == {Exam Code},",
-						"     multiple: false,",
-						"     pickup: 'any',",
-						"     broadcast: 'auto')~> lookupExam",
-						"lookupExamSite derive(Site = iif ({Site} == \"5HA16\", \"LUHFT\", iif ({Site} == \"5NL93\", \"LUHFT\", iif (left({Site},3) == \"REM\", \"LUHFT\", iif (left({Site},3) == \"RQ6\", \"LUHFT\",  iif (left({Site},3) == \"RQ6\", \"LUHFT\", iif (left({Site},3) == \"RQ6\", \"LUHFT\", iif (left({Site},3) == \"RQ6\", \"LUHFT\", iif (left({Site},3) == \"RBL\", \"WUTH\", iif (left({Site},3) == \"RBN\", \"STHK\", iif (left({Site},3) == \"RBQ\", \"LHCH\", iif (left({Site},3) == \"RBS\", \"Alder Hey\", iif (left({Site},3) == \"RBT\", \"MCH\", iif (left({Site},3) == \"REN\", \"CCC\" , iif (left({Site},3) == \"REP\", \"Womens\", iif (left({Site},3) == \"RET\", \"TWC\", iif (left({Site},3) == \"RJR\", \"COCH\", iif (left({Site},3) == \"RVY\", \"S&O\", iif (left({Site},3) == \"RWW\", \"WHH\", {Site}))))))))))))))))))) ~> DeriveTrust",
-						"DeriveTrust, Trust lookup(Site == {Trust Name},",
-						"     multiple: false,",
-						"     pickup: 'any',",
-						"     broadcast: 'auto')~> lookupTrust",
-						"lookupExam derive(Modality = iif({Modality} == \"R\", \"Plain X-Ray\", iif({Modality} == \"A\", \"IR\", iif({Modality} == \"B\", \"Mammo\", iif({Modality} == \"C\", \"CT\", iif({Modality} == \"M\", \"MRI\", iif({Modality} == \"F\", \"Fluoro\", iif({Modality} == \"U\", \"NOUS\", iif({Modality} == \"Z\", \"Additional Workload\", iif({Modality} == \"O\", \"Obstetrics\", iif({Modality} == \"N\", \"Nuc Med\", iif({Modality} == \"H\", \"Cardio\", iif({Modality} == \"S\", \"DEXA\", iif({Modality} == \"Y\", \"Med Phys\", iif({Modality} == \"E\", \"Endo\", iif({Modality} == \"D\", \"Doppler\", \"other\")))))))))))))))) ~> deriveModlaityCode",
-						"deriveModlaityCode, Modality lookup(Modality == Modality2,",
-						"     multiple: false,",
-						"     pickup: 'any',",
-						"     broadcast: 'auto')~> lookupModality",
-						"lookupModality derive(Room = iifNull({Site},'NULL')+iifNull({Room},'NULL')) ~> derivedEamsiteCode",
-						"derivedEamsiteCode, ExamSite lookup(Room == {ExamSite Code},",
-						"     multiple: false,",
-						"     pickup: 'any',",
-						"     broadcast: 'auto')~> lookupExamSite",
-						"lookupTrust select(mapColumn(",
-						"          {Event Key},",
-						"          {Exam Key},",
-						"          {CRIS Number},",
-						"          {Status Category},",
-						"          {Request Date},",
-						"          {Event Date},",
-						"          {Booked Time},",
-						"          {Booked Date},",
-						"          {Creation Date},",
-						"          Attended,",
-						"          Urg,",
-						"          {Days Waiting},",
-						"          {Predicted Reset Date},",
-						"          {Waiting Time Reset Date},",
-						"          {Weeks Waiting},",
-						"          {Planned Appointment Date},",
-						"          {Waiting Breach Date},",
-						"          {Was Planned},",
-						"          {Was Scheduled},",
-						"          {Was Waiting},",
-						"          {Stat Date} = RenameandRemoveCols@{Stat Date},",
-						"          {5 Weeks Wait},",
-						"          {Booked Datetime},",
-						"          {6 Weeks Wait},",
-						"          {Referral Source ID},",
-						"          {Exam ID},",
-						"          {Modality ID},",
-						"          {Exam Room ID},",
-						"          {Trust ID}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> RemoveCols",
-						"RemoveCols derive({Booked Date} = toTimestamp(concatWS(\" \", left(toString({Booked Date}),10), concatWS(\":\",left({Booked Time}, 2), concatWS(\":\",right({Booked Time}, 2),\"00\"))))) ~> deriveBookedDateTime",
-						"lookup1 select(mapColumn(",
-						"          {Event Key} = RemoveCols@{Event Key},",
-						"          {Exam Key} = RemoveCols@{Exam Key},",
-						"          {CRIS Number},",
-						"          {Status Category},",
-						"          {Request Date} = RemoveCols@{Request Date},",
-						"          {Event Date} = RemoveCols@{Event Date},",
-						"          {Booked Date Time} = deriveBookedDateTime@{Booked Date},",
-						"          {Creation Date} = RemoveCols@{Creation Date},",
-						"          Attended = RemoveCols@Attended,",
-						"          Urg = RemoveCols@Urg,",
-						"          {Days Waiting},",
-						"          {Predicted Reset Date},",
-						"          {Waiting Time Reset Date},",
-						"          {Weeks Waiting},",
-						"          {Planned Appointment Date} = RemoveCols@{Planned Appointment Date},",
-						"          {Waiting Breach Date},",
-						"          {Was Planned} = RemoveCols@{Was Planned},",
-						"          {Was Scheduled} = RemoveCols@{Was Scheduled},",
-						"          {Was Waiting} = RemoveCols@{Was Waiting},",
-						"          {Stat Date} = RemoveCols@{Stat Date},",
-						"          {5 Weeks Wait},",
-						"          {Booked Datetime},",
-						"          {6 Weeks Wait},",
-						"          {Referral Source ID},",
-						"          {Exam ID},",
-						"          {Modality ID},",
-						"          {Exam Room ID},",
-						"          {Trust ID},",
-						"          {Status Code}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> RenameCols3",
-						"deriveBookedDateTime, filter1 lookup(RemoveCols@{Exam Key} == source1@{Exam Key},",
-						"     multiple: false,",
-						"     pickup: 'any',",
-						"     broadcast: 'auto')~> lookup1",
-						"source1 filter(Rank==1) ~> filter1",
-						"source2 sort(desc({Status Date}, false)) ~> sort1",
-						"RenameCols3 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
 						"          {Event Key} as integer,",
 						"          {Exam Key} as integer,",
 						"          {CRIS Number} as integer,",
@@ -23967,455 +23499,34 @@
 						"          {Trust ID} as integer,",
 						"          {Status Code} as string",
 						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     recreate:true,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     saveOrder: 1,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> AzureSqlPTLV2Staging"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSql_PTL')]",
-				"[concat(variables('factoryId'), '/datasets/Referral_Source')]",
-				"[concat(variables('factoryId'), '/datasets/Exam')]",
-				"[concat(variables('factoryId'), '/datasets/Trust')]",
-				"[concat(variables('factoryId'), '/datasets/Modality')]",
-				"[concat(variables('factoryId'), '/datasets/Exam_Site')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep2')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSql_STATUSES')]",
-				"[concat(variables('factoryId'), '/datasets/ODBC_PTL_v2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dataflow2')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "AzureSql_PTL",
-								"type": "DatasetReference"
-							},
-							"name": "AzureSqlPTL"
-						},
-						{
-							"dataset": {
-								"referenceName": "Excel1",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						},
-						{
-							"dataset": {
-								"referenceName": "AzureSql_CORE",
-								"type": "DatasetReference"
-							},
-							"name": "RefSrc"
-						},
-						{
-							"dataset": {
-								"referenceName": "FYF_ODBC_CORE_v2",
-								"type": "DatasetReference"
-							},
-							"name": "PatientTypeIn"
-						},
-						{
-							"dataset": {
-								"referenceName": "AzureSql_CORE",
-								"type": "DatasetReference"
-							},
-							"name": "Examination"
-						},
-						{
-							"dataset": {
-								"referenceName": "AzureSql_STATUSES",
-								"type": "DatasetReference"
-							},
-							"name": "STATUSES"
-						},
-						{
-							"dataset": {
-								"referenceName": "FYF_ODBC_CORE_v2",
-								"type": "DatasetReference"
-							},
-							"name": "ModalityIN"
-						},
-						{
-							"dataset": {
-								"referenceName": "AzureSql_CORE",
-								"type": "DatasetReference"
-							},
-							"name": "SiteRoom"
-						},
-						{
-							"dataset": {
-								"referenceName": "AzureSql_CORE",
-								"type": "DatasetReference"
-							},
-							"name": "TatTypeIn"
-						},
-						{
-							"dataset": {
-								"referenceName": "FYF_ODBC_CORE_v2",
-								"type": "DatasetReference"
-							},
-							"name": "TrustIn"
-						},
-						{
-							"dataset": {
-								"referenceName": "Referral_Source",
-								"type": "DatasetReference"
-							},
-							"name": "ReferralSourceRef"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "Tat_Type",
-								"type": "DatasetReference"
-							},
-							"name": "TatType"
-						},
-						{
-							"dataset": {
-								"referenceName": "Trust",
-								"type": "DatasetReference"
-							},
-							"name": "Trust"
-						},
-						{
-							"dataset": {
-								"referenceName": "Exam_Site",
-								"type": "DatasetReference"
-							},
-							"name": "SiteRoomOut"
-						},
-						{
-							"dataset": {
-								"referenceName": "Modality",
-								"type": "DatasetReference"
-							},
-							"name": "Modality"
-						},
-						{
-							"dataset": {
-								"referenceName": "Status",
-								"type": "DatasetReference"
-							},
-							"name": "Status"
-						},
-						{
-							"dataset": {
-								"referenceName": "Exam",
-								"type": "DatasetReference"
-							},
-							"name": "Exam"
-						},
-						{
-							"dataset": {
-								"referenceName": "Patient_Type",
-								"type": "DatasetReference"
-							},
-							"name": "PatientType"
-						},
-						{
-							"dataset": {
-								"referenceName": "Referral_Source",
-								"type": "DatasetReference"
-							},
-							"name": "ReferralSource"
-						}
-					],
-					"transformations": [
-						{
-							"name": "RankColumns8"
-						},
-						{
-							"name": "DeriveColumn8"
-						},
-						{
-							"name": "RankColumns7"
-						},
-						{
-							"name": "DeriveColumn7"
-						},
-						{
-							"name": "RenameColumns6"
-						},
-						{
-							"name": "JointColumn6"
-						},
-						{
-							"name": "RankColumns6"
-						},
-						{
-							"name": "RankColumns5"
-						},
-						{
-							"name": "RankColumns4"
-						},
-						{
-							"name": "DeriveColumn4"
-						},
-						{
-							"name": "RenameColumns3"
-						},
-						{
-							"name": "RankColumns3"
-						},
-						{
-							"name": "RankColumns2"
-						},
-						{
-							"name": "RenameColumns1"
-						},
-						{
-							"name": "RankColumns1"
-						},
-						{
-							"name": "RenameColumns9"
-						},
-						{
-							"name": "CombineCOREPTL6"
-						},
-						{
-							"name": "lookup1"
-						},
-						{
-							"name": "select1"
-						},
-						{
-							"name": "aggregate1"
-						},
-						{
-							"name": "union1"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          Site as string,",
-						"          Room as string,",
-						"          {Stat Date} as timestamp",
-						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'SELECT [Site],[Room]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_PTL]\\n  Group by [Site],[Room]',",
-						"     format: 'query') ~> AzureSqlPTL",
-						"source(output(",
-						"          Site as string,",
-						"          Room as string,",
-						"          {Room Desc} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> source1",
-						"source(output(",
-						"          {Ref Src} as string,",
-						"          {Stat Date} as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     waterMarkColumn: 'Stat Date',",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'SELECT [Ref Src] as [Ref Src]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE]\\n  where [Ref Src] not in (SELECT [Referral Source]\\n  FROM [dev].[Referral Source])\\n  Group by [Ref Src]',",
-						"     format: 'query') ~> RefSrc",
-						"source(output(",
-						"          Patient_Type as string,",
-						"          {Stat Date} as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: '  SELECT [Patient_Type]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE_v2]\\n   where [Patient_Type] not in (SELECT [Patient_Type]\\n    FROM [dev].[Patient Type])\\n  Group by [Patient_Type]',",
-						"     format: 'query') ~> PatientTypeIn",
-						"source(output(",
-						"          Examination as string,",
-						"          {Exam Name} as string,",
-						"          {Stat Date} as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'SELECT [Examination], [Exam Name]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE]\\nwhere [Examination] not in (SELECT [Examination]\\n    FROM [dev].[Exam])\\n  Group by [Examination],[Exam Name]\\n',",
-						"     format: 'query') ~> Examination",
-						"source(output(",
-						"          {Status Code} as string,",
-						"          {Stat Date} as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'SELECT [Status Code]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_STATUSES]\\nwhere [Status Code]not in (SELECT [Status Code]\\n    FROM [dev].[FYF_ODBC_STATUSES])\\n  Group by [Status Code]',",
-						"     format: 'query') ~> STATUSES",
-						"source(output(",
-						"          Modality2 as string,",
-						"          {Stat Date} as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'SELECT Distinct([Modality2]) as [Modality2]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE_v2]\\nwhere [Modality2] not in (SELECT [Modality2]\\n    FROM [dev].[Modality])\\n  Group by [Modality2]',",
-						"     format: 'query') ~> ModalityIN",
-						"source(output(",
-						"          Site as string,",
-						"          Room as string,",
-						"          {Stat Date} as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'SELECT [Site],[Room]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE]\\n  Group by [Site],[Room]',",
-						"     format: 'query') ~> SiteRoom",
-						"source(output(",
-						"          {Tat Type} as string,",
-						"          {Stat Date} as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'SELECT [Tat Type]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE_v2]\\n  where [Tat Type] not in (SELECT [Tat Type] FROM [dev].[Tat Type])\\n  Group by [Tat Type]',",
-						"     format: 'query') ~> TatTypeIn",
-						"source(output(",
-						"          {Trust Name} as string,",
-						"          {Stat Date} as timestamp",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'SELECT Distinct([Trust Name]) as [Trust Name]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE_v2]\\nwhere [Trust Name] not in (SELECT [Trust Name]\\n     FROM [dev].[Trust])\\n  Group by [Trust Name]',",
-						"     format: 'query') ~> TrustIn",
-						"source(output(",
-						"          {Referral Source} as string,",
-						"          {Stat Date} as timestamp,",
-						"          {Referral Source ID} as integer",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> ReferralSourceRef",
-						"TatTypeIn rank(asc({Tat Type}, true),",
-						"     output({Tat Type ID} as long)) ~> RankColumns8",
-						"RankColumns8 derive(Target = iif({Tat Type} == \"Urgent Inpatients\",\"12 hours\",iif({Tat Type} == \"Non-Urgent Inpatients\", \"24 hours\",iif({Tat Type} == \"Outpatient Faster Diagnosis Standard Cancer Pathway\", \"3 days\",iif({Tat Type} == \"Urgent GP and Outpatients\", \"7 days\",iif({Tat Type} == \"All Other Routine Outpatient and GP Studies\", \"28 days\",iif({Tat Type} == \"Acutely Unwell/ED Patients\", \"12 hours\",iif({Tat Type} == \"Other Inpatients\" , \"7 days\",iif({Tat Type} == \"Urgent GP/Urgent Outpatients\", \"7 days\",iif({Tat Type} == \"Routine GP and outpatients\", \"28 days\",iif({Tat Type} == \"Ultrasound and interventional Radiology\", \"3 hours\",\"0\"))))))))))) ~> DeriveColumn8",
-						"TrustIn rank(asc({Trust Name}, true),",
-						"     output({Trust ID} as long),",
-						"     dense: true) ~> RankColumns7",
-						"RankColumns7 derive({Trust Name Group} = iif( {Trust Name} == \"Womens\", \"REP\", iif( {Trust Name} == \"LUHFT\", \"REM\", iif( {Trust Name} == \"WUTH\", \"RBL\", iif( {Trust Name} == \"STHK\", \"RBN\", iif( {Trust Name} == \"S&O\", \"RVY\", iif( {Trust Name} == \"LHCH\", \"RBQ\", iif( {Trust Name} == \"Alder Hey\", \"RBS\", iif( {Trust Name} == \"MCH\", \"RBT\", iif( {Trust Name} == \"CCC\", \"REN\", iif( {Trust Name} == \"TWC\", \"RET\", iif( {Trust Name} == \"COCH\", \"RJR\", iif( {Trust Name} == \"WHH\", \"RWW\", iif( {Trust Name} == \"5M501\", \"REM\", iif( {Trust Name} == \"NTD05\", \"REM\", \"Other\")))))))))))))),",
-						"          {Trust Name Group2} = iif( {Trust Name} == \"Womens\", \"Womens\", iif( {Trust Name} == \"LUHFT\", \"LUHFT\", iif( {Trust Name} == \"WUTH\", \"WUTH\", iif( {Trust Name} == \"STHK\", \"STHK\", iif( {Trust Name} == \"S&O\", \"S&O\", iif( {Trust Name} == \"LHCH\", \"LHCH\", iif( {Trust Name} == \"Alder Hey\", \"Alder Hey\", iif( {Trust Name} == \"MCH\", \"MCH\", iif( {Trust Name} == \"CCC\", \"CCC\", iif( {Trust Name} == \"TWC\", \"TWC\", iif( {Trust Name} == \"COCH\", \"COCH\", iif( {Trust Name} == \"WHH\", \"WHH\", iif( {Trust Name} == \"5M501\", \"LUHFT\", iif( {Trust Name} == \"NTD05\", \"LUHFT\", \"Other\")))))))))))))),",
-						"          {Trust Name Group3} = iif( {Trust Name} == \"Womens\", \"REP\", iif( {Trust Name} == \"LUHFT\", \"REM\", iif( {Trust Name} == \"WUTH\", \"WUTH\", iif( {Trust Name} == \"STHK\", \"RBN\", iif( {Trust Name} == \"S&O\", \"RVY\", iif( {Trust Name} == \"LHCH\", \"RBQ\", iif( {Trust Name} == \"Alder Hey\", \"RBS\", iif( {Trust Name} == \"MCH\", \"RBT\", iif( {Trust Name} == \"CCC\", \"REN\", iif( {Trust Name} == \"TWC\", \"RET\", iif( {Trust Name} == \"COCH\", \"COCH\", iif( {Trust Name} == \"WHH\", \"RWW\", \"Other\"))))))))))))) ~> DeriveColumn7",
-						"SiteRoom select(mapColumn(",
-						"          {Exam Site} = Site,",
-						"          {Exam Room} = Room,",
-						"          {Stat Date}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> RenameColumns6",
-						"CombineCOREPTL6 derive({ExamSite Code} = iifNull({Exam Site},'NULL')+iifNull({Exam Room},'NULL')) ~> JointColumn6",
-						"aggregate1 rank(asc({ExamSite Code}, true),",
-						"     output({Exam Room ID} as long)) ~> RankColumns6",
-						"ModalityIN rank(asc(Modality2, true),",
-						"     output({Modality ID} as long)) ~> RankColumns5",
-						"STATUSES rank(asc({Status Code}, true),",
-						"     output({Status ID} as long)) ~> RankColumns4",
-						"RankColumns4 derive({Status Category} = iif(startsWith({Status Code}, \"AP\"), \"AP\", iif(startsWith({Status Code}, \"AS\"), \"AS\", iif(startsWith({Status Code}, \"AT\"), \"AT\", iif(startsWith({Status Code}, \"C\"), \"C\", iif(startsWith({Status Code}, \"D\"), \"D\", iif(startsWith({Status Code}, \"E\"), \"E\", iif(startsWith({Status Code}, \"P\"), \"P\", iif(startsWith({Status Code}, \"R\"), \"R\", iif(startsWith({Status Code}, \"V\"), \"V\", iif(startsWith({Status Code}, \"W\"), \"W\", iif({Status Code} == \"BHSRAI\", \"ST\", iif({Status Code} == \"ACNCLI\", \"W\", iif({Status Code} == \"SRREPC\", \"ST\", \"0\")))))))))))))) ~> DeriveColumn4",
-						"Examination select(mapColumn(",
-						"          {Exam Code} = Examination,",
-						"          {Exam Name},",
-						"          {Stat Date}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> RenameColumns3",
-						"RenameColumns3 rank(asc({Exam Code}, true),",
-						"     output({Exam ID} as long)) ~> RankColumns3",
-						"PatientTypeIn rank(asc(Patient_Type, true),",
-						"     output({Patient Type ID} as long)) ~> RankColumns2",
-						"RefSrc select(mapColumn(",
-						"          {Referral Source} = {Ref Src},",
-						"          {Stat Date}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> RenameColumns1",
-						"union1 rank(asc({Referral Source ID}, true),",
-						"     asc({Referral Source}, true),",
-						"     output({Referral Source ID} as long)) ~> RankColumns1",
-						"AzureSqlPTL select(mapColumn(",
-						"          {Exam Site} = Site,",
-						"          {Exam Room} = Room,",
-						"          {Stat Date}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> RenameColumns9",
-						"RenameColumns6, RenameColumns9 union(byName: true)~> CombineCOREPTL6",
-						"RankColumns6, source1 lookup({ExamSite Code} == concat(Site,Room),",
-						"     multiple: true,",
-						"     broadcast: 'auto')~> lookup1",
-						"lookup1 select(mapColumn(",
-						"          {Exam Site},",
-						"          {Exam Room},",
-						"          {ExamSite Code},",
+						"     query: 'Select * from [dev].[FYF_ODBC_PTL_v2] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'ptl\\')',",
+						"     format: 'query') ~> source1",
+						"source1 select(mapColumn(",
+						"          {Event Key},",
+						"          {Exam Key},",
+						"          {Exam ID},",
 						"          {Exam Room ID},",
-						"          Description = {Room Desc},",
+						"          {Request Date},",
+						"          {Planned Appointment Date},",
+						"          {Waiting Time Reset Date},",
+						"          {Event Date},",
+						"          {Weeks Waiting},",
+						"          {Modality ID},",
+						"          {Was Planned},",
+						"          {Was Scheduled},",
+						"          {Was Waiting},",
+						"          {Referral Source ID},",
+						"          {Trust ID},",
+						"          {Status Code},",
 						"          {Stat Date}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select1",
-						"JointColumn6 aggregate(groupBy({ExamSite Code},",
-						"          {Exam Site},",
-						"          {Exam Room}),",
-						"     {Stat Date} = min({Stat Date})) ~> aggregate1",
-						"RenameColumns1, ReferralSourceRef union(byName: true)~> union1",
-						"DeriveColumn8 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          {Tat Type} as string,",
-						"          {Tat Type ID} as integer,",
-						"          Target as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> TatType",
-						"DeriveColumn7 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          {Trust Name} as string,",
-						"          {Trust ID} as integer,",
-						"          {Trust Name Group} as string,",
-						"          {Trust Name Group2} as string,",
-						"          {Trust Name Group3} as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> Trust",
 						"select1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     input(",
-						"          {Exam Site} as string,",
-						"          {Exam Room} as string,",
-						"          {ExamSite Code} as string,",
-						"          {Exam Room ID} as long,",
-						"          Description as string,",
-						"          {Stat Date} as timestamp",
-						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
@@ -24424,105 +23535,13 @@
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          {Exam Site},",
-						"          {Exam Room},",
-						"          {ExamSite Code},",
-						"          {Exam Room ID},",
-						"          Description,",
-						"          {Stat Date}",
-						"     )) ~> SiteRoomOut",
-						"RankColumns5 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          Modality2 as string,",
-						"          {Modality ID} as integer",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> Modality",
-						"DeriveColumn4 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          {Status Code} as string,",
-						"          {Status ID} as integer,",
-						"          {Status Category} as string",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> Status",
-						"RankColumns3 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          {Exam Name} as string,",
-						"          {Exam Code} as string,",
-						"          {Exam ID} as integer",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> Exam",
-						"RankColumns2 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          Patient_Type as string,",
-						"          Patient_Type_ID as integer",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> PatientType",
-						"RankColumns1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          {Referral Source} as string,",
-						"          {Stat Date} as timestamp,",
-						"          {Referral Source ID} as integer",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> ReferralSource"
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 					]
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/AzureSql_PTL')]",
-				"[concat(variables('factoryId'), '/datasets/Excel1')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSql_CORE')]",
-				"[concat(variables('factoryId'), '/datasets/FYF_ODBC_CORE_v2')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSql_STATUSES')]",
-				"[concat(variables('factoryId'), '/datasets/Referral_Source')]",
-				"[concat(variables('factoryId'), '/datasets/Tat_Type')]",
-				"[concat(variables('factoryId'), '/datasets/Trust')]",
-				"[concat(variables('factoryId'), '/datasets/Exam_Site')]",
-				"[concat(variables('factoryId'), '/datasets/Modality')]",
-				"[concat(variables('factoryId'), '/datasets/Status')]",
-				"[concat(variables('factoryId'), '/datasets/Exam')]",
-				"[concat(variables('factoryId'), '/datasets/Patient_Type')]"
+				"[concat(variables('factoryId'), '/datasets/ODBC_PTL_v2')]",
+				"[concat(variables('factoryId'), '/datasets/Patient_Waiting')]"
 			]
 		},
 		{
@@ -25337,7 +24356,6 @@
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
-						"     truncate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
@@ -25361,6 +24379,1411 @@
 				"[concat(variables('factoryId'), '/datasets/Referral_Source')]",
 				"[concat(variables('factoryId'), '/datasets/Tat_Type')]",
 				"[concat(variables('factoryId'), '/datasets/FYF_ODBC_CORE_v2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CreateRefColumnsPTL')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSql_PTL",
+								"type": "DatasetReference"
+							},
+							"name": "AzureSqlPTL"
+						},
+						{
+							"dataset": {
+								"referenceName": "Referral_Source",
+								"type": "DatasetReference"
+							},
+							"name": "ReferralSource"
+						},
+						{
+							"dataset": {
+								"referenceName": "Exam",
+								"type": "DatasetReference"
+							},
+							"name": "Exam"
+						},
+						{
+							"dataset": {
+								"referenceName": "Trust",
+								"type": "DatasetReference"
+							},
+							"name": "Trust"
+						},
+						{
+							"dataset": {
+								"referenceName": "Modality",
+								"type": "DatasetReference"
+							},
+							"name": "Modality"
+						},
+						{
+							"dataset": {
+								"referenceName": "Exam_Site",
+								"type": "DatasetReference"
+							},
+							"name": "ExamSite"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSqlCOREStageStep2",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSql_STATUSES",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "ODBC_PTL_v2",
+								"type": "DatasetReference"
+							},
+							"name": "AzureSqlPTLV2Staging"
+						}
+					],
+					"transformations": [
+						{
+							"name": "AddColumns"
+						},
+						{
+							"name": "SelectMostRecent"
+						},
+						{
+							"name": "SortColumns"
+						},
+						{
+							"name": "CreateID"
+						},
+						{
+							"name": "RenameandRemoveCols"
+						},
+						{
+							"name": "lookupReferralSource"
+						},
+						{
+							"name": "lookupExam"
+						},
+						{
+							"name": "DeriveTrust"
+						},
+						{
+							"name": "lookupTrust"
+						},
+						{
+							"name": "deriveModlaityCode"
+						},
+						{
+							"name": "lookupModality"
+						},
+						{
+							"name": "derivedEamsiteCode"
+						},
+						{
+							"name": "lookupExamSite"
+						},
+						{
+							"name": "RemoveCols"
+						},
+						{
+							"name": "deriveBookedDateTime"
+						},
+						{
+							"name": "RenameCols3"
+						},
+						{
+							"name": "lookup1"
+						},
+						{
+							"name": "filter1"
+						},
+						{
+							"name": "sort1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          {Event Key} as integer,",
+						"          {Exam Key} as integer,",
+						"          {CRIS Number} as integer,",
+						"          {Status Category} as string,",
+						"          Referrer as string,",
+						"          {Ref Src} as string,",
+						"          {Referring Location} as string,",
+						"          Examination as string,",
+						"          Site as string,",
+						"          {Request Date} as timestamp,",
+						"          {Event Date} as timestamp,",
+						"          {Booked Time} as string,",
+						"          {Booked Date} as timestamp,",
+						"          {Ref Src2} as string,",
+						"          {Postcode L} as string,",
+						"          {Postcode R} as string,",
+						"          {Creation Date} as timestamp,",
+						"          {Event Key2} as integer,",
+						"          Attended as string,",
+						"          Modality as string,",
+						"          Room as string,",
+						"          RC as string,",
+						"          Urg as integer,",
+						"          {Referrer Name} as string,",
+						"          {Exam Name} as string,",
+						"          {Event Date2} as timestamp,",
+						"          {Days Waiting} as integer,",
+						"          {Predicted Reset Date} as timestamp,",
+						"          {Waiting Time Reset Date} as timestamp,",
+						"          {Weeks Waiting} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Waiting Breach Date} as timestamp,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          CCG as string,",
+						"          {D Status} as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'Select * from [dev].[FYF_ODBC_PTL] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'ptl\\')',",
+						"     format: 'query') ~> AzureSqlPTL",
+						"source(output(",
+						"          {Referral Source} as string,",
+						"          {Referral Source ID} as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ReferralSource",
+						"source(output(",
+						"          {Exam Name} as string,",
+						"          {Exam Code} as string,",
+						"          {Exam ID} as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> Exam",
+						"source(output(",
+						"          {Trust Name} as string,",
+						"          {Trust ID} as integer,",
+						"          {Trust Name Group} as string,",
+						"          {Trust Name Group2} as string,",
+						"          {Trust Name Group3} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> Trust",
+						"source(output(",
+						"          Modality2 as string,",
+						"          {Modality ID} as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> Modality",
+						"source(output(",
+						"          {Exam Site} as string,",
+						"          {Exam Room} as string,",
+						"          {ExamSite Code} as string,",
+						"          {Exam Room ID} as long,",
+						"          Description as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ExamSite",
+						"source(output(",
+						"          {CRIS No} as integer,",
+						"          Accession as string,",
+						"          {Ref Src} as string,",
+						"          Site as string,",
+						"          {Request Date} as date,",
+						"          {Event Date} as date,",
+						"          {Event Time} as string,",
+						"          {On Call} as string,",
+						"          PT as string,",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          Room as string,",
+						"          {Start Time} as string,",
+						"          {End Time} as string,",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          {Status Code} as string,",
+						"          {Booked Date} as timestamp,",
+						"          {Booked Time} as string,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          Urg as string,",
+						"          Modality as string,",
+						"          {No of Proc} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Date First Verified} as timestamp,",
+						"          {Time First Verified} as string,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {Reported By} as string,",
+						"          Rank as integer,",
+						"          {Age At Event} as string,",
+						"          {Status Code.2} as string,",
+						"          {Status Date.1} as timestamp,",
+						"          {Status Time} as string,",
+						"          Modality2 as string,",
+						"          {Trust Name} as string,",
+						"          Patient_Type as string,",
+						"          {Tat Type} as string,",
+						"          {Activity.1} as integer,",
+						"          {Count of Activty_Demand for Activity.1} as long,",
+						"          {ExamSite Code} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source(output(",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          Accession as string,",
+						"          Referrer as string,",
+						"          {Referral Location} as string,",
+						"          {Referral Source} as string,",
+						"          Urg as string,",
+						"          Site as string,",
+						"          {Status Code} as string,",
+						"          {Status Date} as timestamp,",
+						"          {Status Time} as integer,",
+						"          {Referral Location Name} as string,",
+						"          {Referral Source Name} as string,",
+						"          {Referral Name} as string,",
+						"          {Examination Name} as string,",
+						"          Modality as string,",
+						"          {Status Code at State Date} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {D Status} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source2",
+						"AzureSqlPTL derive({5 Weeks Wait} = iif({Weeks Waiting}>=6,1,0),",
+						"          {Booked Datetime} = toString(null()),",
+						"          {6 Weeks Wait} = toString(null()),",
+						"          {Stat Date} = toDate({Stat Date})) ~> AddColumns",
+						"CreateID filter(rank==1) ~> SelectMostRecent",
+						"AddColumns sort(desc({Stat Date}, true)) ~> SortColumns",
+						"SortColumns rank(desc({Stat Date}, true),",
+						"     output(rank as long)) ~> CreateID",
+						"SelectMostRecent select(mapColumn(",
+						"          {Event Key},",
+						"          {Exam Key},",
+						"          {CRIS Number},",
+						"          {Status Category},",
+						"          {Ref Src},",
+						"          Examination,",
+						"          Site,",
+						"          {Request Date},",
+						"          {Event Date},",
+						"          {Booked Time},",
+						"          {Booked Date},",
+						"          {Ref Src2},",
+						"          {Creation Date},",
+						"          Attended,",
+						"          Modality,",
+						"          Room,",
+						"          Urg,",
+						"          {Exam Name},",
+						"          {Days Waiting},",
+						"          {Predicted Reset Date},",
+						"          {Waiting Time Reset Date},",
+						"          {Weeks Waiting},",
+						"          {Planned Appointment Date},",
+						"          {Waiting Breach Date},",
+						"          {Was Planned},",
+						"          {Was Scheduled},",
+						"          {Was Waiting},",
+						"          {Stat Date},",
+						"          {5 Weeks Wait},",
+						"          {Booked Datetime},",
+						"          {6 Weeks Wait}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RenameandRemoveCols",
+						"RenameandRemoveCols, ReferralSource lookup({Ref Src} == {Referral Source},",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> lookupReferralSource",
+						"lookupReferralSource, Exam lookup(Examination == {Exam Code},",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> lookupExam",
+						"lookupExamSite derive(Site = iif ({Site} == \"5HA16\", \"LUHFT\", iif ({Site} == \"5NL93\", \"LUHFT\", iif (left({Site},3) == \"REM\", \"LUHFT\", iif (left({Site},3) == \"RQ6\", \"LUHFT\",  iif (left({Site},3) == \"RQ6\", \"LUHFT\", iif (left({Site},3) == \"RQ6\", \"LUHFT\", iif (left({Site},3) == \"RQ6\", \"LUHFT\", iif (left({Site},3) == \"RBL\", \"WUTH\", iif (left({Site},3) == \"RBN\", \"STHK\", iif (left({Site},3) == \"RBQ\", \"LHCH\", iif (left({Site},3) == \"RBS\", \"Alder Hey\", iif (left({Site},3) == \"RBT\", \"MCH\", iif (left({Site},3) == \"REN\", \"CCC\" , iif (left({Site},3) == \"REP\", \"Womens\", iif (left({Site},3) == \"RET\", \"TWC\", iif (left({Site},3) == \"RJR\", \"COCH\", iif (left({Site},3) == \"RVY\", \"S&O\", iif (left({Site},3) == \"RWW\", \"WHH\", {Site}))))))))))))))))))) ~> DeriveTrust",
+						"DeriveTrust, Trust lookup(Site == {Trust Name},",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> lookupTrust",
+						"lookupExam derive(Modality = iif({Modality} == \"R\", \"Plain X-Ray\", iif({Modality} == \"A\", \"IR\", iif({Modality} == \"B\", \"Mammo\", iif({Modality} == \"C\", \"CT\", iif({Modality} == \"M\", \"MRI\", iif({Modality} == \"F\", \"Fluoro\", iif({Modality} == \"U\", \"NOUS\", iif({Modality} == \"Z\", \"Additional Workload\", iif({Modality} == \"O\", \"Obstetrics\", iif({Modality} == \"N\", \"Nuc Med\", iif({Modality} == \"H\", \"Cardio\", iif({Modality} == \"S\", \"DEXA\", iif({Modality} == \"Y\", \"Med Phys\", iif({Modality} == \"E\", \"Endo\", iif({Modality} == \"D\", \"Doppler\", \"other\")))))))))))))))) ~> deriveModlaityCode",
+						"deriveModlaityCode, Modality lookup(Modality == Modality2,",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> lookupModality",
+						"lookupModality derive(Room = iifNull({Site},'NULL')+iifNull({Room},'NULL')) ~> derivedEamsiteCode",
+						"derivedEamsiteCode, ExamSite lookup(Room == {ExamSite Code},",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> lookupExamSite",
+						"lookupTrust select(mapColumn(",
+						"          {Event Key},",
+						"          {Exam Key},",
+						"          {CRIS Number},",
+						"          {Status Category},",
+						"          {Request Date},",
+						"          {Event Date},",
+						"          {Booked Time},",
+						"          {Booked Date},",
+						"          {Creation Date},",
+						"          Attended,",
+						"          Urg,",
+						"          {Days Waiting},",
+						"          {Predicted Reset Date},",
+						"          {Waiting Time Reset Date},",
+						"          {Weeks Waiting},",
+						"          {Planned Appointment Date},",
+						"          {Waiting Breach Date},",
+						"          {Was Planned},",
+						"          {Was Scheduled},",
+						"          {Was Waiting},",
+						"          {Stat Date} = RenameandRemoveCols@{Stat Date},",
+						"          {5 Weeks Wait},",
+						"          {Booked Datetime},",
+						"          {6 Weeks Wait},",
+						"          {Referral Source ID},",
+						"          {Exam ID},",
+						"          {Modality ID},",
+						"          {Exam Room ID},",
+						"          {Trust ID}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RemoveCols",
+						"RemoveCols derive({Booked Date} = toTimestamp(concatWS(\" \", left(toString({Booked Date}),10), concatWS(\":\",left({Booked Time}, 2), concatWS(\":\",right({Booked Time}, 2),\"00\"))))) ~> deriveBookedDateTime",
+						"lookup1 select(mapColumn(",
+						"          {Event Key} = RemoveCols@{Event Key},",
+						"          {Exam Key} = RemoveCols@{Exam Key},",
+						"          {CRIS Number},",
+						"          {Status Category},",
+						"          {Request Date} = RemoveCols@{Request Date},",
+						"          {Event Date} = RemoveCols@{Event Date},",
+						"          {Booked Date Time} = deriveBookedDateTime@{Booked Date},",
+						"          {Creation Date} = RemoveCols@{Creation Date},",
+						"          Attended = RemoveCols@Attended,",
+						"          Urg = RemoveCols@Urg,",
+						"          {Days Waiting},",
+						"          {Predicted Reset Date},",
+						"          {Waiting Time Reset Date},",
+						"          {Weeks Waiting},",
+						"          {Planned Appointment Date} = RemoveCols@{Planned Appointment Date},",
+						"          {Waiting Breach Date},",
+						"          {Was Planned} = RemoveCols@{Was Planned},",
+						"          {Was Scheduled} = RemoveCols@{Was Scheduled},",
+						"          {Was Waiting} = RemoveCols@{Was Waiting},",
+						"          {Stat Date} = RemoveCols@{Stat Date},",
+						"          {5 Weeks Wait},",
+						"          {Booked Datetime},",
+						"          {6 Weeks Wait},",
+						"          {Referral Source ID},",
+						"          {Exam ID},",
+						"          {Modality ID},",
+						"          {Exam Room ID},",
+						"          {Trust ID},",
+						"          {Status Code}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RenameCols3",
+						"deriveBookedDateTime, filter1 lookup(RemoveCols@{Exam Key} == source1@{Exam Key},",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> lookup1",
+						"source1 filter(Rank==1) ~> filter1",
+						"source2 sort(desc({Status Date}, false)) ~> sort1",
+						"RenameCols3 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {Event Key} as integer,",
+						"          {Exam Key} as integer,",
+						"          {CRIS Number} as integer,",
+						"          {Status Category} as string,",
+						"          {Request Date} as timestamp,",
+						"          {Event Date} as timestamp,",
+						"          {Booked Date Time} as timestamp,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          Urg as integer,",
+						"          {Days Waiting} as integer,",
+						"          {Predicted Reset Date} as timestamp,",
+						"          {Waiting Time Reset Date} as timestamp,",
+						"          {Weeks Waiting} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Waiting Breach Date} as timestamp,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Stat Date} as date,",
+						"          {5 Weeks Wait} as integer,",
+						"          {Booked Datetime} as string,",
+						"          {6 Weeks Wait} as string,",
+						"          {Referral Source ID} as integer,",
+						"          {Exam ID} as integer,",
+						"          {Modality ID} as integer,",
+						"          {Exam Room ID} as integer,",
+						"          {Trust ID} as integer,",
+						"          {Status Code} as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     truncate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     saveOrder: 1,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> AzureSqlPTLV2Staging"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSql_PTL')]",
+				"[concat(variables('factoryId'), '/datasets/Referral_Source')]",
+				"[concat(variables('factoryId'), '/datasets/Exam')]",
+				"[concat(variables('factoryId'), '/datasets/Trust')]",
+				"[concat(variables('factoryId'), '/datasets/Modality')]",
+				"[concat(variables('factoryId'), '/datasets/Exam_Site')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep2')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSql_STATUSES')]",
+				"[concat(variables('factoryId'), '/datasets/ODBC_PTL_v2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/CreateRequestRecieveddataset')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSql_STATUSES",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "RequestRecievedStatus",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "filter1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          Accession as string,",
+						"          Referrer as string,",
+						"          {Referral Location} as string,",
+						"          {Referral Source} as string,",
+						"          Urg as string,",
+						"          Site as string,",
+						"          {Status Code} as string,",
+						"          {Status Date} as timestamp,",
+						"          {Status Time} as integer,",
+						"          {Referral Location Name} as string,",
+						"          {Referral Source Name} as string,",
+						"          {Referral Name} as string,",
+						"          {Examination Name} as string,",
+						"          Modality as string,",
+						"          {Status Code at State Date} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {D Status} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 filter({Status Code}=='RR') ~> filter1",
+						"filter1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          Accession as string,",
+						"          Referrer as string,",
+						"          {Referral Location} as string,",
+						"          {Referral Source} as string,",
+						"          Urg as string,",
+						"          Site as string,",
+						"          {Status Code} as string,",
+						"          {Status Date} as timestamp,",
+						"          {Status Time} as integer,",
+						"          {Referral Location Name} as string,",
+						"          {Referral Source Name} as string,",
+						"          {Referral Name} as string,",
+						"          {Examination Name} as string,",
+						"          Modality as string,",
+						"          {Status Code at State Date} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {D Status} as string,",
+						"          Rank as integer",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSql_STATUSES')]",
+				"[concat(variables('factoryId'), '/datasets/RequestRecievedStatus')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PopulateNewColumns')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "WranglingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"name": "RequestRecievedStatus",
+							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> RequestRecievedStatus",
+							"dataset": {
+								"referenceName": "RequestRecievedStatus",
+								"type": "DatasetReference"
+							}
+						},
+						{
+							"name": "AzureSqlCOREStageStep1",
+							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> AzureSqlCOREStageStep1",
+							"dataset": {
+								"referenceName": "AzureSqlCOREStageStep1",
+								"type": "DatasetReference"
+							}
+						}
+					],
+					"script": "section Section1;\r\nshared RequestRecievedStatus = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dev\",Item=\"RequestRecievedStatus\"]}[Data] in InputTable;\r\nshared AzureSqlCOREStageStep1 = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dev\",Item=\"AzureSqlCOREStageStep1\"]}[Data] in InputTable;\r\nshared UserQuery = let Source = #\"AzureSqlCOREStageStep1\",\r\n  #\"Sorted rows\" = Table.Sort(Source, {{\"Stat Date\", Order.Descending}}),\r\n  #\"Removed columns\" = Table.RemoveColumns(#\"Sorted rows\", {\"ExamSite Code\", \"Status Time\", \"Modality2\", \"Trust Name\", \"Patient_Type\", \"Tat Type\"}),\r\n  #\"Replaced value\" = Table.ReplaceValue(#\"Removed columns\", null, \"NULL\", Replacer.ReplaceValue, {\"Room\"}),\r\n  #\"Replaced value 1\" = Table.ReplaceValue(#\"Replaced value\", null, \"NULL\", Replacer.ReplaceValue, {\"Site\"}),\r\n  #\"Inserted merged column\" = Table.AddColumn(#\"Replaced value 1\", \"ExamSite Code\", each Text.Combine({[Site], [Room]}, \"\"), type text),\r\n  #\"Merged queries\" = Table.NestedJoin(#\"Inserted merged column\", {\"Exam Key\"}, Table.SelectRows(RequestRecievedStatus, each [Status Code] = \"RR\"), {\"Exam Key\"}, \"RequestRecievedStatus\", JoinKind.LeftOuter),\r\n  #\"Expanded RequestRecievedStatus 1\" = Table.ExpandTableColumn(#\"Merged queries\", \"RequestRecievedStatus\", {\"Status Code\", \"Status Date\", \"Status Time\"}, {\"Status Code.2\", \"Status Date.1\", \"Status Time\"}),\r\n  #\"Date Time Change\" = Table.TransformColumnTypes(#\"Expanded RequestRecievedStatus 1\", {{\"Request Date\", type date}, {\"Event Date\", type date}, {\"Status Time\", type text}}),\r\n  Modality = Table.TransformColumnTypes(Table.AddColumn(#\"Date Time Change\", \"Modality2\", each if [Modality] = \"R\" then \"Plain X-Ray\" else if [Modality] = \"A\" then \"IR\" else if [Modality] = \"B\" then \"Mammo\" else if [Modality] = \"C\" then \"CT\" else if[Modality] = \"M\" then \"MRI\" else if [Modality] = \"F\" then \"Fluoro\" else if [Modality] = \"U\" then \"NOUS\"  else if [Modality] = \"N\" then \"Nuc Med\" else if[Modality] = \"S\" then \"DEXA\" else if[Modality] = \"Z\" then \"Additional Workload\" else if[Modality] = \"H\" then \"Cardio\" else if[Modality] = \"D\" then \"Doppler\" else if[Modality] = \"E\" then \"Endo\" else if[Modality] = \"Y\" then \"Med Phys\" else if[Modality] = \"O\" then \"Obstetrics\" else \"other\"), {{\"Modality2\", type text}}),\r\n  Trust = Table.TransformColumnTypes(Table.AddColumn(Modality, \"Trust Name\", each if [Site] = \"5HA16\" then \"LUHFT\" else if [Site] = \"5NL93\" then \"LUHFT\" else if Text.Start([Site],3) = \"REM\" then \"LUHFT\" else if Text.Start([Site],3) = \"RQ6\" then \"LUHFT\" else if Text.Start([Site],3) = \"RBL\" then \"WUTH\" else if Text.Start([Site],3) = \"RBN\" then \"STHK\" else if Text.Start([Site],3) = \"RBQ\" then \"LHCH\" else if Text.Start([Site],3) = \"RBS\" then \"Alder Hey\" else if Text.Start([Site],3) = \"RBT\" then \"MCH\" else if Text.Start([Site],3) = \"REN\" then \"CCC\" else if Text.Start([Site],3) = \"REP\" then \"Womens\" else if Text.Start([Site],3) = \"RET\" then \"TWC\" else if Text.Start([Site],3) = \"RJR\" then \"COCH\" else if Text.Start([Site],3) = \"RVY\" then \"S&O\" else if Text.Start([Site],3) = \"RWW\" then \"WHH\" else [Site]), {{\"Trust Name\", type text}}),\r\n  #\"Patient Type\" = Table.TransformColumnTypes(Table.AddColumn(Trust, \"Patient_Type\", each if [PT] = \"A\" then \"In Patient\" else if [PT] = \"B\" then \"Out Patient\" else if [PT] = \"C\" then \"A&E Attender\" else if [PT] = \"D\" then \"Out Patient\" else if [PT] = \"E\" then \"Out Patient\" else if [PT] = \"F\" then \"Other\" else if [PT] = \"G\" then \"GP Direct Access Patient\"  else if [PT] = \"H\" then \"In Patient\" else if[PT] = \"J\" then \"A&E Attender\" else if[PT] = \"K\" then \"Tertiary Referral\" else if[PT] = \"N\" then \"In Patient\" else if[PT] = \"R\" then \"Research\" else if[PT] = \"T\" then \"Dental\" else if[Modality] = \"X\" then \"Other\" else \"Other\"), {{\"Patient_Type\", type text}}),\r\n  #\"Tat Type\" = Table.TransformColumnTypes(Table.AddColumn(#\"Patient Type\", \"Tat Type\", each if ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\" or [Modality2]=\"Plain X-Ray\") and ([PT]=\"A\" and [Urg]=\"5\") then \"Urgent Inpatients\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\" or [Modality2]=\"Plain X-Ray\") and ([PT]=\"C\") then \"Emergency Department\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\" or [Modality2]=\"Plain X-Ray\") and ([PT]=\"A\" and ([Urg]<>\"5\")) then \"Non-Urgent Inpatients\" else  \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Plain X-Ray\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\") and ([PT]=\"B\" or [PT]=\"G\") and [Urg]=\"7\" then \"Outpatient Faster Diagnosis Standard Cancer Pathway\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\" or [Modality2]=\"Plain X-Ray\") and ([PT]=\"B\" or [PT]=\"G\" or [PT]=\"D\") and ([Urg]=\"5\") then \"Urgent GP and Outpatients\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Plain X-Ray\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\") and ([PT]=\"B\" or [PT]=\"D\" or [PT]=\"G\") and [Urg]=\"1\" then \"Routine GP and Outpatients\" else  \r\n  \r\n\r\nif [Modality2]=\"NOUS\" or [Modality2]=\"IR\" then \"Ultrasound and Interventional Radiology\" else \"Other\"), {{\"Tat Type\", type text}}),\r\n  Activity = Table.TransformColumnTypes(Table.AddColumn(#\"Tat Type\", \"Activity.1\", each if([Status Code]=\"ASACK\" or [Status Code]=\"ASRMS\" or [Status Code]=\"ASRQS\" or [Status Code]=\"ATN\" or  [Status Code]=\"ATP\" or [Status Code]=\"CHBU\" or  [Status Code]=\"CHE\" or [Status Code]=\"CHEC\" or [Status Code]=\"CPC\" or [Status Code]=\"CPDNA\" or [Status Code]=\"CPMP\" or [Status Code]=\"CPPG\" or [Status Code]=\"CPPR\" or [Status Code]=\"CPR\" or [Status Code]=\"DVR\" or [Status Code]=\"PRTRPT\") then 1 else 0), {{\"Activity.1\", type number}}),\r\n  #\"Activity 2\" = Table.TransformColumnTypes(Table.AddColumn(Activity, \"Count of Activty_Demand for Activity.1\", each [Activity.1]), {{\"Count of Activty_Demand for Activity.1\", Int64.Type}}),\r\n  #\"Removed duplicates\" = Table.Distinct(#\"Activity 2\", {\"Exam Key\"}) in #\"Removed duplicates\";\r\n",
+					"documentLocale": "en-us"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/RequestRecievedStatus')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Remove_Dupes_Core')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSql_CORE",
+								"type": "DatasetReference"
+							},
+							"name": "AzureSqlCORE"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSql_Patients",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlCOREStageStep1",
+								"type": "DatasetReference"
+							},
+							"name": "AzureSqlCOREStageStep1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "window1"
+						},
+						{
+							"name": "lookup1"
+						},
+						{
+							"name": "filter2"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          {CRIS No} as integer,",
+						"          Accession as string,",
+						"          {Ref Src} as string,",
+						"          {Referring Locat} as string,",
+						"          Referrer as string,",
+						"          Speciality as string,",
+						"          GP as string,",
+						"          Practice as string,",
+						"          {Postcode L} as string,",
+						"          {Postcode R} as string,",
+						"          Site as string,",
+						"          {Request Date} as timestamp,",
+						"          {Event Date} as timestamp,",
+						"          {Event Time} as string,",
+						"          {On Call} as string,",
+						"          PT as string,",
+						"          RC as string,",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          Room as string,",
+						"          {Start Time} as string,",
+						"          {End Time} as string,",
+						"          {Radiographer 1} as string,",
+						"          {Radiographer 2} as string,",
+						"          {Required Clinician} as string,",
+						"          {Contrast Code} as string,",
+						"          {Qty Used} as decimal(6,2),",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          {Status Code} as string,",
+						"          {Booked Date} as timestamp,",
+						"          {Booked Time} as string,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          {Event Key2} as integer,",
+						"          {Lead Clinician} as string,",
+						"          {Intended Radiologist} as string,",
+						"          Urg as string,",
+						"          {Referring Locat Name } as string,",
+						"          {Referrer Name} as string,",
+						"          Modality as string,",
+						"          {No of Proc} as integer,",
+						"          {GP Name} as string,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Date First Verified} as timestamp,",
+						"          {Reported By} as string,",
+						"          {Reported By2} as string,",
+						"          {Reported By2 Name} as string,",
+						"          {Reported By Name} as string,",
+						"          {Time First Verified} as string,",
+						"          {Time Taken} as integer,",
+						"          {Typed By} as string,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          CCG as string,",
+						"          Postcode as string,",
+						"          {Day of Week} as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     waterMarkColumn: 'Stat Date',",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'Select * from [dev].[FYF_ODBC_Core] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'Core\\')\\n',",
+						"     format: 'query') ~> AzureSqlCORE",
+						"source(output(",
+						"          {CRIS No} as integer,",
+						"          {Creation Date} as timestamp,",
+						"          {Mutation Date} as timestamp,",
+						"          DOB as timestamp,",
+						"          {Event Date} as timestamp,",
+						"          DOD as timestamp,",
+						"          {Ethnic Origin} as string,",
+						"          GP as string,",
+						"          {No of Attends} as integer,",
+						"          {No of Events} as integer,",
+						"          {Ref Src} as string,",
+						"          {Postcode L} as string,",
+						"          {Postcode R} as string,",
+						"          Gender as string,",
+						"          {Referrer Name} as string,",
+						"          {Age at Event} as integer,",
+						"          {HIS ID} as string,",
+						"          CCG as string,",
+						"          Postcode as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"AzureSqlCORE window(over({Exam Key}),",
+						"     desc({Stat Date}, false),",
+						"     Rank = denseRank()) ~> window1",
+						"filter2, source1 lookup(AzureSqlCORE@{CRIS No} == source1@{CRIS No}",
+						"     && AzureSqlCORE@{Event Date} == source1@{Event Date},",
+						"     multiple: true,",
+						"     broadcast: 'auto')~> lookup1",
+						"window1 filter(Rank==1) ~> filter2",
+						"lookup1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {CRIS No} as integer,",
+						"          Accession as string,",
+						"          {Ref Src} as string,",
+						"          Site as string,",
+						"          {Request Date} as timestamp,",
+						"          {Event Date} as timestamp,",
+						"          {Event Time} as string,",
+						"          {On Call} as string,",
+						"          PT as string,",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          Room as string,",
+						"          {ExamSite Code} as string,",
+						"          {Start Time} as string,",
+						"          {End Time} as string,",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          {Status Code} as string,",
+						"          {Booked Date} as timestamp,",
+						"          {Booked Time} as string,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          Urg as string,",
+						"          Modality as string,",
+						"          {No of Proc} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Date First Verified} as timestamp,",
+						"          {Time First Verified} as string,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Stat Date} as timestamp,",
+						"          Modality2 as string,",
+						"          {Trust Name} as string,",
+						"          Patient_Type as string,",
+						"          {Tat Type} as string,",
+						"          {Status Time} as string,",
+						"          {Reported By} as string,",
+						"          Rank as integer,",
+						"          {Age At Event} as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     truncate:true,",
+						"     format: 'table',",
+						"     saveOrder: 1,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          {CRIS No} = AzureSqlCORE@{CRIS No},",
+						"          Accession,",
+						"          {Ref Src} = AzureSqlCORE@{Ref Src},",
+						"          Site,",
+						"          {Request Date},",
+						"          {Event Date} = AzureSqlCORE@{Event Date},",
+						"          {Event Time},",
+						"          {On Call},",
+						"          PT,",
+						"          Examination,",
+						"          {Exam Name},",
+						"          Room,",
+						"          {Start Time},",
+						"          {End Time},",
+						"          {Exam Key},",
+						"          {Event Key},",
+						"          {Status Code},",
+						"          {Booked Date},",
+						"          {Booked Time},",
+						"          {Creation Date} = AzureSqlCORE@{Creation Date},",
+						"          Attended,",
+						"          Urg,",
+						"          Modality,",
+						"          {No of Proc},",
+						"          {Planned Appointment Date},",
+						"          {Date First Verified},",
+						"          {Time First Verified},",
+						"          {Was Planned},",
+						"          {Was Scheduled},",
+						"          {Was Waiting},",
+						"          {Stat Date} = AzureSqlCORE@{Stat Date},",
+						"          {Reported By},",
+						"          Rank,",
+						"          {Age At Event} = {Age at Event}",
+						"     )) ~> AzureSqlCOREStageStep1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSql_CORE')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSql_Patients')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow2')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSql_PTL",
+								"type": "DatasetReference"
+							},
+							"name": "AzureSqlPTL"
+						},
+						{
+							"dataset": {
+								"referenceName": "Excel1",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSql_CORE",
+								"type": "DatasetReference"
+							},
+							"name": "RefSrc"
+						},
+						{
+							"dataset": {
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference"
+							},
+							"name": "PatientTypeIn"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSql_CORE",
+								"type": "DatasetReference"
+							},
+							"name": "Examination"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSql_STATUSES",
+								"type": "DatasetReference"
+							},
+							"name": "STATUSES"
+						},
+						{
+							"dataset": {
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference"
+							},
+							"name": "ModalityIN"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSql_CORE",
+								"type": "DatasetReference"
+							},
+							"name": "SiteRoom"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSql_CORE",
+								"type": "DatasetReference"
+							},
+							"name": "TatTypeIn"
+						},
+						{
+							"dataset": {
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference"
+							},
+							"name": "TrustIn"
+						},
+						{
+							"dataset": {
+								"referenceName": "Referral_Source",
+								"type": "DatasetReference"
+							},
+							"name": "ReferralSourceRef"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Tat_Type",
+								"type": "DatasetReference"
+							},
+							"name": "TatType"
+						},
+						{
+							"dataset": {
+								"referenceName": "Trust",
+								"type": "DatasetReference"
+							},
+							"name": "Trust"
+						},
+						{
+							"dataset": {
+								"referenceName": "Exam_Site",
+								"type": "DatasetReference"
+							},
+							"name": "SiteRoomOut"
+						},
+						{
+							"dataset": {
+								"referenceName": "Modality",
+								"type": "DatasetReference"
+							},
+							"name": "Modality"
+						},
+						{
+							"dataset": {
+								"referenceName": "Status",
+								"type": "DatasetReference"
+							},
+							"name": "Status"
+						},
+						{
+							"dataset": {
+								"referenceName": "Exam",
+								"type": "DatasetReference"
+							},
+							"name": "Exam"
+						},
+						{
+							"dataset": {
+								"referenceName": "Patient_Type",
+								"type": "DatasetReference"
+							},
+							"name": "PatientType"
+						},
+						{
+							"dataset": {
+								"referenceName": "Referral_Source",
+								"type": "DatasetReference"
+							},
+							"name": "ReferralSource"
+						}
+					],
+					"transformations": [
+						{
+							"name": "RankColumns8"
+						},
+						{
+							"name": "DeriveColumn8"
+						},
+						{
+							"name": "RankColumns7"
+						},
+						{
+							"name": "DeriveColumn7"
+						},
+						{
+							"name": "RenameColumns6"
+						},
+						{
+							"name": "JointColumn6"
+						},
+						{
+							"name": "RankColumns6"
+						},
+						{
+							"name": "RankColumns5"
+						},
+						{
+							"name": "RankColumns4"
+						},
+						{
+							"name": "DeriveColumn4"
+						},
+						{
+							"name": "RenameColumns3"
+						},
+						{
+							"name": "RankColumns3"
+						},
+						{
+							"name": "RankColumns2"
+						},
+						{
+							"name": "RenameColumns1"
+						},
+						{
+							"name": "RankColumns1"
+						},
+						{
+							"name": "RenameColumns9"
+						},
+						{
+							"name": "CombineCOREPTL6"
+						},
+						{
+							"name": "lookup1"
+						},
+						{
+							"name": "select1"
+						},
+						{
+							"name": "aggregate1"
+						},
+						{
+							"name": "union1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Site as string,",
+						"          Room as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT [Site],[Room]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_PTL]\\n  Group by [Site],[Room]',",
+						"     format: 'query') ~> AzureSqlPTL",
+						"source(output(",
+						"          Site as string,",
+						"          Room as string,",
+						"          {Room Desc} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source(output(",
+						"          {Ref Src} as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     waterMarkColumn: 'Stat Date',",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT [Ref Src] as [Ref Src]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE]\\n  where [Ref Src] not in (SELECT [Referral Source]\\n  FROM [dev].[Referral Source])\\n  Group by [Ref Src]',",
+						"     format: 'query') ~> RefSrc",
+						"source(output(",
+						"          Patient_Type as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: '  SELECT [Patient_Type]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE_v2]\\n   where [Patient_Type] not in (SELECT [Patient_Type]\\n    FROM [dev].[Patient Type])\\n  Group by [Patient_Type]',",
+						"     format: 'query') ~> PatientTypeIn",
+						"source(output(",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT [Examination], [Exam Name]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE]\\nwhere [Examination] not in (SELECT [Examination]\\n    FROM [dev].[Exam])\\n  Group by [Examination],[Exam Name]\\n',",
+						"     format: 'query') ~> Examination",
+						"source(output(",
+						"          {Status Code} as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT [Status Code]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_STATUSES]\\nwhere [Status Code]not in (SELECT [Status Code]\\n    FROM [dev].[FYF_ODBC_STATUSES])\\n  Group by [Status Code]',",
+						"     format: 'query') ~> STATUSES",
+						"source(output(",
+						"          Modality2 as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT Distinct([Modality2]) as [Modality2]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE_v2]\\nwhere [Modality2] not in (SELECT [Modality2]\\n    FROM [dev].[Modality])\\n  Group by [Modality2]',",
+						"     format: 'query') ~> ModalityIN",
+						"source(output(",
+						"          Site as string,",
+						"          Room as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT [Site],[Room]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE]\\n  Group by [Site],[Room]',",
+						"     format: 'query') ~> SiteRoom",
+						"source(output(",
+						"          {Tat Type} as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT [Tat Type]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE_v2]\\n  where [Tat Type] not in (SELECT [Tat Type] FROM [dev].[Tat Type])\\n  Group by [Tat Type]',",
+						"     format: 'query') ~> TatTypeIn",
+						"source(output(",
+						"          {Trust Name} as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT Distinct([Trust Name]) as [Trust Name]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE_v2]\\nwhere [Trust Name] not in (SELECT [Trust Name]\\n     FROM [dev].[Trust])\\n  Group by [Trust Name]',",
+						"     format: 'query') ~> TrustIn",
+						"source(output(",
+						"          {Referral Source} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {Referral Source ID} as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ReferralSourceRef",
+						"TatTypeIn rank(asc({Tat Type}, true),",
+						"     output({Tat Type ID} as long)) ~> RankColumns8",
+						"RankColumns8 derive(Target = iif({Tat Type} == \"Urgent Inpatients\",\"12 hours\",iif({Tat Type} == \"Non-Urgent Inpatients\", \"24 hours\",iif({Tat Type} == \"Outpatient Faster Diagnosis Standard Cancer Pathway\", \"3 days\",iif({Tat Type} == \"Urgent GP and Outpatients\", \"7 days\",iif({Tat Type} == \"All Other Routine Outpatient and GP Studies\", \"28 days\",iif({Tat Type} == \"Acutely Unwell/ED Patients\", \"12 hours\",iif({Tat Type} == \"Other Inpatients\" , \"7 days\",iif({Tat Type} == \"Urgent GP/Urgent Outpatients\", \"7 days\",iif({Tat Type} == \"Routine GP and outpatients\", \"28 days\",iif({Tat Type} == \"Ultrasound and interventional Radiology\", \"3 hours\",\"0\"))))))))))) ~> DeriveColumn8",
+						"TrustIn rank(asc({Trust Name}, true),",
+						"     output({Trust ID} as long),",
+						"     dense: true) ~> RankColumns7",
+						"RankColumns7 derive({Trust Name Group} = iif( {Trust Name} == \"Womens\", \"REP\", iif( {Trust Name} == \"LUHFT\", \"REM\", iif( {Trust Name} == \"WUTH\", \"RBL\", iif( {Trust Name} == \"STHK\", \"RBN\", iif( {Trust Name} == \"S&O\", \"RVY\", iif( {Trust Name} == \"LHCH\", \"RBQ\", iif( {Trust Name} == \"Alder Hey\", \"RBS\", iif( {Trust Name} == \"MCH\", \"RBT\", iif( {Trust Name} == \"CCC\", \"REN\", iif( {Trust Name} == \"TWC\", \"RET\", iif( {Trust Name} == \"COCH\", \"RJR\", iif( {Trust Name} == \"WHH\", \"RWW\", iif( {Trust Name} == \"5M501\", \"REM\", iif( {Trust Name} == \"NTD05\", \"REM\", \"Other\")))))))))))))),",
+						"          {Trust Name Group2} = iif( {Trust Name} == \"Womens\", \"Womens\", iif( {Trust Name} == \"LUHFT\", \"LUHFT\", iif( {Trust Name} == \"WUTH\", \"WUTH\", iif( {Trust Name} == \"STHK\", \"STHK\", iif( {Trust Name} == \"S&O\", \"S&O\", iif( {Trust Name} == \"LHCH\", \"LHCH\", iif( {Trust Name} == \"Alder Hey\", \"Alder Hey\", iif( {Trust Name} == \"MCH\", \"MCH\", iif( {Trust Name} == \"CCC\", \"CCC\", iif( {Trust Name} == \"TWC\", \"TWC\", iif( {Trust Name} == \"COCH\", \"COCH\", iif( {Trust Name} == \"WHH\", \"WHH\", iif( {Trust Name} == \"5M501\", \"LUHFT\", iif( {Trust Name} == \"NTD05\", \"LUHFT\", \"Other\")))))))))))))),",
+						"          {Trust Name Group3} = iif( {Trust Name} == \"Womens\", \"REP\", iif( {Trust Name} == \"LUHFT\", \"REM\", iif( {Trust Name} == \"WUTH\", \"WUTH\", iif( {Trust Name} == \"STHK\", \"RBN\", iif( {Trust Name} == \"S&O\", \"RVY\", iif( {Trust Name} == \"LHCH\", \"RBQ\", iif( {Trust Name} == \"Alder Hey\", \"RBS\", iif( {Trust Name} == \"MCH\", \"RBT\", iif( {Trust Name} == \"CCC\", \"REN\", iif( {Trust Name} == \"TWC\", \"RET\", iif( {Trust Name} == \"COCH\", \"COCH\", iif( {Trust Name} == \"WHH\", \"RWW\", \"Other\"))))))))))))) ~> DeriveColumn7",
+						"SiteRoom select(mapColumn(",
+						"          {Exam Site} = Site,",
+						"          {Exam Room} = Room,",
+						"          {Stat Date}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RenameColumns6",
+						"CombineCOREPTL6 derive({ExamSite Code} = iifNull({Exam Site},'NULL')+iifNull({Exam Room},'NULL')) ~> JointColumn6",
+						"aggregate1 rank(asc({ExamSite Code}, true),",
+						"     output({Exam Room ID} as long)) ~> RankColumns6",
+						"ModalityIN rank(asc(Modality2, true),",
+						"     output({Modality ID} as long)) ~> RankColumns5",
+						"STATUSES rank(asc({Status Code}, true),",
+						"     output({Status ID} as long)) ~> RankColumns4",
+						"RankColumns4 derive({Status Category} = iif(startsWith({Status Code}, \"AP\"), \"AP\", iif(startsWith({Status Code}, \"AS\"), \"AS\", iif(startsWith({Status Code}, \"AT\"), \"AT\", iif(startsWith({Status Code}, \"C\"), \"C\", iif(startsWith({Status Code}, \"D\"), \"D\", iif(startsWith({Status Code}, \"E\"), \"E\", iif(startsWith({Status Code}, \"P\"), \"P\", iif(startsWith({Status Code}, \"R\"), \"R\", iif(startsWith({Status Code}, \"V\"), \"V\", iif(startsWith({Status Code}, \"W\"), \"W\", iif({Status Code} == \"BHSRAI\", \"ST\", iif({Status Code} == \"ACNCLI\", \"W\", iif({Status Code} == \"SRREPC\", \"ST\", \"0\")))))))))))))) ~> DeriveColumn4",
+						"Examination select(mapColumn(",
+						"          {Exam Code} = Examination,",
+						"          {Exam Name},",
+						"          {Stat Date}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RenameColumns3",
+						"RenameColumns3 rank(asc({Exam Code}, true),",
+						"     output({Exam ID} as long)) ~> RankColumns3",
+						"PatientTypeIn rank(asc(Patient_Type, true),",
+						"     output({Patient Type ID} as long)) ~> RankColumns2",
+						"RefSrc select(mapColumn(",
+						"          {Referral Source} = {Ref Src},",
+						"          {Stat Date}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RenameColumns1",
+						"union1 rank(asc({Referral Source ID}, true),",
+						"     asc({Referral Source}, true),",
+						"     output({Referral Source ID} as long)) ~> RankColumns1",
+						"AzureSqlPTL select(mapColumn(",
+						"          {Exam Site} = Site,",
+						"          {Exam Room} = Room,",
+						"          {Stat Date}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RenameColumns9",
+						"RenameColumns6, RenameColumns9 union(byName: true)~> CombineCOREPTL6",
+						"RankColumns6, source1 lookup({ExamSite Code} == concat(Site,Room),",
+						"     multiple: true,",
+						"     broadcast: 'auto')~> lookup1",
+						"lookup1 select(mapColumn(",
+						"          {Exam Site},",
+						"          {Exam Room},",
+						"          {ExamSite Code},",
+						"          {Exam Room ID},",
+						"          Description = {Room Desc},",
+						"          {Stat Date}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"JointColumn6 aggregate(groupBy({ExamSite Code},",
+						"          {Exam Site},",
+						"          {Exam Room}),",
+						"     {Stat Date} = min({Stat Date})) ~> aggregate1",
+						"RenameColumns1, ReferralSourceRef union(byName: true)~> union1",
+						"DeriveColumn8 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {Tat Type} as string,",
+						"          {Tat Type ID} as integer,",
+						"          Target as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> TatType",
+						"DeriveColumn7 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {Trust Name} as string,",
+						"          {Trust ID} as integer,",
+						"          {Trust Name Group} as string,",
+						"          {Trust Name Group2} as string,",
+						"          {Trust Name Group3} as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> Trust",
+						"select1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {Exam Site} as string,",
+						"          {Exam Room} as string,",
+						"          {ExamSite Code} as string,",
+						"          {Exam Room ID} as long,",
+						"          Description as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     recreate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          {Exam Site},",
+						"          {Exam Room},",
+						"          {ExamSite Code},",
+						"          {Exam Room ID},",
+						"          Description,",
+						"          {Stat Date}",
+						"     )) ~> SiteRoomOut",
+						"RankColumns5 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          Modality2 as string,",
+						"          {Modality ID} as integer",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> Modality",
+						"DeriveColumn4 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {Status Code} as string,",
+						"          {Status ID} as integer,",
+						"          {Status Category} as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> Status",
+						"RankColumns3 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {Exam Name} as string,",
+						"          {Exam Code} as string,",
+						"          {Exam ID} as integer",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> Exam",
+						"RankColumns2 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          Patient_Type as string,",
+						"          Patient_Type_ID as integer",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> PatientType",
+						"RankColumns1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {Referral Source} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {Referral Source ID} as integer",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> ReferralSource"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSql_PTL')]",
+				"[concat(variables('factoryId'), '/datasets/Excel1')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSql_CORE')]",
+				"[concat(variables('factoryId'), '/datasets/FYF_ODBC_CORE_v2')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSql_STATUSES')]",
+				"[concat(variables('factoryId'), '/datasets/Referral_Source')]",
+				"[concat(variables('factoryId'), '/datasets/Tat_Type')]",
+				"[concat(variables('factoryId'), '/datasets/Trust')]",
+				"[concat(variables('factoryId'), '/datasets/Exam_Site')]",
+				"[concat(variables('factoryId'), '/datasets/Modality')]",
+				"[concat(variables('factoryId'), '/datasets/Status')]",
+				"[concat(variables('factoryId'), '/datasets/Exam')]",
+				"[concat(variables('factoryId'), '/datasets/Patient_Type')]"
 			]
 		},
 		{
@@ -25499,425 +25922,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/AzureSQLCoreV3Staging')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AIDFDataset')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "FYF_ODBC_CORE_v2",
-								"type": "DatasetReference"
-							},
-							"name": "FYFODBCCOREv2"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "testtable2",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						},
-						{
-							"dataset": {
-								"referenceName": "AIDF",
-								"type": "DatasetReference"
-							},
-							"name": "sink3"
-						}
-					],
-					"transformations": [
-						{
-							"name": "XRFilter"
-						},
-						{
-							"name": "CTList"
-						},
-						{
-							"name": "XRColumnFix"
-						},
-						{
-							"name": "XRFlags"
-						},
-						{
-							"name": "XRlist"
-						},
-						{
-							"name": "CTFilter"
-						},
-						{
-							"name": "CTXRJoin"
-						},
-						{
-							"name": "datediffcols"
-						},
-						{
-							"name": "t28dayfilter"
-						},
-						{
-							"name": "Mixcolfix"
-						},
-						{
-							"name": "join2"
-						},
-						{
-							"name": "window1"
-						},
-						{
-							"name": "selectclosest"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          {CRIS No} as integer,",
-						"          Accession as string,",
-						"          {Ref Src} as string,",
-						"          Site as string,",
-						"          {Request Date} as date,",
-						"          {Event Date} as date,",
-						"          {Event Time} as string,",
-						"          {On Call} as string,",
-						"          PT as string,",
-						"          Examination as string,",
-						"          {Exam Name} as string,",
-						"          Room as string,",
-						"          {ExamSite Code} as string,",
-						"          {Start Time} as string,",
-						"          {End Time} as string,",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          {Status Code} as string,",
-						"          {Booked Date} as timestamp,",
-						"          {Booked Time} as string,",
-						"          {Creation Date} as timestamp,",
-						"          Attended as string,",
-						"          Urg as string,",
-						"          Modality as string,",
-						"          {No of Proc} as integer,",
-						"          {Planned Appointment Date} as timestamp,",
-						"          {Date First Verified} as timestamp,",
-						"          {Time First Verified} as string,",
-						"          {Was Planned} as string,",
-						"          {Was Scheduled} as string,",
-						"          {Was Waiting} as string,",
-						"          {Status Time} as string,",
-						"          Modality2 as string,",
-						"          {Trust Name} as string,",
-						"          Patient_Type as string,",
-						"          {Tat Type} as string,",
-						"          {Status Time2} as string,",
-						"          {Patient Type ID} as long,",
-						"          {Modality ID} as integer,",
-						"          {Status ID} as integer,",
-						"          {Exam ID} as integer,",
-						"          {Exam Room ID} as integer,",
-						"          {Trust ID} as integer,",
-						"          {Referral Source ID} as integer,",
-						"          {Tat Type ID} as integer,",
-						"          {Reported By} as string,",
-						"          Rank as integer,",
-						"          {Status Date} as timestamp,",
-						"          Activity as integer,",
-						"          {Count of Activty_Demand for Activity} as long,",
-						"          {Stat Date} as timestamp,",
-						"          {Age At Event} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> FYFODBCCOREv2",
-						"FYFODBCCOREv2 filter(Examination == \"XCHES\" && {Event Date} >= toDate('01/01/2022','MM/dd/yyyy') && toDate({Date First Verified}) >= toDate('01/01/2022','MM/dd/yyyy')) ~> XRFilter",
-						"CTFilter select(mapColumn(",
-						"          {CRIS No},",
-						"          {Event Key},",
-						"          {Exam Key},",
-						"          {Trust ID},",
-						"          {Exam Room ID},",
-						"          {Event Date},",
-						"          {Date First Verified},",
-						"          {Reported By},",
-						"          {Patient Type ID},",
-						"          {Age At Event},",
-						"          {Exam ID}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> CTList",
-						"XRFilter select(mapColumn(",
-						"          {CRIS No.XR} = {CRIS No},",
-						"          {Event Key.XR} = {Event Key},",
-						"          {Exam Key.XR} = {Exam Key},",
-						"          {Trust ID.XR} = {Trust ID},",
-						"          {Exam Room ID.XR} = {Exam Room ID},",
-						"          {Event Date.XR} = {Event Date},",
-						"          {Date First Verified.XR} = {Date First Verified},",
-						"          {Reported By.XR} = {Reported By},",
-						"          {Patient Type ID.XR} = {Patient Type ID},",
-						"          {Age At Event.XR} = {Age At Event},",
-						"          {Exam ID.XR} = {Exam ID}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> XRColumnFix",
-						"XRColumnFix derive(Auto = iif(instr({Reported By.XR},\"AUTO\")!=0, 1, 0),",
-						"          {Rep Rad} = iif(startsWith({Reported By.XR},\"RA\")==true(),1,0),",
-						"          Cons = iif(startsWith({Reported By.XR},\"C\")==true(),1,0),",
-						"          Outsource = iif(instr({Reported By.XR},\"4way\")!=0,1,iif(instr({Reported By.XR},\"EXT\")!=0,1,iif(instr({Reported By.XR},\"4WAY\")!=0,1,0))),",
-						"          {CX I-R} = toDate({Date First Verified.XR})-{Event Date.XR},",
-						"          Snapshot = iif(isNull({Date First Verified.XR})==false(),iif(toDate({Date First Verified.XR})>=toDate('10/01/2023','MM/dd/yyyy'),iif({Event Date.XR}<=toDate('10/01/2023','MM/dd/yyyy'),1,0),0),0)) ~> XRFlags",
-						"XRFlags derive(Abnormal = iif(between({CX I-R}, 0, 28)==true(),1,0)) ~> XRlist",
-						"FYFODBCCOREv2 filter(Examination == \"CCHES\" && {Event Date} >= toDate('01/01/2022','MM/dd/yyyy') && toDate({Date First Verified}) >= toDate('01/01/2022','MM/dd/yyyy')) ~> CTFilter",
-						"XRlist, CTList join({CRIS No.XR} == {CRIS No}",
-						"     && {Event Date.XR} <= {Event Date}",
-						"     && toDate({Date First Verified.XR}) <= {Event Date},",
-						"     joinType:'left',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'right')~> CTXRJoin",
-						"CTXRJoin derive({CXR-CCI} = {Event Date}-toDate({Date First Verified.XR}),",
-						"          {CXI-CCR} = toDate({Date First Verified})-{Event Date.XR},",
-						"          {CXI-CCI} = {Event Date}-{Event Date.XR}) ~> datediffcols",
-						"Mixcolfix filter({CXR-CCI}<=28) ~> t28dayfilter",
-						"datediffcols select(mapColumn(",
-						"          {CRIS No.CT} = {CRIS No},",
-						"          {Event Key.CT} = {Event Key},",
-						"          {Exam Key.CT} = {Exam Key},",
-						"          {Trust ID.CT} = {Trust ID},",
-						"          {Exam Room ID.CT} = {Exam Room ID},",
-						"          {Event Date.CT} = {Event Date},",
-						"          {Date First Verified.CT} = {Date First Verified},",
-						"          {Reported By.CT} = {Reported By},",
-						"          {Patient Type ID.CT} = {Patient Type ID},",
-						"          {Age At Event.CT} = {Age At Event},",
-						"          {Exam ID.CT} = {Exam ID},",
-						"          {CXR-CCI},",
-						"          {CXI-CCR},",
-						"          {CXI-CCI},",
-						"          {Exam Key.XR}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> Mixcolfix",
-						"XRlist, selectclosest join(XRColumnFix@{Exam Key.XR} == Mixcolfix@{Exam Key.XR},",
-						"     joinType:'left',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'right')~> join2",
-						"t28dayfilter window(over({Exam Key.CT}),",
-						"     asc({Exam Key.CT}, true),",
-						"     asc({CXR-CCI}, true),",
-						"     asc({CXI-CCR}, true),",
-						"     asc({CXI-CCI}, true),",
-						"     Rank = denseRank()) ~> window1",
-						"window1 filter(Rank==1) ~> selectclosest",
-						"selectclosest sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     recreate:true,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
-						"join2 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          {CRIS No} as integer,",
-						"          {Event Key} as integer,",
-						"          {Exam Key} as integer,",
-						"          {Trust ID} as integer,",
-						"          {Exam Room ID} as integer,",
-						"          {Event Date} as date,",
-						"          {Date First Verified} as timestamp,",
-						"          {Reported By} as string,",
-						"          {Patient Type ID} as long,",
-						"          {Age At Event} as string,",
-						"          {Exam ID} as integer,",
-						"          Auto as integer,",
-						"          {Rep Rad} as integer,",
-						"          Cons as integer,",
-						"          Outsource as integer,",
-						"          {CX I-R} as integer,",
-						"          Snapshot as integer,",
-						"          Abnormal as integer,",
-						"          {CRIS No.1} as integer,",
-						"          {Event Key.1} as integer,",
-						"          {Exam Key.1} as integer,",
-						"          {Trust ID.1} as integer,",
-						"          {Exam Room ID.1} as integer,",
-						"          {Event Date.1} as date,",
-						"          {Date First Verified.1} as timestamp,",
-						"          {Reported By.1} as string,",
-						"          {Patient Type ID.1} as long,",
-						"          {Age At Event.1} as string,",
-						"          {Exam ID.1} as integer,",
-						"          {CXR-CCI.1} as integer,",
-						"          {CXI-CCR.1} as integer,",
-						"          {CXI-CCI.1} as integer",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     truncate:true,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError',",
-						"     mapColumn(",
-						"          {CRIS No} = {CRIS No.XR},",
-						"          {Event Key} = {Event Key.XR},",
-						"          {Exam Key} = XRColumnFix@{Exam Key.XR},",
-						"          {Trust ID} = {Trust ID.XR},",
-						"          {Exam Room ID} = {Exam Room ID.XR},",
-						"          {Event Date} = {Event Date.XR},",
-						"          {Date First Verified} = {Date First Verified.XR},",
-						"          {Reported By} = {Reported By.XR},",
-						"          {Patient Type ID} = {Patient Type ID.XR},",
-						"          {Age At Event} = {Age At Event.XR},",
-						"          {Exam ID} = {Exam ID.XR},",
-						"          Auto,",
-						"          {Rep Rad},",
-						"          Cons,",
-						"          Outsource,",
-						"          {CX I-R},",
-						"          Snapshot,",
-						"          Abnormal,",
-						"          {CRIS No.1} = {CRIS No.CT},",
-						"          {Event Key.1} = {Event Key.CT},",
-						"          {Exam Key.1} = {Exam Key.CT},",
-						"          {Trust ID.1} = {Trust ID.CT},",
-						"          {Exam Room ID.1} = {Exam Room ID.CT},",
-						"          {Event Date.1} = {Event Date.CT},",
-						"          {Date First Verified.1} = {Date First Verified.CT},",
-						"          {Reported By.1} = {Reported By.CT},",
-						"          {Patient Type ID.1} = {Patient Type ID.CT},",
-						"          {Age At Event.1} = {Age At Event.CT},",
-						"          {Exam ID.1} = {Exam ID.CT},",
-						"          {CXR-CCI.1} = {CXR-CCI},",
-						"          {CXI-CCR.1} = {CXI-CCR},",
-						"          {CXI-CCI.1} = {CXI-CCI}",
-						"     )) ~> sink3"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/FYF_ODBC_CORE_v2')]",
-				"[concat(variables('factoryId'), '/datasets/testtable2')]",
-				"[concat(variables('factoryId'), '/datasets/AIDF')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CreatePatientWaiting')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "ODBC_PTL_v2",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "Patient_Waiting",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "select1"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          {Event Key} as integer,",
-						"          {Exam Key} as integer,",
-						"          {CRIS Number} as integer,",
-						"          {Status Category} as string,",
-						"          {Request Date} as timestamp,",
-						"          {Event Date} as timestamp,",
-						"          {Booked Date Time} as timestamp,",
-						"          {Creation Date} as timestamp,",
-						"          Attended as string,",
-						"          Urg as integer,",
-						"          {Days Waiting} as integer,",
-						"          {Predicted Reset Date} as timestamp,",
-						"          {Waiting Time Reset Date} as timestamp,",
-						"          {Weeks Waiting} as integer,",
-						"          {Planned Appointment Date} as timestamp,",
-						"          {Waiting Breach Date} as timestamp,",
-						"          {Was Planned} as string,",
-						"          {Was Scheduled} as string,",
-						"          {Was Waiting} as string,",
-						"          {Stat Date} as date,",
-						"          {5 Weeks Wait} as integer,",
-						"          {Booked Datetime} as string,",
-						"          {6 Weeks Wait} as string,",
-						"          {Referral Source ID} as integer,",
-						"          {Exam ID} as integer,",
-						"          {Modality ID} as integer,",
-						"          {Exam Room ID} as integer,",
-						"          {Trust ID} as integer,",
-						"          {Status Code} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'Select * from [dev].[FYF_ODBC_PTL_v2] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'ptl\\')',",
-						"     format: 'query') ~> source1",
-						"source1 select(mapColumn(",
-						"          {Event Key},",
-						"          {Exam Key},",
-						"          {Exam ID},",
-						"          {Exam Room ID},",
-						"          {Request Date},",
-						"          {Planned Appointment Date},",
-						"          {Waiting Time Reset Date},",
-						"          {Event Date},",
-						"          {Weeks Waiting},",
-						"          {Modality ID},",
-						"          {Was Planned},",
-						"          {Was Scheduled},",
-						"          {Was Waiting},",
-						"          {Referral Source ID},",
-						"          {Trust ID},",
-						"          {Status Code},",
-						"          {Stat Date}",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select1",
-						"select1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     recreate:true,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/ODBC_PTL_v2')]",
-				"[concat(variables('factoryId'), '/datasets/Patient_Waiting')]"
 			]
 		},
 		{
