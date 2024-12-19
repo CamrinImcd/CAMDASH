@@ -90,7 +90,14 @@
 					"sink": {
 						"type": "AzureSqlSink",
 						"preCopyScript": "TRUNCATE TABLE [dev].[AzureSqlCOREStageStep2]\n\nTRUNCATE TABLE [dev].[AzureSqlCOREStageStep1]",
-						"writeBehavior": "insert",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"Exam Key",
+								"Stat Date"
+							]
+						},
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate",
 						"disableMetricsCollection": false
