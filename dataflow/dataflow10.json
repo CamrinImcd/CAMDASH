@@ -21,11 +21,7 @@
 					"name": "sink1"
 				}
 			],
-			"transformations": [
-				{
-					"name": "filter1"
-				}
-			],
+			"transformations": [],
 			"scriptLines": [
 				"source(output(",
 				"          {Exam Key} as integer,",
@@ -51,10 +47,8 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: (select * from dev.FYF_ODBC_STATUSES where [Stat Date] > '@{activity('Prev Latest stat date statuses').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date statuses').output.firstRow.CoreUpdateValue}'and [Status Date] > '@{activity('Prev Latest stat date statuses').output.firstRow.CoreUpdateValue}' ),",
-				"     format: 'query') ~> source1",
-				"source1 filter({Status Code}=='RR') ~> filter1",
-				"filter1 sink(allowSchemaDrift: true,",
+				"     format: 'table') ~> ",
+				" sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          {Exam Key} as integer,",
@@ -82,7 +76,6 @@
 				"     insertable:true,",
 				"     updateable:false,",
 				"     upsertable:false,",
-				"     truncate:true,",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
