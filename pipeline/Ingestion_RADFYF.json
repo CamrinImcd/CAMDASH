@@ -1567,13 +1567,13 @@
 					{
 						"activity": "Latest stat date statuses",
 						"dependencyConditions": [
-							"Failed"
+							"Succeeded"
 						]
 					},
 					{
 						"activity": "Prev Latest stat date statuses",
 						"dependencyConditions": [
-							"Failed"
+							"Succeeded"
 						]
 					}
 				],
