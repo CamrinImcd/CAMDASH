@@ -2071,13 +2071,13 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Prev Latest stat date Imports",
+						"activity": "Latest stat date Imports",
 						"dependencyConditions": [
 							"Failed"
 						]
 					},
 					{
-						"activity": "Latest stat date Imports",
+						"activity": "Prev Latest stat date Imports",
 						"dependencyConditions": [
 							"Failed"
 						]
