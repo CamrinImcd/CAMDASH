@@ -10,6 +10,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSql_STATUSES",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
 				}
 			],
 			"sinks": [
@@ -22,14 +29,44 @@
 					"description": "Export data to Request Received Status"
 				}
 			],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "filter1"
+				}
+			],
 			"scriptLines": [
 				"source(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> ",
+				"source(output(",
+				"          {Exam Key} as integer,",
+				"          {Event Key} as integer,",
+				"          Accession as string,",
+				"          Referrer as string,",
+				"          {Referral Location} as string,",
+				"          {Referral Source} as string,",
+				"          Urg as string,",
+				"          Site as string,",
+				"          {Status Code} as string,",
+				"          {Status Date} as timestamp,",
+				"          {Status Time} as integer,",
+				"          {Referral Location Name} as string,",
+				"          {Referral Source Name} as string,",
+				"          {Referral Name} as string,",
+				"          {Examination Name} as string,",
+				"          Modality as string,",
+				"          {Status Code at State Date} as string,",
+				"          {Stat Date} as timestamp,",
+				"          {D Status} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     query: (select * from dev.FYF_ODBC_STATUSES where [Stat Date] > '@{activity('Prev Latest stat date statuses').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date statuses').output.firstRow.CoreUpdateValue}'and [Status Date] > '@{activity('Prev Latest stat date statuses').output.firstRow.CoreUpdateValue}' ),",
-				"     format: 'query') ~> ",
-				" sink(allowSchemaDrift: true,",
+				"     format: 'query') ~> source2",
+				"source2 filter({Status Code}=='RR') ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          {Exam Key} as integer,",
@@ -54,9 +91,10 @@
 				"          Rank as integer",
 				"     ),",
 				"     deletable:false,",
-				"     insertable:true,",
+				"     insertable:false,",
 				"     updateable:false,",
-				"     upsertable:false,",
+				"     upsertable:true,",
+				"     keys:['Exam Key','Status Code'],",
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
