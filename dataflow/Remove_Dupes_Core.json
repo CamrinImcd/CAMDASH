@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "Remove_Dupes_Core",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {

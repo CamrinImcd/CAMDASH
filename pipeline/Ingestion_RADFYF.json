@@ -4222,7 +4222,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow1",
+						"referenceName": "Remove_Dupes_Core",
 						"type": "DataFlowReference"
 					},
 					"integrationRuntime": {
