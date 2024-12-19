@@ -8267,13 +8267,13 @@
 							{
 								"activity": "Latest stat date orders",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							},
 							{
 								"activity": "Prev Latest stat date orders",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -8288,7 +8288,10 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "select * from dbo.FYF_ODBC_ORDERS where [Stat Date] > '@{activity('Prev Latest stat date orders').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date orders').output.firstRow.CoreUpdateValue}'",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_ORDERS where [Stat Date] > '@{activity('Prev Latest stat date orders').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date orders').output.firstRow.CoreUpdateValue}'",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
@@ -8530,13 +8533,13 @@
 							{
 								"activity": "Latest stat date request",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							},
 							{
 								"activity": "Prev Latest stat date request",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -8551,7 +8554,10 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "select * from dbo.FYF_ODBC_REQUESTS where [Stat Date] > '@{activity('Prev Latest stat date request').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date request').output.firstRow.CoreUpdateValue}'",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_REQUESTS where [Stat Date] > '@{activity('Prev Latest stat date request').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date request').output.firstRow.CoreUpdateValue}'",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
@@ -8986,13 +8992,13 @@
 							{
 								"activity": "Latest stat date statuses",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							},
 							{
 								"activity": "Prev Latest stat date statuses",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -9007,7 +9013,10 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "select * from dbo.FYF_ODBC_STATUSES where [Stat Date] > '@{activity('Prev Latest stat date statuses').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date statuses').output.firstRow.CoreUpdateValue}'and [Status Date] > '@{activity('Prev Latest stat date statuses').output.firstRow.CoreUpdateValue}' ",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_STATUSES where [Stat Date] > '@{activity('Prev Latest stat date statuses').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date statuses').output.firstRow.CoreUpdateValue}'and [Status Date] > '@{activity('Prev Latest stat date statuses').output.firstRow.CoreUpdateValue}' ",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
@@ -9286,13 +9295,13 @@
 							{
 								"activity": "Latest stat date apdna",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							},
 							{
 								"activity": "Prev Latest stat date apdna",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -9307,7 +9316,10 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "select * from dbo.FYF_ODBC_APDNA where [Stat Date] > '@{activity('Prev Latest stat date apdna').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date apdna').output.firstRow.CoreUpdateValue}'",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_APDNA where [Stat Date] > '@{activity('Prev Latest stat date apdna').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date apdna').output.firstRow.CoreUpdateValue}'",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
@@ -9490,13 +9502,13 @@
 							{
 								"activity": "Latest stat date Imports",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							},
 							{
 								"activity": "Prev Latest stat date Imports",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -9603,13 +9615,13 @@
 							{
 								"activity": "Latest stat date lungca",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							},
 							{
 								"activity": "Prev Latest stat date lungca",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -9624,7 +9636,10 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "select * from dbo.FYF_ODBC_LUNG_Ca_ALERTS where [Stat Date] > '@{activity('Prev Latest stat date lungca').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date lungca').output.firstRow.CoreUpdateValue}'",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_LUNG_Ca_ALERTS where [Stat Date] > '@{activity('Prev Latest stat date lungca').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date lungca').output.firstRow.CoreUpdateValue}'",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
@@ -9818,13 +9833,13 @@
 							{
 								"activity": "Latest stat patients",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							},
 							{
 								"activity": "Prev Latest stat patients",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -9839,7 +9854,10 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "select * from dbo.FYF_ODBC_PATIENTS where [Stat Date] > '@{activity('Prev Latest stat patients').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat patients').output.firstRow.CoreUpdateValue}'",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_PATIENTS where [Stat Date] > '@{activity('Prev Latest stat patients').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat patients').output.firstRow.CoreUpdateValue}'",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
@@ -10070,13 +10088,13 @@
 							{
 								"activity": "Latest stat date ptl",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							},
 							{
 								"activity": "Prev Latest stat date ptl",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -10570,13 +10588,13 @@
 							{
 								"activity": "Latest stat date Report TAT",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							},
 							{
 								"activity": "Prev Latest stat date Report TAT",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -10591,7 +10609,10 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "select * from dbo.FYF_ODBC_REPORTING_TAT where [Stat Date] > '@{activity('Prev Latest stat date Report TAT').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date Report TAT').output.firstRow.CoreUpdateValue}'",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_REPORTING_TAT where [Stat Date] > '@{activity('Prev Latest stat date Report TAT').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date Report TAT').output.firstRow.CoreUpdateValue}'",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
@@ -11170,13 +11191,13 @@
 							{
 								"activity": "Latest stat date report_meta",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							},
 							{
 								"activity": "Prev Latest stat date report_meta",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -11191,7 +11212,10 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "select * from dbo.FYF_ODBC_REPORT_META where [Stat Date] > '@{activity('Prev Latest stat date report_meta').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date report_meta').output.firstRow.CoreUpdateValue}'",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_REPORT_META where [Stat Date] > '@{activity('Prev Latest stat date report_meta').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date report_meta').output.firstRow.CoreUpdateValue}'",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
@@ -11481,13 +11505,13 @@
 							{
 								"activity": "Latest stat date test_patients",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							},
 							{
 								"activity": "Prev Latest stat date test_patients",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -11502,7 +11526,10 @@
 						"typeProperties": {
 							"source": {
 								"type": "SqlServerSource",
-								"sqlReaderQuery": "select * from dbo.FYF_ODBC_TEST_Patients where [Stat Date] > '@{activity('Prev Latest stat date test_patients').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date test_patients').output.firstRow.CoreUpdateValue}'",
+								"sqlReaderQuery": {
+									"value": "select * from dbo.FYF_ODBC_TEST_Patients where [Stat Date] > '@{activity('Prev Latest stat date test_patients').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date test_patients').output.firstRow.CoreUpdateValue}'",
+									"type": "Expression"
+								},
 								"queryTimeout": "24:00:00",
 								"partitionOption": "None"
 							},
@@ -11624,7 +11651,7 @@
 							{
 								"activity": "Copy_CORE",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
