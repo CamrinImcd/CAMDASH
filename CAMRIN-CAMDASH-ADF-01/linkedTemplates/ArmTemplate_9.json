@@ -10093,15 +10093,15 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Latest stat date ptl",
+								"activity": "Prev Latest stat date ptl",
 								"dependencyConditions": [
-									"Failed"
+									"Succeeded"
 								]
 							},
 							{
-								"activity": "Prev Latest stat date ptl",
+								"activity": "Latest stat date ptl",
 								"dependencyConditions": [
-									"Failed"
+									"Succeeded"
 								]
 							}
 						],
@@ -11747,7 +11747,7 @@
 							{
 								"activity": "ReferenceLookupsCore",
 								"dependencyConditions": [
-									"Failed"
+									"Succeeded"
 								]
 							}
 						],
@@ -11791,7 +11791,7 @@
 							{
 								"activity": "ReferenceLookupsPTL",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
