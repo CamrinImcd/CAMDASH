@@ -4307,7 +4307,7 @@
 					{
 						"activity": "ReferenceLookupsPTL",
 						"dependencyConditions": [
-							"Failed"
+							"Succeeded"
 						]
 					}
 				],
@@ -4459,7 +4459,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow7",
+						"referenceName": "CreatePatientWaiting",
 						"type": "DataFlowReference"
 					},
 					"compute": {
