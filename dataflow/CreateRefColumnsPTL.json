@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1_copy1",
+	"name": "CreateRefColumnsPTL",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
