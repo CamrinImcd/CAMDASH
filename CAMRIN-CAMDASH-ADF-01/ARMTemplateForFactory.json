@@ -7623,7 +7623,7 @@
 							{
 								"activity": "Add Columns Core",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
