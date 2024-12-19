@@ -4202,7 +4202,7 @@
 				]
 			},
 			{
-				"name": "Add Columns Core",
+				"name": "DedupeCore",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
@@ -4367,7 +4367,7 @@
 				"type": "ExecuteWranglingDataflow",
 				"dependsOn": [
 					{
-						"activity": "Add Columns Core",
+						"activity": "DedupeCore",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -4408,11 +4408,11 @@
 				}
 			},
 			{
-				"name": "Data flow1",
+				"name": "AIDF",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "Data flow2",
+						"activity": "PatientsWaiting",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -4439,7 +4439,7 @@
 				}
 			},
 			{
-				"name": "Data flow2",
+				"name": "PatientsWaiting",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
@@ -5122,7 +5122,7 @@
 				"type": "Lookup",
 				"dependsOn": [
 					{
-						"activity": "Data flow2",
+						"activity": "PatientsWaiting",
 						"dependencyConditions": [
 							"Succeeded"
 						]
