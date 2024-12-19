@@ -4428,7 +4428,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow6",
+						"referenceName": "AIDFDataset",
 						"type": "DataFlowReference"
 					},
 					"compute": {

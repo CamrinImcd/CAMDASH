@@ -1,5 +1,5 @@
 {
-	"name": "dataflow6",
+	"name": "AIDFDataset",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
