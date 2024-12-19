@@ -4102,7 +4102,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"name": "[concat(parameters('factoryName'), '/Remove_Dupes_Core')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -4340,7 +4340,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow10')]",
+			"name": "[concat(parameters('factoryName'), '/CreateRequestRecieveddataset')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -4434,7 +4434,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow1_copy1')]",
+			"name": "[concat(parameters('factoryName'), '/CreateRefColumnsPTL')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -5446,7 +5446,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow3')]",
+			"name": "[concat(parameters('factoryName'), '/CreateRefColumns')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -6411,7 +6411,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow6')]",
+			"name": "[concat(parameters('factoryName'), '/AIDFDataset')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -6721,7 +6721,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow7')]",
+			"name": "[concat(parameters('factoryName'), '/CreatePatientWaiting')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -9479,13 +9479,13 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Prev Latest stat date Imports",
+								"activity": "Latest stat date Imports",
 								"dependencyConditions": [
 									"Failed"
 								]
 							},
 							{
-								"activity": "Latest stat date Imports",
+								"activity": "Prev Latest stat date Imports",
 								"dependencyConditions": [
 									"Failed"
 								]
@@ -11624,7 +11624,7 @@
 						]
 					},
 					{
-						"name": "Add Columns Core",
+						"name": "DedupeCore",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
@@ -11644,7 +11644,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "dataflow1",
+								"referenceName": "Remove_Dupes_Core",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -11682,7 +11682,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "dataflow3",
+								"referenceName": "CreateRefColumns",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -11733,7 +11733,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "dataflow1_copy1",
+								"referenceName": "CreateRefColumnsPTL",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -11763,7 +11763,7 @@
 							{
 								"activity": "ReferenceLookupsPTL",
 								"dependencyConditions": [
-									"Failed"
+									"Succeeded"
 								]
 							}
 						],
@@ -11814,7 +11814,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "dataflow10",
+								"referenceName": "CreateRequestRecieveddataset",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -11835,7 +11835,7 @@
 						"type": "ExecuteWranglingDataflow",
 						"dependsOn": [
 							{
-								"activity": "Add Columns Core",
+								"activity": "DedupeCore",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -11883,11 +11883,11 @@
 						}
 					},
 					{
-						"name": "Data flow1",
+						"name": "AIDF",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
-								"activity": "Data flow2",
+								"activity": "PatientsWaiting",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -11903,7 +11903,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "dataflow6",
+								"referenceName": "AIDFDataset",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -11921,7 +11921,7 @@
 						}
 					},
 					{
-						"name": "Data flow2",
+						"name": "PatientsWaiting",
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
@@ -11941,7 +11941,7 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "dataflow7",
+								"referenceName": "CreatePatientWaiting",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
@@ -12635,7 +12635,7 @@
 						"type": "Lookup",
 						"dependsOn": [
 							{
-								"activity": "Data flow2",
+								"activity": "PatientsWaiting",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -13037,14 +13037,14 @@
 				"lastPublishTime": "2024-01-30T12:35:07Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dataflow1')]",
-				"[concat(variables('factoryId'), '/dataflows/dataflow3')]",
-				"[concat(variables('factoryId'), '/dataflows/dataflow1_copy1')]",
+				"[concat(variables('factoryId'), '/dataflows/Remove_Dupes_Core')]",
+				"[concat(variables('factoryId'), '/dataflows/CreateRefColumns')]",
+				"[concat(variables('factoryId'), '/dataflows/CreateRefColumnsPTL')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
-				"[concat(variables('factoryId'), '/dataflows/dataflow10')]",
+				"[concat(variables('factoryId'), '/dataflows/CreateRequestRecieveddataset')]",
 				"[concat(variables('factoryId'), '/dataflows/PopulateNewColumns')]",
-				"[concat(variables('factoryId'), '/dataflows/dataflow6')]",
-				"[concat(variables('factoryId'), '/dataflows/dataflow7')]"
+				"[concat(variables('factoryId'), '/dataflows/AIDFDataset')]",
+				"[concat(variables('factoryId'), '/dataflows/CreatePatientWaiting')]"
 			]
 		}
 	]
