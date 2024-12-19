@@ -1565,13 +1565,13 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Latest stat date statuses",
+						"activity": "Prev Latest stat date statuses",
 						"dependencyConditions": [
 							"Succeeded"
 						]
 					},
 					{
-						"activity": "Prev Latest stat date statuses",
+						"activity": "Latest stat date statuses",
 						"dependencyConditions": [
 							"Succeeded"
 						]
