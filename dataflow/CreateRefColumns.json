@@ -205,7 +205,7 @@
 				"     validateSchema: false,",
 				"     enableCdc: true,",
 				"     mode: 'read',",
-				"     skipInitialLoad: true,",
+				"     skipInitialLoad: false,",
 				"     waterMarkColumn: 'Stat Date',",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> AzureSQLCoreV2Staging",
