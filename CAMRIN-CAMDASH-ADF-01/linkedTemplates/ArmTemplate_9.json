@@ -6035,10 +6035,12 @@
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     enableCdc: true,",
+						"     mode: 'read',",
+						"     skipInitialLoad: false,",
 						"     waterMarkColumn: 'Stat Date',",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'Select * from [dev].[FYF_ODBC_Core] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'Core\\')\\n',",
-						"     format: 'query') ~> AzureSqlCORE",
+						"     format: 'table') ~> AzureSqlCORE",
 						"source(output(",
 						"          {CRIS No} as integer,",
 						"          {Creation Date} as timestamp,",
@@ -7486,7 +7488,6 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "TRUNCATE TABLE [dev].[AzureSqlCOREStageStep2]\n\nTRUNCATE TABLE [dev].[AzureSqlCOREStageStep1]",
 								"writeBehavior": "upsert",
 								"upsertSettings": {
 									"useTempDB": true,
@@ -11724,7 +11725,7 @@
 							{
 								"activity": "ReferenceLookupsCore",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
