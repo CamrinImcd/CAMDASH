@@ -4273,15 +4273,15 @@
 				"type": "ExecuteDataFlow",
 				"dependsOn": [
 					{
-						"activity": "ReferenceLookupsCore",
+						"activity": "Copy_PTL",
 						"dependencyConditions": [
 							"Failed"
 						]
 					},
 					{
-						"activity": "Copy_PTL",
+						"activity": "ReferenceLookupsCore",
 						"dependencyConditions": [
-							"Failed"
+							"Succeeded"
 						]
 					}
 				],
