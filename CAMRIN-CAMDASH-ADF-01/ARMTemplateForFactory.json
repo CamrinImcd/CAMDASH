@@ -24566,7 +24566,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'Select * from [dev].[FYF_ODBC_PTL] where [Stat Date] > (Select [CoreUpdateValue] from [dev].[CoreUpdatetable] where [TableName] = \\'ptl\\')',",
+						"     query: 'Select * from [dev].[FYF_ODBC_PTL] where CONVERT(date,[Stat Date]) = (Select max(CONVERT(date,[Stat Date]))from [dev].[FYF_ODBC_PTL] )',",
 						"     format: 'query') ~> AzureSqlPTL",
 						"source(output(",
 						"          {Referral Source} as string,",
