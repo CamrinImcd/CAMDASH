@@ -4312,7 +4312,7 @@
 					{
 						"activity": "ReferenceLookupsPTL",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					}
 				],
@@ -4531,7 +4531,7 @@
 				"type": "Lookup",
 				"dependsOn": [
 					{
-						"activity": "CreateAct_Dem",
+						"activity": "ReferenceLookupsPTL",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -5127,7 +5127,7 @@
 				"type": "Lookup",
 				"dependsOn": [
 					{
-						"activity": "PatientsWaiting",
+						"activity": "ReferenceLookupsPTL",
 						"dependencyConditions": [
 							"Succeeded"
 						]
