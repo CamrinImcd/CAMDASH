@@ -11780,7 +11780,7 @@
 							{
 								"activity": "ReferenceLookupsPTL",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -11800,8 +11800,7 @@
 								"datasetParameters": {
 									"Core": {},
 									"sink1": {}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -12034,7 +12033,7 @@
 						"type": "Lookup",
 						"dependsOn": [
 							{
-								"activity": "CreateAct_Dem",
+								"activity": "ReferenceLookupsPTL",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -12653,7 +12652,7 @@
 						"type": "Lookup",
 						"dependsOn": [
 							{
-								"activity": "PatientsWaiting",
+								"activity": "ReferenceLookupsPTL",
 								"dependencyConditions": [
 									"Succeeded"
 								]

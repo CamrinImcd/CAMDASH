@@ -7551,7 +7551,7 @@
 							{
 								"activity": "ReferenceLookupsPTL",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -7571,8 +7571,7 @@
 								"datasetParameters": {
 									"Core": {},
 									"sink1": {}
-								},
-								"linkedServiceParameters": {}
+								}
 							},
 							"staging": {},
 							"compute": {
@@ -7805,7 +7804,7 @@
 						"type": "Lookup",
 						"dependsOn": [
 							{
-								"activity": "CreateAct_Dem",
+								"activity": "ReferenceLookupsPTL",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -8424,7 +8423,7 @@
 						"type": "Lookup",
 						"dependsOn": [
 							{
-								"activity": "PatientsWaiting",
+								"activity": "ReferenceLookupsPTL",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -8853,7 +8852,6 @@
 				"[concat(variables('factoryId'), '/dataflows/Remove_Dupes_Core')]",
 				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveAzureIR')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRefColumns')]",
-				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRefColumnsPTL')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRequestRecieveddataset')]",
