@@ -7504,7 +7504,7 @@
 									"useTempDB": true,
 									"keys": [
 										"Exam Key",
-										"Stat Date"
+										"Status Code"
 									]
 								},
 								"sqlWriterUseTableLock": false,
