@@ -5449,6 +5449,8 @@
 						"     upsertable:true,",
 						"     keys:['Exam Key','Status Code'],",
 						"     format: 'table',",
+						"     preSQLs:['delete T\\nFROM\\n(\\nSELECT *\\n, DupRank = ROW_NUMBER() OVER (\\n              PARTITION BY [Exam Key], [Status Code]\\n              ORDER BY [Stat Date] desc\\n            )\\n  FROM [dev].[AzureSqlCOREStageStep2]\\n) AS T\\nwhere DupRank>1'],",
+						"     postSQLs:['delete T\\nFROM\\n(\\nSELECT *\\n, DupRank = ROW_NUMBER() OVER (\\n              PARTITION BY [Exam Key],[Status Code]\\n              ORDER BY [Stat Date] desc\\n            )\\n  FROM [dev].[FYF_ODBC_CORE_v2]\\n) AS T\\nwhere DupRank>1'],",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     saveOrder: 1,",
@@ -6331,6 +6333,8 @@
 						"     upsertable:false,",
 						"     truncate:true,",
 						"     format: 'table',",
+						"     preSQLs:['Delete T\\nFROM\\n(\\nSELECT *\\n, DupRank = ROW_NUMBER() OVER (\\n              PARTITION BY [Exam Key], [Status Code]\\n              ORDER BY [Stat Date] desc\\n            )\\n  FROM [dev].[FYF_ODBC_CORE]\\n) AS T\\nwhere DupRank>1'],",
+						"     postSQLs:['delete T\\nFROM\\n(\\nSELECT *\\n, DupRank = ROW_NUMBER() OVER (\\n              PARTITION BY [Exam Key], [Status Code]\\n              ORDER BY [Stat Date] desc\\n            )\\n  FROM [dev].[AzureSqlCOREStageStep1]\\n) AS T\\nwhere DupRank>1'],",
 						"     saveOrder: 1,",
 						"     errorHandlingOption: 'stopOnFirstError',",
 						"     mapColumn(",
@@ -8451,13 +8455,13 @@
 							{
 								"activity": "Latest stat date orders",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							},
 							{
 								"activity": "Prev Latest stat date orders",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -9479,13 +9483,13 @@
 							{
 								"activity": "Prev Latest stat date apdna",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							},
 							{
 								"activity": "Latest stat date apdna",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -9799,13 +9803,13 @@
 							{
 								"activity": "Latest stat date lungca",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							},
 							{
 								"activity": "Prev Latest stat date lungca",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -10777,15 +10781,15 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Prev Latest stat date Report TAT",
+								"activity": "Latest stat date Report TAT",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							},
 							{
-								"activity": "Latest stat date Report TAT",
+								"activity": "Prev Latest stat date Report TAT",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -11382,13 +11386,13 @@
 							{
 								"activity": "Latest stat date report_meta",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							},
 							{
 								"activity": "Prev Latest stat date report_meta",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -11976,7 +11980,7 @@
 							{
 								"activity": "ReferenceLookupsPTL",
 								"dependencyConditions": [
-									"Failed"
+									"Succeeded"
 								]
 							}
 						],
