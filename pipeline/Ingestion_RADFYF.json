@@ -4312,7 +4312,7 @@
 					{
 						"activity": "ReferenceLookupsPTL",
 						"dependencyConditions": [
-							"Failed"
+							"Succeeded"
 						]
 					}
 				],
