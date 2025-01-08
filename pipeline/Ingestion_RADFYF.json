@@ -844,13 +844,13 @@
 					{
 						"activity": "Latest stat date orders",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					},
 					{
 						"activity": "Prev Latest stat date orders",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					}
 				],
@@ -1866,13 +1866,13 @@
 					{
 						"activity": "Prev Latest stat date apdna",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					},
 					{
 						"activity": "Latest stat date apdna",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					}
 				],
@@ -2182,13 +2182,13 @@
 					{
 						"activity": "Latest stat date lungca",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					},
 					{
 						"activity": "Prev Latest stat date lungca",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					}
 				],
@@ -3154,15 +3154,15 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Prev Latest stat date Report TAT",
+						"activity": "Latest stat date Report TAT",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					},
 					{
-						"activity": "Latest stat date Report TAT",
+						"activity": "Prev Latest stat date Report TAT",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					}
 				],
@@ -3757,13 +3757,13 @@
 					{
 						"activity": "Latest stat date report_meta",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					},
 					{
 						"activity": "Prev Latest stat date report_meta",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					}
 				],
