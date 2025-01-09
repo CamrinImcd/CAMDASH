@@ -3188,15 +3188,15 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Latest stat date core",
+								"activity": "Prev Latest stat date core",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							},
 							{
-								"activity": "Prev Latest stat date core",
+								"activity": "Latest stat date core",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
@@ -8853,7 +8853,6 @@
 				"[concat(variables('factoryId'), '/dataflows/Remove_Dupes_Core')]",
 				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveAzureIR')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRefColumns')]",
-				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRefColumnsPTL')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRequestRecieveddataset')]",
@@ -26427,7 +26426,26 @@
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          {Event Key},",
+						"          {Exam Key},",
+						"          {Exam ID},",
+						"          {Exam Room ID},",
+						"          {Request Date},",
+						"          {Planned Appointment Date},",
+						"          {Waiting Time Reset Date},",
+						"          {Event Date},",
+						"          {Weeks Waiting},",
+						"          {Modality ID},",
+						"          {Was Planned},",
+						"          {Was Scheduled},",
+						"          {Was Waiting},",
+						"          {Referral Source ID},",
+						"          {Trust ID},",
+						"          {Status Code},",
+						"          {Stat Date}",
+						"     )) ~> sink1"
 					]
 				}
 			},
