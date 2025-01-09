@@ -7,15 +7,15 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Latest stat date core",
+						"activity": "Prev Latest stat date core",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					},
 					{
-						"activity": "Prev Latest stat date core",
+						"activity": "Latest stat date core",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					}
 				],
