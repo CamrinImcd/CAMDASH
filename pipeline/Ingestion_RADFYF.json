@@ -4244,7 +4244,7 @@
 					{
 						"activity": "PopulateNewColumns",
 						"dependencyConditions": [
-							"Succeeded"
+							"Failed"
 						]
 					}
 				],
@@ -4374,7 +4374,7 @@
 					{
 						"activity": "DedupeCore",
 						"dependencyConditions": [
-							"Failed"
+							"Succeeded"
 						]
 					}
 				],
