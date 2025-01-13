@@ -7418,7 +7418,7 @@
 							{
 								"activity": "Copy_CORE",
 								"dependencyConditions": [
-									"Failed"
+									"Succeeded"
 								]
 							}
 						],
@@ -7626,7 +7626,7 @@
 							{
 								"activity": "DedupeCore",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
