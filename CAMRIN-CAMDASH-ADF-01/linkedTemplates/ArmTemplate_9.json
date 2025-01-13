@@ -11903,7 +11903,7 @@
 							{
 								"activity": "PopulateNewColumns",
 								"dependencyConditions": [
-									"Failed"
+									"Succeeded"
 								]
 							}
 						],
@@ -11947,15 +11947,15 @@
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
-								"activity": "ReferenceLookupsCore",
+								"activity": "Copy_PTL",
 								"dependencyConditions": [
 									"Succeeded"
 								]
 							},
 							{
-								"activity": "Copy_PTL",
+								"activity": "ReferenceLookupsCore",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
