@@ -3188,15 +3188,15 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Prev Latest stat date core",
+								"activity": "Latest stat date core",
 								"dependencyConditions": [
-									"Failed"
+									"Succeeded"
 								]
 							},
 							{
-								"activity": "Latest stat date core",
+								"activity": "Prev Latest stat date core",
 								"dependencyConditions": [
-									"Failed"
+									"Succeeded"
 								]
 							}
 						],
@@ -7418,7 +7418,7 @@
 							{
 								"activity": "Copy_CORE",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
