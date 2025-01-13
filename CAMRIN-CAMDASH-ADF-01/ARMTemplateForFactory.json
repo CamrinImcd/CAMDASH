@@ -7805,7 +7805,7 @@
 						"type": "Lookup",
 						"dependsOn": [
 							{
-								"activity": "ReferenceLookupsPTL",
+								"activity": "CreateAct_Dem",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -8424,7 +8424,7 @@
 						"type": "Lookup",
 						"dependsOn": [
 							{
-								"activity": "ReferenceLookupsPTL",
+								"activity": "CreateAct_Dem",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -22696,12 +22696,10 @@
 						"     ),",
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     enableCdc: true,",
-						"     mode: 'read',",
-						"     skipInitialLoad: false,",
 						"     waterMarkColumn: 'Stat Date',",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> Core",
+						"     format: 'table',",
+						"     mode: 'read') ~> Core",
 						"derivedColumn6 derive(DNA = iif({Status Code}==\"CPDNA\", 1, iif({Status Code}==\"APDNA\", 1, 0))) ~> CreateDNAColumn",
 						"CreateDNAColumn aggregate(groupBy({Event Date},",
 						"          {Modality ID},",
@@ -23358,6 +23356,7 @@
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
+						"     truncate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
