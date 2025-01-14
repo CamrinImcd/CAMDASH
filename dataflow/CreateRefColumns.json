@@ -738,7 +738,7 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> RemoveColumns5",
 				"filter1 derive({Status Time2} = lpad(toString({Status Time}),4,\"0\"),",
-				"          {Event Time} = toTimestamp({Event Time},'HH:mm:ss'),",
+				"          {Event Time} = toTimestamp(concat(substring({Event Time}, 0,2),':',substring({Event Time}, 2,2),':','00'),'HH:mm:ss'),",
 				"          {Start Time} = toTimestamp({Start Time},'HH:mm:ss'),",
 				"          {End Time} = toTimestamp({End Time},'HH:mm:ss')) ~> DerivedColumn1",
 				"MapDrifted3 select(mapColumn(",
