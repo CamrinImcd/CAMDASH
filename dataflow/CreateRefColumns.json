@@ -171,6 +171,9 @@
 				},
 				{
 					"name": "AlterRow1"
+				},
+				{
+					"name": "cast1"
 				}
 			],
 			"scriptLines": [
@@ -418,8 +421,8 @@
 				"          {Ref Src},",
 				"          Site,",
 				"          {Request Date},",
-				"          {Event Date},",
-				"          {Event Time},",
+				"          {Event Date} = select7@{Event Date},",
+				"          {Event Time} = select7@{Event Time},",
 				"          {On Call},",
 				"          PT,",
 				"          Examination,",
@@ -734,7 +737,8 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> RemoveColumns5",
-				"filter1 derive({Status Time2} = lpad(toString({Status Time}),4,\"0\")) ~> DerivedColumn1",
+				"filter1 derive({Status Time2} = lpad(toString({Status Time}),4,\"0\"),",
+				"          {Event Time} = toTimestamp({Event Time},'HH:mm:ss')) ~> DerivedColumn1",
 				"MapDrifted3 select(mapColumn(",
 				"          Patient_Type,",
 				"          {Patient Type ID}",
@@ -894,8 +898,12 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select8",
-				"select8 alterRow(upsertIf(iif(UpOrIn==\"Up\",true(),false())),",
+				"cast1 alterRow(upsertIf(iif(UpOrIn==\"Up\",true(),false())),",
 				"     insertIf(iif(UpOrIn==\"In\",true(),false()))) ~> AlterRow1",
+				"select8 cast(output(",
+				"          {Event Time} as timestamp 'MM/dd/yyyy HH:mm:ss'",
+				"     ),",
+				"     errors: true) ~> cast1",
 				"AlterRow1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
