@@ -3266,7 +3266,7 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "Truncate table Core",
+								"preCopyScript": "Truncate table dev.FYF_ODBC_CORE",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
