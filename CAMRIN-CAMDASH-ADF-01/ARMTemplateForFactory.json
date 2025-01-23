@@ -3266,14 +3266,8 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"writeBehavior": "upsert",
-								"upsertSettings": {
-									"useTempDB": true,
-									"keys": [
-										"Exam Key",
-										"Status Code"
-									]
-								},
+								"preCopyScript": "Truncate table Core",
+								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"disableMetricsCollection": false
 							},
