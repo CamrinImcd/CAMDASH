@@ -557,7 +557,7 @@
 				"          {Creation Date} = RemoveColumns6@{Creation Date},",
 				"          {Exam Attended},",
 				"          {Exam Urgency},",
-				"          Modality = RemoveColumns6@Modality,",
+				"          Modality,",
 				"          {Number of Processes},",
 				"          {Planned Appointment Date} = RemoveColumns6@{Planned Appointment Date},",
 				"          {Datetime First Verified},",
