@@ -23419,9 +23419,6 @@
 							"name": "select9"
 						},
 						{
-							"name": "derivedColumn10"
-						},
-						{
 							"name": "MapDrifted7",
 							"description": "Creates an explicit mapping for each drifted column"
 						},
@@ -23627,7 +23624,7 @@
 						"     query: 'Select * from dev.FYF_ODBC_CORE_v2 where [Exam Key]=34351178',",
 						"     format: 'query') ~> source1",
 						"ExamSite derive({ExamSite Code} = toString(byName('ExamSite Code'))) ~> MapDrifted2",
-						"derivedColumn10 select(mapColumn(",
+						"lookupTatType select(mapColumn(",
 						"          {CRIS No},",
 						"          Accession,",
 						"          {On Call},",
@@ -23677,7 +23674,6 @@
 						"          {Image-Report 3D Pass},",
 						"          {Image-Report 7D Pass},",
 						"          {Image-Report 28D Pass},",
-						"          {Updated Modality},",
 						"          {Status Code} = select9@{Status Code}",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
@@ -23845,7 +23841,6 @@
 						"          {Image-Report 3D Pass},",
 						"          {Image-Report 7D Pass},",
 						"          {Image-Report 28D Pass},",
-						"          {Updated Modality},",
 						"          UpOrIn",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
@@ -23927,7 +23922,6 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select9",
-						"lookupTatType derive({Updated Modality} = iif(select9@{Trust Name}==\"LUHFT\" && left(select9@{Exam Site},3)==\"RQ6\" && contains([\"CABDOD\",    \"CABLTA\",    \"CBIOPB\",    \"CCHESB\",    \"CCHESD\",    \"CDRAID\",    \"CEARP\",    \"CEPIDJ\",    \"CLIVEB\",    \"CLNRTJ\",    \"ESIGMY\",    \"FALHC\",    \"FAPTH\",    \"FCVSG\",    \"FFULB\",    \"FHEPW\",    \"FICVG\",    \"FNGFT\",    \"FNJFT\",    \"FNPGB\",    \"FPERC\",    \"FPTCH\",    \"FTUBO\",    \"FVOVB\",    \"FVSAM\",    \"FVSHE\",    \"FVSPT\",    \"IABRBE\",    \"IABROE\",    \"IACFBS\",    \"IACHEE\",    \"IACIBS\",    \"IACOEE\",    \"IACOES\",    \"IAFBOX\",    \"IAFEBS\",    \"IAGABE\",    \"IAGDUE\",    \"IAIIBE\",    \"IAIIBS\",    \"IALUME\",    \"IAPFBE\",    \"IAPFBS\",    \"IAPOBS\",    \"IAPUBE\",    \"IAREBS\",    \"IARELE\",    \"IASCBS\",    \"IASDRD\",    \"IASFBS\",    \"IASIBS\",    \"IASMAS\",    \"IASPLE\",    \"IASPNN\",    \"IAULBX\",    \"IAUTBE\",    \"IAVFBP\",    \"IAVGTP\",    \"IAXIBS\",    \"IBICDG\",    \"IBILDD\",    \"IBILDP\",    \"ICHOSD\",    \"IDATBS\",    \"IDCCBS\",    \"IDHEPS\",    \"IDIMAS\",    \"IDRAII\",    \"IDREBS\",    \"IDSMAS\",    \"IEMBOE\",    \"IENTSS\",    \"IEXCHG\",    \"IEXDYG\",    \"IFEMAI\",    \"IGAJYD\",    \"IGCFBS\",    \"IGPEGG\",    \"IGPEGI\",    \"IGREBS\",    \"IGSJXG\",    \"IGXIBS\",    \"IGYJC\",    \"IIABPI\",    \"IIVFTI\",    \"IIVFTX\",    \"IJPEGI\",    \"IJYCXG\",    \"ILITJB\",    \"IMESAE\",    \"INEPBD\",    \"INEPXG\",    \"IPARTE\",    \"IPDFIP\",    \"IPENAS\",    \"IPICCI\",    \"IPORC\",    \"IPPOBP\",    \"ITAOSS\",    \"ITASPN\",    \"ITCVC\",    \"ITCVCG\",    \"ITCVCI\",    \"ITCVCX\",    \"ITDRAI\",    \"ITHBNJ\",    \"ITIPSS\",    \"ITLLBJ\",    \"ITUNDI\",    \"IURABS\",    \"IUTFDE\",    \"IVBRBS\",    \"IVCATI\",    \"IVENOP\",    \"IVEPOI\",    \"IVOEBE\",    \"IVPOTE\",    \"IVTESE\",    \"IVVTLP\",    \"IVVTTP\",    \"UBIOPB\",    \"UCHESD\",    \"UCNB\",    \"UDRAID\",    \"UDRAII\",    \"UHIFU\",    \"UKIDLB\",    \"ULIVEB\",    \"UTO3D\",    \"UTUNDI\"], select9@{Exam Code}) , 8 , iif(select9@{Trust Name}==\"LUHFT\" && left(select9@{Exam Site},3)==\"RQ6\" && contains([ \"CABDOD\",    \"CABLTA\",    \"CBIOPB\",    \"CBONEB\",    \"CCHESB\",    \"CCHESD\",    \"CCKILA\",    \"CCNRTJ\",    \"CDRAID\",    \"CEPIDJ\",    \"CFITHI\",    \"CLEKLA\",    \"CLELBA\",    \"CLELIA\",    \"CLIVEB\",    \"CLMAAA\",    \"CLMAFA\",    \"CLNRTJ\",    \"CPELVD\",    \"CRRFBA\",    \"CRTUA\",    \"CSINJJ\",    \"EERCP\",    \"EIRDMS\",    \"ESIGMY\",    \"FACRH\",    \"FADVB\",    \"FBONEJ\",    \"FDYCV\",    \"FFIST\",    \"FFULB\",    \"FHEPW\",    \"FICVG\",    \"FNGFT\",    \"FNPGB\",    \"FPERC\",    \"FPTCH\",    \"FREVB\",    \"FSPLV\",    \"FSTENS\",    \"FSVCG\",    \"FTTCH\",    \"FTUBO\",    \"FVENJU\",    \"FVSAM\",    \"FVSHE\",    \"FVSUV\",    \"IABROE\",    \"IACHEE\",    \"IACOEE\",    \"IACOES\",    \"IADFIS\",    \"IAFBOX\",    \"IAGFTS\",    \"IAHEPE\",    \"IALCOJ\",    \"IAREBE\",    \"IAREBS\",    \"IARELE\",    \"IASDRD\",    \"IASIBS\",    \"IASPNN\",    \"IAVEME\",    \"IAVFBP\",    \"IAVSHI\",    \"IBICDG\",    \"IBILDD\",    \"IBILDP\",    \"IBRCEP\",    \"ICHOSD\",    \"IDATBS\",    \"IDCCBS\",    \"IDHEPS\",    \"IDRAII\",    \"IDSMAS\",    \"IDSPLS\",    \"IEMBOE\",    \"IENTSS\",    \"IEXCHG\",    \"IFEMAI\",    \"IGAJYD\",    \"IGDFIS\",    \"IGPEGI\",    \"IGYJC\",    \"IIABPI\",    \"IIVFPI\",    \"IIVFTI\",    \"IIVFTX\",    \"IJPEGI\",    \"ILITJB\",    \"IMESAE\",    \"IMETCS\",    \"INEPBD\",    \"INEPXG\",    \"INTKDI\",    \"IPARTE\",    \"IPDFIP\",    \"IPEG\",    \"IPICCX\",    \"IPORC\",    \"IPTCOE\",    \"ISVCAP\",    \"ITASPN\",    \"ITCVC\",    \"ITCVCG\",    \"ITCVCI\",    \"ITCVCX\",    \"ITHBNJ\",    \"ITIPSE\",    \"ITIPSS\",    \"ITLLBJ\",    \"IURABS\",    \"IURRBS\",    \"IURSLX\",    \"IVENOP\",    \"IVEPOI\",    \"IVILBS\",    \"IVTESE\",    \"UBIOPB\",    \"UCHESD\",    \"UCORA\",    \"UDRAID\",    \"UHIFU\",    \"UKIDLB\",    \"UKIDNN\",    \"UKIDRB\",    \"ULIVEB\",    \"USPUCI\"], select9@{Exam Code}) , 8 , iif((select9@{Trust Name}==\"S&O\" || select9@{Trust Name}==\"StHK\") && contains( [\"CFITHI\",    \"UABDON\",    \"UASPNN\",    \"UABDOB\",    \"UCHESB\",    \"UHIFU\",    \"UINJTJ\",    \"UABDOD\",    \"URAFGA\",    \"UABDO\",    \"UPANCD\",    \"UPELVD\",    \"IAVFBP\",    \"IAVGTP\",    \"IURABS\",    \"ICHOSD\",    \"IASDRD\",    \"IEMBOE\",    \"IACOEE\",    \"IAHEPE\",    \"IMESAE\",    \"IACOES\",    \"FACOG\",    \"IAFEBS\",    \"IASIBS\",    \"IDIMAS\",    \"IDIIBS\",    \"FAPTH\",    \"IAPOBS\",    \"IDREBS\",    \"FACRH\",    \"IASFBS\",    \"IDSMAS\",    \"IATIBS\",    \"IDATBS\",    \"FCYST\",    \"FNPGB\",    \"FICVG\",    \"IVSUBS\",    \"IVTIPS\",    \"IENTSS\",    \"FTUBO\",    \"FPACE\",    \"FTUBG\",    \"IGAJYD\",    \"IBILDD\",    \"ILOREI\",    \"IGPEGI\",    \"IIABPI\",    \"FNGFT\",    \"IPICCI\",    \"IIVFPI\",    \"IIVFTI\",    \"FLUPUY\",    \"INEPBD\",    \"IARELE\",    \"IASPLE\",    \"IULLBJ\",    \"FPTCH\",    \"IPIMAP\",    \"IVSVCS\",    \"FCARDN\",    \"IREBSX\",    \"IIVFTX\",    \"FNERBX\",    \"IURSLX\",    \"IBICDG\",    \"IEXCHG\",    \"IGSJXG\",    \"IGPEGG\",    \"INEPXG\",    \"IPICCG\",    \"ITCVCG\",    \"IVENOP\"], select9@{Exam Code}) , 8 , iif(select9@{Trust Name}==\"CCC\" && contains( [ \"CLIVEB\",    \"CPELVB\",    \"CBIOPB\",    \"CSINJJ\",    \"CDRAID\",    \"UCHESN\",    \"UASPNN\",    \"UCHESB\",    \"UDRAID\",    \"UHIFU\",    \"UINJTJ\",    \"UABDOD\",    \"UCHESD\",    \"UFIPEP\",    \"UTUNDI\",    \"UDRRAX\",    \"FPCAN\",    \"FNPGB\",    \"IVTIPS\",    \"FULVB\",    \"IFEMAI\",    \"FABDO\",    \"FTUBG\",    \"IITHCI\",    \"ITCVCI\",    \"FLUPUY\",    \"INEPBD\",    \"IPIMAP\",    \"ITCVCX\",    \"IPICCG\",    \"FSPEE\"], select9@{Exam Code}) , 8 , iif(select9@{Trust Name}==\"WHH\" && contains( [ \"CFITHI\",    \"UABDON\",    \"UPELVN\",    \"UASPNN\",    \"UABDOB\",    \"UCHESB\",    \"ULIVEB\",    \"UNECKB\",    \"USOFTB\",    \"UDRAID\",    \"UHIFU\",    \"UINJTJ\",    \"UABDOD\",    \"USPUCI\",    \"UCORA\",    \"UABDO\",    \"UBIOPB\",    \"UPANCD\",    \"UPELVD\",    \"IAVFBP\",    \"IAVGTP\",    \"IURABS\",    \"IASPNN\",    \"FBONEB\",    \"FSOFTB\",    \"ICHESB\",    \"IBIOPB\",    \"FHART\",    \"ICHOSD\",    \"IBILDP\",    \"IASDRD\",    \"IUTFDE\",    \"IEMBOE\",    \"FPCAN\",    \"IACOEE\",    \"IAHEPE\",    \"IMESAE\",    \"IAAUIS\",    \"IDAXBS\",    \"IACOES\",    \"IDCCBS\",    \"IAFEBS\",    \"IDHEPS\",    \"IASIBS\",    \"IDIMAS\",    \"IDIIBS\",    \"FACLV\",    \"FALHC\",    \"FAPTH\",    \"IPENAS\",    \"IAPOBS\",    \"IAPUBS\",    \"IDREBS\",    \"FACRH\",    \"IDSPLS\",    \"IASFBS\",    \"IDSMAS\",    \"IATIBS\",    \"IDATBS\",    \"FCYST\",    \"FFIST\",    \"FHERN\",    \"FILCO\",    \"FNPGB\",    \"IVTESE\",    \"FICVG\",    \"FLLVB\",    \"FSVCG\",    \"FULVB\",    \"IFEMAI\",    \"IENTSS\",    \"FTUBO\",    \"FTHOX\",    \"FDIAP\",    \"FPACE\",    \"FHIPB\",    \"FTUBG\",    \"IGAJYD\",    \"FJOINJ\",    \"FINJTJ\",    \"IBILDD\",    \"ILOREI\",    \"IGPEGI\",    \"IVEPOI\",    \"IIABPI\",    \"FNGFT\",    \"IPICCI\",    \"IIVFPI\",    \"IIVFTI\",    \"ITCVCI\",    \"ITUNDI\",    \"FLUPUY\",    \"INEPBD\",    \"IPGFTP\",    \"IAVFIE\",    \"IARELE\",    \"IASPLE\",    \"IALCOJ\",    \"IVEINS\",    \"ICEARJ\",    \"FPTCH\",    \"IDRBAP\",    \"FCARDN\",    \"IREBSX\",    \"IIVFTX\",    \"FNERBX\",    \"IPICCX\",    \"IPORC\",    \"ITCVCX\",    \"IURSLX\",    \"IBICDG\",    \"IEXCHG\",    \"IGSJXG\",    \"IGPEGG\",    \"INEPXG\",    \"IPICCG\",    \"ITCVCG\",    \"IRCPM\",    \"FTTCH\",    \"FVENJU\"], select9@{Exam Code}) , 8 , 0)))))) ~> derivedColumn10",
 						"Modality derive({Stat Date} = toTimestamp(byName('Stat Date')),",
 						"          Modality = toString(byName('Modality'))) ~> MapDrifted7",
 						"Status derive({Stat Date} = toTimestamp(byName('Stat Date'))) ~> MapDrifted8",
@@ -23999,7 +23993,6 @@
 						"          {Image-Report 3D Pass},",
 						"          {Image-Report 7D Pass},",
 						"          {Image-Report 28D Pass},",
-						"          {Updated Modality},",
 						"          UpOrIn",
 						"     )) ~> AzureSqlCOREV2"
 					]
