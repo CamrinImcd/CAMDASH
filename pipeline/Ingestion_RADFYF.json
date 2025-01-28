@@ -80,13 +80,23 @@
 								"value": ""
 							}
 						],
+						"sqlReaderQuery": {
+							"value": "select * from dbo.FYF_ODBC_Core where [Stat Date] > '@{activity('Prev Latest stat date core').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date core').output.firstRow.CoreUpdateValue}'",
+							"type": "Expression"
+						},
 						"queryTimeout": "24:00:00",
 						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "Truncate table dev.FYF_ODBC_CORE",
-						"writeBehavior": "insert",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"Exam Key",
+								"Status Code"
+							]
+						},
 						"sqlWriterUseTableLock": false,
 						"disableMetricsCollection": false
 					},
