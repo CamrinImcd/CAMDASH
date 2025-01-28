@@ -673,7 +673,7 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "dev",
-					"table": "Patient_Waiting_Monthly"
+					"table": "Patient_Waiting_Monthly_v3"
 				}
 			},
 			"dependsOn": []
