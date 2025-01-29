@@ -1,12 +1,12 @@
 {
-	"name": "powerquery1",
+	"name": "Asset1",
 	"properties": {
 		"type": "WranglingDataFlow",
 		"typeProperties": {
 			"sources": [
 				{
 					"name": "NIDC_Asset_Avail",
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~>  NIDC_Asset_Avail",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> NIDC_Asset_Avail",
 					"dataset": {
 						"referenceName": "NIDC_Asset_Avail",
 						"type": "DatasetReference"
@@ -14,7 +14,7 @@
 				},
 				{
 					"name": "Trust",
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~>  Trust",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Trust",
 					"dataset": {
 						"referenceName": "Trust",
 						"type": "DatasetReference"
@@ -22,7 +22,7 @@
 				},
 				{
 					"name": "Modality",
-					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~>  Modality",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Modality",
 					"dataset": {
 						"referenceName": "Modality",
 						"type": "DatasetReference"
