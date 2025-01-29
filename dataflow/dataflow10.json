@@ -1,0 +1,85 @@
+{
+	"name": "dataflow10",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "NIDC_Asset_Spec",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable4",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "cast1"
+				},
+				{
+					"name": "sort1"
+				},
+				{
+					"name": "filter1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Year as string,",
+				"          NIDC_Asset_ID as string,",
+				"          Local_Identifier as string,",
+				"          Trust_Site_Code as string,",
+				"          RIS_Room_Code as string,",
+				"          Location as string,",
+				"          Machine_Type as string,",
+				"          Modality as string,",
+				"          Equipment_Detail as string,",
+				"          Manufacturer as string,",
+				"          First_In_Service_Date as string,",
+				"          Age_of_Machine as string,",
+				"          Planned_Replacement_Date as string,",
+				"          Asset_Status as string,",
+				"          Installation_Replacement_Status as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source1 derive(Age_of_Machine = replace(Age_of_Machine,\"#VALUE!\",\"\"),",
+				"          {Trust Name} = iif(Trust_Site_Code==\"5HA16\",\"LUHFT\",iif(Trust_Site_Code==\"5NL93\", \"LUHFT\", iif(left(Trust_Site_Code,3)==\"REM\", \"LUHFT\", iif(left(Trust_Site_Code,3)==\"RQ6\", \"LUHFT\", iif(left(Trust_Site_Code,3)== \"RBL\", \"WUTH\", iif(left(Trust_Site_Code,3)== \"RBN\", \"STHK\", iif(left(Trust_Site_Code,3)== \"RBQ\", \"LHCH\", iif(left(Trust_Site_Code,3)== \"RBS\", \"Alder Hey\", iif(left(Trust_Site_Code,3)== \"RBT\" , \"MCH\" , iif(left(Trust_Site_Code,3)== \"REN\" , \"CCC\" , iif(left(Trust_Site_Code,3)== \"REP\" , \"Womens\" , iif(left(Trust_Site_Code,3)== \"RET\" , \"TWC\" , iif(left(Trust_Site_Code,3)== \"RJR\" , \"COCH\" , iif(left(Trust_Site_Code,3)==\"RVY\", \"S&O\" , iif(left(Trust_Site_Code,3)==\"RWW\" , \"WHH\" , iif(Trust_Site_Code==\"NTD05\" , \"LUHFT\" , iif(Trust_Site_Code==\"5M501\" , \"LUHFT\" , iif(Trust_Site_Code==\"HALTON\" , \"WHH\" , iif(Trust_Site_Code==\"CSTM\" , \"WHH\" , iif(Trust_Site_Code==\"Warrington\" , \"WHH\" , iif(Trust_Site_Code==\"L6R32\" , \"STHK\" , iif(Trust_Site_Code==\"SHOPPING CITY\" , \"WHH\" , iif(Trust_Site_Code==\"WIDNES\" , \"WHH\" , iif(Trust_Site_Code==\"CDC\" , \"WUTH\" , Trust_Site_Code)))))))))))))))))))))))),",
+				"          Modality2 = iif(like(Equipment_Detail, '%Breast%'), \"Mammo\", iif(like(Equipment_Detail, '%Obstetric%'), \"Obstetrics\", iif(like(Location, '%Breast%'), \"Mammo\", iif(like(Location, '%Maternity%'), \"Obstetrics\", iif(like(Location, '%Dental%'), \"Dental\", iif(Modality == \"Interventional Radiology\", \"IR\", iif(Modality == \"Bone Densitometer\", \"DEXA\", iif(Modality==\"CT\", \"CT\", iif(Modality==\"Fluoroscopy\", \"Fluoro\", iif(Modality==\"Plain XRay\", \"Plain X-Ray\", iif(Modality==\"X ray Units Mobile\", \"Plain X-Ray\", iif(Modality==\"X ray Units Static\", \"Plain X-Ray\", iif(Modality==\"Ultrasound\", \"NOUS\", iif(Modality==\"Nuclear Medicine\", \"Nuc Med\", iif(Modality==\"MRI\", \"MRI\", iif(Modality==\"Mammography\", \"Mammo\", iif(Modality==\"DEXA\", \"DEXA\", iif(like(Modality, '%Mobile C%'), \"Plain X-Ray\", iif(left(Modality,4)==\"Cath\", \"IR\", \"\")))))))))))))))))))) ~> derivedColumn1",
+				"derivedColumn1 cast(output(",
+				"          First_In_Service_Date as date,",
+				"          Age_of_Machine as integer,",
+				"          Planned_Replacement_Date as date",
+				"     ),",
+				"     errors: true) ~> cast1",
+				"cast1 sort(asc(Age_of_Machine, true),",
+				"     asc({Trust Name}, true)) ~> sort1",
+				"sort1 filter(Year==\"2023\") ~> filter1",
+				"filter1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}
