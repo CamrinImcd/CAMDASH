@@ -1,0 +1,36 @@
+{
+	"name": "powerquery1",
+	"properties": {
+		"type": "WranglingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"name": "NIDC_Asset_Avail",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~>  NIDC_Asset_Avail",
+					"dataset": {
+						"referenceName": "NIDC_Asset_Avail",
+						"type": "DatasetReference"
+					}
+				},
+				{
+					"name": "Trust",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~>  Trust",
+					"dataset": {
+						"referenceName": "Trust",
+						"type": "DatasetReference"
+					}
+				},
+				{
+					"name": "Modality",
+					"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~>  Modality",
+					"dataset": {
+						"referenceName": "Modality",
+						"type": "DatasetReference"
+					}
+				}
+			],
+			"script": "section Section1;\r\nshared NIDC_Asset_Avail = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dbo\",Item=\"NIDC_Asset_Avail\"]}[Data] in InputTable;\r\nshared Trust = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dev\",Item=\"Trust\"]}[Data] in InputTable;\r\nshared Modality = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dev\",Item=\"Modality\"]}[Data] in InputTable;\r\nshared UserQuery = let Source = #\"NIDC_Asset_Avail\",\n  #\"Filtered rows\" = Table.SelectRows(Source, each [Location] <> \"Dental Department\" and [Equipment_Detail] <> null and [Equipment_Detail] <> \"2D with 3D Capability – Breast\" and [Equipment_Detail] <> \"2D – Breast\" and [Equipment_Detail] <> \"Dental Cone Beam CT\" and [Equipment_Detail] <> \"Fixed fluoroscopy Imaging Flat plate     \" and [Equipment_Detail] <> \"Flaxitron\" and [Equipment_Detail] <> \"Intraoral\" and [Equipment_Detail] <> \"Mobile C arm\" and [Equipment_Detail] <> \"Mobile C-arm - Flat Panel Digital Detector\" and [Equipment_Detail] <> \"Mobile C-arm - Image Intensifier\" and [Equipment_Detail] <> \"OPG\" and [Equipment_Detail] <> \"OPG+Ceph\" and [Equipment_Detail] <> \"Symptomatic - Digital Mammography - 2D\" and [Equipment_Detail] <> \"Symptomatic - Digital Mammography - 2D + biopsy\" and [Equipment_Detail] <> \"Symptomatic - Digital Mammography 2D + 3D Tomosynthesis\" and [Equipment_Detail] <> \"Symptomatic - Digital Mammography 2D + 3D Tomosynthesis +biopsy\" and [Equipment_Detail] <> \"Ultrasound  – Obstetric\"),\n  #\"Replaced value 2\" = Table.ReplaceValue(#\"Filtered rows\", \"RQ6\", \"REM\", Replacer.ReplaceText, {\"Trust\"}),\n    #\"Replaced value 1\" = Table.ReplaceValue(#\"Replaced value 2\", \"8 on Monday, Tuesday and Thursday\", \"4.8\", Replacer.ReplaceValue, {\"Avg_core_staffed_operational_hours_Weekday\"}),\n    #\"Added Conditional Column\" = Table.AddColumn(#\"Replaced value 1\", \"Equipment_Detail - Copy\", each if Text.Contains([Location], \"Breast\") then \"Mammo\" else if Text.Contains([Location], \"Angio\") then \"IR\" else if Text.Contains([Location], \"Cath Lab\") then \"IR\" else if Text.Contains([Location], \"Maternity\") then \"Obstetrics\" else if Text.Contains([Equipment_Detail], \"Plain\") then \"Plain X-Ray\" else if Text.Contains([Equipment_Detail], \"256\") then \"CT\" else if Text.Contains([Equipment_Detail], \"Bore\") then \"MRI\" else if Text.Contains([Equipment_Detail], \"SPECT\") then \"Nuc Med\" else if Text.Contains([Equipment_Detail], \"Plane\") then \"IR\" else if Text.Contains([Equipment_Detail], \"PET\") then \"Nuc Med\" else if Text.Contains([Equipment_Detail], \"CT\") then \"CT\" else if Text.Contains([Equipment_Detail], \"Dexa\") then \"DEXA\" else if Text.Contains([Equipment_Detail], \"arm\") then \"Plain X-Ray\" else if Text.Contains([Equipment_Detail], \"Breast\") then \"Mammo\" else if Text.Contains([Equipment_Detail], \"Obstetric\") then \"Obstetrics\" else \"NOUS\"),\n    #\"Reordered Columns2\" = Table.ReorderColumns(#\"Added Conditional Column\",{\"Year\", \"Trust\", \"Local_Identifier\", \"Room_Code\", \"Location\", \"Equipment_Detail\", \"Equipment_Detail - Copy\", \"Avg_core_staffed_operational_hours_Weekday\", \"Main_use_core_hours_Weekday\", \"avg_OOHs_Weekday\", \"Avg_core_staffed_operational_hours_Sat\", \"Main_use_core_hours_Sat\", \"avg_OOHs_Sat\", \"Avg_core_staffed_operational_hours_Sun\", \"Main_use_core_hours_Sun\", \"avg_OOHs_Sun\", \"Research\", \"Avg_Research_Hours_per_week\", \"Unscheduled_downtime_12M\"}),\n    #\"Renamed Columns\" = Table.RenameColumns(#\"Reordered Columns2\",{{\"Equipment_Detail - Copy\", \"Modality\"}}),\n    #\"Removed Columns\" = Table.RemoveColumns(#\"Renamed Columns\",{\"Room_Code\", \"Main_use_core_hours_Weekday\", \"avg_OOHs_Weekday\", \"Main_use_core_hours_Sat\", \"avg_OOHs_Sat\", \"Main_use_core_hours_Sun\", \"avg_OOHs_Sun\", \"Research\", \"Avg_Research_Hours_per_week\", \"Unscheduled_downtime_12M\"}),\n    #\"Duplicated Column1\" = Table.DuplicateColumn(#\"Removed Columns\", \"Avg_core_staffed_operational_hours_Weekday\", \"Avg_core_staffed_operational_hours_Weekday - Copy\"),\n    #\"Renamed Columns1\" = Table.RenameColumns(#\"Duplicated Column1\",{{\"Avg_core_staffed_operational_hours_Weekday\", \"Monday\"}, {\"Avg_core_staffed_operational_hours_Weekday - Copy\", \"Tuesday\"}}),\n    #\"Reordered Columns\" = Table.ReorderColumns(#\"Renamed Columns1\",{\"Year\", \"Trust\", \"Local_Identifier\", \"Location\", \"Equipment_Detail\", \"Monday\", \"Tuesday\", \"Avg_core_staffed_operational_hours_Sat\", \"Avg_core_staffed_operational_hours_Sun\", \"Modality\"}),\n    #\"Duplicated Column2\" = Table.DuplicateColumn(#\"Reordered Columns\", \"Tuesday\", \"Tuesday - Copy\"),\n    #\"Renamed Columns2\" = Table.RenameColumns(#\"Duplicated Column2\",{{\"Tuesday - Copy\", \"Wednesday\"}}),\n    #\"Duplicated Column3\" = Table.DuplicateColumn(#\"Renamed Columns2\", \"Wednesday\", \"Thursday\"),\n    #\"Duplicated Column4\" = Table.DuplicateColumn(#\"Duplicated Column3\", \"Thursday\", \"Friday\"),\n    #\"Renamed Columns3\" = Table.RenameColumns(#\"Duplicated Column4\",{{\"Avg_core_staffed_operational_hours_Sat\", \"Saturday\"}, {\"Avg_core_staffed_operational_hours_Sun\", \"Sunday\"}}),\n    #\"Reordered Columns1\" = Table.ReorderColumns(#\"Renamed Columns3\",{\"Year\", \"Trust\", \"Local_Identifier\", \"Location\", \"Equipment_Detail\", \"Modality\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\", \"Sunday\"})\n\nin\n    #\"Reordered Columns1\";\r\n",
+			"documentLocale": "en-us"
+		}
+	}
+}
