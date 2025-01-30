@@ -9071,7 +9071,8 @@
 									"source5": {},
 									"sink1": {},
 									"sink2": {}
-								}
+								},
+								"linkedServiceParameters": {}
 							},
 							"staging": {},
 							"compute": {
@@ -9088,7 +9089,8 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dataflow10')]"
+				"[concat(variables('factoryId'), '/dataflows/dataflow10')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]"
 			]
 		},
 		{
@@ -25263,7 +25265,7 @@
 						},
 						{
 							"dataset": {
-								"referenceName": "AzureSqlTable6",
+								"referenceName": "AzureSqlTable7",
 								"type": "DatasetReference"
 							},
 							"name": "sink2"
@@ -25480,7 +25482,7 @@
 				"[concat(variables('factoryId'), '/datasets/Trust_Unique')]",
 				"[concat(variables('factoryId'), '/datasets/Modality')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable4')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlTable6')]"
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable7')]"
 			]
 		},
 		{
@@ -26862,6 +26864,27 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable7')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "NIDC_Asset2"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
 			]
 		}
 	]
