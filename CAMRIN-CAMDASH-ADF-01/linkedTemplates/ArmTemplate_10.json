@@ -104,6 +104,9 @@
 						},
 						{
 							"name": "sort2"
+						},
+						{
+							"name": "aggregate1"
 						}
 					],
 					"scriptLines": [
@@ -247,6 +250,9 @@
 						"select2 derive({Trust ID} = replace(toString({Trust ID}),\"null\",\"0\"),",
 						"          ID2 = concat(Year,\":\",Day,\":\",toString({Trust ID}),\":\",toString({Modality ID}))) ~> derivedColumn3",
 						"derivedColumn3 sort(asc(ID2, false)) ~> sort2",
+						"sort2 aggregate(groupBy(Year,",
+						"          ID2),",
+						"     {Hours Open} = sum(toInteger({Hours Open}))) ~> aggregate1",
 						"filter1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
@@ -258,7 +264,7 @@
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
-						"sort2 sink(allowSchemaDrift: true,",
+						"aggregate1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
 						"     insertable:true,",
