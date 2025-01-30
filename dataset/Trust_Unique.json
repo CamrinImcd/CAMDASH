@@ -1,0 +1,43 @@
+{
+	"name": "Trust_Unique",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Trust Name",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Stat Date",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "Trust ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Trust Name Group",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Trust Name Group2",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Trust Name Group3",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dev",
+			"table": "Trust Unique"
+		}
+	}
+}
