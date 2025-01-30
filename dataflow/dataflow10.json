@@ -10,6 +10,27 @@
 						"type": "DatasetReference"
 					},
 					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "NIDC_Asset_Avail",
+						"type": "DatasetReference"
+					},
+					"name": "source3"
+				},
+				{
+					"dataset": {
+						"referenceName": "Trust_Unique",
+						"type": "DatasetReference"
+					},
+					"name": "source4"
+				},
+				{
+					"dataset": {
+						"referenceName": "Modality",
+						"type": "DatasetReference"
+					},
+					"name": "source5"
 				}
 			],
 			"sinks": [
@@ -19,6 +40,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable6",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
 				}
 			],
 			"transformations": [
@@ -33,6 +61,33 @@
 				},
 				{
 					"name": "filter1"
+				},
+				{
+					"name": "filter2"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "select1"
+				},
+				{
+					"name": "unpivot1"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "select2"
+				},
+				{
+					"name": "join2"
+				},
+				{
+					"name": "derivedColumn3"
+				},
+				{
+					"name": "sort2"
 				}
 			],
 			"scriptLines": [
@@ -57,6 +112,50 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source1",
+				"source(output(",
+				"          Year as string,",
+				"          Trust as string,",
+				"          Local_Identifier as string,",
+				"          Room_Code as string,",
+				"          Location as string,",
+				"          Equipment_Detail as string,",
+				"          Avg_core_staffed_operational_hours_Weekday as string,",
+				"          Main_use_core_hours_Weekday as string,",
+				"          avg_OOHs_Weekday as string,",
+				"          Avg_core_staffed_operational_hours_Sat as string,",
+				"          Main_use_core_hours_Sat as string,",
+				"          avg_OOHs_Sat as string,",
+				"          Avg_core_staffed_operational_hours_Sun as string,",
+				"          Main_use_core_hours_Sun as string,",
+				"          avg_OOHs_Sun as string,",
+				"          Research as string,",
+				"          Avg_Research_Hours_per_week as string,",
+				"          Unscheduled_downtime_12M as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source3",
+				"source(output(",
+				"          {Trust Name} as string,",
+				"          {Stat Date} as timestamp,",
+				"          {Trust ID} as integer,",
+				"          {Trust Name Group} as string,",
+				"          {Trust Name Group2} as string,",
+				"          {Trust Name Group3} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source4",
+				"source(output(",
+				"          Modality2 as string,",
+				"          {Modality ID} as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source5",
 				"source1 derive(Age_of_Machine = replace(Age_of_Machine,\"#VALUE!\",\"\"),",
 				"          {Trust Name} = iif(Trust_Site_Code==\"5HA16\",\"LUHFT\",iif(Trust_Site_Code==\"5NL93\", \"LUHFT\", iif(left(Trust_Site_Code,3)==\"REM\", \"LUHFT\", iif(left(Trust_Site_Code,3)==\"RQ6\", \"LUHFT\", iif(left(Trust_Site_Code,3)== \"RBL\", \"WUTH\", iif(left(Trust_Site_Code,3)== \"RBN\", \"STHK\", iif(left(Trust_Site_Code,3)== \"RBQ\", \"LHCH\", iif(left(Trust_Site_Code,3)== \"RBS\", \"Alder Hey\", iif(left(Trust_Site_Code,3)== \"RBT\" , \"MCH\" , iif(left(Trust_Site_Code,3)== \"REN\" , \"CCC\" , iif(left(Trust_Site_Code,3)== \"REP\" , \"Womens\" , iif(left(Trust_Site_Code,3)== \"RET\" , \"TWC\" , iif(left(Trust_Site_Code,3)== \"RJR\" , \"COCH\" , iif(left(Trust_Site_Code,3)==\"RVY\", \"S&O\" , iif(left(Trust_Site_Code,3)==\"RWW\" , \"WHH\" , iif(Trust_Site_Code==\"NTD05\" , \"LUHFT\" , iif(Trust_Site_Code==\"5M501\" , \"LUHFT\" , iif(Trust_Site_Code==\"HALTON\" , \"WHH\" , iif(Trust_Site_Code==\"CSTM\" , \"WHH\" , iif(Trust_Site_Code==\"Warrington\" , \"WHH\" , iif(Trust_Site_Code==\"L6R32\" , \"STHK\" , iif(Trust_Site_Code==\"SHOPPING CITY\" , \"WHH\" , iif(Trust_Site_Code==\"WIDNES\" , \"WHH\" , iif(Trust_Site_Code==\"CDC\" , \"WUTH\" , Trust_Site_Code)))))))))))))))))))))))),",
 				"          Modality2 = iif(like(Equipment_Detail, '%Breast%'), \"Mammo\", iif(like(Equipment_Detail, '%Obstetric%'), \"Obstetrics\", iif(like(Location, '%Breast%'), \"Mammo\", iif(like(Location, '%Maternity%'), \"Obstetrics\", iif(like(Location, '%Dental%'), \"Dental\", iif(Modality == \"Interventional Radiology\", \"IR\", iif(Modality == \"Bone Densitometer\", \"DEXA\", iif(Modality==\"CT\", \"CT\", iif(Modality==\"Fluoroscopy\", \"Fluoro\", iif(Modality==\"Plain XRay\", \"Plain X-Ray\", iif(Modality==\"X ray Units Mobile\", \"Plain X-Ray\", iif(Modality==\"X ray Units Static\", \"Plain X-Ray\", iif(Modality==\"Ultrasound\", \"NOUS\", iif(Modality==\"Nuclear Medicine\", \"Nuc Med\", iif(Modality==\"MRI\", \"MRI\", iif(Modality==\"Mammography\", \"Mammo\", iif(Modality==\"DEXA\", \"DEXA\", iif(like(Modality, '%Mobile C%'), \"Plain X-Ray\", iif(left(Modality,4)==\"Cath\", \"IR\", \"\")))))))))))))))))))) ~> derivedColumn1",
@@ -69,6 +168,71 @@
 				"cast1 sort(asc(Age_of_Machine, true),",
 				"     asc({Trust Name}, true)) ~> sort1",
 				"sort1 filter(Year==\"2023\") ~> filter1",
+				"source3 filter(Location != \"Dental Department\" || isNull(Equipment_Detail) == false() || Equipment_Detail != \"2D with 3D Capability – Breast\" || Equipment_Detail != \"2D – Breast\" || Equipment_Detail != \"Dental Cone Beam CT\" || Equipment_Detail != \"Fixed fluoroscopy Imaging Flat plate     \" || Equipment_Detail != \"Flaxitron\" || Equipment_Detail != \"Intraoral\" || Equipment_Detail != \"Mobile C arm\" || Equipment_Detail != \"Mobile C-arm - Flat Panel Digital Detector\" || Equipment_Detail != \"Mobile C-arm - Image Intensifier\" || Equipment_Detail != \"OPG\" || Equipment_Detail != \"OPG+Ceph\" || Equipment_Detail != \"Symptomatic - Digital Mammography - 2D\" || Equipment_Detail != \"Symptomatic - Digital Mammography - 2D + biopsy\" || Equipment_Detail != \"Symptomatic - Digital Mammography 2D + 3D Tomosynthesis\" || Equipment_Detail != \"Symptomatic - Digital Mammography 2D + 3D Tomosynthesis +biopsy\" || Equipment_Detail != \"Ultrasound  – Obstetric\") ~> filter2",
+				"filter2 derive(Trust = replace(Trust,\"RQ6\",\"REM\"),",
+				"          avg_OOHs_Weekday = replace(avg_OOHs_Weekday,\"8 on Monday, Tuesday and Thursday\", \"4.8\"),",
+				"          Modality = iif(contains([Location], #item==\"Breast\") , \"Mammo\" , iif(contains([Location], #item==\"Angio\") , \"IR\" , iif(contains([Location], #item==\"Cath Lab\") , \"IR\" , iif(contains([Location], #item==\"Maternity\") , \"Obstetrics\" , iif(contains([Equipment_Detail], #item==\"Plain\") , \"Plain X-Ray\" , iif(contains([Equipment_Detail], #item==\"256\") , \"CT\" , iif(contains([Equipment_Detail], #item==\"Bore\") , \"MRI\" , iif(contains([Equipment_Detail], #item==\"SPECT\") , \"Nuc Med\" , iif(contains([Equipment_Detail], #item==\"Plane\") , \"IR\" , iif(contains([Equipment_Detail], #item==\"PET\") , \"Nuc Med\" , iif(contains([Equipment_Detail], #item==\"CT\") , \"CT\" , iif(contains([Equipment_Detail], #item==\"Dexa\") , \"DEXA\" , iif(contains([Equipment_Detail], #item==\"arm\") , \"Plain X-Ray\" , iif(contains([Equipment_Detail], #item==\"Breast\") , \"Mammo\" , iif(contains([Equipment_Detail], #item==\"Obstetric\") , \"Obstetrics\" , \"NOUS\")))))))))))))))\r",
+				",",
+				"          Monday = Avg_core_staffed_operational_hours_Weekday,",
+				"          Tuesday = Avg_core_staffed_operational_hours_Weekday,",
+				"          Wednesday = Avg_core_staffed_operational_hours_Weekday,",
+				"          Thursday = Avg_core_staffed_operational_hours_Weekday,",
+				"          Friday = Avg_core_staffed_operational_hours_Weekday) ~> derivedColumn2",
+				"derivedColumn2 select(mapColumn(",
+				"          Year,",
+				"          Trust,",
+				"          Local_Identifier,",
+				"          Location,",
+				"          Equipment_Detail,",
+				"          Monday,",
+				"          Tuesday,",
+				"          Wednesday,",
+				"          Thursday,",
+				"          Friday,",
+				"          Saturday = Avg_core_staffed_operational_hours_Sat,",
+				"          Sunday = Avg_core_staffed_operational_hours_Sun,",
+				"          Modality",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 unpivot(output(",
+				"          Day as string,",
+				"          {Hours Open} as string",
+				"     ),",
+				"     ungroupBy(Year,",
+				"          Trust,",
+				"          Local_Identifier,",
+				"          Location,",
+				"          Equipment_Detail,",
+				"          Modality),",
+				"     lateral: true,",
+				"     ignoreNullPivots: true) ~> unpivot1",
+				"unpivot1, source4 join(Trust == {Trust Name Group},",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join2 select(mapColumn(",
+				"          Year,",
+				"          Local_Identifier,",
+				"          Location,",
+				"          Equipment_Detail,",
+				"          Day,",
+				"          {Hours Open},",
+				"          {Trust ID},",
+				"          {Modality ID}",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select2",
+				"join1, source5 join(Modality == Modality2,",
+				"     joinType:'left',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join2",
+				"select2 derive({Trust ID} = replace(toString({Trust ID}),\"null\",\"0\"),",
+				"          ID2 = concat(Year,\":\",Day,\":\",toString({Trust ID}),\":\",toString({Modality ID}))\r",
+				") ~> derivedColumn3",
+				"derivedColumn3 sort(asc(ID2, false)) ~> sort2",
 				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
@@ -78,7 +242,17 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
+				"sort2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink2"
 			]
 		}
 	}
