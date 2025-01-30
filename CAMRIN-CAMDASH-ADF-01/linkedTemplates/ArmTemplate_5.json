@@ -13,6 +13,83 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_SubStaffMedical')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "SubStaffMedical",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Staff Type",
+						"type": "String"
+					},
+					{
+						"name": "Headcount",
+						"type": "String"
+					},
+					{
+						"name": "FTE",
+						"type": "String"
+					},
+					{
+						"name": "Pay Costs (£)",
+						"type": "String"
+					},
+					{
+						"name": "Vacancy",
+						"type": "String"
+					},
+					{
+						"name": "DCC - Reporting",
+						"type": "String"
+					},
+					{
+						"name": "DCC - MDT",
+						"type": "String"
+					},
+					{
+						"name": "DCC - Other Clinical Activities",
+						"type": "String"
+					},
+					{
+						"name": "SPA",
+						"type": "String"
+					},
+					{
+						"name": "SPA - Imaging Network",
+						"type": "String"
+					},
+					{
+						"name": "REALM / Governance",
+						"type": "String"
+					},
+					{
+						"name": "Other",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_SubStaffNonClinicalDuties')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -736,25 +813,6 @@
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "NIDC_Workforce_ActivityIA"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/NIDC_Workforce_ActivityKPI')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "NIDC_Workforce_ActivityKPI"
 				}
 			},
 			"dependsOn": []
