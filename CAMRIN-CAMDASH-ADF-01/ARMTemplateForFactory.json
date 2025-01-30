@@ -9042,6 +9042,56 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/NIDC_Transformation')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow10",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"source3": {},
+									"source4": {},
+									"source5": {},
+									"sink1": {},
+									"sink2": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow10')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AIDF')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -10969,6 +11019,69 @@
 				"typeProperties": {
 					"schema": "dev",
 					"table": "AzureSQL_CORE_V3"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable4')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "NIDC_Asset_Spec2"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable5')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "Trust Unique"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable6')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "NIDC_Asset_a"
 				}
 			},
 			"dependsOn": [
@@ -17969,7 +18082,80 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "Year",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Trust",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Local_Identifier",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Room_Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Location",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Equipment_Detail",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Avg_core_staffed_operational_hours_Weekday",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Main_use_core_hours_Weekday",
+						"type": "nvarchar"
+					},
+					{
+						"name": "avg_OOHs_Weekday",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Avg_core_staffed_operational_hours_Sat",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Main_use_core_hours_Sat",
+						"type": "nvarchar"
+					},
+					{
+						"name": "avg_OOHs_Sat",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Avg_core_staffed_operational_hours_Sun",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Main_use_core_hours_Sun",
+						"type": "nvarchar"
+					},
+					{
+						"name": "avg_OOHs_Sun",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Research",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Avg_Research_Hours_per_week",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Unscheduled_downtime_12M",
+						"type": "nvarchar"
+					}
+				],
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "NIDC_Asset_Avail"
@@ -21620,6 +21806,54 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Trust_Unique')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Trust Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Trust ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Trust Name Group",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Trust Name Group2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Trust Name Group3",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "Trust Unique"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/testtable2')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -22312,6 +22546,49 @@
 				"[concat(variables('factoryId'), '/datasets/FYF_ODBC_CORE_v2')]",
 				"[concat(variables('factoryId'), '/datasets/testtable2')]",
 				"[concat(variables('factoryId'), '/datasets/AIDF')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Asset1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "WranglingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"name": "NIDC_Asset_Avail",
+							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> NIDC_Asset_Avail",
+							"dataset": {
+								"referenceName": "NIDC_Asset_Avail",
+								"type": "DatasetReference"
+							}
+						},
+						{
+							"name": "Trust",
+							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Trust",
+							"dataset": {
+								"referenceName": "Trust",
+								"type": "DatasetReference"
+							}
+						},
+						{
+							"name": "Modality",
+							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Modality",
+							"dataset": {
+								"referenceName": "Modality",
+								"type": "DatasetReference"
+							}
+						}
+					],
+					"script": "section Section1;\r\nshared NIDC_Asset_Avail = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dbo\",Item=\"NIDC_Asset_Avail\"]}[Data] in InputTable;\r\nshared Trust = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dev\",Item=\"Trust\"]}[Data] in InputTable;\r\nshared Modality = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dev\",Item=\"Modality\"]}[Data] in InputTable;\r\nshared UserQuery = let Source = #\"NIDC_Asset_Avail\",\n  #\"Filtered rows\" = Table.SelectRows(Source, each [Location] <> \"Dental Department\" and [Equipment_Detail] <> null and [Equipment_Detail] <> \"2D with 3D Capability – Breast\" and [Equipment_Detail] <> \"2D – Breast\" and [Equipment_Detail] <> \"Dental Cone Beam CT\" and [Equipment_Detail] <> \"Fixed fluoroscopy Imaging Flat plate     \" and [Equipment_Detail] <> \"Flaxitron\" and [Equipment_Detail] <> \"Intraoral\" and [Equipment_Detail] <> \"Mobile C arm\" and [Equipment_Detail] <> \"Mobile C-arm - Flat Panel Digital Detector\" and [Equipment_Detail] <> \"Mobile C-arm - Image Intensifier\" and [Equipment_Detail] <> \"OPG\" and [Equipment_Detail] <> \"OPG+Ceph\" and [Equipment_Detail] <> \"Symptomatic - Digital Mammography - 2D\" and [Equipment_Detail] <> \"Symptomatic - Digital Mammography - 2D + biopsy\" and [Equipment_Detail] <> \"Symptomatic - Digital Mammography 2D + 3D Tomosynthesis\" and [Equipment_Detail] <> \"Symptomatic - Digital Mammography 2D + 3D Tomosynthesis +biopsy\" and [Equipment_Detail] <> \"Ultrasound  – Obstetric\"),\n  #\"Replaced value 2\" = Table.ReplaceValue(#\"Filtered rows\", \"RQ6\", \"REM\", Replacer.ReplaceText, {\"Trust\"}),\n    #\"Replaced value 1\" = Table.ReplaceValue(#\"Replaced value 2\", \"8 on Monday, Tuesday and Thursday\", \"4.8\", Replacer.ReplaceValue, {\"Avg_core_staffed_operational_hours_Weekday\"}),\n    #\"Added Conditional Column\" = Table.AddColumn(#\"Replaced value 1\", \"Equipment_Detail - Copy\", each if Text.Contains([Location], \"Breast\") then \"Mammo\" else if Text.Contains([Location], \"Angio\") then \"IR\" else if Text.Contains([Location], \"Cath Lab\") then \"IR\" else if Text.Contains([Location], \"Maternity\") then \"Obstetrics\" else if Text.Contains([Equipment_Detail], \"Plain\") then \"Plain X-Ray\" else if Text.Contains([Equipment_Detail], \"256\") then \"CT\" else if Text.Contains([Equipment_Detail], \"Bore\") then \"MRI\" else if Text.Contains([Equipment_Detail], \"SPECT\") then \"Nuc Med\" else if Text.Contains([Equipment_Detail], \"Plane\") then \"IR\" else if Text.Contains([Equipment_Detail], \"PET\") then \"Nuc Med\" else if Text.Contains([Equipment_Detail], \"CT\") then \"CT\" else if Text.Contains([Equipment_Detail], \"Dexa\") then \"DEXA\" else if Text.Contains([Equipment_Detail], \"arm\") then \"Plain X-Ray\" else if Text.Contains([Equipment_Detail], \"Breast\") then \"Mammo\" else if Text.Contains([Equipment_Detail], \"Obstetric\") then \"Obstetrics\" else \"NOUS\"),\n    #\"Reordered Columns2\" = Table.ReorderColumns(#\"Added Conditional Column\",{\"Year\", \"Trust\", \"Local_Identifier\", \"Room_Code\", \"Location\", \"Equipment_Detail\", \"Equipment_Detail - Copy\", \"Avg_core_staffed_operational_hours_Weekday\", \"Main_use_core_hours_Weekday\", \"avg_OOHs_Weekday\", \"Avg_core_staffed_operational_hours_Sat\", \"Main_use_core_hours_Sat\", \"avg_OOHs_Sat\", \"Avg_core_staffed_operational_hours_Sun\", \"Main_use_core_hours_Sun\", \"avg_OOHs_Sun\", \"Research\", \"Avg_Research_Hours_per_week\", \"Unscheduled_downtime_12M\"}),\n    #\"Renamed Columns\" = Table.RenameColumns(#\"Reordered Columns2\",{{\"Equipment_Detail - Copy\", \"Modality\"}}),\n    #\"Removed Columns\" = Table.RemoveColumns(#\"Renamed Columns\",{\"Room_Code\", \"Main_use_core_hours_Weekday\", \"avg_OOHs_Weekday\", \"Main_use_core_hours_Sat\", \"avg_OOHs_Sat\", \"Main_use_core_hours_Sun\", \"avg_OOHs_Sun\", \"Research\", \"Avg_Research_Hours_per_week\", \"Unscheduled_downtime_12M\"}),\n    #\"Duplicated Column1\" = Table.DuplicateColumn(#\"Removed Columns\", \"Avg_core_staffed_operational_hours_Weekday\", \"Avg_core_staffed_operational_hours_Weekday - Copy\"),\n    #\"Renamed Columns1\" = Table.RenameColumns(#\"Duplicated Column1\",{{\"Avg_core_staffed_operational_hours_Weekday\", \"Monday\"}, {\"Avg_core_staffed_operational_hours_Weekday - Copy\", \"Tuesday\"}}),\n    #\"Reordered Columns\" = Table.ReorderColumns(#\"Renamed Columns1\",{\"Year\", \"Trust\", \"Local_Identifier\", \"Location\", \"Equipment_Detail\", \"Monday\", \"Tuesday\", \"Avg_core_staffed_operational_hours_Sat\", \"Avg_core_staffed_operational_hours_Sun\", \"Modality\"}),\n    #\"Duplicated Column2\" = Table.DuplicateColumn(#\"Reordered Columns\", \"Tuesday\", \"Tuesday - Copy\"),\n    #\"Renamed Columns2\" = Table.RenameColumns(#\"Duplicated Column2\",{{\"Tuesday - Copy\", \"Wednesday\"}}),\n    #\"Duplicated Column3\" = Table.DuplicateColumn(#\"Renamed Columns2\", \"Wednesday\", \"Thursday\"),\n    #\"Duplicated Column4\" = Table.DuplicateColumn(#\"Duplicated Column3\", \"Thursday\", \"Friday\"),\n    #\"Renamed Columns3\" = Table.RenameColumns(#\"Duplicated Column4\",{{\"Avg_core_staffed_operational_hours_Sat\", \"Saturday\"}, {\"Avg_core_staffed_operational_hours_Sun\", \"Sunday\"}}),\n    #\"Reordered Columns1\" = Table.ReorderColumns(#\"Renamed Columns3\",{\"Year\", \"Trust\", \"Local_Identifier\", \"Location\", \"Equipment_Detail\", \"Modality\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\", \"Sunday\"})\n\nin\n    #\"Reordered Columns1\";\r\n",
+					"documentLocale": "en-us"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/NIDC_Asset_Avail')]",
+				"[concat(variables('factoryId'), '/datasets/Trust')]",
+				"[concat(variables('factoryId'), '/datasets/Modality')]"
 			]
 		},
 		{
@@ -24428,7 +24705,8 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RemoveCols",
-						"RemoveCols derive({Booked Date} = toTimestamp(concatWS(\" \", left(toString({Booked Date}),10), concatWS(\":\",left({Booked Time}, 2), concatWS(\":\",right({Booked Time}, 2),\"00\"))))) ~> deriveBookedDateTime",
+						"RemoveCols derive({Booked Date} = toTimestamp(concatWS(\" \", left(toString({Booked Date}),10), concatWS(\":\",left({Booked Time}, 2), concatWS(\":\",right({Booked Time}, 2),\"00\")))),",
+						"          {Was Planned Flag} = iif(isNull({Planned Appointment Date}),0,1)) ~> deriveBookedDateTime",
 						"lookup1 select(mapColumn(",
 						"          {Event Key} = RemoveCols@{Event Key},",
 						"          {Exam Key} = RemoveCols@{Exam Key},",
@@ -24510,7 +24788,38 @@
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     saveOrder: 1,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> AzureSqlPTLV2Staging"
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          {Event Key},",
+						"          {Exam Key},",
+						"          {CRIS Number},",
+						"          {Status Category},",
+						"          {Request Date},",
+						"          {Event Date},",
+						"          {Booked Date Time},",
+						"          {Creation Date},",
+						"          Attended,",
+						"          Urg,",
+						"          {Days Waiting},",
+						"          {Predicted Reset Date},",
+						"          {Waiting Time Reset Date},",
+						"          {Weeks Waiting},",
+						"          {Planned Appointment Date},",
+						"          {Waiting Breach Date},",
+						"          {Was Planned},",
+						"          {Was Scheduled},",
+						"          {Was Waiting},",
+						"          {Stat Date},",
+						"          {5 Weeks Wait},",
+						"          {Booked Datetime},",
+						"          {6 Weeks Wait},",
+						"          {Referral Source ID},",
+						"          {Exam ID},",
+						"          {Modality ID},",
+						"          {Exam Room ID},",
+						"          {Trust ID},",
+						"          {Status Code}",
+						"     )) ~> AzureSqlPTLV2Staging"
 					]
 				}
 			},
@@ -24905,6 +25214,273 @@
 				"[concat(variables('factoryId'), '/datasets/AzureSql_CORE')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSql_Patients')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow10')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "NIDC_Asset_Spec",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "NIDC_Asset_Avail",
+								"type": "DatasetReference"
+							},
+							"name": "source3"
+						},
+						{
+							"dataset": {
+								"referenceName": "Trust_Unique",
+								"type": "DatasetReference"
+							},
+							"name": "source4"
+						},
+						{
+							"dataset": {
+								"referenceName": "Modality",
+								"type": "DatasetReference"
+							},
+							"name": "source5"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable4",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable6",
+								"type": "DatasetReference"
+							},
+							"name": "sink2"
+						}
+					],
+					"transformations": [
+						{
+							"name": "derivedColumn1"
+						},
+						{
+							"name": "cast1"
+						},
+						{
+							"name": "sort1"
+						},
+						{
+							"name": "filter1"
+						},
+						{
+							"name": "filter2"
+						},
+						{
+							"name": "derivedColumn2"
+						},
+						{
+							"name": "select1"
+						},
+						{
+							"name": "unpivot1"
+						},
+						{
+							"name": "join1"
+						},
+						{
+							"name": "select2"
+						},
+						{
+							"name": "join2"
+						},
+						{
+							"name": "derivedColumn3"
+						},
+						{
+							"name": "sort2"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Year as string,",
+						"          NIDC_Asset_ID as string,",
+						"          Local_Identifier as string,",
+						"          Trust_Site_Code as string,",
+						"          RIS_Room_Code as string,",
+						"          Location as string,",
+						"          Machine_Type as string,",
+						"          Modality as string,",
+						"          Equipment_Detail as string,",
+						"          Manufacturer as string,",
+						"          First_In_Service_Date as string,",
+						"          Age_of_Machine as string,",
+						"          Planned_Replacement_Date as string,",
+						"          Asset_Status as string,",
+						"          Installation_Replacement_Status as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source(output(",
+						"          Year as string,",
+						"          Trust as string,",
+						"          Local_Identifier as string,",
+						"          Room_Code as string,",
+						"          Location as string,",
+						"          Equipment_Detail as string,",
+						"          Avg_core_staffed_operational_hours_Weekday as string,",
+						"          Main_use_core_hours_Weekday as string,",
+						"          avg_OOHs_Weekday as string,",
+						"          Avg_core_staffed_operational_hours_Sat as string,",
+						"          Main_use_core_hours_Sat as string,",
+						"          avg_OOHs_Sat as string,",
+						"          Avg_core_staffed_operational_hours_Sun as string,",
+						"          Main_use_core_hours_Sun as string,",
+						"          avg_OOHs_Sun as string,",
+						"          Research as string,",
+						"          Avg_Research_Hours_per_week as string,",
+						"          Unscheduled_downtime_12M as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source3",
+						"source(output(",
+						"          {Trust Name} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {Trust ID} as integer,",
+						"          {Trust Name Group} as string,",
+						"          {Trust Name Group2} as string,",
+						"          {Trust Name Group3} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source4",
+						"source(output(",
+						"          Modality2 as string,",
+						"          {Modality ID} as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source5",
+						"source1 derive(Age_of_Machine = replace(Age_of_Machine,\"#VALUE!\",\"\"),",
+						"          {Trust Name} = iif(Trust_Site_Code==\"5HA16\",\"LUHFT\",iif(Trust_Site_Code==\"5NL93\", \"LUHFT\", iif(left(Trust_Site_Code,3)==\"REM\", \"LUHFT\", iif(left(Trust_Site_Code,3)==\"RQ6\", \"LUHFT\", iif(left(Trust_Site_Code,3)== \"RBL\", \"WUTH\", iif(left(Trust_Site_Code,3)== \"RBN\", \"STHK\", iif(left(Trust_Site_Code,3)== \"RBQ\", \"LHCH\", iif(left(Trust_Site_Code,3)== \"RBS\", \"Alder Hey\", iif(left(Trust_Site_Code,3)== \"RBT\" , \"MCH\" , iif(left(Trust_Site_Code,3)== \"REN\" , \"CCC\" , iif(left(Trust_Site_Code,3)== \"REP\" , \"Womens\" , iif(left(Trust_Site_Code,3)== \"RET\" , \"TWC\" , iif(left(Trust_Site_Code,3)== \"RJR\" , \"COCH\" , iif(left(Trust_Site_Code,3)==\"RVY\", \"S&O\" , iif(left(Trust_Site_Code,3)==\"RWW\" , \"WHH\" , iif(Trust_Site_Code==\"NTD05\" , \"LUHFT\" , iif(Trust_Site_Code==\"5M501\" , \"LUHFT\" , iif(Trust_Site_Code==\"HALTON\" , \"WHH\" , iif(Trust_Site_Code==\"CSTM\" , \"WHH\" , iif(Trust_Site_Code==\"Warrington\" , \"WHH\" , iif(Trust_Site_Code==\"L6R32\" , \"STHK\" , iif(Trust_Site_Code==\"SHOPPING CITY\" , \"WHH\" , iif(Trust_Site_Code==\"WIDNES\" , \"WHH\" , iif(Trust_Site_Code==\"CDC\" , \"WUTH\" , Trust_Site_Code)))))))))))))))))))))))),",
+						"          Modality2 = iif(like(Equipment_Detail, '%Breast%'), \"Mammo\", iif(like(Equipment_Detail, '%Obstetric%'), \"Obstetrics\", iif(like(Location, '%Breast%'), \"Mammo\", iif(like(Location, '%Maternity%'), \"Obstetrics\", iif(like(Location, '%Dental%'), \"Dental\", iif(Modality == \"Interventional Radiology\", \"IR\", iif(Modality == \"Bone Densitometer\", \"DEXA\", iif(Modality==\"CT\", \"CT\", iif(Modality==\"Fluoroscopy\", \"Fluoro\", iif(Modality==\"Plain XRay\", \"Plain X-Ray\", iif(Modality==\"X ray Units Mobile\", \"Plain X-Ray\", iif(Modality==\"X ray Units Static\", \"Plain X-Ray\", iif(Modality==\"Ultrasound\", \"NOUS\", iif(Modality==\"Nuclear Medicine\", \"Nuc Med\", iif(Modality==\"MRI\", \"MRI\", iif(Modality==\"Mammography\", \"Mammo\", iif(Modality==\"DEXA\", \"DEXA\", iif(like(Modality, '%Mobile C%'), \"Plain X-Ray\", iif(left(Modality,4)==\"Cath\", \"IR\", \"\")))))))))))))))))))) ~> derivedColumn1",
+						"derivedColumn1 cast(output(",
+						"          First_In_Service_Date as date,",
+						"          Age_of_Machine as integer,",
+						"          Planned_Replacement_Date as date",
+						"     ),",
+						"     errors: true) ~> cast1",
+						"cast1 sort(asc(Age_of_Machine, true),",
+						"     asc({Trust Name}, true)) ~> sort1",
+						"sort1 filter(Year==\"2023\") ~> filter1",
+						"source3 filter(Location != \"Dental Department\" || isNull(Equipment_Detail) == false() || Equipment_Detail != \"2D with 3D Capability – Breast\" || Equipment_Detail != \"2D – Breast\" || Equipment_Detail != \"Dental Cone Beam CT\" || Equipment_Detail != \"Fixed fluoroscopy Imaging Flat plate     \" || Equipment_Detail != \"Flaxitron\" || Equipment_Detail != \"Intraoral\" || Equipment_Detail != \"Mobile C arm\" || Equipment_Detail != \"Mobile C-arm - Flat Panel Digital Detector\" || Equipment_Detail != \"Mobile C-arm - Image Intensifier\" || Equipment_Detail != \"OPG\" || Equipment_Detail != \"OPG+Ceph\" || Equipment_Detail != \"Symptomatic - Digital Mammography - 2D\" || Equipment_Detail != \"Symptomatic - Digital Mammography - 2D + biopsy\" || Equipment_Detail != \"Symptomatic - Digital Mammography 2D + 3D Tomosynthesis\" || Equipment_Detail != \"Symptomatic - Digital Mammography 2D + 3D Tomosynthesis +biopsy\" || Equipment_Detail != \"Ultrasound  – Obstetric\") ~> filter2",
+						"filter2 derive(Trust = replace(Trust,\"RQ6\",\"REM\"),",
+						"          avg_OOHs_Weekday = replace(avg_OOHs_Weekday,\"8 on Monday, Tuesday and Thursday\", \"4.8\"),",
+						"          Modality = iif(contains([Location], #item==\"Breast\") , \"Mammo\" , iif(contains([Location], #item==\"Angio\") , \"IR\" , iif(contains([Location], #item==\"Cath Lab\") , \"IR\" , iif(contains([Location], #item==\"Maternity\") , \"Obstetrics\" , iif(contains([Equipment_Detail], #item==\"Plain\") , \"Plain X-Ray\" , iif(contains([Equipment_Detail], #item==\"256\") , \"CT\" , iif(contains([Equipment_Detail], #item==\"Bore\") , \"MRI\" , iif(contains([Equipment_Detail], #item==\"SPECT\") , \"Nuc Med\" , iif(contains([Equipment_Detail], #item==\"Plane\") , \"IR\" , iif(contains([Equipment_Detail], #item==\"PET\") , \"Nuc Med\" , iif(contains([Equipment_Detail], #item==\"CT\") , \"CT\" , iif(contains([Equipment_Detail], #item==\"Dexa\") , \"DEXA\" , iif(contains([Equipment_Detail], #item==\"arm\") , \"Plain X-Ray\" , iif(contains([Equipment_Detail], #item==\"Breast\") , \"Mammo\" , iif(contains([Equipment_Detail], #item==\"Obstetric\") , \"Obstetrics\" , \"NOUS\"))))))))))))))),",
+						"          Monday = Avg_core_staffed_operational_hours_Weekday,",
+						"          Tuesday = Avg_core_staffed_operational_hours_Weekday,",
+						"          Wednesday = Avg_core_staffed_operational_hours_Weekday,",
+						"          Thursday = Avg_core_staffed_operational_hours_Weekday,",
+						"          Friday = Avg_core_staffed_operational_hours_Weekday) ~> derivedColumn2",
+						"derivedColumn2 select(mapColumn(",
+						"          Year,",
+						"          Trust,",
+						"          Local_Identifier,",
+						"          Location,",
+						"          Equipment_Detail,",
+						"          Monday,",
+						"          Tuesday,",
+						"          Wednesday,",
+						"          Thursday,",
+						"          Friday,",
+						"          Saturday = Avg_core_staffed_operational_hours_Sat,",
+						"          Sunday = Avg_core_staffed_operational_hours_Sun,",
+						"          Modality",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 unpivot(output(",
+						"          Day as string,",
+						"          {Hours Open} as string",
+						"     ),",
+						"     ungroupBy(Year,",
+						"          Trust,",
+						"          Local_Identifier,",
+						"          Location,",
+						"          Equipment_Detail,",
+						"          Modality),",
+						"     lateral: true,",
+						"     ignoreNullPivots: true) ~> unpivot1",
+						"unpivot1, source4 join(Trust == {Trust Name Group},",
+						"     joinType:'left',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join1",
+						"join2 select(mapColumn(",
+						"          Year,",
+						"          Local_Identifier,",
+						"          Location,",
+						"          Equipment_Detail,",
+						"          Day,",
+						"          {Hours Open},",
+						"          {Trust ID},",
+						"          {Modality ID}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select2",
+						"join1, source5 join(Modality == Modality2,",
+						"     joinType:'left',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join2",
+						"select2 derive({Trust ID} = replace(toString({Trust ID}),\"null\",\"0\"),",
+						"          ID2 = concat(Year,\":\",Day,\":\",toString({Trust ID}),\":\",toString({Modality ID}))) ~> derivedColumn3",
+						"derivedColumn3 sort(asc(ID2, false)) ~> sort2",
+						"filter1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
+						"sort2 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink2"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/NIDC_Asset_Spec')]",
+				"[concat(variables('factoryId'), '/datasets/NIDC_Asset_Avail')]",
+				"[concat(variables('factoryId'), '/datasets/Trust_Unique')]",
+				"[concat(variables('factoryId'), '/datasets/Modality')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable4')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable6')]"
 			]
 		},
 		{

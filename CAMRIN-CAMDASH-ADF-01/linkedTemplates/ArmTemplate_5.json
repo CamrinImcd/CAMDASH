@@ -13,6 +13,141 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_SubStaffNonClinicalDuties')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "SubStaffNonClinicalDuties",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Band",
+						"type": "String"
+					},
+					{
+						"name": "Staff Type",
+						"type": "String"
+					},
+					{
+						"name": "Y/N",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_SubStaffNonClinicalPercentage')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "SubStaffNonClinicalPercentage",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Band",
+						"type": "String"
+					},
+					{
+						"name": "Percentage",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_SubStaffOvernightWeekends')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "SubStaffOvernightWeekends",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Band",
+						"type": "String"
+					},
+					{
+						"name": "Number of staff on site (Weekday night)",
+						"type": "String"
+					},
+					{
+						"name": "Number of staff on site (weekend night)",
+						"type": "String"
+					},
+					{
+						"name": "Number of staff on site (weekend day)",
+						"type": "String"
+					},
+					{
+						"name": "Number of staff on call (Weekday night)",
+						"type": "String"
+					},
+					{
+						"name": "Number of staff on call (weekend night)",
+						"type": "String"
+					},
+					{
+						"name": "Number of staff on call (weekend day)",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_SubStaffPostgradLearning')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -321,7 +456,80 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "Year",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Trust",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Local_Identifier",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Room_Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Location",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Equipment_Detail",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Avg_core_staffed_operational_hours_Weekday",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Main_use_core_hours_Weekday",
+						"type": "nvarchar"
+					},
+					{
+						"name": "avg_OOHs_Weekday",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Avg_core_staffed_operational_hours_Sat",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Main_use_core_hours_Sat",
+						"type": "nvarchar"
+					},
+					{
+						"name": "avg_OOHs_Sat",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Avg_core_staffed_operational_hours_Sun",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Main_use_core_hours_Sun",
+						"type": "nvarchar"
+					},
+					{
+						"name": "avg_OOHs_Sun",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Research",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Avg_Research_Hours_per_week",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Unscheduled_downtime_12M",
+						"type": "nvarchar"
+					}
+				],
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "NIDC_Asset_Avail"
@@ -547,63 +755,6 @@
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "NIDC_Workforce_ActivityKPI"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/NIDC_Workforce_ActivityPathway')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "NIDC_Workforce_ActivityPathway"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/NIDC_Workforce_ActivityProtocol')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "NIDC_Workforce_ActivityProtocol"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/NIDC_Workforce_ActivityRep')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "NIDC_Workforce_ActivityRep"
 				}
 			},
 			"dependsOn": []

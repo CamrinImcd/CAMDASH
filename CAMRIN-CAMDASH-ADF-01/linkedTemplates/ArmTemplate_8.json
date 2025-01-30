@@ -13,6 +13,165 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Patient_Waiting_Monthly')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "Patient_Waiting_Monthly_v3"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Referral_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Referral Source",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Referral Source ID",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "Referral Source"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/RequestRecievedStatus')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Accession",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Referrer",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Referral Location",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Referral Source",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Urg",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Site",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Status Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Status Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Status Time",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Referral Location Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Referral Source Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Referral Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Examination Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Modality",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Status Code at State Date",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "D Status",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rank",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "RequestRecievedStatus"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SinkDataset')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1860,123 +2019,6 @@
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "FYF_ODBC_STATUSES"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServer_TEST_PAT')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "RADFYF01_CRIS_PostgreSQL",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "CRIS No",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Creation Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Mutation Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Surname",
-						"type": "varchar"
-					},
-					{
-						"name": "Forename",
-						"type": "varchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "FYF_ODBC_TEST_Patients"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Status')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Status Code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Status ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status Category",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dev",
-					"table": "Status"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Tat_Type')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Tat Type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Tat Type ID",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Target",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dev",
-					"table": "Tat Type"
 				}
 			},
 			"dependsOn": []

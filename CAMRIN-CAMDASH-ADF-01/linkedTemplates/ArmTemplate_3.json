@@ -13,6 +13,184 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "Patients Waitingbacklogv2.csv",
+						"container": "patients-waiting-backlog"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "ImportDate",
+						"type": "String"
+					},
+					{
+						"name": "Event key",
+						"type": "String"
+					},
+					{
+						"name": "Exam key",
+						"type": "String"
+					},
+					{
+						"name": "Examination",
+						"type": "String"
+					},
+					{
+						"name": "Exam Name",
+						"type": "String"
+					},
+					{
+						"name": "Site",
+						"type": "String"
+					},
+					{
+						"name": "Request date",
+						"type": "String"
+					},
+					{
+						"name": "Planned App Date",
+						"type": "String"
+					},
+					{
+						"name": "Clock Reset Date",
+						"type": "String"
+					},
+					{
+						"name": "Event Date",
+						"type": "String"
+					},
+					{
+						"name": "Weeks",
+						"type": "String"
+					},
+					{
+						"name": "Modality",
+						"type": "String"
+					},
+					{
+						"name": "Planned",
+						"type": "String"
+					},
+					{
+						"name": "Referral Source Name",
+						"type": "String"
+					},
+					{
+						"name": "Trust Name",
+						"type": "String"
+					},
+					{
+						"name": "Status Cde",
+						"type": "String"
+					},
+					{
+						"name": "Room",
+						"type": "String"
+					},
+					{
+						"name": "Room Desc",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Exam')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Exam Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam ID",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "Exam"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Exam_Site')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Exam Site",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam Room",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ExamSite Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam Room ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "Description",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime2",
+						"scale": 7
+					}
+				],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "Exam_Site_2"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Exam_Site_1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1322,157 +1500,6 @@
 				"type": "Excel",
 				"typeProperties": {
 					"sheetName": "AgencyExternal",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "NIDC_Workforce.xlsx",
-						"container": "nidc-workforce-22"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Trust",
-						"type": "String"
-					},
-					{
-						"name": "Staff Group",
-						"type": "String"
-					},
-					{
-						"name": "Staff Type",
-						"type": "String"
-					},
-					{
-						"name": "Unit Of Payment",
-						"type": "String"
-					},
-					{
-						"name": "Band",
-						"type": "String"
-					},
-					{
-						"name": "Count",
-						"type": "String"
-					},
-					{
-						"name": "Cost",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_AgencyInsource')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "AgencyInsource",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "NIDC_Workforce.xlsx",
-						"container": "nidc-workforce-22"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Trust",
-						"type": "String"
-					},
-					{
-						"name": "Modality",
-						"type": "String"
-					},
-					{
-						"name": "Activity Group",
-						"type": "String"
-					},
-					{
-						"name": "Volume",
-						"type": "String"
-					},
-					{
-						"name": "Cost",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_AgencyInternal')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "AgencyInternal",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "NIDC_Workforce.xlsx",
-						"container": "nidc-workforce-22"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Trust",
-						"type": "String"
-					},
-					{
-						"name": "Staff Group",
-						"type": "String"
-					},
-					{
-						"name": "Staff Type",
-						"type": "String"
-					},
-					{
-						"name": "Unit Of Payment",
-						"type": "String"
-					},
-					{
-						"name": "Band",
-						"type": "String"
-					},
-					{
-						"name": "Count",
-						"type": "String"
-					},
-					{
-						"name": "Cost",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_AgencyLocum')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "AgencyLocum",
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "NIDC_Workforce.xlsx",
