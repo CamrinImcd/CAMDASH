@@ -538,7 +538,7 @@
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookup6",
-				"lookup6, MapDrifted11 lookup({Referral Source} == ReferralSource@{Referral Source},",
+				"lookup6, MapDrifted11 lookup(select9@{Referral Source} == ReferralSource@{Referral Source},",
 				"     multiple: false,",
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookupReferralSource",
