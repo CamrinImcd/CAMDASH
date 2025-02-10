@@ -4246,6 +4246,12 @@
 						"dependencyConditions": [
 							"Succeeded"
 						]
+					},
+					{
+						"activity": "Copy_REPORT_TAT",
+						"dependencyConditions": [
+							"Succeeded"
+						]
 					}
 				],
 				"policy": {
@@ -5267,7 +5273,7 @@
 				"type": "Lookup",
 				"dependsOn": [
 					{
-						"activity": "Data flow1",
+						"activity": "ReferenceLookupsCore",
 						"dependencyConditions": [
 							"Succeeded"
 						]
@@ -5505,37 +5511,6 @@
 						"referenceName": "CoreUpdateTable",
 						"type": "DatasetReference"
 					}
-				}
-			},
-			{
-				"name": "Data flow1",
-				"type": "ExecuteDataFlow",
-				"dependsOn": [
-					{
-						"activity": "Copy_REPORT_TAT",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"dataflow": {
-						"referenceName": "dataflow11",
-						"type": "DataFlowReference"
-					},
-					"compute": {
-						"coreCount": 8,
-						"computeType": "General"
-					},
-					"traceLevel": "Fine"
 				}
 			}
 		],
