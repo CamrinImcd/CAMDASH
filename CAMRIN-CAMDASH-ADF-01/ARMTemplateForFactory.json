@@ -6355,13 +6355,13 @@
 							{
 								"activity": "Latest stat date Report TAT",
 								"dependencyConditions": [
-									"Failed"
+									"Succeeded"
 								]
 							},
 							{
 								"activity": "Prev Latest stat date Report TAT",
 								"dependencyConditions": [
-									"Failed"
+									"Succeeded"
 								]
 							}
 						],
@@ -6956,15 +6956,15 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Latest stat date report_meta",
+								"activity": "Prev Latest stat date report_meta",
 								"dependencyConditions": [
-									"Failed"
+									"Succeeded"
 								]
 							},
 							{
-								"activity": "Prev Latest stat date report_meta",
+								"activity": "Latest stat date report_meta",
 								"dependencyConditions": [
-									"Failed"
+									"Succeeded"
 								]
 							}
 						],
