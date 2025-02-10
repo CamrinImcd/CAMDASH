@@ -1,0 +1,111 @@
+{
+	"name": "dataflow11",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "AzureSql_REPORT_TAT",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable8",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "derivedColumn3"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Accession as string,",
+				"          {Event Key} as integer,",
+				"          {Exam Key} as integer,",
+				"          {Report Key} as integer,",
+				"          {Request Date} as timestamp,",
+				"          {Event Date} as timestamp,",
+				"          {Event Time} as string,",
+				"          {Lead Clinician} as string,",
+				"          Referrer as string,",
+				"          {Referring Locat} as string,",
+				"          Site as string,",
+				"          Examination as string,",
+				"          {Exam Name} as string,",
+				"          {Event Key2} as integer,",
+				"          {Status Code} as string,",
+				"          {Intended Radiologist} as string,",
+				"          {Ref Src} as string,",
+				"          Modality as string,",
+				"          {Date First Addended} as timestamp,",
+				"          {Date First Verified} as timestamp,",
+				"          {Date Last Addended} as timestamp,",
+				"          {Date LAst Verified} as timestamp,",
+				"          {Date Reported} as timestamp,",
+				"          {Date Typed} as timestamp,",
+				"          {First Addended By} as string,",
+				"          {First Addended by Name} as string,",
+				"          {First Verified By} as string,",
+				"          {First Verified By Name} as string,",
+				"          {Last Addended By} as string,",
+				"          {Last Addended By Name} as string,",
+				"          {Last Verified By} as string,",
+				"          {Last Verified By Name} as string,",
+				"          {Reported By} as string,",
+				"          {Reported By2} as string,",
+				"          {Reported By Name} as string,",
+				"          {Reported By2 Name} as string,",
+				"          {First Verified Time} as string,",
+				"          {Last Verified Time} as string,",
+				"          {Time Reported} as string,",
+				"          {Time Typed} as string,",
+				"          {Typed By} as string,",
+				"          {Attend to First Verified Days} as integer,",
+				"          {Attend to Reported Days} as integer,",
+				"          {Stat Date} as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source1 derive({Event Time} = iif({Event Time} == '2099-01-01', toTimestamp('2099-01-01 00:00:00'),toTimestamp(concat(toString({Event Date}),' ',iif(isNull({Event Time}),\"00:00:00\",concat(substring(lpad(toString({Event Time}),4,\"0\"), 0,2),':',substring(lpad(toString({Event Time}),4,\"0\"), 3,2),':','00'))))),",
+				"          {Time First Verified} = toTimestamp(concat(toString(toDate({Date First Verified})),' ',iif(isNull({First Verified Time}),\"00:00:00\",concat(substring(lpad(toString({First Verified Time}),4,\"0\"), 0,2),':',substring(lpad(toString({First Verified Time}),4,\"0\"), 3,2),':','00'))))) ~> derivedColumn1",
+				"derivedColumn1 derive({Image-Report Days} = iif(or(or({Event Time}>{Stat Date},{Time First Verified}>{Stat Date}),or({Event Time}<toTimestamp('2019-01-01 00:00:00'),{Time First Verified}<toTimestamp('2019-01-01 00:00:00'))),toLong(''),(({Date First Verified}-{Event Date})/1000)/86400),",
+				"          {Image-Report Hours} = iif(or(or({Event Time}>{Stat Date},{Time First Verified}>{Stat Date}),or({Event Time}<toTimestamp('2019-01-01 00:00:00'),{Time First Verified}<toTimestamp('2019-01-01 00:00:00'))),toLong(''),(({Time First Verified}-{Event Time})/1000)/3600)) ~> derivedColumn2",
+				"derivedColumn2 derive({Image-Report 3H Pass} = iif(isNull({Image-Report Hours})==true(),0,iif({Image-Report Hours}<=3,1,0)),",
+				"          {Image-Report 4H Pass} = iif(isNull({Image-Report Hours})==true(),0,iif({Image-Report Hours}<=4,1,0)),",
+				"          {Image-Report 12H Pass} = iif(isNull({Image-Report Hours})==true(),0,iif({Image-Report Hours}<=12,1,0)),",
+				"          {Image-Report 24H Pass} = iif(isNull({Image-Report Hours})==true(),0,iif({Image-Report Hours}<=24,1,0)),",
+				"          {Image-Report 3D Pass} = iif(isNull({Image-Report Days})==true(),0,iif({Image-Report Days}<=3,1,0)),",
+				"          {Image-Report 7D Pass} = iif(isNull({Image-Report Days})==true(),0,iif({Image-Report Days}<=7,1,0)),",
+				"          {Image-Report 28D Pass} = iif(isNull({Image-Report Days})==true(),0,iif({Image-Report Days}<=28,1,0))) ~> derivedColumn3",
+				"derivedColumn3 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     recreate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}
