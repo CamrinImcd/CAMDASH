@@ -6246,6 +6246,12 @@
 								"dependencyConditions": [
 									"Succeeded"
 								]
+							},
+							{
+								"activity": "Copy_REPORT_TAT",
+								"dependencyConditions": [
+									"Succeeded"
+								]
 							}
 						],
 						"policy": {
@@ -6272,6 +6278,7 @@
 									"ReferralSource": {},
 									"TatType": {},
 									"source1": {},
+									"source2": {},
 									"AzureSqlCOREV2": {}
 								}
 							},
@@ -7357,7 +7364,7 @@
 						"type": "Lookup",
 						"dependsOn": [
 							{
-								"activity": "Data flow1",
+								"activity": "ReferenceLookupsCore",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -7603,43 +7610,6 @@
 								"parameters": {}
 							}
 						}
-					},
-					{
-						"name": "Data flow1",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [
-							{
-								"activity": "Copy_REPORT_TAT",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "dataflow11",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
 					}
 				],
 				"policy": {
@@ -7652,8 +7622,7 @@
 				"lastPublishTime": "2024-01-30T12:35:07Z"
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/Remove_Dupes_Core')]",
-				"[concat(variables('factoryId'), '/dataflows/dataflow11')]"
+				"[concat(variables('factoryId'), '/dataflows/Remove_Dupes_Core')]"
 			]
 		},
 		{
