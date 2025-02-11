@@ -19628,7 +19628,73 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "Event Key",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam Key",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Room ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Request Date",
+						"type": "date"
+					},
+					{
+						"name": "Planned Appointment Date",
+						"type": "date"
+					},
+					{
+						"name": "Waiting Time Reset Date",
+						"type": "date"
+					},
+					{
+						"name": "Event Date",
+						"type": "date"
+					},
+					{
+						"name": "Weeks Waiting",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Modality ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Was Planned",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Referral Source ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Trust ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "nvarchar"
+					}
+				],
 				"typeProperties": {
 					"schema": "dev",
 					"table": "Patient_Waiting_Monthly_v3"
@@ -26142,6 +26208,23 @@
 						"          {Event Date} = toDate({Event Date},\"dd/MM/yyyy\")) ~> derivedColumn2",
 						"derivedColumn2 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     input(",
+						"          {Event Key} as string,",
+						"          {Exam Key} as string,",
+						"          {Exam ID} as integer,",
+						"          {Exam Room ID} as integer,",
+						"          {Request Date} as date,",
+						"          {Planned Appointment Date} as date,",
+						"          {Waiting Time Reset Date} as date,",
+						"          {Event Date} as date,",
+						"          {Weeks Waiting} as string,",
+						"          {Modality ID} as integer,",
+						"          {Was Planned} as string,",
+						"          {Referral Source ID} as integer,",
+						"          {Trust ID} as integer,",
+						"          {Status Code} as string,",
+						"          {Stat Date} as string",
+						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
@@ -26395,6 +26478,23 @@
 						"          ImportDate = toInteger(replace(toString(ImportDate),\"-\",\"\"))) ~> derivedColumn3",
 						"derivedColumn3 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     input(",
+						"          {Event Key} as string,",
+						"          {Exam Key} as string,",
+						"          {Exam ID} as integer,",
+						"          {Exam Room ID} as integer,",
+						"          {Request Date} as date,",
+						"          {Planned Appointment Date} as date,",
+						"          {Waiting Time Reset Date} as date,",
+						"          {Event Date} as date,",
+						"          {Weeks Waiting} as string,",
+						"          {Modality ID} as integer,",
+						"          {Was Planned} as string,",
+						"          {Referral Source ID} as integer,",
+						"          {Trust ID} as integer,",
+						"          {Status Code} as string,",
+						"          {Stat Date} as string",
+						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
@@ -26404,7 +26504,6 @@
 						"     skipDuplicateMapOutputs: true,",
 						"     errorHandlingOption: 'stopOnFirstError',",
 						"     mapColumn(",
-						"          ImportDate,",
 						"          {Event Key},",
 						"          {Exam Key},",
 						"          {Exam ID},",
@@ -26415,13 +26514,9 @@
 						"          {Event Date},",
 						"          {Weeks Waiting},",
 						"          {Modality ID},",
-						"          Planned,",
 						"          {Referral Source ID},",
 						"          {Trust ID},",
-						"          {Status Code},",
-						"          {Days since planned},",
-						"          DaysSinceFlag,",
-						"          Appointed",
+						"          {Status Code}",
 						"     )) ~> sink1"
 					]
 				}
