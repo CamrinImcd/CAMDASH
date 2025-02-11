@@ -4677,6 +4677,9 @@
 						},
 						{
 							"name": "select10"
+						},
+						{
+							"name": "derivedColumn10"
 						}
 					],
 					"scriptLines": [
@@ -5233,7 +5236,7 @@
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
 						"     broadcast: 'auto')~> join2",
-						"join2 select(mapColumn(",
+						"derivedColumn10 select(mapColumn(",
 						"          {CRIS No},",
 						"          Accession = select7@Accession,",
 						"          {Ref Src} = select7@{Ref Src},",
@@ -5259,8 +5262,8 @@
 						"          Modality = select7@Modality,",
 						"          {No of Proc},",
 						"          {Planned Appointment Date},",
-						"          {Date First Verified} = source2@{Date First Verified},",
-						"          {Time First Verified} = {First Verified Time},",
+						"          {Date First Verified} = {Date First Verified Check},",
+						"          {Time First Verified} = {Time First Verified Check},",
 						"          {Was Planned},",
 						"          {Was Scheduled},",
 						"          {Was Waiting},",
@@ -5281,6 +5284,8 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select10",
+						"join2 derive({Date First Verified Check} = iif(isNull(source2@{Date First Verified}),select7@{Date First Verified},source2@{Date First Verified}),",
+						"          {Time First Verified Check} = iif(isNull({First Verified Time}),{Time First Verified},{First Verified Time})) ~> derivedColumn10",
 						"AlterRow1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
