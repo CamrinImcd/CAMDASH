@@ -26512,11 +26512,11 @@
 						"          {Planned Appointment Date},",
 						"          {Waiting Time Reset Date},",
 						"          {Event Date},",
-						"          {Weeks Waiting},",
 						"          {Modality ID},",
 						"          {Referral Source ID},",
 						"          {Trust ID},",
-						"          {Status Code}",
+						"          {Status Code},",
+						"          {Stat Date} = ImportDate",
 						"     )) ~> sink1"
 					]
 				}
