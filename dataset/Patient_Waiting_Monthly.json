@@ -7,7 +7,73 @@
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
-		"schema": [],
+		"schema": [
+			{
+				"name": "Event Key",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Exam Key",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Exam ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Exam Room ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Request Date",
+				"type": "date"
+			},
+			{
+				"name": "Planned Appointment Date",
+				"type": "date"
+			},
+			{
+				"name": "Waiting Time Reset Date",
+				"type": "date"
+			},
+			{
+				"name": "Event Date",
+				"type": "date"
+			},
+			{
+				"name": "Weeks Waiting",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Modality ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Was Planned",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Referral Source ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Trust ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Status Code",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Stat Date",
+				"type": "nvarchar"
+			}
+		],
 		"typeProperties": {
 			"schema": "dev",
 			"table": "Patient_Waiting_Monthly_v3"
