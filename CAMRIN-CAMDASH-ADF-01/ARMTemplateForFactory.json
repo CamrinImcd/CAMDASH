@@ -23358,16 +23358,16 @@
 							"name": "derivedColumn9"
 						},
 						{
-							"name": "rank1"
-						},
-						{
 							"name": "filter2"
 						},
 						{
-							"name": "join2"
+							"name": "select10"
 						},
 						{
-							"name": "select10"
+							"name": "lookup7"
+						},
+						{
+							"name": "window2"
 						}
 					],
 					"scriptLines": [
@@ -23421,8 +23421,7 @@
 						"     validateSchema: false,",
 						"     waterMarkColumn: 'Stat Date',",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'Select * from dev.AzureSqlCOREStageStep2',",
-						"     format: 'query',",
+						"     format: 'table',",
 						"     mode: 'read') ~> AzureSQLCoreV2Staging",
 						"source(output(",
 						"          Patient_Type as string,",
@@ -23598,8 +23597,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'select * from [dev].[FYF_ODBC_REPORTING_TAT]',",
-						"     format: 'query') ~> source2",
+						"     format: 'table') ~> source2",
 						"ExamSite derive({ExamSite Code} = toString(byName('ExamSite Code'))) ~> MapDrifted2",
 						"derivedColumn8 select(mapColumn(",
 						"          {CRIS No},",
@@ -23638,8 +23636,6 @@
 						"          {Data Pull Date},",
 						"          {Age At Event},",
 						"          {Event Date Time},",
-						"          {Date First Verified.2},",
-						"          {First Verified Time.2},",
 						"          {Request-Image Days},",
 						"          {Image-Report Days},",
 						"          {Request-Report Days},",
@@ -23808,8 +23804,6 @@
 						"          {Data Pull Date},",
 						"          {Age At Event} = RemoveColumns6@{Age At Event},",
 						"          {Event Date Time},",
-						"          {Date First Verified.2},",
-						"          {First Verified Time.2},",
 						"          {Request-Image Days},",
 						"          {Image-Report Days},",
 						"          {Request-Report Days},",
@@ -23878,8 +23872,6 @@
 						"          {Reported By},",
 						"          {Age At Event},",
 						"          {Status Code},",
-						"          {Date First Verified.2},",
-						"          {First Verified Time.2},",
 						"          {Requested Date} = {Request Date},",
 						"          {Requested Time} = {Status Time},",
 						"          Modality2,",
@@ -23924,15 +23916,8 @@
 						"          {Event Year Only} = year({Event Date Time}),",
 						"          {Event Month Number Only} = month({Event Date Time}),",
 						"          {Event Hour} = hour({Event Date Time})) ~> derivedColumn9",
-						"source2 rank(asc({Report Key}, true),",
-						"     output(Rank as long)) ~> rank1",
-						"rank1 filter(Rank==1) ~> filter2",
-						"filter1, filter2 join(select7@{Exam Key} == source2@{Exam Key},",
-						"     joinType:'left',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> join2",
-						"join2 select(mapColumn(",
+						"window2 filter(Rank==1) ~> filter2",
+						"lookup7 select(mapColumn(",
 						"          {CRIS No},",
 						"          Accession = select7@Accession,",
 						"          {Ref Src} = select7@{Ref Src},",
@@ -23958,8 +23943,8 @@
 						"          Modality = select7@Modality,",
 						"          {No of Proc},",
 						"          {Planned Appointment Date},",
-						"          {Date First Verified} = select7@{Date First Verified},",
-						"          {Time First Verified},",
+						"          {Date First Verified} = source2@{Date First Verified},",
+						"          {Time First Verified} = {First Verified Time},",
 						"          {Was Planned},",
 						"          {Was Scheduled},",
 						"          {Was Waiting},",
@@ -23976,12 +23961,18 @@
 						"          Activity = {Activity.1},",
 						"          {Activity.1} = {Count of Activty_Demand for Activity.1},",
 						"          {ExamSite Code},",
-						"          Rank = window1@Rank,",
-						"          {Date First Verified.2} = source2@{Date First Verified},",
-						"          {First Verified Time.2} = {First Verified Time}",
+						"          Rank = window1@Rank",
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select10",
+						"filter1, filter2 lookup(select7@{Exam Key} == source2@{Exam Key},",
+						"     multiple: false,",
+						"     pickup: 'first',",
+						"     asc({Report Key}, true),",
+						"     broadcast: 'auto')~> lookup7",
+						"source2 window(over({Report Key}),",
+						"     asc({Report Key}, false),",
+						"     Rank = denseRank()) ~> window2",
 						"AlterRow1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
@@ -24032,8 +24023,6 @@
 						"          {Data Pull Date},",
 						"          {Age At Event},",
 						"          {Event Date Time},",
-						"          {Date First Verified.2},",
-						"          {First Verified Time.2},",
 						"          {Request-Image Days},",
 						"          {Image-Report Days},",
 						"          {Request-Report Days},",
