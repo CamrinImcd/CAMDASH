@@ -29,9 +29,18 @@
 						"type": "nvarchar"
 					},
 					{
-						"name": "Patient_Type_ID",
-						"type": "int",
-						"precision": 10
+						"name": "Stat Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Patient Type ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "Patient Type Code",
+						"type": "nvarchar"
 					}
 				],
 				"typeProperties": {
