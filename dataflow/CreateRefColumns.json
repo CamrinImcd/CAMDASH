@@ -211,6 +211,9 @@
 				},
 				{
 					"name": "window2"
+				},
+				{
+					"name": "derivedColumn10"
 				}
 			],
 			"scriptLines": [
@@ -819,6 +822,8 @@
 				"source2 window(over({Report Key}),",
 				"     asc({Report Key}, false),",
 				"     Rank = denseRank()) ~> window2",
+				"filter2 derive({Date First Verified} = iif({Date First Verified}>{Date LAst Verified},{Date LAst Verified},{Date First Verified}),",
+				"          {First Verified Time} = iif({Date First Verified}>{Date LAst Verified},{Last Verified Time},{First Verified Time})) ~> derivedColumn10",
 				"AlterRow1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
