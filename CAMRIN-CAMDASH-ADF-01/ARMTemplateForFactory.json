@@ -9359,66 +9359,7 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Activity",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Date",
-						"type": "date"
-					},
-					{
-						"name": "Demand",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
-					},
-					{
-						"name": "ID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Modality ID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Month",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Monthly Activity Sum",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Monthly Demand Sum",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Monthly Max",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Trust ID",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Years",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DNA",
-						"type": "nvarchar"
-					},
-					{
-						"name": "DNARate",
-						"type": "nvarchar"
-					}
-				],
+				"schema": [],
 				"typeProperties": {
 					"schema": "dev",
 					"table": "Act_Dem"
@@ -23007,26 +22948,11 @@
 						"     broadcast: 'auto')~> join4",
 						"filter1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     input(",
-						"          Activity as integer,",
-						"          Date as date,",
-						"          Demand as decimal(19,4),",
-						"          ID as string,",
-						"          {Modality ID} as string,",
-						"          Month as string,",
-						"          {Monthly Activity Sum} as integer,",
-						"          {Monthly Demand Sum} as integer,",
-						"          {Monthly Max} as integer,",
-						"          {Trust ID} as string,",
-						"          Years as string,",
-						"          DNA as string,",
-						"          DNARate as string",
-						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
 						"     upsertable:false,",
-						"     truncate:true,",
+						"     recreate:true,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
