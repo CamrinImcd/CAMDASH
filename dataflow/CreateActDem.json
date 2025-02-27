@@ -307,7 +307,8 @@
 				"          {Monthly Demand Sum},",
 				"          {Hours Open},",
 				"          Year = derivedColumn5@Year,",
-				"          DNARate",
+				"          DNARate,",
+				"          ID2 = source2@ID2",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select3",
@@ -352,7 +353,10 @@
 				"          {Trust ID},",
 				"          Years = Year,",
 				"          DNA,",
-				"          DNARate",
+				"          DNARate,",
+				"          {Hours Open},",
+				"          SUR,",
+				"          ID2",
 				"     )) ~> sink1"
 			]
 		}
