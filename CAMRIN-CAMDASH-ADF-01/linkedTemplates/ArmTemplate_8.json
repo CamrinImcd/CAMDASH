@@ -13,6 +13,202 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/PROD_Unity_DM01')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashprod101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "PERIOD",
+						"type": "varchar"
+					},
+					{
+						"name": "PROVIDER_PARENT_ORG_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "PROVIDER_PARENT_NAME",
+						"type": "varchar"
+					},
+					{
+						"name": "PROVIDER_ORG_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "PROVIDER_ORG_NAME",
+						"type": "varchar"
+					},
+					{
+						"name": "COMMISSIONER_PARENT_ORG_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "COMMISSIONER_PARENT_NAME",
+						"type": "varchar"
+					},
+					{
+						"name": "COMMISSIONER_ORG_CODE",
+						"type": "varchar"
+					},
+					{
+						"name": "COMMISSIONER_ORG_NAME",
+						"type": "varchar"
+					},
+					{
+						"name": "DIAGNOSTIC_TESTS_SORT_ORDER",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "DIAGNOSTIC_TESTS",
+						"type": "varchar"
+					},
+					{
+						"name": "WEEK_0_LESSTHAN_1",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_1_LESSTHAN_2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_2_LESSTHAN_3",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_3_LESSTHAN_4",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_4_LESSTHAN_5",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_5_LESSTHAN_6",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_6_LESSTHAN_7",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_7_LESSTHAN_8",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_8_LESSTHAN_9",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_9_LESSTHAN_10",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_10_LESSTHAN_11",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_11_LESSTHAN_12",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEK_12_LESSTHAN_13",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WEEKS_13PLUS",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TOTAL_WL",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "WAITING_LIST_ACTIVITY",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "PLANNED_ACTIVITY",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "UNSCHEDULED_ACTIVITY",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "TOTAL_ACTIVITY",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Z_SNAPSHOT_MONTH",
+						"type": "varchar"
+					},
+					{
+						"name": "Z_SNAPSHOT_YEAR",
+						"type": "varchar"
+					},
+					{
+						"name": "Z_SNAPSHOT_FISCAL_MONTH",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Z_SNAPSHOT_FISCAL_YEAR",
+						"type": "varchar"
+					},
+					{
+						"name": "Z_LATEST_SNAPSHOT",
+						"type": "varchar"
+					},
+					{
+						"name": "X_SEQNO",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "z_load_date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "z_snapshot_filename",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "Unify",
+					"table": "NAT_DM01"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Patient_Type')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1648,226 +1844,6 @@
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "FYF_ODBC_REPORT_META"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServer_REPO_TAT')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "RADFYF01_CRIS_PostgreSQL",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "Accession",
-						"type": "varchar"
-					},
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Report Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Request Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Event Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Lead Clinician",
-						"type": "varchar"
-					},
-					{
-						"name": "Referrer",
-						"type": "varchar"
-					},
-					{
-						"name": "Referring Locat",
-						"type": "varchar"
-					},
-					{
-						"name": "Site",
-						"type": "varchar"
-					},
-					{
-						"name": "Examination",
-						"type": "varchar"
-					},
-					{
-						"name": "Exam Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Event Key2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status Code",
-						"type": "varchar"
-					},
-					{
-						"name": "Intended Radiologist",
-						"type": "varchar"
-					},
-					{
-						"name": "Ref Src",
-						"type": "varchar"
-					},
-					{
-						"name": "Modality",
-						"type": "varchar"
-					},
-					{
-						"name": "Date First Addended",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date First Verified",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date Last Addended",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date LAst Verified",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date Reported",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date Typed",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "First Addended By",
-						"type": "varchar"
-					},
-					{
-						"name": "First Addended by Name",
-						"type": "varchar"
-					},
-					{
-						"name": "First Verified By",
-						"type": "varchar"
-					},
-					{
-						"name": "First Verified By Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Last Addended By",
-						"type": "varchar"
-					},
-					{
-						"name": "Last Addended By Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Last Verified By",
-						"type": "varchar"
-					},
-					{
-						"name": "Last Verified By Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By2",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported By2 Name",
-						"type": "varchar"
-					},
-					{
-						"name": "First Verified Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Last Verified Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Time Reported",
-						"type": "varchar"
-					},
-					{
-						"name": "Time Typed",
-						"type": "varchar"
-					},
-					{
-						"name": "Typed By",
-						"type": "varchar"
-					},
-					{
-						"name": "Attend to First Verified Days",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Attend to Reported Days",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "FYF_ODBC_REPORTING_TAT"
 				}
 			},
 			"dependsOn": []

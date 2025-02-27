@@ -13,6 +13,63 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_ActivitySpecialRep')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "ActivitySpecialRep",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Reporter type",
+						"type": "String"
+					},
+					{
+						"name": "Chest X-ray",
+						"type": "String"
+					},
+					{
+						"name": "CT Head",
+						"type": "String"
+					},
+					{
+						"name": "CT Colonography",
+						"type": "String"
+					},
+					{
+						"name": "MRI SPINES",
+						"type": "String"
+					},
+					{
+						"name": "MRI KNEES",
+						"type": "String"
+					},
+					{
+						"name": "MRI HEAD",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_AgencyCovidTemp')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1142,63 +1199,6 @@
 					},
 					{
 						"name": "Cost",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_SubStaffJobPlan')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "SubStaffJobPlan",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "NIDC_Workforce.xlsx",
-						"container": "nidc-workforce-22"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Trust",
-						"type": "String"
-					},
-					{
-						"name": "Consultant\nRadiographer ",
-						"type": "String"
-					},
-					{
-						"name": "Advanced \nPractitioner\n",
-						"type": "String"
-					},
-					{
-						"name": "Consultant \nSonographer",
-						"type": "String"
-					},
-					{
-						"name": "Advanced Practitioner - Sonographer",
-						"type": "String"
-					},
-					{
-						"name": "Consultant Mammographer - Symptomatic",
-						"type": "String"
-					},
-					{
-						"name": "Advanced Practitioner – Mammographer ",
-						"type": "String"
-					},
-					{
-						"name": "Reporting \nRadiographer",
 						"type": "String"
 					}
 				]
