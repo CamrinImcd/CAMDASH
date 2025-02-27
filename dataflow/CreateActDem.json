@@ -17,6 +17,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "AzureSqlTable9",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
 				}
 			],
 			"sinks": [
@@ -81,9 +88,6 @@
 					"name": "select3"
 				},
 				{
-					"name": "derivedColumn5"
-				},
-				{
 					"name": "filter1"
 				},
 				{
@@ -94,6 +98,18 @@
 				},
 				{
 					"name": "join4"
+				},
+				{
+					"name": "derivedColumn5"
+				},
+				{
+					"name": "derivedColumn6"
+				},
+				{
+					"name": "lookup1"
+				},
+				{
+					"name": "derivedColumn7"
 				}
 			],
 			"scriptLines": [
@@ -174,6 +190,21 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> source1",
+				"source(output(",
+				"          Year as string,",
+				"          Local_Identifier as string,",
+				"          Location as string,",
+				"          Equipment_Detail as string,",
+				"          Day as string,",
+				"          {Hours Open} as string,",
+				"          {Trust ID} as string,",
+				"          {Modality ID} as integer,",
+				"          ID2 as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source2",
 				"join4 derive(DNA = iif({Status Code}==\"CPDNA\", 1, iif({Status Code}==\"APDNA\", 1, 0))) ~> CreateDNAColumn",
 				"CreateDNAColumn aggregate(groupBy({Event Date} = toDate({Event Date Time}),",
 				"          {Modality ID},",
@@ -222,11 +253,13 @@
 				"          ID,",
 				"          Activity,",
 				"          DNA,",
-				"          Month",
+				"          Month,",
+				"          {Day Name}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
-				"derivedColumn3 derive(Month = addMonths(addDays(lastDayOfMonth(Date),1),-1)) ~> derivedColumn4",
+				"derivedColumn3 derive(Month = addMonths(addDays(lastDayOfMonth(Date),1),-1),",
+				"          {Day Name} = dayOfWeek(Date)) ~> derivedColumn4",
 				"derivedColumn4 aggregate(groupBy({Modality ID},",
 				"          {Trust ID},",
 				"          Month),",
@@ -260,7 +293,7 @@
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select2",
-				"join3 select(mapColumn(",
+				"lookup1 select(mapColumn(",
 				"          Date,",
 				"          {Modality ID} = select1@{Modality ID},",
 				"          {Trust ID} = select1@{Trust ID},",
@@ -271,13 +304,12 @@
 				"          Month = select1@Month,",
 				"          {Monthly Demand Max},",
 				"          {Monthly Activity Sum},",
-				"          {Monthly Demand Sum}",
+				"          {Monthly Demand Sum},",
+				"          {Hours Open}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select3",
-				"select3 derive(Year = year(Date),",
-				"          DNARate = DNA/(Activity+DNA)) ~> derivedColumn5",
-				"derivedColumn5 filter(isNull(ID)==false()) ~> filter1",
+				"derivedColumn7 filter(isNull(ID)==false()) ~> filter1",
 				"derivedColumn1 filter(isNull(ID)==false()) ~> filter2",
 				"derivedColumn2 filter(isNull(ID)==false()) ~> filter4",
 				"Core, source1 join(Core@{Status ID} == source1@{Status ID},",
@@ -285,6 +317,13 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'auto')~> join4",
+				"join3 derive({Day Name} = iif({Day Name}==1, 'Sunday', iif({Day Name}==2, 'Monday', iif({Day Name}==3, 'Tuesday', iif({Day Name}==4, 'Wednesday', iif({Day Name}==5, 'Thursday', iif({Day Name}==6, 'Friday', iif({Day Name}==7, 'Saturday', '0')))))))) ~> derivedColumn5",
+				"derivedColumn5 derive(ID2 = concat(toString(year(Date)),':',{Day Name},':',toString(select1@{Trust ID}),':',toString(select1@{Modality ID}))) ~> derivedColumn6",
+				"derivedColumn6, source2 lookup(derivedColumn6@ID2 == source2@ID2,",
+				"     multiple: false,",
+				"     pickup: 'any',",
+				"     broadcast: 'auto')~> lookup1",
+				"select3 derive(SUR = Activity/toLong({Hours Open})) ~> derivedColumn7",
 				"filter1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",

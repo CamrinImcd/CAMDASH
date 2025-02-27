@@ -1,0 +1,54 @@
+{
+	"name": "AzureSqlTable9",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "Year",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Local_Identifier",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Location",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Equipment_Detail",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Day",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Hours Open",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Trust ID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Modality ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ID2",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "NIDC_Asset2"
+		}
+	}
+}
