@@ -4602,7 +4602,8 @@
 						"          DNARate,",
 						"          {Hours Open},",
 						"          SUR,",
-						"          ID2",
+						"          ID2,",
+						"          {Day Name}",
 						"     )) ~> sink1"
 					]
 				}
