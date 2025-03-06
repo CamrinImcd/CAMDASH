@@ -308,7 +308,7 @@
 				"          {Hours Open},",
 				"          Year = derivedColumn5@Year,",
 				"          DNARate,",
-				"          ID2 = source2@ID2,",
+				"          ID2 = derivedColumn6@ID2,",
 				"          {Day Name}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
