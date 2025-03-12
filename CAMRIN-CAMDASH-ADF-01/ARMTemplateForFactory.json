@@ -24023,7 +24023,10 @@
 						"          {Month First Verified} = subMonths(addDays(lastDayOfMonth({Datetime First Verified}),1),1),",
 						"          {Event Year Only} = year({Event Date Time}),",
 						"          {Event Month Number Only} = month({Event Date Time}),",
-						"          {Event Hour} = hour({Event Date Time})) ~> derivedColumn9",
+						"          {Event Hour} = hour({Event Date Time}),",
+						"          {Date First Verified} = toDate(toString({Datetime First Verified})),",
+						"          {Event Date} = toDate(toString({Event Date Time})),",
+						"          {Request Date} = toDate(toString({Requested Datetime}))) ~> derivedColumn9",
 						"window2 filter(Rank==1) ~> filter2",
 						"lookup7 select(mapColumn(",
 						"          {CRIS No},",
@@ -24156,7 +24159,10 @@
 						"          {Month First Verified},",
 						"          {Event Year Only},",
 						"          {Event Month Number Only},",
-						"          {Event Hour}",
+						"          {Event Hour},",
+						"          {Date First Verified},",
+						"          {Event Date},",
+						"          {Request Date}",
 						"     )) ~> AzureSqlCOREV2"
 					]
 				}
