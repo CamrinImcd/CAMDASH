@@ -110,6 +110,24 @@
 				},
 				{
 					"name": "derivedColumn7"
+				},
+				{
+					"name": "window1"
+				},
+				{
+					"name": "derivedColumn9"
+				},
+				{
+					"name": "window2"
+				},
+				{
+					"name": "window3"
+				},
+				{
+					"name": "window4"
+				},
+				{
+					"name": "select4"
 				}
 			],
 			"scriptLines": [
@@ -330,7 +348,65 @@
 				"     pickup: 'any',",
 				"     broadcast: 'auto')~> lookup1",
 				"select3 derive(SUR = Activity/toLong({Hours Open})) ~> derivedColumn7",
-				"filter1 sink(allowSchemaDrift: true,",
+				"filter1 window(over({Modality ID},",
+				"          {Trust ID},",
+				"          Date),",
+				"     asc(Date, true),",
+				"     {Daily DNA Count} = sum(DNA),",
+				"          {Daily Activity Count} = sum(Activity)) ~> window1",
+				"window3 derive({Date (Month)} = iif(month(Date)==1,'Jan',iif(month(Date)==2,'Feb',iif(month(Date)==3,'Mar',iif(month(Date)==4,'Apr',iif(month(Date)==5,'May',iif(month(Date)==6,'Jun',iif(month(Date)==7,'Jul',iif(month(Date)==8,'Aug',iif(month(Date)==9,'Sep',iif(month(Date)==10,'Oct',iif(month(Date)==11,'Nov',iif(month(Date)==12,'Dec','ERROR')))))))))))),",
+				"          {Date (Year)} = year(Date),",
+				"          {DNA Daily} = {Daily DNA Count}/{Daily DNA Count}+{Daily Activity Count},",
+				"          {DNA Monthly} = {Monthly DNA Count}/{Monthly DNA Count}+{Monthly Activity Count},",
+				"          Capacity = toLong({Hours Open})*{Yearly SUR}) ~> derivedColumn9",
+				"window1 window(over({Modality ID},",
+				"          {Trust ID},",
+				"          Month),",
+				"     asc(Date, true),",
+				"     {Monthly DNA Count} = sum(DNA),",
+				"          {Monthly Activity Count} = sum(Activity),",
+				"          {Monthly SUR} = avg(SUR)) ~> window2",
+				"window2 window(over(Year,",
+				"          {Modality ID},",
+				"          {Trust ID}),",
+				"     asc(Date, true),",
+				"     {Yearly SUR} = avg({Monthly SUR})) ~> window3",
+				"derivedColumn9 window(over(Month,",
+				"          {Modality ID},",
+				"          {Trust ID}),",
+				"     asc(Date, true),",
+				"     {Monthly Cap} = sum(Capacity)) ~> window4",
+				"window4 select(mapColumn(",
+				"          Activity,",
+				"          Capacity,",
+				"          Date,",
+				"          {Date (Month)},",
+				"          {Date (Year)},",
+				"          {Day Name},",
+				"          Demand,",
+				"          DNA,",
+				"          {DNA Daily},",
+				"          {DNA Monthly},",
+				"          {DNA Monthly Count} = {Monthly DNA Count},",
+				"          DNARate,",
+				"          {Hours Open},",
+				"          ID,",
+				"          ID2,",
+				"          {Modality ID},",
+				"          Month,",
+				"          {Monthly Activity Sum},",
+				"          {Monthly Cap},",
+				"          {Monthly Demand Sum},",
+				"          {Monthly Demand Max},",
+				"          {Monthly SUR},",
+				"          SUR,",
+				"          {Trust ID},",
+				"          {Yearly SUR},",
+				"          Year",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select4",
+				"select4 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -340,26 +416,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError',",
-				"     mapColumn(",
-				"          Activity,",
-				"          Date,",
-				"          Demand,",
-				"          ID,",
-				"          {Modality ID},",
-				"          Month,",
-				"          {Monthly Activity Sum},",
-				"          {Monthly Demand Sum},",
-				"          {Monthly Max} = {Monthly Demand Max},",
-				"          {Trust ID},",
-				"          Years = Year,",
-				"          DNA,",
-				"          DNARate,",
-				"          {Hours Open},",
-				"          SUR,",
-				"          ID2,",
-				"          {Day Name}",
-				"     )) ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}
