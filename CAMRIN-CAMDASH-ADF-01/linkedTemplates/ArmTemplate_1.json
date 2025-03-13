@@ -1014,6 +1014,25 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable12')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "Avg_Req_Rep_Inpt"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSqlTable2')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2054,44 +2073,6 @@
 				"typeProperties": {
 					"schema": "dev",
 					"table": "AzureSql_CoreV2Staging"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSql_Imports_LUFT')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Site",
-						"type": "varchar"
-					},
-					{
-						"name": "Room",
-						"type": "varchar"
-					},
-					{
-						"name": "Room Description",
-						"type": "varchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "luft",
-					"table": "FYF_ODBC_IMPORTS"
 				}
 			},
 			"dependsOn": []

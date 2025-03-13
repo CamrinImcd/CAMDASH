@@ -8911,6 +8911,7 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
+								"preCopyScript": "drop table [dev].[Report_Page]",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"tableOption": "autoCreate",
@@ -8936,6 +8937,65 @@
 						"outputs": [
 							{
 								"referenceName": "AzureSqlTable11",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Avg_Req_Rep_Inpt_Table",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "ReferenceLookupsCore",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [Trust ID]\n\t,[Modality ID]\n      ,[Patient Type ID]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]\n\t  ,[Date First Verified]\n\t  ,Avg([Request-Report Hours]) as [Avg Request-Report Hours]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Datetime First Verified] is not null\n  and [Patient Type ID]=4\n  and [Request-Report Hours] >0\n  Group by [Trust ID]\n\t,[Modality ID]\n      ,[Patient Type ID]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]\n\t  ,[Date First Verified]",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "drop table [dev].[Avg_Req_Rep_Inpt]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable12",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -8979,7 +9039,6 @@
 				"[concat(variables('factoryId'), '/dataflows/Remove_Dupes_Core')]",
 				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveAzureIR')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRefColumns')]",
-				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRefColumnsPTL')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRequestRecieveddataset')]",
@@ -8992,6 +9051,7 @@
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable10')]",
 				"[concat(variables('factoryId'), '/datasets/FYF_ODBC_CORE_v2')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable11')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable12')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep2')]"
 			]
 		},
@@ -10838,6 +10898,27 @@
 				"typeProperties": {
 					"schema": "dev",
 					"table": "Report_Page"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable12')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "Avg_Req_Rep_Inpt"
 				}
 			},
 			"dependsOn": [

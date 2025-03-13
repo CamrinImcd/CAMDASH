@@ -13,6 +13,44 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSql_Imports_LUFT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Site",
+						"type": "varchar"
+					},
+					{
+						"name": "Room",
+						"type": "varchar"
+					},
+					{
+						"name": "Room Description",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "luft",
+					"table": "FYF_ODBC_IMPORTS"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSql_LUNGCa')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -2432,57 +2470,6 @@
 				],
 				"typeProperties": {
 					"schema": "dev",
-					"table": "FYF_ODBC_TEST_Patients"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSql_Test_LUFT')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "CRIS No",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Creation Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Mutation Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Surname",
-						"type": "varchar"
-					},
-					{
-						"name": "Forename",
-						"type": "varchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "luft",
 					"table": "FYF_ODBC_TEST_Patients"
 				}
 			},
