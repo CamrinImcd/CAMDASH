@@ -5512,6 +5512,60 @@
 						"type": "DatasetReference"
 					}
 				}
+			},
+			{
+				"name": "Copy_DM01",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "CreateAct_Dem",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "Select * \n  FROM [Unify].[NAT_DM01]\n  Where PROVIDER_PARENT_ORG_CODE in ('Q75','Qyg')\n",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "PROD_Unity_DM01",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "AzureSqlTable10",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"folder": {
