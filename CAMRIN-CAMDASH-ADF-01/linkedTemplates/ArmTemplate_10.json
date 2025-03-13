@@ -848,8 +848,8 @@
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
-						"     upsertable:false,",
-						"     recreate:true,",
+						"     upsertable:true,",
+						"     keys:['Exam Key','Status ID'],",
 						"     format: 'table',",
 						"     preSQLs:['delete T\\nFROM\\n(\\nSELECT *\\n, DupRank = ROW_NUMBER() OVER (\\n              PARTITION BY [Exam Key], [Status Code]\\n              ORDER BY [Stat Date] desc\\n            )\\n  FROM [dev].[AzureSqlCOREStageStep2]\\n) AS T\\nwhere DupRank>1'],",
 						"     postSQLs:['delete T\\nFROM\\n(\\nSELECT *\\n, DupRank = ROW_NUMBER() OVER (\\n              PARTITION BY [Exam Key],[Status ID]\\n              ORDER BY [Data Pull Date] desc\\n            )\\n  FROM [dev].[FYF_ODBC_CORE_v2]\\n) AS T\\nwhere DupRank>1'],",
@@ -7339,15 +7339,15 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Prev Latest stat date report_meta",
+								"activity": "Latest stat date report_meta",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							},
 							{
-								"activity": "Latest stat date report_meta",
+								"activity": "Prev Latest stat date report_meta",
 								"dependencyConditions": [
-									"Succeeded"
+									"Failed"
 								]
 							}
 						],
