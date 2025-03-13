@@ -13,6 +13,126 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_REPO_META')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RADFYF01_CRIS_PostgreSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Report Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key2",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Referral Source",
+						"type": "varchar"
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Event Time",
+						"type": "varchar"
+					},
+					{
+						"name": "Date of First Addendnum",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date First Verified",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date of Last Addendnum",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date Last Verified",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date Reported",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Date Typed",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Reported by",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported by2",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported by2 Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Reported by Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Typed by",
+						"type": "varchar"
+					},
+					{
+						"name": "Typed by Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FYF_ODBC_REPORT_META"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SqlServer_REPO_TAT')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -6213,104 +6333,6 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Trust')]"
 			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/CreateRequestRecieveddataset')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "AzureSql_STATUSES",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "RequestRecievedStatus",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "filter1"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          Accession as string,",
-						"          Referrer as string,",
-						"          {Referral Location} as string,",
-						"          {Referral Source} as string,",
-						"          Urg as string,",
-						"          Site as string,",
-						"          {Status Code} as string,",
-						"          {Status Date} as timestamp,",
-						"          {Status Time} as integer,",
-						"          {Referral Location Name} as string,",
-						"          {Referral Source Name} as string,",
-						"          {Referral Name} as string,",
-						"          {Examination Name} as string,",
-						"          Modality as string,",
-						"          {Status Code at State Date} as string,",
-						"          {Stat Date} as timestamp,",
-						"          {D Status} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     enableCdc: true,",
-						"     mode: 'read',",
-						"     skipInitialLoad: false,",
-						"     waterMarkColumn: 'Stat Date',",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> source1",
-						"source1 filter({Status Code}=='RR') ~> filter1",
-						"filter1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     input(",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          Accession as string,",
-						"          Referrer as string,",
-						"          {Referral Location} as string,",
-						"          {Referral Source} as string,",
-						"          Urg as string,",
-						"          Site as string,",
-						"          {Status Code} as string,",
-						"          {Status Date} as timestamp,",
-						"          {Status Time} as integer,",
-						"          {Referral Location Name} as string,",
-						"          {Referral Source Name} as string,",
-						"          {Referral Name} as string,",
-						"          {Examination Name} as string,",
-						"          Modality as string,",
-						"          {Status Code at State Date} as string,",
-						"          {Stat Date} as timestamp,",
-						"          {D Status} as string,",
-						"          Rank as integer",
-						"     ),",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
-					]
-				}
-			},
-			"dependsOn": []
 		}
 	]
 }

@@ -13,6 +13,55 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_SubStaffFTE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "SubStaffFTE",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Staff Group",
+						"type": "String"
+					},
+					{
+						"name": "Staff Type",
+						"type": "String"
+					},
+					{
+						"name": "Band",
+						"type": "String"
+					},
+					{
+						"name": "Count",
+						"type": "String"
+					},
+					{
+						"name": "Cost",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_SubStaffJobPlan')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -789,95 +838,6 @@
 					"schema": "dbo",
 					"table": "NIDC_Asset_Spec"
 				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/NIDC_Upload_AA')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "CAMDASH_DATALAKE",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "Asset_availability",
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "NIDC_LHCH.xlsx",
-						"fileSystem": "nidc-lhch"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Local_Identifier",
-						"type": "String"
-					},
-					{
-						"name": "Room_Code",
-						"type": "String"
-					},
-					{
-						"name": "Location",
-						"type": "String"
-					},
-					{
-						"name": "Equipment_Detail",
-						"type": "String"
-					},
-					{
-						"name": "Avg_core_staffed_operational_hours_Weekday",
-						"type": "String"
-					},
-					{
-						"name": "Main_use_core_hours_Weekday",
-						"type": "String"
-					},
-					{
-						"name": "avg_OOHs_Weekday",
-						"type": "String"
-					},
-					{
-						"name": "Avg_core_staffed_operational_hours_Sat",
-						"type": "String"
-					},
-					{
-						"name": "Main_use_core_hours_Sat",
-						"type": "String"
-					},
-					{
-						"name": "avg_OOHs_Sat",
-						"type": "String"
-					},
-					{
-						"name": "Avg_core_staffed_operational_hours_Sun",
-						"type": "String"
-					},
-					{
-						"name": "Main_use_core_hours_Sun",
-						"type": "String"
-					},
-					{
-						"name": "avg_OOHs_Sun",
-						"type": "String"
-					},
-					{
-						"name": "Research",
-						"type": "String"
-					},
-					{
-						"name": "Avg_Research_Hours_per_week",
-						"type": "String"
-					},
-					{
-						"name": "Unscheduled_downtime_12M",
-						"type": "String"
-					}
-				]
 			},
 			"dependsOn": []
 		}

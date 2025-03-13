@@ -13,6 +13,162 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/ODBC_PTL_v2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "CRIS Number",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status Category",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Request Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Booked Date Time",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Creation Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Attended",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Urg",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Days Waiting",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Predicted Reset Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Waiting Time Reset Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Weeks Waiting",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Planned Appointment Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Waiting Breach Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Was Planned",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Was Scheduled",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Was Waiting",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "date"
+					},
+					{
+						"name": "5 Weeks Wait",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Booked Datetime",
+						"type": "nvarchar"
+					},
+					{
+						"name": "6 Weeks Wait",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Referral Source ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Modality ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Room ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Trust ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status Code",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "FYF_ODBC_PTL_v2"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PROD_Unity_DM01')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1724,126 +1880,6 @@
 				"typeProperties": {
 					"schema": "dbo",
 					"table": "FYF_ODBC_PTL"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServer_REPO_META')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "RADFYF01_CRIS_PostgreSQL",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Report Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Event Key2",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Referral Source",
-						"type": "varchar"
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Event Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Date of First Addendnum",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date First Verified",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date of Last Addendnum",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date Last Verified",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date Reported",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Date Typed",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					},
-					{
-						"name": "Reported by",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported by2",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported by2 Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Reported by Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Typed by",
-						"type": "varchar"
-					},
-					{
-						"name": "Typed by Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "FYF_ODBC_REPORT_META"
 				}
 			},
 			"dependsOn": []

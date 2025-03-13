@@ -13,6 +13,104 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/CreateRequestRecieveddataset')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSql_STATUSES",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "RequestRecievedStatus",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "filter1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          Accession as string,",
+						"          Referrer as string,",
+						"          {Referral Location} as string,",
+						"          {Referral Source} as string,",
+						"          Urg as string,",
+						"          Site as string,",
+						"          {Status Code} as string,",
+						"          {Status Date} as timestamp,",
+						"          {Status Time} as integer,",
+						"          {Referral Location Name} as string,",
+						"          {Referral Source Name} as string,",
+						"          {Referral Name} as string,",
+						"          {Examination Name} as string,",
+						"          Modality as string,",
+						"          {Status Code at State Date} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {D Status} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     enableCdc: true,",
+						"     mode: 'read',",
+						"     skipInitialLoad: false,",
+						"     waterMarkColumn: 'Stat Date',",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 filter({Status Code}=='RR') ~> filter1",
+						"filter1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          Accession as string,",
+						"          Referrer as string,",
+						"          {Referral Location} as string,",
+						"          {Referral Source} as string,",
+						"          Urg as string,",
+						"          Site as string,",
+						"          {Status Code} as string,",
+						"          {Status Date} as timestamp,",
+						"          {Status Time} as integer,",
+						"          {Referral Location Name} as string,",
+						"          {Referral Source Name} as string,",
+						"          {Referral Name} as string,",
+						"          {Examination Name} as string,",
+						"          Modality as string,",
+						"          {Status Code at State Date} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {D Status} as string,",
+						"          Rank as integer",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PopulateNewColumns')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -7673,6 +7771,62 @@
 								"parameters": {}
 							}
 						}
+					},
+					{
+						"name": "Copy_DM01",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "CreateAct_Dem",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "Select * \n  FROM [Unify].[NAT_DM01]\n  Where PROVIDER_PARENT_ORG_CODE in ('Q75','Qyg')\n",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "PROD_Unity_DM01",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable10",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -7686,6 +7840,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/Remove_Dupes_Core')]",
+				"[concat(variables('factoryId'), '/dataflows/CreateRequestRecieveddataset')]",
 				"[concat(variables('factoryId'), '/dataflows/PopulateNewColumns')]"
 			]
 		},

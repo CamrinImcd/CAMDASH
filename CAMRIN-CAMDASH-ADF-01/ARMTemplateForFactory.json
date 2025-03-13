@@ -8823,6 +8823,62 @@
 								"parameters": {}
 							}
 						}
+					},
+					{
+						"name": "Copy_DM01",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "CreateAct_Dem",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "Select * \n  FROM [Unify].[NAT_DM01]\n  Where PROVIDER_PARENT_ORG_CODE in ('Q75','Qyg')\n",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "PROD_Unity_DM01",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable10",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -8870,6 +8926,8 @@
 				"[concat(variables('factoryId'), '/dataflows/CreatePatientWaiting')]",
 				"[concat(variables('factoryId'), '/datasets/CoreUpdateTable')]",
 				"[concat(variables('factoryId'), '/datasets/SqlServer_Imports')]",
+				"[concat(variables('factoryId'), '/datasets/PROD_Unity_DM01')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable10')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep2')]"
 			]
 		},
@@ -10674,6 +10732,27 @@
 				"typeProperties": {
 					"schema": "dev",
 					"table": "FYF_ODBC_PTL_v2"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable10')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "DM01NW"
 				}
 			},
 			"dependsOn": [
