@@ -5535,12 +5535,13 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "Select * \n  FROM [Unify].[NAT_DM01]\n  Where PROVIDER_PARENT_ORG_CODE in ('Q75','Qyg')\n",
+						"sqlReaderQuery": "SELECT [PERIOD]\n      ,[PROVIDER_PARENT_ORG_CODE]\n      ,[PROVIDER_PARENT_NAME]\n      ,[PROVIDER_ORG_CODE]\n      ,[PROVIDER_ORG_NAME]\n      ,[COMMISSIONER_PARENT_ORG_CODE]\n      ,[COMMISSIONER_PARENT_NAME]\n      ,[COMMISSIONER_ORG_CODE]\n      ,[COMMISSIONER_ORG_NAME]\n      ,[DIAGNOSTIC_TESTS_SORT_ORDER]\n      ,[DIAGNOSTIC_TESTS]\n      ,[WEEK_0_LESSTHAN_1]\n      ,[WEEK_1_LESSTHAN_2]\n      ,[WEEK_2_LESSTHAN_3]\n      ,[WEEK_3_LESSTHAN_4]\n      ,[WEEK_4_LESSTHAN_5]\n      ,[WEEK_5_LESSTHAN_6]\n      ,[WEEK_6_LESSTHAN_7]\n      ,[WEEK_7_LESSTHAN_8]\n      ,[WEEK_8_LESSTHAN_9]\n      ,[WEEK_9_LESSTHAN_10]\n      ,[WEEK_10_LESSTHAN_11]\n      ,[WEEK_11_LESSTHAN_12]\n      ,[WEEK_12_LESSTHAN_13]\n      ,[WEEKS_13PLUS]\n      ,[TOTAL_WL]\n      ,[WAITING_LIST_ACTIVITY]\n      ,[PLANNED_ACTIVITY]\n      ,[UNSCHEDULED_ACTIVITY]\n      ,[TOTAL_ACTIVITY]\n      ,[Z_SNAPSHOT_MONTH]\n      ,[Z_SNAPSHOT_YEAR]\n      ,[Z_SNAPSHOT_FISCAL_MONTH]\n      ,[Z_SNAPSHOT_FISCAL_YEAR]\n      ,[Z_LATEST_SNAPSHOT]\n      ,[X_SEQNO]\n      ,[z_load_date]\n      ,[z_snapshot_filename]\n\t  ,[WEEK_0_LESSTHAN_1]+[WEEK_1_LESSTHAN_2]+[WEEK_2_LESSTHAN_3]+[WEEK_3_LESSTHAN_4]+[WEEK_4_LESSTHAN_5]+[WEEK_5_LESSTHAN_6]+[WEEK_6_LESSTHAN_7]+[WEEK_7_LESSTHAN_8]+[WEEK_8_LESSTHAN_9]+[WEEK_9_LESSTHAN_10]+[WEEK_10_LESSTHAN_11]+[WEEK_11_LESSTHAN_12]+[WEEK_12_LESSTHAN_13]+[WEEKS_13PLUS] as [Calc_total_WL]\n\t  ,[WEEK_6_LESSTHAN_7] + [WEEK_7_LESSTHAN_8]+ [WEEK_8_LESSTHAN_9]+ [WEEK_9_LESSTHAN_10] + [WEEK_10_LESSTHAN_11] + [WEEK_11_LESSTHAN_12] + [WEEK_12_LESSTHAN_13] + [WEEKs_13PLUS] as [Over 6 Weeks]\n\t  ,[WEEK_0_LESSTHAN_1] + [WEEK_1_LESSTHAN_2]+ [WEEK_2_LESSTHAN_3]+ [WEEK_3_LESSTHAN_4] + [WEEK_4_LESSTHAN_5] + [WEEK_5_LESSTHAN_6] as [Under 6 Weeks]\n\t  ,Cast(Case when [TOTAL_WL] <> 0 then cast(([WEEK_0_LESSTHAN_1] + [WEEK_1_LESSTHAN_2]+ [WEEK_2_LESSTHAN_3]+ [WEEK_3_LESSTHAN_4] + [WEEK_4_LESSTHAN_5] + [WEEK_5_LESSTHAN_6]) as float)/Cast([WEEK_0_LESSTHAN_1]+[WEEK_1_LESSTHAN_2]+[WEEK_2_LESSTHAN_3]+[WEEK_3_LESSTHAN_4]+[WEEK_4_LESSTHAN_5]+[WEEK_5_LESSTHAN_6]+[WEEK_6_LESSTHAN_7]+[WEEK_7_LESSTHAN_8]+[WEEK_8_LESSTHAN_9]+[WEEK_9_LESSTHAN_10]+[WEEK_10_LESSTHAN_11]+[WEEK_11_LESSTHAN_12]+[WEEK_12_LESSTHAN_13]+[WEEKS_13PLUS] as float) else 0 end as float) as percentage\n  FROM [Unify].[NAT_DM01]\n  Where PROVIDER_PARENT_ORG_CODE in ('Q75','Qyg')\n  and Z_SNAPSHOT_YEAR >=2019",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
 					"sink": {
 						"type": "AzureSqlSink",
+						"preCopyScript": "drop table [dev].[DM01NW]",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate",
