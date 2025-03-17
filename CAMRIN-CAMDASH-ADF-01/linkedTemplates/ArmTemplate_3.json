@@ -13,6 +13,160 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/AzureSql_Statuses_LUFT')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Accession",
+						"type": "varchar"
+					},
+					{
+						"name": "Referrer",
+						"type": "varchar"
+					},
+					{
+						"name": "Referral Location",
+						"type": "varchar"
+					},
+					{
+						"name": "Referral Source",
+						"type": "varchar"
+					},
+					{
+						"name": "Urg",
+						"type": "varchar"
+					},
+					{
+						"name": "Site",
+						"type": "varchar"
+					},
+					{
+						"name": "Status Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Status Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Status Time",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Referral Location Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Referral Source Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Referral Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Examination Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Modality",
+						"type": "varchar"
+					},
+					{
+						"name": "Status Code at State Date",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "D Status",
+						"type": "varchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "luft",
+					"table": "FYF_ODBC_STATUSES"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSql_TEST_PATIENTS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CRIS No",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Creation Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Mutation Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					},
+					{
+						"name": "Surname",
+						"type": "varchar"
+					},
+					{
+						"name": "Forename",
+						"type": "varchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "FYF_ODBC_TEST_Patients"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/AzureSql_Test_LUFT')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1700,108 +1854,6 @@
 					},
 					{
 						"name": "Count",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_ActivityKPI')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "ActivityKPI",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "NIDC_Workforce.xlsx",
-						"container": "nidc-workforce-22"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Trust",
-						"type": "String"
-					},
-					{
-						"name": "Modality",
-						"type": "String"
-					},
-					{
-						"name": "95th Percentile Request to Report Issued",
-						"type": "String"
-					},
-					{
-						"name": "95th Percentile Exam to Report Issued",
-						"type": "String"
-					},
-					{
-						"name": "Report outstanding > 10 days",
-						"type": "String"
-					},
-					{
-						"name": "Report outstanding > 30 days",
-						"type": "String"
-					},
-					{
-						"name": "Percentage of appointments not attended by patient",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_ActivityPathway')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "ActivityPathway",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "NIDC_Workforce.xlsx",
-						"container": "nidc-workforce-22"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Trust",
-						"type": "String"
-					},
-					{
-						"name": "Multiparametric Prostate MRI",
-						"type": "String"
-					},
-					{
-						"name": "Cauda Equina MRI ",
-						"type": "String"
-					},
-					{
-						"name": "CE_Operational Hours",
-						"type": "String"
-					},
-					{
-						"name": "Mechanical Thrombectomy procedures ",
-						"type": "String"
-					},
-					{
-						"name": "MT_Operational Hours",
 						"type": "String"
 					}
 				]

@@ -13,6 +13,432 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/CreateActDem')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference"
+							},
+							"name": "Core"
+						},
+						{
+							"dataset": {
+								"referenceName": "Status",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable9",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Act_Dem",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "CreateDNAColumn"
+						},
+						{
+							"name": "GroupbyEvent"
+						},
+						{
+							"name": "GroupbyRequest"
+						},
+						{
+							"name": "RenameDate1"
+						},
+						{
+							"name": "RenameDate2"
+						},
+						{
+							"name": "derivedColumn1"
+						},
+						{
+							"name": "derivedColumn2"
+						},
+						{
+							"name": "join1"
+						},
+						{
+							"name": "derivedColumn3"
+						},
+						{
+							"name": "select1"
+						},
+						{
+							"name": "derivedColumn4"
+						},
+						{
+							"name": "aggregate1"
+						},
+						{
+							"name": "aggregate2"
+						},
+						{
+							"name": "join2"
+						},
+						{
+							"name": "join3"
+						},
+						{
+							"name": "select2"
+						},
+						{
+							"name": "select3"
+						},
+						{
+							"name": "filter1"
+						},
+						{
+							"name": "filter2"
+						},
+						{
+							"name": "filter4"
+						},
+						{
+							"name": "join4"
+						},
+						{
+							"name": "derivedColumn5"
+						},
+						{
+							"name": "derivedColumn6"
+						},
+						{
+							"name": "lookup1"
+						},
+						{
+							"name": "derivedColumn7"
+						},
+						{
+							"name": "window1"
+						},
+						{
+							"name": "derivedColumn9"
+						},
+						{
+							"name": "window2"
+						},
+						{
+							"name": "window3"
+						},
+						{
+							"name": "window4"
+						},
+						{
+							"name": "select4"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          {CRIS No} as integer,",
+						"          Accession as string,",
+						"          {On Call} as string,",
+						"          {Exam Room} as string,",
+						"          {ExamSite Code} as string,",
+						"          {Exam Start Time} as timestamp,",
+						"          {Exam End Time} as timestamp,",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          {Booked Date Time} as timestamp,",
+						"          {Creation Date} as date,",
+						"          {Exam Attended} as string,",
+						"          {Exam Urgency} as string,",
+						"          Modality as string,",
+						"          {Number of Processes} as integer,",
+						"          {Planned Appointment Date} as date,",
+						"          {Datetime First Verified} as timestamp,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Requested Datetime} as timestamp,",
+						"          {Patient Type ID} as long,",
+						"          {Modality ID} as integer,",
+						"          {Status ID} as integer,",
+						"          {Exam ID} as integer,",
+						"          {Exam Room ID} as long,",
+						"          {Trust ID} as integer,",
+						"          {Referral Source ID} as integer,",
+						"          {Tat Type ID} as integer,",
+						"          {Reported By} as string,",
+						"          Rank as integer,",
+						"          Activity as integer,",
+						"          {ActivIty 1} as long,",
+						"          {Data Pull Date} as timestamp,",
+						"          {Age At Event} as string,",
+						"          {Event Date Time} as timestamp,",
+						"          {Request-Image Days} as double,",
+						"          {Image-Report Days} as double,",
+						"          {Request-Report Days} as double,",
+						"          {Request-Image Hours} as double,",
+						"          {Image-Report Hours} as double,",
+						"          {Request-Report Hours} as double,",
+						"          {Image-Report 3H Pass} as integer,",
+						"          {Image-Report 4H Pass} as integer,",
+						"          {Image-Report 12H Pass} as integer,",
+						"          {Image-Report 24H Pass} as integer,",
+						"          {Image-Report 3D Pass} as integer,",
+						"          {Image-Report 7D Pass} as integer,",
+						"          {Image-Report 28D Pass} as integer,",
+						"          UpOrIn as string,",
+						"          {Updated Modality} as integer,",
+						"          {Body Parts Activity} as integer,",
+						"          {Request Year Only} as integer,",
+						"          {Request Month Number Only} as integer,",
+						"          {Report Year Only} as integer,",
+						"          {Report Month Number Only} as integer,",
+						"          {Month First Verified} as date,",
+						"          {Event Year Only} as integer,",
+						"          {Event Month Number Only} as integer,",
+						"          {Event Hour} as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     waterMarkColumn: 'Stat Date',",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table',",
+						"     mode: 'read') ~> Core",
+						"source(output(",
+						"          {Status Code} as string,",
+						"          {Status ID} as integer,",
+						"          {Status Category} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source(output(",
+						"          Year as string,",
+						"          Local_Identifier as string,",
+						"          Location as string,",
+						"          Equipment_Detail as string,",
+						"          Day as string,",
+						"          {Hours Open} as string,",
+						"          {Trust ID} as string,",
+						"          {Modality ID} as integer,",
+						"          ID2 as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source2",
+						"join4 derive(DNA = iif({Status Code}==\"CPDNA\", 1, iif({Status Code}==\"APDNA\", 1, 0))) ~> CreateDNAColumn",
+						"CreateDNAColumn aggregate(groupBy({Event Date} = toDate({Event Date Time}),",
+						"          {Modality ID},",
+						"          {Trust ID}),",
+						"     Activity = sum(Activity),",
+						"          DNA = sum(DNA)) ~> GroupbyEvent",
+						"CreateDNAColumn aggregate(groupBy({Request Date} = toDate({Requested Datetime}),",
+						"          {Modality ID},",
+						"          {Trust ID}),",
+						"     Demand = count(Activity)) ~> GroupbyRequest",
+						"GroupbyRequest select(mapColumn(",
+						"          Date = {Request Date},",
+						"          {Modality ID},",
+						"          {Trust ID},",
+						"          Demand",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RenameDate1",
+						"GroupbyEvent select(mapColumn(",
+						"          Date = {Event Date},",
+						"          {Modality ID},",
+						"          {Trust ID},",
+						"          Activity,",
+						"          DNA",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RenameDate2",
+						"RenameDate1 derive(Date = toDate(toString(Date)),",
+						"          ID = concat(left(toString(Date),10), concat(toString({Modality ID}), toString({Trust ID})))) ~> derivedColumn1",
+						"RenameDate2 derive(Date = toDate(toString(Date)),",
+						"          ID = concat(left(toString(Date),10), concat(toString({Modality ID}), toString({Trust ID})))) ~> derivedColumn2",
+						"filter2, filter4 join(derivedColumn1@ID == derivedColumn2@ID,",
+						"     joinType:'outer',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join1",
+						"join1 derive(Date = iifNull(derivedColumn1@Date,derivedColumn2@Date),",
+						"          {Modality ID} = iifNull(RenameDate1@{Modality ID},RenameDate2@{Modality ID}),",
+						"          {Trust ID} = iifNull(RenameDate1@{Trust ID},RenameDate2@{Trust ID}),",
+						"          ID = iifNull(derivedColumn1@ID, derivedColumn2@ID)) ~> derivedColumn3",
+						"derivedColumn4 select(mapColumn(",
+						"          Date,",
+						"          {Modality ID},",
+						"          {Trust ID},",
+						"          Demand,",
+						"          ID,",
+						"          Activity,",
+						"          DNA,",
+						"          Month,",
+						"          {Day Name}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"derivedColumn3 derive(Month = addMonths(addDays(lastDayOfMonth(Date),1),-1),",
+						"          {Day Name} = dayOfWeek(Date)) ~> derivedColumn4",
+						"derivedColumn4 aggregate(groupBy({Modality ID},",
+						"          {Trust ID},",
+						"          Month),",
+						"     {Monthly Activity Sum} = sum(Activity),",
+						"          {Monthly Demand Sum} = sum(Demand)) ~> aggregate1",
+						"aggregate1 aggregate(groupBy({Modality ID},",
+						"          {Trust ID},",
+						"          Month),",
+						"     {Monthly Demand Max} = iif(isNull(max({Monthly Activity Sum})), max({Monthly Demand Sum}), iif(isNull(max({Monthly Demand Sum})), max({Monthly Activity Sum}), iif(max({Monthly Demand Sum})>max({Monthly Activity Sum}), max({Monthly Demand Sum}), max({Monthly Activity Sum}))))) ~> aggregate2",
+						"aggregate2, aggregate1 join(aggregate2@{Modality ID} == aggregate1@{Modality ID}",
+						"     && aggregate2@{Trust ID} == aggregate1@{Trust ID}",
+						"     && aggregate2@Month == aggregate1@Month,",
+						"     joinType:'outer',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join2",
+						"select1, select2 join(select1@{Modality ID} == select2@{Modality ID}",
+						"     && select1@{Trust ID} == select2@{Trust ID}",
+						"     && select1@Month == select2@Month,",
+						"     joinType:'outer',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join3",
+						"join2 select(mapColumn(",
+						"          {Modality ID} = aggregate2@{Modality ID},",
+						"          {Trust ID} = aggregate2@{Trust ID},",
+						"          Month = aggregate2@Month,",
+						"          {Monthly Demand Max},",
+						"          {Monthly Activity Sum},",
+						"          {Monthly Demand Sum}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select2",
+						"lookup1 select(mapColumn(",
+						"          Date,",
+						"          {Modality ID} = select1@{Modality ID},",
+						"          {Trust ID} = select1@{Trust ID},",
+						"          Demand,",
+						"          ID,",
+						"          Activity,",
+						"          DNA,",
+						"          Month = select1@Month,",
+						"          {Monthly Demand Max},",
+						"          {Monthly Activity Sum},",
+						"          {Monthly Demand Sum},",
+						"          {Hours Open},",
+						"          Year = derivedColumn5@Year,",
+						"          DNARate,",
+						"          ID2 = derivedColumn6@ID2,",
+						"          {Day Name}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select3",
+						"derivedColumn7 filter(isNull(ID)==false()) ~> filter1",
+						"derivedColumn1 filter(isNull(ID)==false()) ~> filter2",
+						"derivedColumn2 filter(isNull(ID)==false()) ~> filter4",
+						"Core, source1 join(Core@{Status ID} == source1@{Status ID},",
+						"     joinType:'left',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join4",
+						"join3 derive({Day Name} = iif({Day Name}==1, 'Sunday', iif({Day Name}==2, 'Monday', iif({Day Name}==3, 'Tuesday', iif({Day Name}==4, 'Wednesday', iif({Day Name}==5, 'Thursday', iif({Day Name}==6, 'Friday', iif({Day Name}==7, 'Saturday', '0'))))))),",
+						"          Year = year(Date),",
+						"          DNARate = DNA/(Activity+DNA)) ~> derivedColumn5",
+						"derivedColumn5 derive(ID2 = concat(toString(year(Date)),':',{Day Name},':',toString(select1@{Trust ID}),':',toString(select1@{Modality ID}))) ~> derivedColumn6",
+						"derivedColumn6, source2 lookup(derivedColumn6@ID2 == source2@ID2,",
+						"     multiple: false,",
+						"     pickup: 'any',",
+						"     broadcast: 'auto')~> lookup1",
+						"select3 derive(SUR = Activity/toLong({Hours Open})) ~> derivedColumn7",
+						"filter1 window(over({Modality ID},",
+						"          {Trust ID},",
+						"          Date),",
+						"     asc(Date, true),",
+						"     {Daily DNA Count} = sum(DNA),",
+						"          {Daily Activity Count} = sum(Activity)) ~> window1",
+						"window3 derive({Date (Month)} = iif(month(Date)==1,'Jan',iif(month(Date)==2,'Feb',iif(month(Date)==3,'Mar',iif(month(Date)==4,'Apr',iif(month(Date)==5,'May',iif(month(Date)==6,'Jun',iif(month(Date)==7,'Jul',iif(month(Date)==8,'Aug',iif(month(Date)==9,'Sep',iif(month(Date)==10,'Oct',iif(month(Date)==11,'Nov',iif(month(Date)==12,'Dec','ERROR')))))))))))),",
+						"          {Date (Year)} = year(Date),",
+						"          {DNA Daily} = {Daily DNA Count}/{Daily DNA Count}+{Daily Activity Count},",
+						"          {DNA Monthly} = {Monthly DNA Count}/{Monthly DNA Count}+{Monthly Activity Count},",
+						"          Capacity = toLong({Hours Open})*{Yearly SUR}) ~> derivedColumn9",
+						"window1 window(over({Modality ID},",
+						"          {Trust ID},",
+						"          Month),",
+						"     asc(Date, true),",
+						"     {Monthly DNA Count} = sum(DNA),",
+						"          {Monthly Activity Count} = sum(Activity),",
+						"          {Monthly SUR} = avg(SUR)) ~> window2",
+						"window2 window(over(Year,",
+						"          {Modality ID},",
+						"          {Trust ID}),",
+						"     asc(Date, true),",
+						"     {Yearly SUR} = avg({Monthly SUR})) ~> window3",
+						"derivedColumn9 window(over(Month,",
+						"          {Modality ID},",
+						"          {Trust ID}),",
+						"     asc(Date, true),",
+						"     {Monthly Cap} = sum(Capacity)) ~> window4",
+						"window4 select(mapColumn(",
+						"          Activity,",
+						"          Capacity,",
+						"          Date,",
+						"          {Date (Month)},",
+						"          {Date (Year)},",
+						"          {Day Name},",
+						"          Demand,",
+						"          DNA,",
+						"          {DNA Daily},",
+						"          {DNA Monthly},",
+						"          {DNA Monthly Count} = {Monthly DNA Count},",
+						"          DNARate,",
+						"          {Hours Open},",
+						"          ID,",
+						"          ID2,",
+						"          {Modality ID},",
+						"          Month,",
+						"          {Monthly Activity Sum},",
+						"          {Monthly Cap},",
+						"          {Monthly Demand Sum},",
+						"          {Monthly Demand Max},",
+						"          {Monthly SUR},",
+						"          SUR,",
+						"          {Trust ID},",
+						"          {Yearly SUR},",
+						"          Year",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select4",
+						"select4 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     recreate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/CreatePatientWaiting')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -9544,6 +9970,64 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Utility",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "ReferenceLookupsCore",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "select [Trust ID]\n    ,[Modality ID]\n    ,[Exam Room ID]\n    ,[Event Date]\n    ,[Event Hour]\n    ,Sum([Body Parts Activity]) as [Sum]\n    ,Sum(case when [Modality ID] = 2 then [Body Parts Activity] else 0 end) as [Sum CT]\n    ,Sum(case when [Modality ID] = 9 then [Body Parts Activity] else 0 end) as [Sum MRI]\n    ,Sum(case when [Modality ID] = 12 then [Body Parts Activity] else 0 end) as [Sum NOUS]\n\t,case when [Modality ID]= 2 then Sum([Body Parts Activity])-1 else Sum([Body Parts Activity]) end as ConForm2\nFROM [dev].[FYF_ODBC_CORE_v2]\nWhere [Updated Modality] in (2,9,12)\nand [Event Date]>='2024-01-01'\nand [Event Hour] between 8 and 19\nand [Exam Room ID] not in (3\n,11\n,13\n,20\n,32\n,37\n,50\n,112\n,142\n,187\n,192\n,194\n,198\n,199\n,208\n,209\n,258\n,261\n,262\n,294\n,296\n,298\n,304\n,314\n,318\n,342\n,374\n,411\n,429\n,448\n,472\n,478\n,479\n,479\n,480\n,482\n,483\n,484\n,484\n,499\n,500\n,508\n,516\n,517\n,552\n,553\n,556\n,557\n,558\n,560\n,561\n,562\n,564\n,570\n,571\n,583\n,589\n,590\n,601\n,604\n,651\n,683\n,692\n,693\n,697\n,709\n,719\n,734\n,779\n,780\n,797\n,848\n,887\n,891\n,935\n,936\n,938\n,939\n,950\n,964\n,977\n,999\n,1008\n,1030\n,1057\n,1061\n,1062\n,1067\n,1072\n,1074\n,1082\n,1087\n,1147\n)\ngroup by [Trust ID]\n    ,[Modality ID]\n    ,[Exam Room ID]\n    ,[Event Date]\n    ,[Event Hour]\norder by [Event Date]\n",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable14",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -9559,6 +10043,7 @@
 				"[concat(variables('factoryId'), '/dataflows/Remove_Dupes_Core')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRefColumns')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRefColumnsPTL')]",
+				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRequestRecieveddataset')]",
 				"[concat(variables('factoryId'), '/dataflows/PopulateNewColumns')]",
 				"[concat(variables('factoryId'), '/dataflows/CreatePatientWaiting')]"
@@ -9776,47 +10261,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/Ingestion_RADFYF')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Monthly')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Monthly",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Month",
-						"interval": 1,
-						"startTime": "2024-05-01T03:30:00",
-						"timeZone": "GMT Standard Time",
-						"schedule": {
-							"minutes": [
-								30
-							],
-							"hours": [
-								3
-							],
-							"monthDays": [
-								2
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Monthly')]"
 			]
 		}
 	]
