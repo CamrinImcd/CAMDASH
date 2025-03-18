@@ -13,6 +13,45 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Asset1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "WranglingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"name": "NIDC_Asset_Avail",
+							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> NIDC_Asset_Avail",
+							"dataset": {
+								"referenceName": "NIDC_Asset_Avail",
+								"type": "DatasetReference"
+							}
+						},
+						{
+							"name": "Trust",
+							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Trust",
+							"dataset": {
+								"referenceName": "Trust",
+								"type": "DatasetReference"
+							}
+						},
+						{
+							"name": "Modality",
+							"script": "source(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tisolationLevel: 'READ_UNCOMMITTED',\n\tformat: 'table') ~> Modality",
+							"dataset": {
+								"referenceName": "Modality",
+								"type": "DatasetReference"
+							}
+						}
+					],
+					"script": "section Section1;\r\nshared NIDC_Asset_Avail = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dbo\",Item=\"NIDC_Asset_Avail\"]}[Data] in InputTable;\r\nshared Trust = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dev\",Item=\"Trust\"]}[Data] in InputTable;\r\nshared Modality = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dev\",Item=\"Modality\"]}[Data] in InputTable;\r\nshared UserQuery = let Source = #\"NIDC_Asset_Avail\",\n  #\"Filtered rows\" = Table.SelectRows(Source, each [Location] <> \"Dental Department\" and [Equipment_Detail] <> null and [Equipment_Detail] <> \"2D with 3D Capability – Breast\" and [Equipment_Detail] <> \"2D – Breast\" and [Equipment_Detail] <> \"Dental Cone Beam CT\" and [Equipment_Detail] <> \"Fixed fluoroscopy Imaging Flat plate     \" and [Equipment_Detail] <> \"Flaxitron\" and [Equipment_Detail] <> \"Intraoral\" and [Equipment_Detail] <> \"Mobile C arm\" and [Equipment_Detail] <> \"Mobile C-arm - Flat Panel Digital Detector\" and [Equipment_Detail] <> \"Mobile C-arm - Image Intensifier\" and [Equipment_Detail] <> \"OPG\" and [Equipment_Detail] <> \"OPG+Ceph\" and [Equipment_Detail] <> \"Symptomatic - Digital Mammography - 2D\" and [Equipment_Detail] <> \"Symptomatic - Digital Mammography - 2D + biopsy\" and [Equipment_Detail] <> \"Symptomatic - Digital Mammography 2D + 3D Tomosynthesis\" and [Equipment_Detail] <> \"Symptomatic - Digital Mammography 2D + 3D Tomosynthesis +biopsy\" and [Equipment_Detail] <> \"Ultrasound  – Obstetric\"),\n  #\"Replaced value 2\" = Table.ReplaceValue(#\"Filtered rows\", \"RQ6\", \"REM\", Replacer.ReplaceText, {\"Trust\"}),\n    #\"Replaced value 1\" = Table.ReplaceValue(#\"Replaced value 2\", \"8 on Monday, Tuesday and Thursday\", \"4.8\", Replacer.ReplaceValue, {\"Avg_core_staffed_operational_hours_Weekday\"}),\n    #\"Added Conditional Column\" = Table.AddColumn(#\"Replaced value 1\", \"Equipment_Detail - Copy\", each if Text.Contains([Location], \"Breast\") then \"Mammo\" else if Text.Contains([Location], \"Angio\") then \"IR\" else if Text.Contains([Location], \"Cath Lab\") then \"IR\" else if Text.Contains([Location], \"Maternity\") then \"Obstetrics\" else if Text.Contains([Equipment_Detail], \"Plain\") then \"Plain X-Ray\" else if Text.Contains([Equipment_Detail], \"256\") then \"CT\" else if Text.Contains([Equipment_Detail], \"Bore\") then \"MRI\" else if Text.Contains([Equipment_Detail], \"SPECT\") then \"Nuc Med\" else if Text.Contains([Equipment_Detail], \"Plane\") then \"IR\" else if Text.Contains([Equipment_Detail], \"PET\") then \"Nuc Med\" else if Text.Contains([Equipment_Detail], \"CT\") then \"CT\" else if Text.Contains([Equipment_Detail], \"Dexa\") then \"DEXA\" else if Text.Contains([Equipment_Detail], \"arm\") then \"Plain X-Ray\" else if Text.Contains([Equipment_Detail], \"Breast\") then \"Mammo\" else if Text.Contains([Equipment_Detail], \"Obstetric\") then \"Obstetrics\" else \"NOUS\"),\n    #\"Reordered Columns2\" = Table.ReorderColumns(#\"Added Conditional Column\",{\"Year\", \"Trust\", \"Local_Identifier\", \"Room_Code\", \"Location\", \"Equipment_Detail\", \"Equipment_Detail - Copy\", \"Avg_core_staffed_operational_hours_Weekday\", \"Main_use_core_hours_Weekday\", \"avg_OOHs_Weekday\", \"Avg_core_staffed_operational_hours_Sat\", \"Main_use_core_hours_Sat\", \"avg_OOHs_Sat\", \"Avg_core_staffed_operational_hours_Sun\", \"Main_use_core_hours_Sun\", \"avg_OOHs_Sun\", \"Research\", \"Avg_Research_Hours_per_week\", \"Unscheduled_downtime_12M\"}),\n    #\"Renamed Columns\" = Table.RenameColumns(#\"Reordered Columns2\",{{\"Equipment_Detail - Copy\", \"Modality\"}}),\n    #\"Removed Columns\" = Table.RemoveColumns(#\"Renamed Columns\",{\"Room_Code\", \"Main_use_core_hours_Weekday\", \"avg_OOHs_Weekday\", \"Main_use_core_hours_Sat\", \"avg_OOHs_Sat\", \"Main_use_core_hours_Sun\", \"avg_OOHs_Sun\", \"Research\", \"Avg_Research_Hours_per_week\", \"Unscheduled_downtime_12M\"}),\n    #\"Duplicated Column1\" = Table.DuplicateColumn(#\"Removed Columns\", \"Avg_core_staffed_operational_hours_Weekday\", \"Avg_core_staffed_operational_hours_Weekday - Copy\"),\n    #\"Renamed Columns1\" = Table.RenameColumns(#\"Duplicated Column1\",{{\"Avg_core_staffed_operational_hours_Weekday\", \"Monday\"}, {\"Avg_core_staffed_operational_hours_Weekday - Copy\", \"Tuesday\"}}),\n    #\"Reordered Columns\" = Table.ReorderColumns(#\"Renamed Columns1\",{\"Year\", \"Trust\", \"Local_Identifier\", \"Location\", \"Equipment_Detail\", \"Monday\", \"Tuesday\", \"Avg_core_staffed_operational_hours_Sat\", \"Avg_core_staffed_operational_hours_Sun\", \"Modality\"}),\n    #\"Duplicated Column2\" = Table.DuplicateColumn(#\"Reordered Columns\", \"Tuesday\", \"Tuesday - Copy\"),\n    #\"Renamed Columns2\" = Table.RenameColumns(#\"Duplicated Column2\",{{\"Tuesday - Copy\", \"Wednesday\"}}),\n    #\"Duplicated Column3\" = Table.DuplicateColumn(#\"Renamed Columns2\", \"Wednesday\", \"Thursday\"),\n    #\"Duplicated Column4\" = Table.DuplicateColumn(#\"Duplicated Column3\", \"Thursday\", \"Friday\"),\n    #\"Renamed Columns3\" = Table.RenameColumns(#\"Duplicated Column4\",{{\"Avg_core_staffed_operational_hours_Sat\", \"Saturday\"}, {\"Avg_core_staffed_operational_hours_Sun\", \"Sunday\"}}),\n    #\"Reordered Columns1\" = Table.ReorderColumns(#\"Renamed Columns3\",{\"Year\", \"Trust\", \"Local_Identifier\", \"Location\", \"Equipment_Detail\", \"Modality\", \"Monday\", \"Tuesday\", \"Wednesday\", \"Thursday\", \"Friday\", \"Saturday\", \"Sunday\"})\n\nin\n    #\"Reordered Columns1\";\r\n",
+					"documentLocale": "en-us"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/CreateActDem')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -2100,7 +2139,7 @@
 							}
 						}
 					],
-					"script": "section Section1;\r\nshared RequestRecievedStatus = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dev\",Item=\"RequestRecievedStatus\"]}[Data] in InputTable;\r\nshared AzureSqlCOREStageStep1 = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dev\",Item=\"AzureSqlCOREStageStep1\"]}[Data] in InputTable;\r\nshared UserQuery = let Source = #\"AzureSqlCOREStageStep1\",\r\n  #\"Sorted rows\" = Table.Sort(Source, {{\"Stat Date\", Order.Descending}}),\r\n  #\"Removed columns\" = Table.RemoveColumns(#\"Sorted rows\", {\"ExamSite Code\", \"Status Time\", \"Modality2\", \"Trust Name\", \"Patient_Type\", \"Tat Type\"}),\r\n  #\"Replaced value\" = Table.ReplaceValue(#\"Removed columns\", null, \"NULL\", Replacer.ReplaceValue, {\"Room\"}),\r\n  #\"Replaced value 1\" = Table.ReplaceValue(#\"Replaced value\", null, \"NULL\", Replacer.ReplaceValue, {\"Site\"}),\r\n  #\"Inserted merged column\" = Table.AddColumn(#\"Replaced value 1\", \"ExamSite Code\", each Text.Combine({[Site], [Room]}, \"\"), type text),\r\n  #\"Merged queries\" = Table.NestedJoin(#\"Inserted merged column\", {\"Exam Key\"}, Table.SelectRows(RequestRecievedStatus, each [Status Code] = \"RR\"), {\"Exam Key\"}, \"RequestRecievedStatus\", JoinKind.LeftOuter),\r\n  #\"Expanded RequestRecievedStatus 1\" = Table.ExpandTableColumn(#\"Merged queries\", \"RequestRecievedStatus\", {\"Status Code\", \"Status Date\", \"Status Time\"}, {\"Status Code.2\", \"Status Date.1\", \"Status Time\"}),\r\n  #\"Date Time Change\" = Table.TransformColumnTypes(#\"Expanded RequestRecievedStatus 1\", {{\"Request Date\", type date}, {\"Event Date\", type date}, {\"Status Time\", type text}}),\r\n  Modality = Table.TransformColumnTypes(Table.AddColumn(#\"Date Time Change\", \"Modality2\", each if [Modality] = \"R\" then \"Plain X-Ray\" else if [Modality] = \"A\" then \"IR\" else if [Modality] = \"B\" then \"Mammo\" else if [Modality] = \"C\" then \"CT\" else if[Modality] = \"M\" then \"MRI\" else if [Modality] = \"F\" then \"Fluoro\" else if [Modality] = \"U\" then \"NOUS\"  else if [Modality] = \"N\" then \"Nuc Med\" else if[Modality] = \"S\" then \"DEXA\" else if[Modality] = \"Z\" then \"Additional Workload\" else if[Modality] = \"H\" then \"Cardio\" else if[Modality] = \"D\" then \"Doppler\" else if[Modality] = \"E\" then \"Endo\" else if[Modality] = \"Y\" then \"Med Phys\" else if[Modality] = \"O\" then \"Obstetrics\" else \"other\"), {{\"Modality2\", type text}}),\r\n  Trust = Table.TransformColumnTypes(Table.AddColumn(Modality, \"Trust Name\", each if [Site] = \"5HA16\" then \"LUHFT\" else if [Site] = \"5NL93\" then \"LUHFT\" else if Text.Start([Site],3) = \"REM\" then \"LUHFT\" else if Text.Start([Site],3) = \"RQ6\" then \"LUHFT\" else if Text.Start([Site],3) = \"RBL\" then \"WUTH\" else if Text.Start([Site],3) = \"RBN\" then \"STHK\" else if Text.Start([Site],3) = \"RBQ\" then \"LHCH\" else if Text.Start([Site],3) = \"RBS\" then \"Alder Hey\" else if Text.Start([Site],3) = \"RBT\" then \"MCH\" else if Text.Start([Site],3) = \"REN\" then \"CCC\" else if Text.Start([Site],3) = \"REP\" then \"Womens\" else if Text.Start([Site],3) = \"RET\" then \"TWC\" else if Text.Start([Site],3) = \"RJR\" then \"COCH\" else if Text.Start([Site],3) = \"RVY\" then \"S&O\" else if Text.Start([Site],3) = \"RWW\" then \"WHH\" else [Site]), {{\"Trust Name\", type text}}),\r\n  #\"Patient Type\" = Table.TransformColumnTypes(Table.AddColumn(Trust, \"Patient_Type\", each if [PT] = \"A\" then \"In Patient\" else if [PT] = \"B\" then \"Out Patient\" else if [PT] = \"C\" then \"A&E Attender\" else if [PT] = \"D\" then \"Out Patient\" else if [PT] = \"E\" then \"Out Patient\" else if [PT] = \"F\" then \"Other\" else if [PT] = \"G\" then \"GP Direct Access Patient\"  else if [PT] = \"H\" then \"In Patient\" else if[PT] = \"J\" then \"A&E Attender\" else if[PT] = \"K\" then \"Tertiary Referral\" else if[PT] = \"N\" then \"In Patient\" else if[PT] = \"R\" then \"Research\" else if[PT] = \"T\" then \"Dental\" else if[Modality] = \"X\" then \"Other\" else \"Other\"), {{\"Patient_Type\", type text}}),\r\n  #\"Tat Type\" = Table.TransformColumnTypes(Table.AddColumn(#\"Patient Type\", \"Tat Type\", each if ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\") and ([PT]=\"A\" and [Urg]=\"5\") then \"Urgent Inpatients\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\" or [Modality2]=\"Plain X-Ray\") and ([PT]=\"C\") then \"Emergency Department\" else \r\n\r\nif ([Modality2]=\"Plain X-Ray\") and ([PT]=\"C\") and (Number.FromText([Time First Verified])>=800) and (Number.FromText([Time First Verified])<2000) then \"Emergency Department\" else\r\n\r\nif ([Modality2]=\"Plain X-Ray\") and ([PT]=\"C\") and ((Number.FromText([Time First Verified])<800) or (Number.FromText([Time First Verified])>=2000)) then \"Urgent Inpatients\" else\r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\" or [Modality2]=\"Plain X-Ray\") and ([PT]=\"A\" and ([Urg]<>\"5\")) then \"Non-Urgent Inpatients\" else  \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Plain X-Ray\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\") and ([PT]=\"B\" or [PT]=\"G\") and [Urg]=\"7\" then \"Outpatient Faster Diagnosis Standard Cancer Pathway\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\" or [Modality2]=\"Plain X-Ray\") and ([PT]=\"B\" or [PT]=\"G\" or [PT]=\"D\") and ([Urg]=\"5\") then \"Urgent GP and Outpatients\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Plain X-Ray\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\") and ([PT]=\"B\" or [PT]=\"D\" or [PT]=\"G\") and [Urg]=\"1\" then \"Routine GP and Outpatients\" else  \r\n  \r\nif [Modality2]=\"NOUS\" or [Modality2]=\"IR\" then \"Ultrasound and Interventional Radiology\" else \"Other\"), {{\"Tat Type\", type text}}),\r\n  Activity = Table.TransformColumnTypes(Table.AddColumn(#\"Tat Type\", \"Activity.1\", each if([Status Code]=\"ASACK\" or [Status Code]=\"ASRMS\" or [Status Code]=\"ASRQS\" or [Status Code]=\"ATN\" or  [Status Code]=\"ATP\" or [Status Code]=\"CHBU\" or  [Status Code]=\"CHE\" or [Status Code]=\"CHEC\" or [Status Code]=\"CPC\" or [Status Code]=\"CPDNA\" or [Status Code]=\"CPMP\" or [Status Code]=\"CPPG\" or [Status Code]=\"CPPR\" or [Status Code]=\"CPR\" or [Status Code]=\"DVR\" or [Status Code]=\"PRTRPT\") then 1 else 0), {{\"Activity.1\", type number}}),\r\n  #\"Activity 2\" = Table.TransformColumnTypes(Table.AddColumn(Activity, \"Count of Activty_Demand for Activity.1\", each [Activity.1]), {{\"Count of Activty_Demand for Activity.1\", Int64.Type}}),\r\n  #\"Removed duplicates\" = Table.Distinct(#\"Activity 2\", {\"Exam Key\"}) in #\"Removed duplicates\";\r\n",
+					"script": "section Section1;\r\nshared RequestRecievedStatus = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dev\",Item=\"RequestRecievedStatus\"]}[Data] in InputTable;\r\nshared AzureSqlCOREStageStep1 = let AdfDoc = Sql.Database(\"camrinsql101.database.windows.net\", \"camdashdevtest101\", [CreateNavigationProperties = false]), InputTable = AdfDoc{[Schema=\"dev\",Item=\"AzureSqlCOREStageStep1\"]}[Data] in InputTable;\r\nshared UserQuery = let Source = #\"AzureSqlCOREStageStep1\",\r\n  #\"Sorted rows\" = Table.Sort(Source, {{\"Stat Date\", Order.Descending}}),\r\n  #\"Removed columns\" = Table.RemoveColumns(#\"Sorted rows\", {\"ExamSite Code\", \"Status Time\", \"Modality2\", \"Trust Name\", \"Patient_Type\", \"Tat Type\"}),\r\n  #\"Replaced value\" = Table.ReplaceValue(#\"Removed columns\", null, \"NULL\", Replacer.ReplaceValue, {\"Room\"}),\r\n  #\"Replaced value 1\" = Table.ReplaceValue(#\"Replaced value\", null, \"NULL\", Replacer.ReplaceValue, {\"Site\"}),\r\n  #\"Inserted merged column\" = Table.AddColumn(#\"Replaced value 1\", \"ExamSite Code\", each Text.Combine({[Site], [Room]}, \"\"), type text),\r\n  #\"Merged queries\" = Table.NestedJoin(#\"Inserted merged column\", {\"Exam Key\"}, Table.SelectRows(RequestRecievedStatus, each [Status Code] = \"RR\"), {\"Exam Key\"}, \"RequestRecievedStatus\", JoinKind.LeftOuter),\r\n  #\"Expanded RequestRecievedStatus 1\" = Table.ExpandTableColumn(#\"Merged queries\", \"RequestRecievedStatus\", {\"Status Code\", \"Status Date\", \"Status Time\"}, {\"Status Code.2\", \"Status Date.1\", \"Status Time\"}),\r\n  #\"Date Time Change\" = Table.TransformColumnTypes(#\"Expanded RequestRecievedStatus 1\", {{\"Request Date\", type date}, {\"Event Date\", type date}, {\"Status Time\", type text}}),\r\n  Modality = Table.TransformColumnTypes(Table.AddColumn(#\"Date Time Change\", \"Modality2\", each if [Modality] = \"R\" then \"Plain X-Ray\" else if [Modality] = \"A\" then \"IR\" else if [Modality] = \"B\" then \"Mammo\" else if [Modality] = \"C\" then \"CT\" else if[Modality] = \"M\" then \"MRI\" else if [Modality] = \"F\" then \"Fluoro\" else if [Modality] = \"U\" then \"NOUS\"  else if [Modality] = \"N\" then \"Nuc Med\" else if[Modality] = \"S\" then \"DEXA\" else if[Modality] = \"Z\" then \"Additional Workload\" else if[Modality] = \"H\" then \"Cardio\" else if[Modality] = \"D\" then \"Doppler\" else if[Modality] = \"E\" then \"Endo\" else if[Modality] = \"Y\" then \"Med Phys\" else if[Modality] = \"O\" then \"Obstetrics\" else \"other\"), {{\"Modality2\", type text}}),\r\n  Trust = Table.TransformColumnTypes(Table.AddColumn(Modality, \"Trust Name\", each if [Site] = \"5HA16\" then \"LUHFT\" else if [Site] = \"5NL93\" then \"LUHFT\" else if Text.Start([Site],3) = \"REM\" then \"LUHFT\" else if Text.Start([Site],3) = \"RQ6\" then \"LUHFT\" else if Text.Start([Site],3) = \"RBL\" then \"WUTH\" else if Text.Start([Site],3) = \"RBN\" then \"STHK\" else if Text.Start([Site],3) = \"RBQ\" then \"LHCH\" else if Text.Start([Site],3) = \"RBS\" then \"Alder Hey\" else if Text.Start([Site],3) = \"RBT\" then \"MCH\" else if Text.Start([Site],3) = \"REN\" then \"CCC\" else if Text.Start([Site],3) = \"REP\" then \"Womens\" else if Text.Start([Site],3) = \"RET\" then \"TWC\" else if Text.Start([Site],3) = \"RJR\" then \"COCH\" else if Text.Start([Site],3) = \"RVY\" then \"S&O\" else if Text.Start([Site],3) = \"RWW\" then \"WHH\" else [Site]), {{\"Trust Name\", type text}}),\r\n  #\"Patient Type\" = Table.TransformColumnTypes(Table.AddColumn(Trust, \"Patient_Type\", each if [PT] = \"A\" then \"In Patient\" else if [PT] = \"B\" then \"Out Patient\" else if [PT] = \"C\" then \"A&E Attender\" else if [PT] = \"D\" then \"Out Patient\" else if [PT] = \"E\" then \"Out Patient\" else if [PT] = \"F\" then \"Other\" else if [PT] = \"G\" then \"GP Direct Access Patient\"  else if [PT] = \"H\" then \"In Patient\" else if[PT] = \"J\" then \"A&E Attender\" else if[PT] = \"K\" then \"Tertiary Referral\" else if[PT] = \"N\" then \"In Patient\" else if[PT] = \"R\" then \"Research\" else if[PT] = \"T\" then \"Dental\" else if[Modality] = \"X\" then \"Other\" else \"Other\"), {{\"Patient_Type\", type text}}),\r\n  #\"Tat Type\" = Table.TransformColumnTypes(Table.AddColumn(#\"Patient Type\", \"Tat Type\", each if ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\") and ([PT]=\"A\" and [Urg]=\"5\") then \"Urgent Inpatients\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\" or [Modality2]=\"Plain X-Ray\") and ([PT]=\"C\") then \"Emergency Department\" else \r\n\r\nif ([Modality2]=\"Plain X-Ray\") and ([PT]=\"C\") and (Number.FromText([Time First Verified])>=800) and (Number.FromText([Time First Verified])<2000) then \"Emergency Department\" else\r\n\r\nif [Modality2]=\"Plain X-Ray\" and [PT]=\"C\" and (Number.FromText([Time First Verified])<800 or Number.FromText([Time First Verified])>=2000) then \"Urgent Inpatients\" else\r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\" or [Modality2]=\"Plain X-Ray\") and ([PT]=\"A\" and ([Urg]<>\"5\")) then \"Non-Urgent Inpatients\" else  \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Plain X-Ray\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\") and ([PT]=\"B\" or [PT]=\"G\") and [Urg]=\"7\" then \"Outpatient Faster Diagnosis Standard Cancer Pathway\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\" or [Modality2]=\"Plain X-Ray\") and ([PT]=\"B\" or [PT]=\"G\" or [PT]=\"D\") and ([Urg]=\"5\") then \"Urgent GP and Outpatients\" else \r\n\r\nif ([Modality2]=\"CT\" or [Modality2]=\"MRI\" or [Modality2]=\"Plain X-Ray\" or [Modality2]=\"Fluoro\" or [Modality2]=\"Nuc Med\" or [Modality2]=\"Dexa\") and ([PT]=\"B\" or [PT]=\"D\" or [PT]=\"G\") and [Urg]=\"1\" then \"Routine GP and Outpatients\" else  \r\n  \r\nif [Modality2]=\"NOUS\" or [Modality2]=\"IR\" then \"Ultrasound and Interventional Radiology\" else \"Other\"), {{\"Tat Type\", type text}}),\r\n  Activity = Table.TransformColumnTypes(Table.AddColumn(#\"Tat Type\", \"Activity.1\", each if([Status Code]=\"ASACK\" or [Status Code]=\"ASRMS\" or [Status Code]=\"ASRQS\" or [Status Code]=\"ATN\" or  [Status Code]=\"ATP\" or [Status Code]=\"CHBU\" or  [Status Code]=\"CHE\" or [Status Code]=\"CHEC\" or [Status Code]=\"CPC\" or [Status Code]=\"CPDNA\" or [Status Code]=\"CPMP\" or [Status Code]=\"CPPG\" or [Status Code]=\"CPPR\" or [Status Code]=\"CPR\" or [Status Code]=\"DVR\" or [Status Code]=\"PRTRPT\") then 1 else 0), {{\"Activity.1\", type number}}),\r\n  #\"Activity 2\" = Table.TransformColumnTypes(Table.AddColumn(Activity, \"Count of Activty_Demand for Activity.1\", each [Activity.1]), {{\"Count of Activty_Demand for Activity.1\", Int64.Type}}),\r\n  #\"Removed duplicates\" = Table.Distinct(#\"Activity 2\", {\"Exam Key\"}) in #\"Removed duplicates\";\r\n",
 					"documentLocale": "en-us"
 				}
 			},
@@ -2215,7 +2254,8 @@
 						"     validateSchema: false,",
 						"     waterMarkColumn: 'Stat Date',",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table',",
+						"     query: (\"select * from dev.FYF_ODBC_Core where [Stat Date] > '@{activity('Prev Latest stat date core').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date core').output.firstRow.CoreUpdateValue}'\"),",
+						"     format: 'query',",
 						"     mode: 'read') ~> AzureSqlCORE",
 						"source(output(",
 						"          {CRIS No} as integer,",
@@ -10028,6 +10068,64 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "MMPMP",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "ReferenceLookupsCore",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,[Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,[Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=1465 and [Planned Appointment Date] is null and [Was Planned]='n'\n",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable15",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -10215,45 +10313,6 @@
 							],
 							"hours": [
 								1
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Ingestion_RADFYF')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Initial Bulk Upload')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Ingestion_RADFYF",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2023-02-01T15:11:00",
-						"endTime": "2023-02-03T15:11:00",
-						"timeZone": "GMT Standard Time",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								2
 							]
 						}
 					}
