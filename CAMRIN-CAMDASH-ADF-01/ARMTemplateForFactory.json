@@ -25290,6 +25290,8 @@
 						"     updateable:false,",
 						"     upsertable:false,",
 						"     format: 'table',",
+						"     preSQLs:['Delete T\\nFROM\\n(\\nSELECT *\\n, DupRank = ROW_NUMBER() OVER (\\n              PARTITION BY [Exam Key], [Status Code]\\n              ORDER BY [Stat Date] \\n            )\\n FROM [dev].[FYF_ODBC_STATUSES]\\n) AS T\\nwhere DupRank>1'],",
+						"     postSQLs:['delete T\\nFROM\\n(\\nSELECT *\\n, DupRank = ROW_NUMBER() OVER (\\n              PARTITION BY [Exam Key]\\n              ORDER BY [Stat Date]\\n            )\\n  FROM [dev].[RequestRecievedStatus]\\n) AS T\\nwhere DupRank>1'],",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
 						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
