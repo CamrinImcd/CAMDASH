@@ -105,7 +105,7 @@
 				"     validateSchema: false,",
 				"     waterMarkColumn: 'Stat Date',",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: (\"select * from dev.FYF_ODBC_Core where [Stat Date] > '@{activity('Prev Latest stat date core').output.firstRow.CoreUpdateValue}' and [Stat Date] <= '@{activity('Latest stat date core').output.firstRow.CoreUpdateValue}'\"),",
+				"     query: (\"select * from dev.FYF_ODBC_Core where [Stat Date] > (SELECT [CoreUpdateValue] FROM [dev].[CoreUpdatetable] where [TableName]='Core')\"),",
 				"     format: 'query',",
 				"     mode: 'read') ~> AzureSqlCORE",
 				"source(output(",
