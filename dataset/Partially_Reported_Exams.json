@@ -1,0 +1,16 @@
+{
+	"name": "Partially_Reported_Exams",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dev",
+			"table": "PRE"
+		}
+	}
+}
