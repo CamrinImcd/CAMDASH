@@ -9177,6 +9177,64 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Partially reported exams",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "ReferenceLookupsCore",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "select [Event Key]\n,left(Accession,3) as trust\n,Count([Event Key]) as [partially reported exams]\n,[Site]\n,[Request Date]\n,[Event Date]\n,[PT]\n,[Examination]\n,[Room]\n,[Exam Key]\n,[Modality]\nFROM [dev].[FYF_ODBC_CORE]\nwhere [Event Key] in(\nSELECT [Event Key]\n  FROM [dev].[FYF_ODBC_CORE]\n  where [Date First Verified] is null\n  ) and [Event Key] in(\nSELECT [Event Key]\n  FROM [dev].[FYF_ODBC_CORE]\n  where [Date First Verified] is not null)\n and [Date First Verified] is null\n and Attended = 'Y'\n group by  [Event Key],left(Accession,3),[Site],[Request Date]\n      ,[Event Date],[PT],[Examination],[Room],[Exam Key],[Modality]\n order by [Event Key]",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SqlServer_CORE",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Partially_Reported_Exams",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -9232,6 +9290,7 @@
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable13')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable14')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable15')]",
+				"[concat(variables('factoryId'), '/datasets/Partially_Reported_Exams')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep2')]"
 			]
 		},
@@ -20052,6 +20111,27 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/camdashprod101')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Partially_Reported_Exams')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "PRE"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
 			]
 		},
 		{

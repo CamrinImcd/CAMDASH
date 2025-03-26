@@ -13,6 +13,314 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/AIDFDataset')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference"
+							},
+							"name": "FYFODBCCOREv2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "testtable2",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						},
+						{
+							"dataset": {
+								"referenceName": "AIDF",
+								"type": "DatasetReference"
+							},
+							"name": "sink3"
+						}
+					],
+					"transformations": [
+						{
+							"name": "XRFilter"
+						},
+						{
+							"name": "CTList"
+						},
+						{
+							"name": "XRColumnFix"
+						},
+						{
+							"name": "XRFlags"
+						},
+						{
+							"name": "XRlist"
+						},
+						{
+							"name": "CTFilter"
+						},
+						{
+							"name": "CTXRJoin"
+						},
+						{
+							"name": "datediffcols"
+						},
+						{
+							"name": "t28dayfilter"
+						},
+						{
+							"name": "Mixcolfix"
+						},
+						{
+							"name": "join2"
+						},
+						{
+							"name": "window1"
+						},
+						{
+							"name": "selectclosest"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          {CRIS No} as integer,",
+						"          Accession as string,",
+						"          {Ref Src} as string,",
+						"          Site as string,",
+						"          {Request Date} as date,",
+						"          {Event Date} as date,",
+						"          {Event Time} as string,",
+						"          {On Call} as string,",
+						"          PT as string,",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          Room as string,",
+						"          {ExamSite Code} as string,",
+						"          {Start Time} as string,",
+						"          {End Time} as string,",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          {Status Code} as string,",
+						"          {Booked Date} as timestamp,",
+						"          {Booked Time} as string,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          Urg as string,",
+						"          Modality as string,",
+						"          {No of Proc} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Date First Verified} as timestamp,",
+						"          {Time First Verified} as string,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Status Time} as string,",
+						"          Modality2 as string,",
+						"          {Trust Name} as string,",
+						"          Patient_Type as string,",
+						"          {Tat Type} as string,",
+						"          {Status Time2} as string,",
+						"          {Patient Type ID} as long,",
+						"          {Modality ID} as integer,",
+						"          {Status ID} as integer,",
+						"          {Exam ID} as integer,",
+						"          {Exam Room ID} as integer,",
+						"          {Trust ID} as integer,",
+						"          {Referral Source ID} as integer,",
+						"          {Tat Type ID} as integer,",
+						"          {Reported By} as string,",
+						"          Rank as integer,",
+						"          {Status Date} as timestamp,",
+						"          Activity as integer,",
+						"          {Count of Activty_Demand for Activity} as long,",
+						"          {Stat Date} as timestamp,",
+						"          {Age At Event} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> FYFODBCCOREv2",
+						"FYFODBCCOREv2 filter(Examination == \"XCHES\" && {Event Date} >= toDate('01/01/2022','MM/dd/yyyy') && toDate({Date First Verified}) >= toDate('01/01/2022','MM/dd/yyyy')) ~> XRFilter",
+						"CTFilter select(mapColumn(",
+						"          {CRIS No},",
+						"          {Event Key},",
+						"          {Exam Key},",
+						"          {Trust ID},",
+						"          {Exam Room ID},",
+						"          {Event Date},",
+						"          {Date First Verified},",
+						"          {Reported By},",
+						"          {Patient Type ID},",
+						"          {Age At Event},",
+						"          {Exam ID}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> CTList",
+						"XRFilter select(mapColumn(",
+						"          {CRIS No.XR} = {CRIS No},",
+						"          {Event Key.XR} = {Event Key},",
+						"          {Exam Key.XR} = {Exam Key},",
+						"          {Trust ID.XR} = {Trust ID},",
+						"          {Exam Room ID.XR} = {Exam Room ID},",
+						"          {Event Date.XR} = {Event Date},",
+						"          {Date First Verified.XR} = {Date First Verified},",
+						"          {Reported By.XR} = {Reported By},",
+						"          {Patient Type ID.XR} = {Patient Type ID},",
+						"          {Age At Event.XR} = {Age At Event},",
+						"          {Exam ID.XR} = {Exam ID}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> XRColumnFix",
+						"XRColumnFix derive(Auto = iif(instr({Reported By.XR},\"AUTO\")!=0, 1, 0),",
+						"          {Rep Rad} = iif(startsWith({Reported By.XR},\"RA\")==true(),1,0),",
+						"          Cons = iif(startsWith({Reported By.XR},\"C\")==true(),1,0),",
+						"          Outsource = iif(instr({Reported By.XR},\"4way\")!=0,1,iif(instr({Reported By.XR},\"EXT\")!=0,1,iif(instr({Reported By.XR},\"4WAY\")!=0,1,0))),",
+						"          {CX I-R} = toDate({Date First Verified.XR})-{Event Date.XR},",
+						"          Snapshot = iif(isNull({Date First Verified.XR})==false(),iif(toDate({Date First Verified.XR})>=toDate('10/01/2023','MM/dd/yyyy'),iif({Event Date.XR}<=toDate('10/01/2023','MM/dd/yyyy'),1,0),0),0)) ~> XRFlags",
+						"XRFlags derive(Abnormal = iif(between({CX I-R}, 0, 28)==true(),1,0)) ~> XRlist",
+						"FYFODBCCOREv2 filter(Examination == \"CCHES\" && {Event Date} >= toDate('01/01/2022','MM/dd/yyyy') && toDate({Date First Verified}) >= toDate('01/01/2022','MM/dd/yyyy')) ~> CTFilter",
+						"XRlist, CTList join({CRIS No.XR} == {CRIS No}",
+						"     && {Event Date.XR} <= {Event Date}",
+						"     && toDate({Date First Verified.XR}) <= {Event Date},",
+						"     joinType:'left',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'right')~> CTXRJoin",
+						"CTXRJoin derive({CXR-CCI} = {Event Date}-toDate({Date First Verified.XR}),",
+						"          {CXI-CCR} = toDate({Date First Verified})-{Event Date.XR},",
+						"          {CXI-CCI} = {Event Date}-{Event Date.XR}) ~> datediffcols",
+						"Mixcolfix filter({CXR-CCI}<=28) ~> t28dayfilter",
+						"datediffcols select(mapColumn(",
+						"          {CRIS No.CT} = {CRIS No},",
+						"          {Event Key.CT} = {Event Key},",
+						"          {Exam Key.CT} = {Exam Key},",
+						"          {Trust ID.CT} = {Trust ID},",
+						"          {Exam Room ID.CT} = {Exam Room ID},",
+						"          {Event Date.CT} = {Event Date},",
+						"          {Date First Verified.CT} = {Date First Verified},",
+						"          {Reported By.CT} = {Reported By},",
+						"          {Patient Type ID.CT} = {Patient Type ID},",
+						"          {Age At Event.CT} = {Age At Event},",
+						"          {Exam ID.CT} = {Exam ID},",
+						"          {CXR-CCI},",
+						"          {CXI-CCR},",
+						"          {CXI-CCI},",
+						"          {Exam Key.XR}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> Mixcolfix",
+						"XRlist, selectclosest join(XRColumnFix@{Exam Key.XR} == Mixcolfix@{Exam Key.XR},",
+						"     joinType:'left',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'right')~> join2",
+						"t28dayfilter window(over({Exam Key.CT}),",
+						"     asc({Exam Key.CT}, true),",
+						"     asc({CXR-CCI}, true),",
+						"     asc({CXI-CCR}, true),",
+						"     asc({CXI-CCI}, true),",
+						"     Rank = denseRank()) ~> window1",
+						"window1 filter(Rank==1) ~> selectclosest",
+						"selectclosest sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     recreate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
+						"join2 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {CRIS No} as integer,",
+						"          {Event Key} as integer,",
+						"          {Exam Key} as integer,",
+						"          {Trust ID} as integer,",
+						"          {Exam Room ID} as integer,",
+						"          {Event Date} as date,",
+						"          {Date First Verified} as timestamp,",
+						"          {Reported By} as string,",
+						"          {Patient Type ID} as long,",
+						"          {Age At Event} as string,",
+						"          {Exam ID} as integer,",
+						"          Auto as integer,",
+						"          {Rep Rad} as integer,",
+						"          Cons as integer,",
+						"          Outsource as integer,",
+						"          {CX I-R} as integer,",
+						"          Snapshot as integer,",
+						"          Abnormal as integer,",
+						"          {CRIS No.1} as integer,",
+						"          {Event Key.1} as integer,",
+						"          {Exam Key.1} as integer,",
+						"          {Trust ID.1} as integer,",
+						"          {Exam Room ID.1} as integer,",
+						"          {Event Date.1} as date,",
+						"          {Date First Verified.1} as timestamp,",
+						"          {Reported By.1} as string,",
+						"          {Patient Type ID.1} as long,",
+						"          {Age At Event.1} as string,",
+						"          {Exam ID.1} as integer,",
+						"          {CXR-CCI.1} as integer,",
+						"          {CXI-CCR.1} as integer,",
+						"          {CXI-CCI.1} as integer",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     truncate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          {CRIS No} = {CRIS No.XR},",
+						"          {Event Key} = {Event Key.XR},",
+						"          {Exam Key} = XRColumnFix@{Exam Key.XR},",
+						"          {Trust ID} = {Trust ID.XR},",
+						"          {Exam Room ID} = {Exam Room ID.XR},",
+						"          {Event Date} = {Event Date.XR},",
+						"          {Date First Verified} = {Date First Verified.XR},",
+						"          {Reported By} = {Reported By.XR},",
+						"          {Patient Type ID} = {Patient Type ID.XR},",
+						"          {Age At Event} = {Age At Event.XR},",
+						"          {Exam ID} = {Exam ID.XR},",
+						"          Auto,",
+						"          {Rep Rad},",
+						"          Cons,",
+						"          Outsource,",
+						"          {CX I-R},",
+						"          Snapshot,",
+						"          Abnormal,",
+						"          {CRIS No.1} = {CRIS No.CT},",
+						"          {Event Key.1} = {Event Key.CT},",
+						"          {Exam Key.1} = {Exam Key.CT},",
+						"          {Trust ID.1} = {Trust ID.CT},",
+						"          {Exam Room ID.1} = {Exam Room ID.CT},",
+						"          {Event Date.1} = {Event Date.CT},",
+						"          {Date First Verified.1} = {Date First Verified.CT},",
+						"          {Reported By.1} = {Reported By.CT},",
+						"          {Patient Type ID.1} = {Patient Type ID.CT},",
+						"          {Age At Event.1} = {Age At Event.CT},",
+						"          {Exam ID.1} = {Exam ID.CT},",
+						"          {CXR-CCI.1} = {CXR-CCI},",
+						"          {CXI-CCR.1} = {CXI-CCR},",
+						"          {CXI-CCI.1} = {CXI-CCI}",
+						"     )) ~> sink3"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Asset1')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -10133,6 +10441,64 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Partially reported exams",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "ReferenceLookupsCore",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"sqlReaderQuery": "select [Event Key]\n,left(Accession,3) as trust\n,Count([Event Key]) as [partially reported exams]\n,[Site]\n,[Request Date]\n,[Event Date]\n,[PT]\n,[Examination]\n,[Room]\n,[Exam Key]\n,[Modality]\nFROM [dev].[FYF_ODBC_CORE]\nwhere [Event Key] in(\nSELECT [Event Key]\n  FROM [dev].[FYF_ODBC_CORE]\n  where [Date First Verified] is null\n  ) and [Event Key] in(\nSELECT [Event Key]\n  FROM [dev].[FYF_ODBC_CORE]\n  where [Date First Verified] is not null)\n and [Date First Verified] is null\n and Attended = 'Y'\n group by  [Event Key],left(Accession,3),[Site],[Request Date]\n      ,[Event Date],[PT],[Examination],[Room],[Exam Key],[Modality]\n order by [Event Key]",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SqlServer_CORE",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Partially_Reported_Exams",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -10151,6 +10517,7 @@
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRequestRecieveddataset')]",
 				"[concat(variables('factoryId'), '/dataflows/PopulateNewColumns')]",
+				"[concat(variables('factoryId'), '/dataflows/AIDFDataset')]",
 				"[concat(variables('factoryId'), '/dataflows/CreatePatientWaiting')]"
 			]
 		},
@@ -10290,44 +10657,6 @@
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Daily')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Started",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "Ingestion_RADFYF",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "ScheduleTrigger",
-				"typeProperties": {
-					"recurrence": {
-						"frequency": "Day",
-						"interval": 1,
-						"startTime": "2023-08-09T08:00:00",
-						"timeZone": "GMT Standard Time",
-						"schedule": {
-							"minutes": [
-								0
-							],
-							"hours": [
-								1
-							]
-						}
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/Ingestion_RADFYF')]"
-			]
 		}
 	]
 }
