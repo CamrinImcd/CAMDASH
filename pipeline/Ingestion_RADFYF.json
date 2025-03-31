@@ -5876,7 +5876,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "SqlServerSource",
+						"type": "AzureSqlSource",
 						"sqlReaderQuery": "select [Event Key]\n,left(Accession,3) as trust\n,Count([Event Key]) as [partially reported exams]\n,[Site]\n,[Request Date]\n,[Event Date]\n,[PT]\n,[Examination]\n,[Room]\n,[Exam Key]\n,[Modality]\nFROM [dev].[FYF_ODBC_CORE]\nwhere [Event Key] in(\nSELECT [Event Key]\n  FROM [dev].[FYF_ODBC_CORE]\n  where [Date First Verified] is null\n  ) and [Event Key] in(\nSELECT [Event Key]\n  FROM [dev].[FYF_ODBC_CORE]\n  where [Date First Verified] is not null)\n and [Date First Verified] is null\n and Attended = 'Y'\n group by  [Event Key],left(Accession,3),[Site],[Request Date]\n      ,[Event Date],[PT],[Examination],[Room],[Exam Key],[Modality]\n order by [Event Key]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
@@ -5900,7 +5900,7 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "SqlServer_CORE",
+						"referenceName": "AzureSql_CORE",
 						"type": "DatasetReference"
 					}
 				],
