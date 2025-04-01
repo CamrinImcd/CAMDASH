@@ -2601,13 +2601,6 @@
 								"type": "DatasetReference"
 							},
 							"name": "source1"
-						},
-						{
-							"dataset": {
-								"referenceName": "DelimitedText2",
-								"type": "DatasetReference"
-							},
-							"name": "source2"
 						}
 					],
 					"sinks": [
@@ -2628,15 +2621,6 @@
 						},
 						{
 							"name": "filter2"
-						},
-						{
-							"name": "union1"
-						},
-						{
-							"name": "select1"
-						},
-						{
-							"name": "derivedColumn1"
 						}
 					],
 					"scriptLines": [
@@ -2734,120 +2718,14 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> source1",
-						"source(output(",
-						"          {Unique  Identifier for patient} as string,",
-						"          {Ref Src} as string,",
-						"          {Referring Locat} as string,",
-						"          Referrer as string,",
-						"          Speciality as string,",
-						"          GP as string,",
-						"          Practice as string,",
-						"          Site as string,",
-						"          {Request Date} as string,",
-						"          {Event Date/Time} as string,",
-						"          PT as string,",
-						"          RC as string,",
-						"          Examination as string,",
-						"          {Exam Name} as string,",
-						"          Room as string,",
-						"          {Exam Start Date/Time} as string,",
-						"          {Exam End Date/Time} as string,",
-						"          {Radiographer 1} as string,",
-						"          {Radiographer 2} as string,",
-						"          {Qty Used} as string,",
-						"          {Exam Key} as string,",
-						"          {Event Key} as string,",
-						"          {Status Code} as string,",
-						"          {Booked Date/Time} as string,",
-						"          Attended as string,",
-						"          {Lead Clinician} as string,",
-						"          Urg as string,",
-						"          {Referring Locat Name} as string,",
-						"          {Referrer Name} as string,",
-						"          Modality as string,",
-						"          {No of Proc} as string,",
-						"          {GP Name} as string,",
-						"          {Date/Time First Verified} as string,",
-						"          {Reported By} as string,",
-						"          {Reported By2} as string,",
-						"          {Reported By Name} as string,",
-						"          {Reported By2 Name} as string,",
-						"          {Time Taken} as string,",
-						"          {Was Planned} as string,",
-						"          {Was Waiting} as string,",
-						"          CCG as string,",
-						"          {Stat Date} as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> source2",
-						"union1 window(over({Exam Key}),",
+						"AzureSqlCORE window(over({Exam Key}),",
 						"     desc({Stat Date}, false),",
 						"     Rank = denseRank()) ~> window1",
-						"filter2, source1 lookup(union1@{CRIS No} == source1@{CRIS No}",
-						"     && union1@{Event Date} == source1@{Event Date},",
+						"filter2, source1 lookup(AzureSqlCORE@{CRIS No} == source1@{CRIS No}",
+						"     && AzureSqlCORE@{Event Date} == source1@{Event Date},",
 						"     multiple: true,",
 						"     broadcast: 'auto')~> lookup1",
 						"window1 filter(Rank==1) ~> filter2",
-						"AzureSqlCORE, derivedColumn1 union(byName: true)~> union1",
-						"source2 select(mapColumn(",
-						"          Accession = {Unique  Identifier for patient},",
-						"          {Ref Src},",
-						"          {Referring Locat},",
-						"          Referrer,",
-						"          Speciality,",
-						"          GP,",
-						"          Practice,",
-						"          Site,",
-						"          {Request Date},",
-						"          {Event Date} = {Event Date/Time},",
-						"          {Event Time} = {Event Date/Time},",
-						"          PT,",
-						"          RC,",
-						"          Examination,",
-						"          {Exam Name},",
-						"          Room,",
-						"          {Start Time} = {Exam Start Date/Time},",
-						"          {End Time} = {Exam End Date/Time},",
-						"          {Radiographer 1},",
-						"          {Radiographer 2},",
-						"          {Qty Used},",
-						"          {Exam Key},",
-						"          {Event Key},",
-						"          {Status Code},",
-						"          {Booked Date} = {Booked Date/Time},",
-						"          {Booked Time} = {Booked Date/Time},",
-						"          Attended,",
-						"          {Lead Clinician},",
-						"          Urg,",
-						"          {Referring Locat Name},",
-						"          {Referrer Name},",
-						"          Modality,",
-						"          {No of Proc},",
-						"          {GP Name},",
-						"          {Date First Verified} = {Date/Time First Verified},",
-						"          {Reported By},",
-						"          {Reported By2},",
-						"          {Reported By Name},",
-						"          {Reported By2 Name},",
-						"          {Time Taken},",
-						"          {Was Planned},",
-						"          {Was Waiting},",
-						"          CCG,",
-						"          {Stat Date}",
-						"     ),",
-						"     skipDuplicateMapInputs: false,",
-						"     skipDuplicateMapOutputs: false) ~> select1",
-						"select1 derive({Stat Date} = toTimestamp({Stat Date}),",
-						"          {Time Taken} = toLong({Time Taken}),",
-						"          {Date First Verified} = toTimestamp({Date First Verified}),",
-						"          {No of Proc} = toLong({No of Proc}),",
-						"          {Booked Date} = toTimestamp({Booked Date}),",
-						"          {Event Date} = toTimestamp({Event Date}),",
-						"          {Request Date} = toTimestamp({Request Date}),",
-						"          {Exam Key} = toLong({Exam Key}),",
-						"          {Event Key} = toLong({Event Key}),",
-						"          {Qty Used} = toDecimal({Qty Used})) ~> derivedColumn1",
 						"lookup1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
@@ -2903,12 +2781,12 @@
 						"     saveOrder: 1,",
 						"     errorHandlingOption: 'stopOnFirstError',",
 						"     mapColumn(",
-						"          {CRIS No} = union1@{CRIS No},",
+						"          {CRIS No} = AzureSqlCORE@{CRIS No},",
 						"          Accession,",
-						"          {Ref Src} = union1@{Ref Src},",
+						"          {Ref Src} = AzureSqlCORE@{Ref Src},",
 						"          Site,",
 						"          {Request Date},",
-						"          {Event Date} = union1@{Event Date},",
+						"          {Event Date} = AzureSqlCORE@{Event Date},",
 						"          {Event Time},",
 						"          {On Call},",
 						"          PT,",
@@ -2922,7 +2800,7 @@
 						"          {Status Code},",
 						"          {Booked Date},",
 						"          {Booked Time},",
-						"          {Creation Date} = union1@{Creation Date},",
+						"          {Creation Date} = AzureSqlCORE@{Creation Date},",
 						"          Attended,",
 						"          Urg,",
 						"          Modality,",
@@ -2933,7 +2811,7 @@
 						"          {Was Planned},",
 						"          {Was Scheduled},",
 						"          {Was Waiting},",
-						"          {Stat Date} = union1@{Stat Date},",
+						"          {Stat Date} = AzureSqlCORE@{Stat Date},",
 						"          {Reported By},",
 						"          Rank,",
 						"          {Age At Event} = {Age at Event}",
@@ -4679,6 +4557,222 @@
 						"     updateable:false,",
 						"     upsertable:false,",
 						"     truncate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow12')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DelimitedText2",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSql_CORE",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "select1"
+						},
+						{
+							"name": "derivedColumn1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          {Unique  Identifier for patient} as string,",
+						"          {Ref Src} as string,",
+						"          {Referring Locat} as string,",
+						"          Referrer as string,",
+						"          Speciality as string,",
+						"          GP as string,",
+						"          Practice as string,",
+						"          Site as string,",
+						"          {Request Date} as string,",
+						"          {Event Date/Time} as string,",
+						"          PT as string,",
+						"          RC as string,",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          Room as string,",
+						"          {Exam Start Date/Time} as string,",
+						"          {Exam End Date/Time} as string,",
+						"          {Radiographer 1} as string,",
+						"          {Radiographer 2} as string,",
+						"          {Qty Used} as string,",
+						"          {Exam Key} as string,",
+						"          {Event Key} as string,",
+						"          {Status Code} as string,",
+						"          {Booked Date/Time} as string,",
+						"          Attended as string,",
+						"          {Lead Clinician} as string,",
+						"          Urg as string,",
+						"          {Referring Locat Name} as string,",
+						"          {Referrer Name} as string,",
+						"          Modality as string,",
+						"          {No of Proc} as string,",
+						"          {GP Name} as string,",
+						"          {Date/Time First Verified} as string,",
+						"          {Reported By} as string,",
+						"          {Reported By2} as string,",
+						"          {Reported By Name} as string,",
+						"          {Reported By2 Name} as string,",
+						"          {Time Taken} as string,",
+						"          {Was Planned} as string,",
+						"          {Was Waiting} as string,",
+						"          CCG as string,",
+						"          {Stat Date} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source2",
+						"source2 select(mapColumn(",
+						"          Accession = {Unique  Identifier for patient},",
+						"          {Ref Src},",
+						"          {Referring Locat},",
+						"          Referrer,",
+						"          Speciality,",
+						"          GP,",
+						"          Practice,",
+						"          Site,",
+						"          {Request Date},",
+						"          {Event Date} = {Event Date/Time},",
+						"          {Event Time} = {Event Date/Time},",
+						"          PT,",
+						"          RC,",
+						"          Examination,",
+						"          {Exam Name},",
+						"          Room,",
+						"          {Start Time} = {Exam Start Date/Time},",
+						"          {End Time} = {Exam End Date/Time},",
+						"          {Radiographer 1},",
+						"          {Radiographer 2},",
+						"          {Qty Used},",
+						"          {Exam Key},",
+						"          {Event Key},",
+						"          {Status Code},",
+						"          {Booked Date} = {Booked Date/Time},",
+						"          {Booked Time} = {Booked Date/Time},",
+						"          Attended,",
+						"          {Lead Clinician},",
+						"          Urg,",
+						"          {Referring Locat Name},",
+						"          {Referrer Name},",
+						"          Modality,",
+						"          {No of Proc},",
+						"          {GP Name},",
+						"          {Date First Verified} = {Date/Time First Verified},",
+						"          {Reported By},",
+						"          {Reported By2},",
+						"          {Reported By Name},",
+						"          {Reported By2 Name},",
+						"          {Time Taken},",
+						"          {Was Planned},",
+						"          {Was Waiting},",
+						"          CCG,",
+						"          {Stat Date}",
+						"     ),",
+						"     skipDuplicateMapInputs: false,",
+						"     skipDuplicateMapOutputs: false) ~> select1",
+						"select1 derive({Stat Date} = toTimestamp({Stat Date},'dd/MM/yyyy HH:mm'),",
+						"          {Booked Date} = toTimestamp({Booked Date},'dd/MM/yyyy HH:mm'),",
+						"          {Date First Verified} = toTimestamp({Date First Verified},'dd/MM/yyyy HH:mm'),",
+						"          {Event Date} = toTimestamp({Event Date},'dd/MM/yyyy HH:mm'),",
+						"          {Request Date} = toTimestamp({Request Date},'dd/MM/yyyy HH:mm')\r",
+						",",
+						"          {Time Taken} = toLong({Time Taken}),",
+						"          {No of Proc} = toLong({No of Proc}),",
+						"          {Exam Key} = toLong({Exam Key}),",
+						"          {Event Key} = toLong({Event Key}),",
+						"          {Qty Used} = toDecimal({Qty Used})) ~> derivedColumn1",
+						"derivedColumn1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {CRIS No} as integer,",
+						"          Accession as string,",
+						"          {Ref Src} as string,",
+						"          {Referring Locat} as string,",
+						"          Referrer as string,",
+						"          Speciality as string,",
+						"          GP as string,",
+						"          Practice as string,",
+						"          {Postcode L} as string,",
+						"          {Postcode R} as string,",
+						"          Site as string,",
+						"          {Request Date} as timestamp,",
+						"          {Event Date} as timestamp,",
+						"          {Event Time} as string,",
+						"          {On Call} as string,",
+						"          PT as string,",
+						"          RC as string,",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          Room as string,",
+						"          {Start Time} as string,",
+						"          {End Time} as string,",
+						"          {Radiographer 1} as string,",
+						"          {Radiographer 2} as string,",
+						"          {Required Clinician} as string,",
+						"          {Contrast Code} as string,",
+						"          {Qty Used} as decimal(6,2),",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          {Status Code} as string,",
+						"          {Booked Date} as timestamp,",
+						"          {Booked Time} as string,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          {Event Key2} as integer,",
+						"          {Lead Clinician} as string,",
+						"          {Intended Radiologist} as string,",
+						"          Urg as string,",
+						"          {Referring Locat Name } as string,",
+						"          {Referrer Name} as string,",
+						"          Modality as string,",
+						"          {No of Proc} as integer,",
+						"          {GP Name} as string,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Date First Verified} as timestamp,",
+						"          {Reported By} as string,",
+						"          {Reported By2} as string,",
+						"          {Reported By2 Name} as string,",
+						"          {Reported By Name} as string,",
+						"          {Time First Verified} as string,",
+						"          {Time Taken} as integer,",
+						"          {Typed By} as string,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          CCG as string,",
+						"          Postcode as string,",
+						"          {Day of Week} as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
 						"     format: 'table',",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true,",
@@ -8927,7 +9021,7 @@
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
-								"activity": "Copy_CORE",
+								"activity": "Data flow1",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -8949,7 +9043,6 @@
 								"datasetParameters": {
 									"AzureSqlCORE": {},
 									"source1": {},
-									"source2": {},
 									"AzureSqlCOREStageStep1": {}
 								}
 							},
@@ -10747,6 +10840,44 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "Copy_CORE",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow12",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source2": {},
+									"sink1": {}
+								},
+								"linkedServiceParameters": {}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
 					}
 				],
 				"policy": {
@@ -10766,7 +10897,8 @@
 				"[concat(variables('factoryId'), '/dataflows/CreateRequestRecieveddataset')]",
 				"[concat(variables('factoryId'), '/dataflows/PopulateNewColumns')]",
 				"[concat(variables('factoryId'), '/dataflows/AIDFDataset')]",
-				"[concat(variables('factoryId'), '/dataflows/CreatePatientWaiting')]"
+				"[concat(variables('factoryId'), '/dataflows/CreatePatientWaiting')]",
+				"[concat(variables('factoryId'), '/dataflows/dataflow12')]"
 			]
 		},
 		{
@@ -10815,56 +10947,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/dataflows/dataflow8')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/NIDC_Transformation')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Data flow1",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "dataflow10",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"source1": {},
-									"source3": {},
-									"source4": {},
-									"source5": {},
-									"sink1": {},
-									"sink2": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dataflow10')]"
 			]
 		}
 	]
