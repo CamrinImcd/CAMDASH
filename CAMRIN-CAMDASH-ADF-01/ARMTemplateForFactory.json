@@ -7438,6 +7438,7 @@
 								"datasetParameters": {
 									"AzureSqlCORE": {},
 									"source1": {},
+									"source2": {},
 									"AzureSqlCOREStageStep1": {}
 								}
 							},
@@ -25438,6 +25439,13 @@
 								"type": "DatasetReference"
 							},
 							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "DelimitedText2",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
 						}
 					],
 					"sinks": [
@@ -25458,6 +25466,15 @@
 						},
 						{
 							"name": "filter2"
+						},
+						{
+							"name": "union1"
+						},
+						{
+							"name": "select1"
+						},
+						{
+							"name": "derivedColumn1"
 						}
 					],
 					"scriptLines": [
@@ -25555,14 +25572,120 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> source1",
-						"AzureSqlCORE window(over({Exam Key}),",
+						"source(output(",
+						"          {Unique  Identifier for patient} as string,",
+						"          {Ref Src} as string,",
+						"          {Referring Locat} as string,",
+						"          Referrer as string,",
+						"          Speciality as string,",
+						"          GP as string,",
+						"          Practice as string,",
+						"          Site as string,",
+						"          {Request Date} as string,",
+						"          {Event Date/Time} as string,",
+						"          PT as string,",
+						"          RC as string,",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          Room as string,",
+						"          {Exam Start Date/Time} as string,",
+						"          {Exam End Date/Time} as string,",
+						"          {Radiographer 1} as string,",
+						"          {Radiographer 2} as string,",
+						"          {Qty Used} as string,",
+						"          {Exam Key} as string,",
+						"          {Event Key} as string,",
+						"          {Status Code} as string,",
+						"          {Booked Date/Time} as string,",
+						"          Attended as string,",
+						"          {Lead Clinician} as string,",
+						"          Urg as string,",
+						"          {Referring Locat Name} as string,",
+						"          {Referrer Name} as string,",
+						"          Modality as string,",
+						"          {No of Proc} as string,",
+						"          {GP Name} as string,",
+						"          {Date/Time First Verified} as string,",
+						"          {Reported By} as string,",
+						"          {Reported By2} as string,",
+						"          {Reported By Name} as string,",
+						"          {Reported By2 Name} as string,",
+						"          {Time Taken} as string,",
+						"          {Was Planned} as string,",
+						"          {Was Waiting} as string,",
+						"          CCG as string,",
+						"          {Stat Date} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source2",
+						"union1 window(over({Exam Key}),",
 						"     desc({Stat Date}, false),",
 						"     Rank = denseRank()) ~> window1",
-						"filter2, source1 lookup(AzureSqlCORE@{CRIS No} == source1@{CRIS No}",
-						"     && AzureSqlCORE@{Event Date} == source1@{Event Date},",
+						"filter2, source1 lookup(union1@{CRIS No} == source1@{CRIS No}",
+						"     && union1@{Event Date} == source1@{Event Date},",
 						"     multiple: true,",
 						"     broadcast: 'auto')~> lookup1",
 						"window1 filter(Rank==1) ~> filter2",
+						"AzureSqlCORE, derivedColumn1 union(byName: true)~> union1",
+						"source2 select(mapColumn(",
+						"          Accession = {Unique  Identifier for patient},",
+						"          {Ref Src},",
+						"          {Referring Locat},",
+						"          Referrer,",
+						"          Speciality,",
+						"          GP,",
+						"          Practice,",
+						"          Site,",
+						"          {Request Date},",
+						"          {Event Date} = {Event Date/Time},",
+						"          {Event Time} = {Event Date/Time},",
+						"          PT,",
+						"          RC,",
+						"          Examination,",
+						"          {Exam Name},",
+						"          Room,",
+						"          {Start Time} = {Exam Start Date/Time},",
+						"          {End Time} = {Exam End Date/Time},",
+						"          {Radiographer 1},",
+						"          {Radiographer 2},",
+						"          {Qty Used},",
+						"          {Exam Key},",
+						"          {Event Key},",
+						"          {Status Code},",
+						"          {Booked Date} = {Booked Date/Time},",
+						"          {Booked Time} = {Booked Date/Time},",
+						"          Attended,",
+						"          {Lead Clinician},",
+						"          Urg,",
+						"          {Referring Locat Name},",
+						"          {Referrer Name},",
+						"          Modality,",
+						"          {No of Proc},",
+						"          {GP Name},",
+						"          {Date First Verified} = {Date/Time First Verified},",
+						"          {Reported By},",
+						"          {Reported By2},",
+						"          {Reported By Name},",
+						"          {Reported By2 Name},",
+						"          {Time Taken},",
+						"          {Was Planned},",
+						"          {Was Waiting},",
+						"          CCG,",
+						"          {Stat Date}",
+						"     ),",
+						"     skipDuplicateMapInputs: false,",
+						"     skipDuplicateMapOutputs: false) ~> select1",
+						"select1 derive({Stat Date} = toTimestamp({Stat Date}),",
+						"          {Time Taken} = toLong({Time Taken}),",
+						"          {Date First Verified} = toTimestamp({Date First Verified}),",
+						"          {No of Proc} = toLong({No of Proc}),",
+						"          {Booked Date} = toTimestamp({Booked Date}),",
+						"          {Event Date} = toTimestamp({Event Date}),",
+						"          {Request Date} = toTimestamp({Request Date}),",
+						"          {Exam Key} = toLong({Exam Key}),",
+						"          {Event Key} = toLong({Event Key}),",
+						"          {Qty Used} = toDecimal({Qty Used})) ~> derivedColumn1",
 						"lookup1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
@@ -25659,6 +25782,7 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/AzureSql_CORE')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSql_Patients')]",
+				"[concat(variables('factoryId'), '/datasets/DelimitedText2')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep1')]"
 			]
 		},
@@ -27465,6 +27589,203 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "COCH_CAMDASH_CORE_Feb2025.csv",
+						"container": "cochcsv"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Unique  Identifier for patient",
+						"type": "String"
+					},
+					{
+						"name": "Ref Src",
+						"type": "String"
+					},
+					{
+						"name": "Referring Locat",
+						"type": "String"
+					},
+					{
+						"name": "Referrer",
+						"type": "String"
+					},
+					{
+						"name": "Speciality",
+						"type": "String"
+					},
+					{
+						"name": "GP",
+						"type": "String"
+					},
+					{
+						"name": "Practice",
+						"type": "String"
+					},
+					{
+						"name": "Site",
+						"type": "String"
+					},
+					{
+						"name": "Request Date",
+						"type": "String"
+					},
+					{
+						"name": "Event Date/Time",
+						"type": "String"
+					},
+					{
+						"name": "PT",
+						"type": "String"
+					},
+					{
+						"name": "RC",
+						"type": "String"
+					},
+					{
+						"name": "Examination",
+						"type": "String"
+					},
+					{
+						"name": "Exam Name",
+						"type": "String"
+					},
+					{
+						"name": "Room",
+						"type": "String"
+					},
+					{
+						"name": "Exam Start Date/Time",
+						"type": "String"
+					},
+					{
+						"name": "Exam End Date/Time",
+						"type": "String"
+					},
+					{
+						"name": "Radiographer 1",
+						"type": "String"
+					},
+					{
+						"name": "Radiographer 2",
+						"type": "String"
+					},
+					{
+						"name": "Qty Used",
+						"type": "String"
+					},
+					{
+						"name": "Exam Key",
+						"type": "String"
+					},
+					{
+						"name": "Event Key",
+						"type": "String"
+					},
+					{
+						"name": "Status Code",
+						"type": "String"
+					},
+					{
+						"name": "Booked Date/Time",
+						"type": "String"
+					},
+					{
+						"name": "Attended",
+						"type": "String"
+					},
+					{
+						"name": "Lead Clinician",
+						"type": "String"
+					},
+					{
+						"name": "Urg",
+						"type": "String"
+					},
+					{
+						"name": "Referring Locat Name",
+						"type": "String"
+					},
+					{
+						"name": "Referrer Name",
+						"type": "String"
+					},
+					{
+						"name": "Modality",
+						"type": "String"
+					},
+					{
+						"name": "No of Proc",
+						"type": "String"
+					},
+					{
+						"name": "GP Name",
+						"type": "String"
+					},
+					{
+						"name": "Date/Time First Verified",
+						"type": "String"
+					},
+					{
+						"name": "Reported By",
+						"type": "String"
+					},
+					{
+						"name": "Reported By2",
+						"type": "String"
+					},
+					{
+						"name": "Reported By Name",
+						"type": "String"
+					},
+					{
+						"name": "Reported By2 Name",
+						"type": "String"
+					},
+					{
+						"name": "Time Taken",
+						"type": "String"
+					},
+					{
+						"name": "Was Planned",
+						"type": "String"
+					},
+					{
+						"name": "Was Waiting",
+						"type": "String"
+					},
+					{
+						"name": "CCG",
+						"type": "String"
+					},
+					{
+						"name": "Stat Date",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Test_AzureBlobStorage')]"
 			]
 		}
 	]
