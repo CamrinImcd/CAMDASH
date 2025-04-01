@@ -50,6 +50,9 @@
 				},
 				{
 					"name": "select1"
+				},
+				{
+					"name": "derivedColumn1"
 				}
 			],
 			"scriptLines": [
@@ -197,12 +200,12 @@
 				"union1 window(over({Exam Key}),",
 				"     desc({Stat Date}, false),",
 				"     Rank = denseRank()) ~> window1",
-				"filter2, source1 lookup(AzureSqlCORE@{CRIS No} == source1@{CRIS No}",
-				"     && AzureSqlCORE@{Event Date} == source1@{Event Date},",
+				"filter2, source1 lookup(union1@{CRIS No} == source1@{CRIS No}",
+				"     && union1@{Event Date} == source1@{Event Date},",
 				"     multiple: true,",
 				"     broadcast: 'auto')~> lookup1",
 				"window1 filter(Rank==1) ~> filter2",
-				"AzureSqlCORE, select1 union(byName: true)~> union1",
+				"AzureSqlCORE, derivedColumn1 union(byName: true)~> union1",
 				"source2 select(mapColumn(",
 				"          Accession = {Unique  Identifier for patient},",
 				"          {Ref Src},",
@@ -251,6 +254,16 @@
 				"     ),",
 				"     skipDuplicateMapInputs: false,",
 				"     skipDuplicateMapOutputs: false) ~> select1",
+				"select1 derive({Stat Date} = toTimestamp({Stat Date}),",
+				"          {Time Taken} = toLong({Time Taken}),",
+				"          {Date First Verified} = toTimestamp({Date First Verified}),",
+				"          {No of Proc} = toLong({No of Proc}),",
+				"          {Booked Date} = toTimestamp({Booked Date}),",
+				"          {Event Date} = toTimestamp({Event Date}),",
+				"          {Request Date} = toTimestamp({Request Date}),",
+				"          {Exam Key} = toLong({Exam Key}),",
+				"          {Event Key} = toLong({Event Key}),",
+				"          {Qty Used} = toDecimal({Qty Used})) ~> derivedColumn1",
 				"lookup1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
