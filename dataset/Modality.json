@@ -13,9 +13,26 @@
 				"type": "nvarchar"
 			},
 			{
+				"name": "Stat Date",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
 				"name": "Modality ID",
 				"type": "int",
 				"precision": 10
+			},
+			{
+				"name": "Modality",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DIAGNOSTIC_TESTS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "Cerner Modality",
+				"type": "nvarchar"
 			}
 		],
 		"typeProperties": {
