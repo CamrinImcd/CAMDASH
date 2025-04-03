@@ -526,6 +526,10 @@
 					{
 						"name": "Patient Type Code",
 						"type": "nvarchar"
+					},
+					{
+						"name": "Cerner Patient Type",
+						"type": "nvarchar"
 					}
 				],
 				"typeProperties": {
