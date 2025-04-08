@@ -9264,6 +9264,7 @@
 									"source2": {},
 									"source3": {},
 									"source4": {},
+									"source5": {},
 									"sink1": {}
 								}
 							},
@@ -11261,6 +11262,27 @@
 				"typeProperties": {
 					"schema": "dev",
 					"table": "MMPMP"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSqlTable16')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "Main Specialty Codes"
 				}
 			},
 			"dependsOn": [
@@ -26340,6 +26362,13 @@
 								"type": "DatasetReference"
 							},
 							"name": "source4"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSqlTable16",
+								"type": "DatasetReference"
+							},
+							"name": "source5"
 						}
 					],
 					"sinks": [
@@ -26366,6 +26395,9 @@
 						},
 						{
 							"name": "select2"
+						},
+						{
+							"name": "lookup3"
 						}
 					],
 					"scriptLines": [
@@ -26439,6 +26471,16 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> source4",
+						"source(output(",
+						"          Group as string,",
+						"          {DD Code} as double,",
+						"          {Main Specialty Title} as string,",
+						"          Status as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source5",
 						"source2 select(mapColumn(",
 						"          {CRIS No} = {Unique  Identifier for patient},",
 						"          {Ref Src},",
@@ -26515,13 +26557,13 @@
 						"     multiple: true,",
 						"     broadcast: 'auto',",
 						"     pickup: 'any')~> lookup2",
-						"lookup2 select(mapColumn(",
+						"lookup3 select(mapColumn(",
 						"          {CRIS No},",
 						"          Accession = {Accession ID},",
 						"          {Ref Src},",
 						"          {Referring Locat},",
 						"          Referrer,",
-						"          Speciality,",
+						"          Speciality = {DD Code},",
 						"          GP,",
 						"          Practice,",
 						"          Site,",
@@ -26565,6 +26607,10 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> select2",
+						"lookup2, source5 lookup(Speciality == {Main Specialty Title},",
+						"     multiple: true,",
+						"     broadcast: 'auto',",
+						"     pickup: 'any')~> lookup3",
 						"select2 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
@@ -26692,6 +26738,7 @@
 				"[concat(variables('factoryId'), '/datasets/DelimitedText2')]",
 				"[concat(variables('factoryId'), '/datasets/Patient_Type')]",
 				"[concat(variables('factoryId'), '/datasets/Modality')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlTable16')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSql_CORE')]"
 			]
 		},
