@@ -32,14 +32,23 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "dataflow8",
+								"referenceName": "update Refs",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
-									"source1": {},
-									"source2": {},
-									"source3": {},
-									"sink1": {}
+									"AzureSqlPTL": {},
+									"RefSrc": {},
+									"Examination": {},
+									"STATUSES": {},
+									"SiteRoom": {},
+									"ReferralSourceRef": {},
+									"ExamRef": {},
+									"StatusRef": {},
+									"SiteRef": {},
+									"SiteRoomOut": {},
+									"Status": {},
+									"Exam": {},
+									"ReferralSource": {}
 								}
 							},
 							"staging": {},
