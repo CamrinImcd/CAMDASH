@@ -66,6 +66,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "StatusRef"
+				},
+				{
+					"dataset": {
+						"referenceName": "Exam_Site",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
 				}
 			],
 			"sinks": [
@@ -185,6 +192,9 @@
 				},
 				{
 					"name": "derivedColumn3"
+				},
+				{
+					"name": "aggregate6"
 				}
 			],
 			"scriptLines": [
@@ -272,6 +282,18 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> StatusRef",
+				"source(output(",
+				"          {Exam Site} as string,",
+				"          {Exam Room} as string,",
+				"          {ExamSite Code} as string,",
+				"          {Exam Room ID} as long,",
+				"          Description as string,",
+				"          {Stat Date} as timestamp",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source2",
 				"SiteRoom select(mapColumn(",
 				"          {Exam Site} = Site,",
 				"          {Exam Room} = Room,",
@@ -365,6 +387,7 @@
 				"     ignoreSpaces: false,",
 				"     broadcast: 'right')~> join3",
 				"join3 derive({Status ID} = toInteger(Key+MaxID)) ~> derivedColumn3",
+				"source2 aggregate(MaxID = max({Exam Room ID})) ~> aggregate6",
 				"select1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
