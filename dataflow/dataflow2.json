@@ -27,13 +27,6 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "FYF_ODBC_CORE_v2",
-						"type": "DatasetReference"
-					},
-					"name": "PatientTypeIn"
-				},
-				{
-					"dataset": {
 						"referenceName": "AzureSql_CORE",
 						"type": "DatasetReference"
 					},
@@ -80,6 +73,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "ReferralSourceRef"
+				},
+				{
+					"dataset": {
+						"referenceName": "Exam",
+						"type": "DatasetReference"
+					},
+					"name": "ExamRef"
 				}
 			],
 			"sinks": [
@@ -178,13 +178,7 @@
 					"name": "RankColumns3"
 				},
 				{
-					"name": "RankColumns2"
-				},
-				{
 					"name": "RenameColumns1"
-				},
-				{
-					"name": "RankColumns1"
 				},
 				{
 					"name": "RenameColumns9"
@@ -202,7 +196,28 @@
 					"name": "aggregate1"
 				},
 				{
-					"name": "union1"
+					"name": "exists1"
+				},
+				{
+					"name": "aggregate2"
+				},
+				{
+					"name": "surrogateKey1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "join1"
+				},
+				{
+					"name": "sort1"
+				},
+				{
+					"name": "aggregate3"
+				},
+				{
+					"name": "aggregate4"
 				}
 			],
 			"scriptLines": [
@@ -232,17 +247,8 @@
 				"     validateSchema: false,",
 				"     waterMarkColumn: 'Stat Date',",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'SELECT [Ref Src] as [Ref Src]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE]\\n  where [Ref Src] not in (SELECT [Referral Source]\\n  FROM [dev].[Referral Source])\\n  Group by [Ref Src]',",
+				"     query: 'SELECT Distinct([Ref Src]) as [Ref Src]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE]\\n  Group by [Ref Src]',",
 				"     format: 'query') ~> RefSrc",
-				"source(output(",
-				"          Patient_Type as string,",
-				"          {Stat Date} as timestamp",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: '  SELECT [Patient_Type]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE_v2]\\n   where [Patient_Type] not in (SELECT [Patient_Type]\\n    FROM [dev].[Patient Type])\\n  Group by [Patient_Type]',",
-				"     format: 'query') ~> PatientTypeIn",
 				"source(output(",
 				"          Examination as string,",
 				"          {Exam Name} as string,",
@@ -251,7 +257,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'SELECT [Examination], [Exam Name]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE]\\nwhere [Examination] not in (SELECT [Examination]\\n    FROM [dev].[Exam])\\n  Group by [Examination],[Exam Name]\\n',",
+				"     query: 'SELECT [Examination], [Exam Name]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE]\\n  Group by [Examination],[Exam Name]',",
 				"     format: 'query') ~> Examination",
 				"source(output(",
 				"          {Status Code} as string,",
@@ -308,6 +314,15 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> ReferralSourceRef",
+				"source(output(",
+				"          {Exam Name} as string,",
+				"          {Exam Code} as string,",
+				"          {Exam ID} as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> ExamRef",
 				"TatTypeIn rank(asc({Tat Type}, true),",
 				"     output({Tat Type ID} as long)) ~> RankColumns8",
 				"RankColumns8 derive(Target = iif({Tat Type} == \"Urgent Inpatients\",\"12 hours\",iif({Tat Type} == \"Non-Urgent Inpatients\", \"24 hours\",iif({Tat Type} == \"Outpatient Faster Diagnosis Standard Cancer Pathway\", \"3 days\",iif({Tat Type} == \"Urgent GP and Outpatients\", \"7 days\",iif({Tat Type} == \"All Other Routine Outpatient and GP Studies\", \"28 days\",iif({Tat Type} == \"Acutely Unwell/ED Patients\", \"12 hours\",iif({Tat Type} == \"Other Inpatients\" , \"7 days\",iif({Tat Type} == \"Urgent GP/Urgent Outpatients\", \"7 days\",iif({Tat Type} == \"Routine GP and outpatients\", \"28 days\",iif({Tat Type} == \"Ultrasound and interventional Radiology\", \"3 hours\",\"0\"))))))))))) ~> DeriveColumn8",
@@ -341,17 +356,13 @@
 				"     skipDuplicateMapOutputs: true) ~> RenameColumns3",
 				"RenameColumns3 rank(asc({Exam Code}, true),",
 				"     output({Exam ID} as long)) ~> RankColumns3",
-				"PatientTypeIn rank(asc(Patient_Type, true),",
-				"     output({Patient Type ID} as long)) ~> RankColumns2",
-				"RefSrc select(mapColumn(",
+				"derivedColumn1 select(mapColumn(",
 				"          {Referral Source} = {Ref Src},",
-				"          {Stat Date}",
+				"          {Stat Date},",
+				"          {Referral Source ID}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> RenameColumns1",
-				"union1 rank(asc({Referral Source ID}, true),",
-				"     asc({Referral Source}, true),",
-				"     output({Referral Source ID} as long)) ~> RankColumns1",
 				"AzureSqlPTL select(mapColumn(",
 				"          {Exam Site} = Site,",
 				"          {Exam Room} = Room,",
@@ -377,7 +388,22 @@
 				"          {Exam Site},",
 				"          {Exam Room}),",
 				"     {Stat Date} = min({Stat Date})) ~> aggregate1",
-				"RenameColumns1, ReferralSourceRef union(byName: true)~> union1",
+				"RefSrc, ReferralSourceRef exists({Ref Src} == {Referral Source},",
+				"     negate:true,",
+				"     broadcast: 'auto')~> exists1",
+				"ReferralSourceRef aggregate(MaxID = max({Referral Source ID})) ~> aggregate2",
+				"sort1 keyGenerate(output(Key as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey1",
+				"join1 derive({Referral Source ID} = toInteger(Key+MaxID)) ~> derivedColumn1",
+				"surrogateKey1, aggregate2 join(Key < MaxID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'right')~> join1",
+				"exists1 sort(asc({Ref Src}, true)) ~> sort1",
+				"aggregate4 aggregate(MaxID = max({Exam ID})) ~> aggregate3",
+				"ExamRef aggregate(MaxID = max({Exam ID})) ~> aggregate4",
 				"DeriveColumn8 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -441,7 +467,11 @@
 				"     validateSchema: false,",
 				"     input(",
 				"          Modality2 as string,",
-				"          {Modality ID} as integer",
+				"          {Stat Date} as timestamp,",
+				"          {Modality ID} as integer,",
+				"          Modality as string,",
+				"          DIAGNOSTIC_TESTS as string,",
+				"          {Cerner Modality} as string",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -481,13 +511,14 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError') ~> Exam",
-				"RankColumns2 sink(allowSchemaDrift: true,",
+				" sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          Patient_Type as string,",
 				"          {Stat Date} as timestamp,",
 				"          {Patient Type ID} as long,",
-				"          {Patient Type Code} as string",
+				"          {Patient Type Code} as string,",
+				"          {Cerner Patient Type} as string",
 				"     ),",
 				"     deletable:false,",
 				"     insertable:true,",
@@ -497,7 +528,7 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError') ~> PatientType",
-				"RankColumns1 sink(allowSchemaDrift: true,",
+				"RenameColumns1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          {Referral Source} as string,",
@@ -511,7 +542,12 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> ReferralSource"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          {Referral Source},",
+				"          {Stat Date},",
+				"          {Referral Source ID}",
+				"     )) ~> ReferralSource"
 			]
 		}
 	}
