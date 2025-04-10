@@ -41,13 +41,6 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "FYF_ODBC_CORE_v2",
-						"type": "DatasetReference"
-					},
-					"name": "ModalityIN"
-				},
-				{
-					"dataset": {
 						"referenceName": "AzureSql_CORE",
 						"type": "DatasetReference"
 					},
@@ -80,6 +73,13 @@
 						"type": "DatasetReference"
 					},
 					"name": "ExamRef"
+				},
+				{
+					"dataset": {
+						"referenceName": "Status",
+						"type": "DatasetReference"
+					},
+					"name": "StatusRef"
 				}
 			],
 			"sinks": [
@@ -103,13 +103,6 @@
 						"type": "DatasetReference"
 					},
 					"name": "SiteRoomOut"
-				},
-				{
-					"dataset": {
-						"referenceName": "Modality",
-						"type": "DatasetReference"
-					},
-					"name": "Modality"
 				},
 				{
 					"dataset": {
@@ -163,19 +156,10 @@
 					"name": "RankColumns6"
 				},
 				{
-					"name": "RankColumns5"
-				},
-				{
-					"name": "RankColumns4"
-				},
-				{
 					"name": "DeriveColumn4"
 				},
 				{
 					"name": "RenameColumns3"
-				},
-				{
-					"name": "RankColumns3"
 				},
 				{
 					"name": "RenameColumns1"
@@ -214,10 +198,40 @@
 					"name": "sort1"
 				},
 				{
-					"name": "aggregate3"
+					"name": "aggregate4"
 				},
 				{
-					"name": "aggregate4"
+					"name": "exists2"
+				},
+				{
+					"name": "sort2"
+				},
+				{
+					"name": "surrogateKey2"
+				},
+				{
+					"name": "join2"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "aggregate5"
+				},
+				{
+					"name": "exists3"
+				},
+				{
+					"name": "sort3"
+				},
+				{
+					"name": "surrogateKey3"
+				},
+				{
+					"name": "join3"
+				},
+				{
+					"name": "derivedColumn3"
 				}
 			],
 			"scriptLines": [
@@ -269,15 +283,6 @@
 				"     query: 'SELECT [Status Code]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_STATUSES]\\nwhere [Status Code]not in (SELECT [Status Code]\\n    FROM [dev].[FYF_ODBC_STATUSES])\\n  Group by [Status Code]',",
 				"     format: 'query') ~> STATUSES",
 				"source(output(",
-				"          Modality2 as string,",
-				"          {Stat Date} as timestamp",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     isolationLevel: 'READ_UNCOMMITTED',",
-				"     query: 'SELECT Distinct([Modality2]) as [Modality2]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE_v2]\\nwhere [Modality2] not in (SELECT [Modality2]\\n    FROM [dev].[Modality])\\n  Group by [Modality2]',",
-				"     format: 'query') ~> ModalityIN",
-				"source(output(",
 				"          Site as string,",
 				"          Room as string,",
 				"          {Stat Date} as timestamp",
@@ -323,6 +328,15 @@
 				"     validateSchema: false,",
 				"     isolationLevel: 'READ_UNCOMMITTED',",
 				"     format: 'table') ~> ExamRef",
+				"source(output(",
+				"          {Status Code} as string,",
+				"          {Status ID} as integer,",
+				"          {Status Category} as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> StatusRef",
 				"TatTypeIn rank(asc({Tat Type}, true),",
 				"     output({Tat Type ID} as long)) ~> RankColumns8",
 				"RankColumns8 derive(Target = iif({Tat Type} == \"Urgent Inpatients\",\"12 hours\",iif({Tat Type} == \"Non-Urgent Inpatients\", \"24 hours\",iif({Tat Type} == \"Outpatient Faster Diagnosis Standard Cancer Pathway\", \"3 days\",iif({Tat Type} == \"Urgent GP and Outpatients\", \"7 days\",iif({Tat Type} == \"All Other Routine Outpatient and GP Studies\", \"28 days\",iif({Tat Type} == \"Acutely Unwell/ED Patients\", \"12 hours\",iif({Tat Type} == \"Other Inpatients\" , \"7 days\",iif({Tat Type} == \"Urgent GP/Urgent Outpatients\", \"7 days\",iif({Tat Type} == \"Routine GP and outpatients\", \"28 days\",iif({Tat Type} == \"Ultrasound and interventional Radiology\", \"3 hours\",\"0\"))))))))))) ~> DeriveColumn8",
@@ -342,20 +356,15 @@
 				"CombineCOREPTL6 derive({ExamSite Code} = iifNull({Exam Site},'NULL')+iifNull({Exam Room},'NULL')) ~> JointColumn6",
 				"aggregate1 rank(asc({ExamSite Code}, true),",
 				"     output({Exam Room ID} as long)) ~> RankColumns6",
-				"ModalityIN rank(asc(Modality2, true),",
-				"     output({Modality ID} as long)) ~> RankColumns5",
-				"STATUSES rank(asc({Status Code}, true),",
-				"     output({Status ID} as long)) ~> RankColumns4",
-				"RankColumns4 derive({Status Category} = iif(startsWith({Status Code}, \"AP\"), \"AP\", iif(startsWith({Status Code}, \"AS\"), \"AS\", iif(startsWith({Status Code}, \"AT\"), \"AT\", iif(startsWith({Status Code}, \"C\"), \"C\", iif(startsWith({Status Code}, \"D\"), \"D\", iif(startsWith({Status Code}, \"E\"), \"E\", iif(startsWith({Status Code}, \"P\"), \"P\", iif(startsWith({Status Code}, \"R\"), \"R\", iif(startsWith({Status Code}, \"V\"), \"V\", iif(startsWith({Status Code}, \"W\"), \"W\", iif({Status Code} == \"BHSRAI\", \"ST\", iif({Status Code} == \"ACNCLI\", \"W\", iif({Status Code} == \"SRREPC\", \"ST\", \"0\")))))))))))))) ~> DeriveColumn4",
-				"Examination select(mapColumn(",
+				"derivedColumn3 derive({Status Category} = iif(startsWith({Status Code}, \"AP\"), \"AP\", iif(startsWith({Status Code}, \"AS\"), \"AS\", iif(startsWith({Status Code}, \"AT\"), \"AT\", iif(startsWith({Status Code}, \"C\"), \"C\", iif(startsWith({Status Code}, \"D\"), \"D\", iif(startsWith({Status Code}, \"E\"), \"E\", iif(startsWith({Status Code}, \"P\"), \"P\", iif(startsWith({Status Code}, \"R\"), \"R\", iif(startsWith({Status Code}, \"V\"), \"V\", iif(startsWith({Status Code}, \"W\"), \"W\", iif({Status Code} == \"BHSRAI\", \"ST\", iif({Status Code} == \"ACNCLI\", \"W\", iif({Status Code} == \"SRREPC\", \"ST\", \"0\")))))))))))))) ~> DeriveColumn4",
+				"derivedColumn2 select(mapColumn(",
 				"          {Exam Code} = Examination,",
 				"          {Exam Name},",
-				"          {Stat Date}",
+				"          {Stat Date},",
+				"          {Exam ID}",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> RenameColumns3",
-				"RenameColumns3 rank(asc({Exam Code}, true),",
-				"     output({Exam ID} as long)) ~> RankColumns3",
 				"derivedColumn1 select(mapColumn(",
 				"          {Referral Source} = {Ref Src},",
 				"          {Stat Date},",
@@ -401,9 +410,35 @@
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
 				"     broadcast: 'right')~> join1",
-				"exists1 sort(asc({Ref Src}, true)) ~> sort1",
-				"aggregate4 aggregate(MaxID = max({Exam ID})) ~> aggregate3",
+				"exists1 sort(asc({Ref Src}, false)) ~> sort1",
 				"ExamRef aggregate(MaxID = max({Exam ID})) ~> aggregate4",
+				"Examination, ExamRef exists(Examination == {Exam Code},",
+				"     negate:true,",
+				"     broadcast: 'auto')~> exists2",
+				"exists2 sort(asc(Examination, false)) ~> sort2",
+				"sort2 keyGenerate(output(Key as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey2",
+				"surrogateKey2, aggregate4 join(Key < MaxID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'right')~> join2",
+				"join2 derive({Exam ID} = toInteger(Key+MaxID)) ~> derivedColumn2",
+				"StatusRef aggregate(MaxID = max({Status ID})) ~> aggregate5",
+				"STATUSES, StatusRef exists(STATUSES@{Status Code} == StatusRef@{Status Code},",
+				"     negate:true,",
+				"     broadcast: 'auto')~> exists3",
+				"exists3 sort(asc({Status Code}, false)) ~> sort3",
+				"sort3 keyGenerate(output(Key as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey3",
+				"surrogateKey3, aggregate5 join(Key < MaxID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'right')~> join3",
+				"join3 derive({Status ID} = toInteger(Key+MaxID)) ~> derivedColumn3",
 				"DeriveColumn8 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -463,24 +498,6 @@
 				"          Description,",
 				"          {Stat Date}",
 				"     )) ~> SiteRoomOut",
-				"RankColumns5 sink(allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     input(",
-				"          Modality2 as string,",
-				"          {Stat Date} as timestamp,",
-				"          {Modality ID} as integer,",
-				"          Modality as string,",
-				"          DIAGNOSTIC_TESTS as string,",
-				"          {Cerner Modality} as string",
-				"     ),",
-				"     deletable:false,",
-				"     insertable:true,",
-				"     updateable:false,",
-				"     upsertable:false,",
-				"     format: 'table',",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     errorHandlingOption: 'stopOnFirstError') ~> Modality",
 				"DeriveColumn4 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
@@ -496,7 +513,7 @@
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
 				"     errorHandlingOption: 'stopOnFirstError') ~> Status",
-				"RankColumns3 sink(allowSchemaDrift: true,",
+				"RenameColumns3 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          {Exam Name} as string,",
