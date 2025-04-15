@@ -6133,7 +6133,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
-								"sqlReaderQuery": "SELECT [Request Year Only]\n\t  ,[Request Month Number Only]\n      ,[Trust ID]\n      ,[Updated Modality]\n\t  ,[Patient Type ID]\n      ,[Referral Source ID]\n\t  ,Count([Request-Image Days]) as [Count]\n      ,Avg([Request-Image Days]) as [Avg Request-Image Days]\n      ,Avg([Request-Image Hours])  as [Avg Request-Image Hours]\n       FROM [dev].[FYF_ODBC_CORE_v2]\n\t   Where [Request Date] is not null\n\t   and [Request Year Only]>2019\n\t   and [Was Planned]='N'\n\t   Group by  [Request Month Number Only]\n\t  ,[Request Year Only]\n      ,[Was Planned]\n      ,[Patient Type ID]\n      ,[Updated Modality]\n      ,[Trust ID]\n      ,[Referral Source ID] \n\t  order by [Request Year Only],[Request Month Number Only],[Trust ID],[Referral Source ID]",
+								"sqlReaderQuery": "SELECT \n\t  DATEADD(month, DATEDIFF(month, 0, [Request Date]), 0) AS StartOfMonth\n      ,[Trust ID]\n      ,[Updated Modality]\n\t  ,[Patient Type ID]\n      ,[Referral Source ID]\n\t  ,Count([Request-Image Days]) as [Count]\n      ,Avg([Request-Image Days]) as [Avg Request-Image Days]\n      ,Avg([Request-Image Hours])  as [Avg Request-Image Hours]\n       FROM [dev].[FYF_ODBC_CORE_v2]\n\t   Where [Request Date] is not null\n\t   and [Request Year Only]>2019\n\t   and [Was Planned]='N'\n\t   Group by   DATEADD(month, DATEDIFF(month, 0, [Request Date]), 0)\n      ,[Was Planned]\n      ,[Patient Type ID]\n      ,[Updated Modality]\n      ,[Trust ID]\n      ,[Referral Source ID] \n\t  order by DATEADD(month, DATEDIFF(month, 0, [Request Date]), 0),[Trust ID],[Referral Source ID]",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -6147,116 +6147,6 @@
 							"enableStaging": false,
 							"translator": {
 								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"name": "Request Year Only",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "Request Year Only",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "Request Month Number Only",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "Request Month Number Only",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "Trust ID",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "Trust ID",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "Updated Modality",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "Updated Modality",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "Patient Type ID",
-											"type": "Int64",
-											"physicalType": "bigint"
-										},
-										"sink": {
-											"name": "Patient Type ID",
-											"type": "Int64",
-											"physicalType": "bigint"
-										}
-									},
-									{
-										"source": {
-											"name": "Referral Source ID",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "Referral Source ID",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "Count",
-											"type": "Int32",
-											"physicalType": "int"
-										},
-										"sink": {
-											"name": "Count",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"name": "Avg Request-Image Days",
-											"type": "Double",
-											"physicalType": "float"
-										},
-										"sink": {
-											"name": "Avg Request-Image Days",
-											"type": "Double",
-											"physicalType": "float"
-										}
-									},
-									{
-										"source": {
-											"name": "Avg Request-Image Hours",
-											"type": "Double",
-											"physicalType": "float"
-										},
-										"sink": {
-											"name": "Avg Request-Image Hours",
-											"type": "Double",
-											"physicalType": "float"
-										}
-									}
-								],
 								"typeConversion": true,
 								"typeConversionSettings": {
 									"allowDataTruncation": true,
