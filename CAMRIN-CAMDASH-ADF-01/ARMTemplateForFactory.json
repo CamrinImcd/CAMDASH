@@ -9298,12 +9298,13 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
-								"sqlReaderQuery": "SELECT \n\t  DATEADD(month, DATEDIFF(month, 0, [Request Date]), 0) AS StartOfMonth\n      ,[Trust ID]\n      ,[Updated Modality]\n\t  ,[Patient Type ID]\n      ,[Referral Source ID]\n\t  ,Count([Request-Image Days]) as [Count]\n      ,Avg([Request-Image Days]) as [Avg Request-Image Days]\n      ,Avg([Request-Image Hours])  as [Avg Request-Image Hours]\n       FROM [dev].[FYF_ODBC_CORE_v2]\n\t   Where [Request Date] is not null\n\t   and [Request Year Only]>2019\n\t   and [Was Planned]='N'\n\t   Group by   DATEADD(month, DATEDIFF(month, 0, [Request Date]), 0)\n      ,[Was Planned]\n      ,[Patient Type ID]\n      ,[Updated Modality]\n      ,[Trust ID]\n      ,[Referral Source ID] \n\t  order by DATEADD(month, DATEDIFF(month, 0, [Request Date]), 0),[Trust ID],[Referral Source ID]",
+								"sqlReaderQuery": "SELECT \n\t  CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE) AS StartOfMonth\n      ,[Trust ID]\n      ,[Updated Modality]\n\t  ,[Patient Type ID]\n      ,[Referral Source ID]\n\t  ,Count([Request-Image Days]) as [Count]\n      ,Avg([Request-Image Days]) as [Avg Request-Image Days]\n      ,Avg([Request-Image Hours])  as [Avg Request-Image Hours]\n       FROM [dev].[FYF_ODBC_CORE_v2]\n\t   Where [Request Date] is not null\n\t   and [Request Year Only]>2019\n\t   and [Was Planned]='N'\n\t   Group by   CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE)\n      ,[Was Planned]\n      ,[Patient Type ID]\n      ,[Updated Modality]\n      ,[Trust ID]\n      ,[Referral Source ID] \n\t  order by CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE),[Trust ID],[Referral Source ID]",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
 							"sink": {
 								"type": "AzureSqlSink",
+								"preCopyScript": "drop table [dev].[Referral]",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"tableOption": "autoCreate",
