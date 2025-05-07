@@ -9415,23 +9415,14 @@
 						"userProperties": [],
 						"typeProperties": {
 							"dataflow": {
-								"referenceName": "update Refs",
+								"referenceName": "dataflow8",
 								"type": "DataFlowReference",
 								"parameters": {},
 								"datasetParameters": {
-									"AzureSqlPTL": {},
-									"RefSrc": {},
-									"Examination": {},
-									"STATUSES": {},
-									"SiteRoom": {},
-									"ReferralSourceRef": {},
-									"ExamRef": {},
-									"StatusRef": {},
-									"SiteRef": {},
-									"SiteRoomOut": {},
-									"Status": {},
-									"Exam": {},
-									"ReferralSource": {}
+									"source1": {},
+									"source2": {},
+									"source3": {},
+									"sink1": {}
 								}
 							},
 							"staging": {},
@@ -9449,7 +9440,7 @@
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/update Refs')]"
+				"[concat(variables('factoryId'), '/dataflows/dataflow8')]"
 			]
 		},
 		{
