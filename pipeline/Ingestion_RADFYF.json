@@ -6020,7 +6020,7 @@
 					},
 					"sink": {
 						"type": "AzureSqlSink",
-						"preCopyScript": "Truncate dev.FYF_ODBC_VET",
+						"preCopyScript": "Truncate table [dev].[FYF_ODBC_VET]",
 						"writeBehavior": "insert",
 						"sqlWriterUseTableLock": false,
 						"tableOption": "autoCreate",
