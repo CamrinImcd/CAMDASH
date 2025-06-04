@@ -9356,7 +9356,7 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "Truncate dev.FYF_ODBC_VET",
+								"preCopyScript": "Truncate table [dev].[FYF_ODBC_VET]",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"tableOption": "autoCreate",
@@ -15237,6 +15237,102 @@
 				"typeProperties": {
 					"schema": "luft",
 					"table": "FYF_ODBC_TEST_Patients"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureSql_Vet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "CRIS No",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Request Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "UserID",
+						"type": "varchar"
+					},
+					{
+						"name": "Users Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Status Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Status Code Description",
+						"type": "varchar"
+					},
+					{
+						"name": "Vetting Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Examination",
+						"type": "varchar"
+					},
+					{
+						"name": "Status Start Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Status Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Status Time",
+						"type": "varchar"
+					},
+					{
+						"name": "Date Required",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "FYF_ODBC_VET"
 				}
 			},
 			"dependsOn": [
@@ -22975,6 +23071,102 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_Vet')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "RADFYF01_CRIS_PostgreSQL",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "CRIS No",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Request Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Event Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "UserID",
+						"type": "varchar"
+					},
+					{
+						"name": "Users Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Status Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Status Code Description",
+						"type": "varchar"
+					},
+					{
+						"name": "Vetting Code",
+						"type": "varchar"
+					},
+					{
+						"name": "Examination",
+						"type": "varchar"
+					},
+					{
+						"name": "Status Start Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Status Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Status Time",
+						"type": "varchar"
+					},
+					{
+						"name": "Date Required",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime",
+						"precision": 23,
+						"scale": 3
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "FYF_ODBC_VET"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/RADFYF01_CRIS_PostgreSQL')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Status')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -28419,198 +28611,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/managedVirtualNetworks/default')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SqlServer_Vet')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "RADFYF01_CRIS_PostgreSQL",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "CRIS No",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Request Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "UserID",
-						"type": "varchar"
-					},
-					{
-						"name": "Users Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Status Code",
-						"type": "varchar"
-					},
-					{
-						"name": "Status Code Description",
-						"type": "varchar"
-					},
-					{
-						"name": "Vetting Code",
-						"type": "varchar"
-					},
-					{
-						"name": "Examination",
-						"type": "varchar"
-					},
-					{
-						"name": "Status Start Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Status Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Status Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Date Required",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "dbo",
-					"table": "FYF_ODBC_VET"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/RADFYF01_CRIS_PostgreSQL')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AzureSql_Vet')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "CRIS No",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Request Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "UserID",
-						"type": "varchar"
-					},
-					{
-						"name": "Users Name",
-						"type": "varchar"
-					},
-					{
-						"name": "Status Code",
-						"type": "varchar"
-					},
-					{
-						"name": "Status Code Description",
-						"type": "varchar"
-					},
-					{
-						"name": "Vetting Code",
-						"type": "varchar"
-					},
-					{
-						"name": "Examination",
-						"type": "varchar"
-					},
-					{
-						"name": "Status Start Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Status Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Status Time",
-						"type": "varchar"
-					},
-					{
-						"name": "Date Required",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime",
-						"precision": 23,
-						"scale": 3
-					}
-				],
-				"typeProperties": {
-					"schema": "dev",
-					"table": "FYF_ODBC_VET"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
 			]
 		}
 	]
