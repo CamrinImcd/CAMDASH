@@ -1,0 +1,91 @@
+{
+	"name": "SqlServer_Vet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "RADFYF01_CRIS_PostgreSQL",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "CRIS No",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Exam Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Event Key",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Request Date",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "Event Date",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "UserID",
+				"type": "varchar"
+			},
+			{
+				"name": "Users Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Status Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Status Code Description",
+				"type": "varchar"
+			},
+			{
+				"name": "Vetting Code",
+				"type": "varchar"
+			},
+			{
+				"name": "Examination",
+				"type": "varchar"
+			},
+			{
+				"name": "Status Start Date",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "Status Date",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "Status Time",
+				"type": "varchar"
+			},
+			{
+				"name": "Date Required",
+				"type": "datetime2",
+				"scale": 7
+			},
+			{
+				"name": "Stat Date",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "FYF_ODBC_VET"
+		}
+	}
+}
