@@ -1330,6 +1330,7 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
+								"preCopyScript": "DROP TABLE IF EXISTS dbo.NIDC_Workforce_SubStaffMedical",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"tableOption": "autoCreate",
@@ -1338,6 +1339,176 @@
 							"enableStaging": false,
 							"translator": {
 								"type": "TabularTranslator",
+								"mappings": [
+									{
+										"source": {
+											"name": "Year",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Year",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Trust",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Trust",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Staff Type",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Staff Type",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Headcount",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Headcount",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "FTE",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "FTE",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Pay Costs (£)",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Pay Costs (£)",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Vacancy",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Vacancy",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DCC - Reporting",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "DCC - Reporting",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DCC - MDT",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "DCC - MDT",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "DCC - Other Clinical Activities",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "DCC - Other Clinical Activities",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SPA",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "SPA",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "SPA - Imaging Network",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "SPA - Imaging Network",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "REALM / Governance",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "REALM / Governance",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									},
+									{
+										"source": {
+											"name": "Other",
+											"type": "String",
+											"physicalType": "String"
+										},
+										"sink": {
+											"name": "Other",
+											"type": "String",
+											"physicalType": "nvarchar"
+										}
+									}
+								],
 								"typeConversion": true,
 								"typeConversionSettings": {
 									"allowDataTruncation": true,
@@ -4780,8 +4951,7 @@
 						"     skipDuplicateMapOutputs: true) ~> select8",
 						"derivedColumn9 alterRow(upsertIf(iif(UpOrIn==\"Up\",true(),false())),",
 						"     insertIf(iif(UpOrIn==\"In\",true(),false()))) ~> AlterRow1",
-						"DerivedColumn1 derive({Request-Image Days} = iif(or(or({Event Date}>{Stat Date},{Request Date}>{Event Date}),or({Event Date}<toDate('2019-01-01 00:00:00'),{Request Date}<toDate('2019-01-01 00:00:00'))),toLong(''),toLong({Event Date}-{Request Date}))\r",
-						",",
+						"DerivedColumn1 derive({Request-Image Days} = iif(or(or({Event Date}>{Stat Date},{Request Date}>{Event Date}),or({Event Date}<toDate('2019-01-01 00:00:00'),{Request Date}<toDate('2019-01-01 00:00:00'))),toLong(''),toLong({Event Date}-{Request Date})),",
 						"          {Image-Report Days} = iif(or(or({Event Date}>{Stat Date},{Date First Verified}>{Stat Date}),or({Event Date}<toDate('2019-01-01 00:00:00'),{Date First Verified}<toDate('2019-01-01 00:00:00'))),toLong(''),toLong({Date First Verified}-{Event Date})),",
 						"          {Request-Image Hours} = iif(or(or({Event Time}>{Stat Datetime},{Requested Time}>{Event Time}),or({Event Time}<toTimestamp('2019-01-01 00:00:00'),{Requested Time}<toTimestamp('2019-01-01 00:00:00'))),toLong(''),(({Event Time}-{Requested Time})/1000)/3600),",
 						"          {Request-Report Days} = iif(or(or({Request Date}>{Stat Date},{Date First Verified}>{Stat Date}),or({Request Date}<toDate('2019-01-01 00:00:00'),{Date First Verified}<toDate('2019-01-01 00:00:00'))),toLong(''),toLong({Date First Verified}-{Request Date})),",
