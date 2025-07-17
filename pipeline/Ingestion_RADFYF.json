@@ -1563,12 +1563,6 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Prev Latest stat date statuses",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					},
-					{
 						"activity": "Latest stat date statuses",
 						"dependencyConditions": [
 							"Succeeded"
@@ -4595,7 +4589,14 @@
 			{
 				"name": "Latest stat date statuses",
 				"type": "Lookup",
-				"dependsOn": [],
+				"dependsOn": [
+					{
+						"activity": "Prev Latest stat date statuses",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
 				"policy": {
 					"timeout": "0.12:00:00",
 					"retry": 0,
