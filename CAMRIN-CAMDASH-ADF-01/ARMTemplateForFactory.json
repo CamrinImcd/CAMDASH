@@ -26644,7 +26644,7 @@
 						"     errors: true) ~> cast1",
 						"cast1 sort(asc(Age_of_Machine, true),",
 						"     asc({Trust Name}, true)) ~> sort1",
-						"sort1 filter(Year==\"2023\") ~> filter1",
+						"sort1 filter(Year==\"2024\") ~> filter1",
 						"source3 filter(Location != \"Dental Department\" || isNull(Equipment_Detail) == false() || Equipment_Detail != \"2D with 3D Capability – Breast\" || Equipment_Detail != \"2D – Breast\" || Equipment_Detail != \"Dental Cone Beam CT\" || Equipment_Detail != \"Fixed fluoroscopy Imaging Flat plate     \" || Equipment_Detail != \"Flaxitron\" || Equipment_Detail != \"Intraoral\" || Equipment_Detail != \"Mobile C arm\" || Equipment_Detail != \"Mobile C-arm - Flat Panel Digital Detector\" || Equipment_Detail != \"Mobile C-arm - Image Intensifier\" || Equipment_Detail != \"OPG\" || Equipment_Detail != \"OPG+Ceph\" || Equipment_Detail != \"Symptomatic - Digital Mammography - 2D\" || Equipment_Detail != \"Symptomatic - Digital Mammography - 2D + biopsy\" || Equipment_Detail != \"Symptomatic - Digital Mammography 2D + 3D Tomosynthesis\" || Equipment_Detail != \"Symptomatic - Digital Mammography 2D + 3D Tomosynthesis +biopsy\" || Equipment_Detail != \"Ultrasound  – Obstetric\") ~> filter2",
 						"filter2 derive(Trust = replace(Trust,\"RQ6\",\"REM\"),",
 						"          avg_OOHs_Weekday = replace(avg_OOHs_Weekday,\"8 on Monday, Tuesday and Thursday\", \"4.8\"),",
