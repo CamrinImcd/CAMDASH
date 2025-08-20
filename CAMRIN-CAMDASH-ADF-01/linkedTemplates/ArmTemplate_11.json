@@ -13,6 +13,142 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/dataflow5')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSQLCoreV3Staging",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSQLCoreV3Staging",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "filter1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          {CRIS No} as integer,",
+						"          Accession as string,",
+						"          {Ref Src} as string,",
+						"          Site as string,",
+						"          {Request Date} as date,",
+						"          {Event Date} as date,",
+						"          {Event Time} as string,",
+						"          {On Call} as string,",
+						"          PT as string,",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          Room as string,",
+						"          {ExamSite Code} as string,",
+						"          {Start Time} as string,",
+						"          {End Time} as string,",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          {Status Code} as string,",
+						"          {Booked Date} as timestamp,",
+						"          {Booked Time} as string,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          Urg as string,",
+						"          Modality as string,",
+						"          {No of Proc} as integer,",
+						"          {Age At Event} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Date First Verified} as timestamp,",
+						"          {Time First Verified} as string,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Stat Date} as timestamp,",
+						"          Modality2 as string,",
+						"          {Trust Name} as string,",
+						"          Patient_Type as string,",
+						"          {Tat Type} as string,",
+						"          {Status Time} as string,",
+						"          {Reported By} as string,",
+						"          Rank as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source1",
+						"source1 filter({Exam Key}==26213771) ~> filter1",
+						"filter1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {CRIS No} as integer,",
+						"          Accession as string,",
+						"          {Ref Src} as string,",
+						"          Site as string,",
+						"          {Request Date} as date,",
+						"          {Event Date} as date,",
+						"          {Event Time} as string,",
+						"          {On Call} as string,",
+						"          PT as string,",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          Room as string,",
+						"          {ExamSite Code} as string,",
+						"          {Start Time} as string,",
+						"          {End Time} as string,",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          {Status Code} as string,",
+						"          {Booked Date} as timestamp,",
+						"          {Booked Time} as string,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          Urg as string,",
+						"          Modality as string,",
+						"          {No of Proc} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Date First Verified} as timestamp,",
+						"          {Time First Verified} as string,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Stat Date} as timestamp,",
+						"          Modality2 as string,",
+						"          {Trust Name} as string,",
+						"          Patient_Type as string,",
+						"          {Tat Type} as string,",
+						"          {Status Time} as string,",
+						"          {Reported By} as string,",
+						"          Rank as integer,",
+						"          {Age At Event} as integer",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     truncate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/dataflow8 backlog')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -7703,6 +7839,65 @@
 						"outputs": [
 							{
 								"referenceName": "DQ_Stat",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "DQ_Dup",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "ReferenceLookupsCore",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "  SELECT a.[CRIS No]\n      ,a.[Accession]\n\t  ,b.[Accession]\n\t  ,a.[Exam ID]\t \n\t  ,d.[Trust ID]\n\t  ,e.[Trust ID]\n\t  ,a.[Event Date]\n\t  ,b.[Event Date]\n\t  ,DATEDIFF(day,a.[Event Date],b.[Event Date]) as Diff\n  FROM [dev].[FYF_ODBC_CORE_v2] as a\n  inner Join (\n  SELECT [CRIS No]\n      ,[Accession]\n      ,[Request Date]\n\t  ,[Event Date]\n\t  ,[Exam ID]\n\t  ,[Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  where [CRIS No] in (SELECT [CRIS No] FROM [dev].[FYF_ODBC_CORE_v2] GROUP BY [CRIS No] HAVING COUNT(*) > 1)\n    and [Request Date] >='12/31/2022'  ) as b on a.[CRIS No]=b.[CRIS No] and a.[Trust ID]<>b.[Trust ID] and a.[Exam ID]=b.[Exam ID] and DATEDIFF(day,a.[Event Date],b.[Event Date]) between -62 and 62\n    Left Join [dev].[Trust Unique] as d on a.[Trust ID]=d.[Trust ID]\n\tLeft Join [dev].[Trust Unique] as e on b.[Trust ID]=e.[Trust ID]\n\tLeft Join [dev].[Exam] as c on a.[Exam ID]=c.[Exam ID]\n  where a.[Request Date] >='12/31/2022'\n  and a.[Event Date] <= GETDATE() and b.[Event Date] <= GETDATE()",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "drop table [dev].[DQ_Dup]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DQ_Dup",
 								"type": "DatasetReference",
 								"parameters": {}
 							}

@@ -9701,6 +9701,65 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "DQ_Dup",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "ReferenceLookupsCore",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "  SELECT a.[CRIS No]\n      ,a.[Accession]\n\t  ,b.[Accession]\n\t  ,a.[Exam ID]\t \n\t  ,d.[Trust ID]\n\t  ,e.[Trust ID]\n\t  ,a.[Event Date]\n\t  ,b.[Event Date]\n\t  ,DATEDIFF(day,a.[Event Date],b.[Event Date]) as Diff\n  FROM [dev].[FYF_ODBC_CORE_v2] as a\n  inner Join (\n  SELECT [CRIS No]\n      ,[Accession]\n      ,[Request Date]\n\t  ,[Event Date]\n\t  ,[Exam ID]\n\t  ,[Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  where [CRIS No] in (SELECT [CRIS No] FROM [dev].[FYF_ODBC_CORE_v2] GROUP BY [CRIS No] HAVING COUNT(*) > 1)\n    and [Request Date] >='12/31/2022'  ) as b on a.[CRIS No]=b.[CRIS No] and a.[Trust ID]<>b.[Trust ID] and a.[Exam ID]=b.[Exam ID] and DATEDIFF(day,a.[Event Date],b.[Event Date]) between -62 and 62\n    Left Join [dev].[Trust Unique] as d on a.[Trust ID]=d.[Trust ID]\n\tLeft Join [dev].[Trust Unique] as e on b.[Trust ID]=e.[Trust ID]\n\tLeft Join [dev].[Exam] as c on a.[Exam ID]=c.[Exam ID]\n  where a.[Request Date] >='12/31/2022'\n  and a.[Event Date] <= GETDATE() and b.[Event Date] <= GETDATE()",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "drop table [dev].[DQ_Dup]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DQ_Dup",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -9763,6 +9822,7 @@
 				"[concat(variables('factoryId'), '/datasets/AzureSql_Vet')]",
 				"[concat(variables('factoryId'), '/datasets/DQ_T2T')]",
 				"[concat(variables('factoryId'), '/datasets/DQ_Stat')]",
+				"[concat(variables('factoryId'), '/datasets/DQ_Dup')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep2')]"
 			]
 		},
@@ -15997,6 +16057,27 @@
 				"typeProperties": {
 					"schema": "dev",
 					"table": "CoreUpdatetable"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DQ_Dup')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "DQ_Dup"
 				}
 			},
 			"dependsOn": [

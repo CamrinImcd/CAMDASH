@@ -13,6 +13,43 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Excel1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "20239369__output_1 - Copy",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "20239369__output_2.xlsx",
+						"container": "patients-waiting-backlog"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Site",
+						"type": "String"
+					},
+					{
+						"name": "Room",
+						"type": "String"
+					},
+					{
+						"name": "Room Desc",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Asset_22_Avail')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1500,55 +1537,6 @@
 					},
 					{
 						"name": "Count",
-						"type": "String"
-					},
-					{
-						"name": "Cost",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_AgencyVolCost')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "AgencyVolCost",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "NIDC_Workforce.xlsx",
-						"container": "nidc-workforce-22"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Trust",
-						"type": "String"
-					},
-					{
-						"name": "Staff Group",
-						"type": "String"
-					},
-					{
-						"name": "Staff Type",
-						"type": "String"
-					},
-					{
-						"name": "Unit Of Payment",
-						"type": "String"
-					},
-					{
-						"name": "Volume",
 						"type": "String"
 					},
 					{

@@ -1288,6 +1288,25 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DQ_Dup')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "DQ_Dup"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DQ_Stat')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1714,43 +1733,6 @@
 					"schema": "dev",
 					"table": "Exam Site"
 				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "20239369__output_1 - Copy",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "20239369__output_2.xlsx",
-						"container": "patients-waiting-backlog"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Site",
-						"type": "String"
-					},
-					{
-						"name": "Room",
-						"type": "String"
-					},
-					{
-						"name": "Room Desc",
-						"type": "String"
-					}
-				]
 			},
 			"dependsOn": []
 		}
