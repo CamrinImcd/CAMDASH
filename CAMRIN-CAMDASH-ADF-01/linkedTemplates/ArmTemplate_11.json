@@ -7748,7 +7748,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
-								"sqlReaderQuery": "SELECT a.[Request Date] as [Request Date]\n,e.[Trust Name Group2] as [Examinaion Trust]\n,d.[Trust Name Group2] as [Referral Trust_Name]\n,a.[Referral Source ID]\n,a.[Patient Type ID]\n,a.[exam ID]\n, [Exam Key]\n  FROM [dev].[FYF_ODBC_CORE_v2] as a\n  Left Join [dev].[Referral Source] as b on a.[Referral Source ID]=b.[Referral Source ID]\n  Left Join [dev].[Patient Type] as c on a.[Patient Type ID]=c.[Patient Type ID]\n  Left Join [dev].[Trust Unique] as d on LEFT(b.[Referral Source],3)=d.[Trust Name Group] \n  Left Join [dev].[Trust Unique] as e on LEFT(a.[ExamSite Code],3)=e.[Trust Name Group]\n  Where e.[Trust Name Group2]<> d.[Trust Name Group2]\n  and e.[Trust Name Group2] is not null\n  and Datediff(year,a.[Request Date],Getdate()) <=5",
+								"sqlReaderQuery": "SELECT a.[Request Date] as [Request Date]\n,e.[Trust Name Group2] as [Examinaion Trust]\n,d.[Trust Name Group2] as [Referral Trust_Name]\n,a.[Referral Source ID]\n,a.[Patient Type ID]\n,a.[Updated Modality]\n,a.[exam ID]\n, [Exam Key]\n  FROM [dev].[FYF_ODBC_CORE_v2] as a\n  Left Join [dev].[Referral Source] as b on a.[Referral Source ID]=b.[Referral Source ID]\n  Left Join [dev].[Patient Type] as c on a.[Patient Type ID]=c.[Patient Type ID]\n  Left Join [dev].[Trust Unique] as d on LEFT(b.[Referral Source],3)=d.[Trust Name Group] \n  Left Join [dev].[Trust Unique] as e on LEFT(a.[ExamSite Code],3)=e.[Trust Name Group]\n  Where e.[Trust Name Group2]<> d.[Trust Name Group2]\n  and e.[Trust Name Group2] is not null\n  and Datediff(year,a.[Request Date],Getdate()) <=5",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
