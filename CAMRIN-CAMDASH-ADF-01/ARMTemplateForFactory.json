@@ -9642,6 +9642,65 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "DQ_Stat",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "ReferenceLookupsCore",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "  SELECT a.[Request Year Only]\n      ,a.[Request Month Number Only]\n\t  ,d.[Trust Name Group2]\n      ,c.[Patient_Type]\n      ,e.[Modality2]\n      ,f.[Status Code]\n      ,b.[Referral Source]\n\t  ,Count(f.[Status Code]) as [Count]\n  FROM [dev].[FYF_ODBC_CORE_v2] as a\n  Left Join [dev].[Referral Source] as b on a.[Referral Source ID]=b.[Referral Source ID]\n  Left Join [dev].[Patient Type] as c on a.[Patient Type ID]=c.[Patient Type ID]\n  Left Join [dev].[Trust Unique] as d on a.[Trust ID]=d.[Trust ID]\n  Left Join [dev].[Modality] as e on a.[Updated Modality]=e.[Modality ID]\n  Left Join [dev].[Status] as f on a.[Status ID]=f.[Status ID]\n  Where d.[Trust Name Group2] is not null\n  and a.[Request Date] >='12/31/2021'\n  Group by a.[Request Year Only]\n      ,a.[Request Month Number Only]\n      ,d.[Trust Name Group2]\n ,c.[Patient_Type]\n      ,e.[Modality2]\n      ,f.[Status Code]\n      ,b.[Referral Source] ",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "drop table [dev].[DQ_Stat]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DQ_Stat",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -9703,6 +9762,7 @@
 				"[concat(variables('factoryId'), '/datasets/SqlServer_Vet')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSql_Vet')]",
 				"[concat(variables('factoryId'), '/datasets/DQ_T2T')]",
+				"[concat(variables('factoryId'), '/datasets/DQ_Stat')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep2')]"
 			]
 		},
@@ -15937,6 +15997,27 @@
 				"typeProperties": {
 					"schema": "dev",
 					"table": "CoreUpdatetable"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DQ_Stat')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "DQ_stat"
 				}
 			},
 			"dependsOn": [
