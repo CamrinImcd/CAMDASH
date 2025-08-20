@@ -9583,6 +9583,65 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "DQ_T2T",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "ReferenceLookupsCore",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT a.[Request Date] as Month\n,e.[Trust Name Group2] as [Examinaion Trust]\n,d.[Trust Name Group2] as [Referral Trust_Name]\n, left(b.[Referral Source],3) as [Referral Code]\n,c.Patient_Type\n, [Exam Key]\n  FROM [dev].[FYF_ODBC_CORE_v2] as a\n  Left Join [dev].[Referral Source] as b on a.[Referral Source ID]=b.[Referral Source ID]\n  Left Join [dev].[Patient Type] as c on a.[Patient Type ID]=c.[Patient Type ID]\n  Left Join [dev].[Trust Unique] as d on LEFT(b.[Referral Source],3)=d.[Trust Name Group] \n  Left Join [dev].[Trust Unique] as e on LEFT(a.[ExamSite Code],3)=e.[Trust Name Group]\n  Where e.[Trust Name Group2]<> d.[Trust Name Group2]\n  and Patient_Type not in ('GP Direct Access Patient','Dental')\n  and e.[Trust Name Group2] is not null\n  and a.[Request Date] >='12/31/2019'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "drop table [dev].[DQ_T2T]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DQ_T2T",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -9643,6 +9702,7 @@
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable17')]",
 				"[concat(variables('factoryId'), '/datasets/SqlServer_Vet')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSql_Vet')]",
+				"[concat(variables('factoryId'), '/datasets/DQ_T2T')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep2')]"
 			]
 		},
@@ -15877,6 +15937,27 @@
 				"typeProperties": {
 					"schema": "dev",
 					"table": "CoreUpdatetable"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DQ_T2T')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "DQ_T2T"
 				}
 			},
 			"dependsOn": [

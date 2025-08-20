@@ -13,6 +13,283 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/dataflow8')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "ODBC_PTL_v2",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "ODBC_PTL_v2",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
+						},
+						{
+							"dataset": {
+								"referenceName": "Modality",
+								"type": "DatasetReference"
+							},
+							"name": "source3"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Patient_Waiting_Monthly",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "select1"
+						},
+						{
+							"name": "join1"
+						},
+						{
+							"name": "derivedColumn1"
+						},
+						{
+							"name": "join2"
+						},
+						{
+							"name": "select2"
+						},
+						{
+							"name": "filter1"
+						},
+						{
+							"name": "select3"
+						},
+						{
+							"name": "derivedColumn2"
+						},
+						{
+							"name": "derivedColumn3"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          {Event Key} as integer,",
+						"          {Exam Key} as integer,",
+						"          {CRIS Number} as integer,",
+						"          {Status Category} as string,",
+						"          {Request Date} as timestamp,",
+						"          {Event Date} as timestamp,",
+						"          {Booked Date Time} as timestamp,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          Urg as integer,",
+						"          {Days Waiting} as integer,",
+						"          {Predicted Reset Date} as timestamp,",
+						"          {Waiting Time Reset Date} as timestamp,",
+						"          {Weeks Waiting} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Waiting Breach Date} as timestamp,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Stat Date} as date,",
+						"          {5 Weeks Wait} as integer,",
+						"          {Booked Datetime} as string,",
+						"          {6 Weeks Wait} as string,",
+						"          {Referral Source ID} as integer,",
+						"          {Exam ID} as integer,",
+						"          {Modality ID} as integer,",
+						"          {Exam Room ID} as integer,",
+						"          {Trust ID} as integer,",
+						"          {Status Code} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'Select * \\nFROM [dev].[FYF_ODBC_PTL_v2]\\n  Where [Exam ID] in (21,71,88,89,218,338,339,1320,1323,1328,1332,1345,1348,1349,1350)',",
+						"     format: 'query') ~> source1",
+						"source(output(",
+						"          {Event Key} as integer,",
+						"          {Exam Key} as integer,",
+						"          {CRIS Number} as integer,",
+						"          {Status Category} as string,",
+						"          {Request Date} as timestamp,",
+						"          {Event Date} as timestamp,",
+						"          {Booked Date Time} as timestamp,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          Urg as integer,",
+						"          {Days Waiting} as integer,",
+						"          {Predicted Reset Date} as timestamp,",
+						"          {Waiting Time Reset Date} as timestamp,",
+						"          {Weeks Waiting} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Waiting Breach Date} as timestamp,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Stat Date} as date,",
+						"          {5 Weeks Wait} as integer,",
+						"          {Booked Datetime} as string,",
+						"          {6 Weeks Wait} as string,",
+						"          {Referral Source ID} as integer,",
+						"          {Exam ID} as integer,",
+						"          {Modality ID} as integer,",
+						"          {Exam Room ID} as integer,",
+						"          {Trust ID} as integer,",
+						"          {Status Code} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source2",
+						"source(output(",
+						"          Modality2 as string,",
+						"          {Modality ID} as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source3",
+						"source1 select(mapColumn(",
+						"          {Event Key},",
+						"          {Exam Key},",
+						"          {Exam ID},",
+						"          {Exam Room ID},",
+						"          {Request Date},",
+						"          {Planned Appointment Date},",
+						"          {Waiting Time Reset Date},",
+						"          {Event Date},",
+						"          {Weeks Waiting},",
+						"          {Modality ID},",
+						"          {Was Planned},",
+						"          {Was Scheduled},",
+						"          {Was Waiting},",
+						"          {Referral Source ID},",
+						"          {Trust ID},",
+						"          {Status Code},",
+						"          {Stat Date}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1, source2 join(select1@{Exam Key} == source2@{Exam Key},",
+						"     joinType:'left',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join1",
+						"join1 derive({Status Code2} = iif(isNull(select1@{Status Code}), {Status Category}, select1@{Status Code}),",
+						"          {Days since planned} = currentTimestamp()-select1@{Planned Appointment Date}) ~> derivedColumn1",
+						"derivedColumn1, source3 join(select1@{Modality ID} == source3@{Modality ID},",
+						"     joinType:'left',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join2",
+						"join2 select(mapColumn(",
+						"          {Event Key} = select1@{Event Key},",
+						"          {Exam Key} = select1@{Exam Key},",
+						"          {Exam ID} = select1@{Exam ID},",
+						"          {Exam Room ID} = select1@{Exam Room ID},",
+						"          {Request Date} = select1@{Request Date},",
+						"          {Planned Appointment Date} = select1@{Planned Appointment Date},",
+						"          {Waiting Time Reset Date} = select1@{Waiting Time Reset Date},",
+						"          {Event Date} = select1@{Event Date},",
+						"          {Weeks Waiting} = select1@{Weeks Waiting},",
+						"          {Modality ID} = select1@{Modality ID},",
+						"          Planned = select1@{Was Planned},",
+						"          Scheduled = select1@{Was Scheduled},",
+						"          Waiting = select1@{Was Waiting},",
+						"          {Referral Source ID} = select1@{Referral Source ID},",
+						"          {Trust ID} = select1@{Trust ID},",
+						"          ImportDate = select1@{Stat Date},",
+						"          {Status Code} = {Status Code2},",
+						"          Modality2,",
+						"          {Days since planned}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select2",
+						"select2 filter((isNull(Modality2) == true() || Modality2 == \"CT\" || Modality2 == \"MRI\" || Modality2 == \"NOUS\" || Modality2 == \"Nuc Med\") && isNull({Status Code}) == false() && {Status Code} != \"ACNCLI\" && {Status Code} != \"APDNA\" && {Status Code} != \"AT\" && {Status Code} != \"ATN\" && {Status Code} != \"ATP\" && {Status Code} != \"C\" && {Status Code} != \"CDC\" && {Status Code} != \"CH\" && {Status Code} != \"CHB\" && {Status Code} != \"CHCR\" && {Status Code} != \"CHDPC\" && {Status Code} != \"CHIP\" && {Status Code} != \"CHRE\" && {Status Code} != \"CHUN\" && {Status Code} != \"CP\" && {Status Code} != \"CPC\" && {Status Code} != \"CPCGA\" && {Status Code} != \"CPCOM\" && {Status Code} != \"CPCR\" && {Status Code} != \"RU\") ~> filter1",
+						"filter1 select(mapColumn(",
+						"          {Event Key},",
+						"          {Exam Key},",
+						"          {Exam ID},",
+						"          {Exam Room ID},",
+						"          {Request Date},",
+						"          {Planned Appointment Date},",
+						"          {Waiting Time Reset Date},",
+						"          {Event Date},",
+						"          {Weeks Waiting},",
+						"          {Modality ID},",
+						"          Planned,",
+						"          Scheduled,",
+						"          Waiting,",
+						"          {Referral Source ID},",
+						"          {Trust ID},",
+						"          ImportDate,",
+						"          {Status Code},",
+						"          {Days since planned}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select3",
+						"select3 derive(DaysSinceFlag = iif(isNull({Days since planned}), 0, 1)) ~> derivedColumn2",
+						"derivedColumn2 derive(Appointed = iif(left({Status Code},2)==\"AP\", \"Appointed\", iif(DaysSinceFlag == 0, \"Not Appointed\", iif({Days since planned} > 0, \"Planned Date Passed\", iif({Days since planned} <= 0, \"Planned\", \"Other\")))),",
+						"          ImportDate = toInteger(replace(toString(ImportDate),\"-\",\"\"))) ~> derivedColumn3",
+						"derivedColumn3 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {Event Key} as string,",
+						"          {Exam Key} as string,",
+						"          {Exam ID} as integer,",
+						"          {Exam Room ID} as integer,",
+						"          {Request Date} as date,",
+						"          {Planned Appointment Date} as date,",
+						"          {Waiting Time Reset Date} as date,",
+						"          {Event Date} as date,",
+						"          {Weeks Waiting} as string,",
+						"          {Modality ID} as integer,",
+						"          {Was Planned} as string,",
+						"          {Referral Source ID} as integer,",
+						"          {Trust ID} as integer,",
+						"          {Status Code} as string,",
+						"          {Stat Date} as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          {Event Key},",
+						"          {Exam Key},",
+						"          {Exam ID},",
+						"          {Exam Room ID},",
+						"          {Request Date},",
+						"          {Planned Appointment Date},",
+						"          {Waiting Time Reset Date},",
+						"          {Event Date},",
+						"          {Modality ID},",
+						"          {Referral Source ID},",
+						"          {Trust ID},",
+						"          {Status Code},",
+						"          {Stat Date} = ImportDate",
+						"     )) ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/dataflow9')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
@@ -7054,6 +7331,65 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "DQ_T2T",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "ReferenceLookupsCore",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT a.[Request Date] as Month\n,e.[Trust Name Group2] as [Examinaion Trust]\n,d.[Trust Name Group2] as [Referral Trust_Name]\n, left(b.[Referral Source],3) as [Referral Code]\n,c.Patient_Type\n, [Exam Key]\n  FROM [dev].[FYF_ODBC_CORE_v2] as a\n  Left Join [dev].[Referral Source] as b on a.[Referral Source ID]=b.[Referral Source ID]\n  Left Join [dev].[Patient Type] as c on a.[Patient Type ID]=c.[Patient Type ID]\n  Left Join [dev].[Trust Unique] as d on LEFT(b.[Referral Source],3)=d.[Trust Name Group] \n  Left Join [dev].[Trust Unique] as e on LEFT(a.[ExamSite Code],3)=e.[Trust Name Group]\n  Where e.[Trust Name Group2]<> d.[Trust Name Group2]\n  and Patient_Type not in ('GP Direct Access Patient','Dental')\n  and e.[Trust Name Group2] is not null\n  and a.[Request Date] >='12/31/2019'",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"preCopyScript": "drop table [dev].[DQ_T2T]",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "DQ_T2T",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -7111,7 +7447,9 @@
 				},
 				"annotations": []
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow8')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/NIDC_Transformation')]",
