@@ -232,7 +232,297 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "CRIS No",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Accession",
+						"type": "nvarchar"
+					},
+					{
+						"name": "On Call",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam Room",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ExamSite Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam Start Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam End Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Booked Date Time",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Creation Date",
+						"type": "date"
+					},
+					{
+						"name": "Exam Attended",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam Urgency",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Modality",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Number of Processes",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Planned Appointment Date",
+						"type": "date"
+					},
+					{
+						"name": "Datetime First Verified",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Was Planned",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Was Scheduled",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Was Waiting",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Requested Datetime",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Patient Type ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "Modality ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Room ID",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "Trust ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Referral Source ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Tat Type ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Reported By",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rank",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Activity",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Data Pull Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Age At Event",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Event Date Time",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Request-Image Days",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Image-Report Days",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Request-Report Days",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Request-Image Hours",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Image-Report Hours",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Request-Report Hours",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Image-Report 3H Pass",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Image-Report 4H Pass",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Image-Report 12H Pass",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Image-Report 24H Pass",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Image-Report 3D Pass",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Image-Report 7D Pass",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Image-Report 28D Pass",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "UpOrIn",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Updated Modality",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Body Parts Activity",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Request Year Only",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Request Month Number Only",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Report Year Only",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Report Month Number Only",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Month First Verified",
+						"type": "date"
+					},
+					{
+						"name": "Event Year Only",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Month Number Only",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Hour",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Date First Verified",
+						"type": "date"
+					},
+					{
+						"name": "Event Date",
+						"type": "date"
+					},
+					{
+						"name": "Request Date",
+						"type": "date"
+					}
+				],
 				"typeProperties": {
 					"schema": "dev",
 					"table": "FYF_ODBC_CORE_v2"
