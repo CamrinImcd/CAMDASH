@@ -1651,17 +1651,26 @@
 				"type": "AzureSqlTable",
 				"schema": [
 					{
+						"name": "Exam Code",
+						"type": "nvarchar"
+					},
+					{
 						"name": "Exam Name",
 						"type": "nvarchar"
 					},
 					{
-						"name": "Exam Code",
-						"type": "nvarchar"
+						"name": "Stat Date",
+						"type": "datetime2",
+						"scale": 7
 					},
 					{
 						"name": "Exam ID",
 						"type": "int",
 						"precision": 10
+					},
+					{
+						"name": "Exam Group",
+						"type": "nvarchar"
 					}
 				],
 				"typeProperties": {

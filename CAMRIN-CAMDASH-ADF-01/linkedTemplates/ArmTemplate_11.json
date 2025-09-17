@@ -1347,9 +1347,11 @@
 						"RenameColumns3 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
-						"          {Exam Name} as string,",
 						"          {Exam Code} as string,",
-						"          {Exam ID} as integer",
+						"          {Exam Name} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {Exam ID} as integer,",
+						"          {Exam Group} as string",
 						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
@@ -5782,6 +5784,7 @@
 									"source1": {},
 									"source2": {},
 									"source3": {},
+									"source4": {},
 									"sink1": {}
 								}
 							},
