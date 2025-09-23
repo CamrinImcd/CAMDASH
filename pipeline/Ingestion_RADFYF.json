@@ -5593,7 +5593,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT [Trust ID]\n\t\t,[Updated Modality] as [Modality ID]\n      ,[Tat Type ID]\n\t  ,[Exam ID]\n      ,[Patient Type ID]\n\t  ,[Exam Urgency]\n\t  ,sum(Case when [Tat Type ID]=12 and [Image-Report Hours]<=4 then 1\n\t\t\twhen [Tat Type ID]=11 and [Image-Report Hours]<=12 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Pass]\n\t  ,sum(Case when [Tat Type ID]=12 or [Tat Type ID]=11 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Report]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8)  and [Image-Report Hours]<=4 then 1\n\t\t\telse null end) as [Image-Report 4H Pass]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8) then 1\n\t\t\telse null end) as [Image-Report 4H Report]\n\t  ,sum(Case when [Tat Type ID]=11  and [Image-Report Hours]<=12 then 1\n\t\t\telse null end) as [Image-Report 12H Pass]\n\t  ,sum(Case when [Tat Type ID]=11  then 1\n\t\t\telse null end) as [Image-Report 12H Report]\n\t  ,sum(Case when [Tat Type ID]=3  and [Image-Report Hours]<=24 then 1\n\t\t\telse null end) as [Image-Report 24H Pass]\n\t  ,sum(Case when [Tat Type ID]=3  then 1\n\t\t\telse null end) as [Image-Report 24H Report]\n\t  ,sum(Case when [Tat Type ID]=7  and [Image-Report Days]<=28 then 1\n\t\t\telse null end) as [Image-Report 28D Pass]\n\t  ,sum(Case when [Tat Type ID]=7   then 1\n\t\t\telse null end) as [Image-Report 28D Report]\n\t  ,sum(Case when [Tat Type ID]=6  and [Image-Report Days]<=3 then 1\n\t\t\telse null end) as [Image-Report 3D Pass]\n\t ,sum(Case when [Tat Type ID]=6  then 1\n\t\t\telse null end) as [Image-Report 3D Report]\n\t  ,sum(Case when [Tat Type ID]=9  and [Image-Report Days]<=7 then 1\n\t\t\telse null end) as [Image-Report 7D Pass]\n\t ,sum(Case when [Tat Type ID]=9  then 1\n\t\t\telse null end) as [Image-Report 7D Report]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Datetime First Verified] is not null\n  Group by [Trust ID] ,[Updated Modality]\n      ,[Tat Type ID]\n\t  ,[Exam ID]\n      ,[Patient Type ID]\n\t  ,[Exam Urgency]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]",
+						"sqlReaderQuery": "SELECT [Trust ID]\n\t\t,[Modality ID]\n      ,[Tat Type ID]\n\t  ,[Exam ID]\n      ,[Patient Type ID]\n\t  ,[Exam Urgency]\n\t  ,sum(Case when [Tat Type ID]=12 and [Image-Report Hours]<=4 then 1\n\t\t\twhen [Tat Type ID]=11 and [Image-Report Hours]<=12 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Pass]\n\t  ,sum(Case when [Tat Type ID]=12 or [Tat Type ID]=11 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Report]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8)  and [Image-Report Hours]<=4 then 1\n\t\t\telse null end) as [Image-Report 4H Pass]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8) then 1\n\t\t\telse null end) as [Image-Report 4H Report]\n\t  ,sum(Case when [Tat Type ID]=11  and [Image-Report Hours]<=12 then 1\n\t\t\telse null end) as [Image-Report 12H Pass]\n\t  ,sum(Case when [Tat Type ID]=11  then 1\n\t\t\telse null end) as [Image-Report 12H Report]\n\t  ,sum(Case when [Tat Type ID]=3  and [Image-Report Hours]<=24 then 1\n\t\t\telse null end) as [Image-Report 24H Pass]\n\t  ,sum(Case when [Tat Type ID]=3  then 1\n\t\t\telse null end) as [Image-Report 24H Report]\n\t  ,sum(Case when [Tat Type ID]=7  and [Image-Report Days]<=28 then 1\n\t\t\telse null end) as [Image-Report 28D Pass]\n\t  ,sum(Case when [Tat Type ID]=7   then 1\n\t\t\telse null end) as [Image-Report 28D Report]\n\t  ,sum(Case when [Tat Type ID]=6  and [Image-Report Days]<=3 then 1\n\t\t\telse null end) as [Image-Report 3D Pass]\n\t ,sum(Case when [Tat Type ID]=6  then 1\n\t\t\telse null end) as [Image-Report 3D Report]\n\t  ,sum(Case when [Tat Type ID]=9  and [Image-Report Days]<=7 then 1\n\t\t\telse null end) as [Image-Report 7D Pass]\n\t ,sum(Case when [Tat Type ID]=9  then 1\n\t\t\telse null end) as [Image-Report 7D Report]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Datetime First Verified] is not null\n  Group by [Trust ID],[Modality ID]\n      ,[Tat Type ID]\n\t  ,[Exam ID]\n      ,[Patient Type ID]\n\t  ,[Exam Urgency]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -5764,7 +5764,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select Case \n\tWhen isnumeric(b.[Description])=1  then b.[Trust_ID_2]\n\telse a.[Trust ID]\n\tend [Trust ID]\n    ,[Updated Modality] as [Modality ID]\n    ,Case \n\tWhen isnumeric(b.[Description])=1  then b.[Description]\n\telse a.[Exam Room ID]\n\tend as [Exam Room ID]\n    ,[Event Date]\n    ,[Event Hour]\n    ,Sum([Body Parts Activity]) as [Sum]\n    ,Sum(case when [Updated Modality] = 2 then [Body Parts Activity] else 0 end) as [Sum CT]\n    ,Sum(case when [Updated Modality] = 9 then [Body Parts Activity] else 0 end) as [Sum MRI]\n    ,Sum(case when [Updated Modality] = 12 then [Body Parts Activity] else 0 end) as [Sum NOUS]\n    ,Sum(case when [Updated Modality] = 4 then [Body Parts Activity] else 0 end) as [Sum DEXA]\n\t,case when [Updated Modality]= 2 then Sum([Body Parts Activity])-1 else Sum([Body Parts Activity]) end as ConForm2\nFROM [dev].[FYF_ODBC_CORE_v2] as a\nLeft Join dev.Exam_Site_2 as b on a.[Exam Room ID]=b.[Exam room ID]\nWhere [Updated Modality] in (2,9,12,4)\nand [Event Date]>='2024-06-01'\nand [Event Hour] between 8 and 19\nand a.[Updated Modality] = b.[Modality_ID]\nand a.[Exam Room ID] not in (795,3,11,13,20,32,37,50,112,142,187,192,194,198,199,208,209,258,261,262,294,296,298,304,314,318,342,374,411,429,448,472,478,479,479,480,482,483,484,484,499,500,508,516,517,552,553,556,557,558,560,561,562,564,570,571,583,589,590,601,604,651,683,692,693,697,709,719,734,779,780,797,848,887,891,935,936,938,939,950,964,977,999,1008,1030,1057,1061,1062,1067,1072,1074,1082,1087,1147\n)\ngroup by Case \n\tWhen isnumeric(b.[Description])=1  then b.[Trust_ID_2]\n\telse a.[Trust ID]\n\tend\n    ,[Updated Modality]\n    ,Case \n\tWhen isnumeric(b.[Description])=1  then b.[Description]\n\telse a.[Exam Room ID]\n\tend\n    ,[Event Date]\n    ,[Event Hour]",
+						"sqlReaderQuery": "select Case \n\tWhen isnumeric(b.[Description])=1  then b.[Trust_ID_2]\n\telse a.[Trust ID]\n\tend [Trust ID]\n    ,[Updated Modality]\n    ,Case \n\tWhen isnumeric(b.[Description])=1  then b.[Description]\n\telse a.[Exam Room ID]\n\tend as [Exam Room ID]\n    ,[Event Date]\n    ,[Event Hour]\n    ,Sum([Body Parts Activity]) as [Sum]\n    ,Sum(case when [Updated Modality] = 2 then [Body Parts Activity] else 0 end) as [Sum CT]\n    ,Sum(case when [Updated Modality] = 9 then [Body Parts Activity] else 0 end) as [Sum MRI]\n    ,Sum(case when [Updated Modality] = 12 then [Body Parts Activity] else 0 end) as [Sum NOUS]\n    ,Sum(case when [Updated Modality] = 4 then [Body Parts Activity] else 0 end) as [Sum DEXA]\n\t,case when [Updated Modality]= 2 then Sum([Body Parts Activity])-1 else Sum([Body Parts Activity]) end as ConForm2\nFROM [dev].[FYF_ODBC_CORE_v2] as a\nLeft Join dev.Exam_Site_2 as b on a.[Exam Room ID]=b.[Exam room ID]\nWhere [Event Date]>='2024-06-01'\nand [Event Hour] between 8 and 19\nand a.[Updated Modality] = b.[Modality_ID]\nand a.[Exam Room ID] not in (795,3,11,13,20,32,37,50,112,142,187,192,194,198,199,208,209,258,261,262,294,296,298,304,314,318,342,374,411,429,448,472,478,479,479,480,482,483,484,484,499,500,508,516,517,552,553,556,557,558,560,561,562,564,570,571,583,589,590,601,604,651,683,692,693,697,709,719,734,779,780,797,848,887,891,935,936,938,939,950,964,977,999,1008,1030,1057,1061,1062,1067,1072,1074,1082,1087,1147\n)\ngroup by Case \n\tWhen isnumeric(b.[Description])=1  then b.[Trust_ID_2]\n\telse a.[Trust ID]\n\tend\n    ,[Updated Modality]\n    ,Case \n\tWhen isnumeric(b.[Description])=1  then b.[Description]\n\telse a.[Exam Room ID]\n\tend\n    ,[Event Date]\n    ,[Event Hour]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -6416,61 +6416,7 @@
 				]
 			},
 			{
-				"name": "Report_Table avg",
-				"type": "Copy",
-				"dependsOn": [
-					{
-						"activity": "Report_Table",
-						"dependencyConditions": [
-							"Succeeded"
-						]
-					}
-				],
-				"policy": {
-					"timeout": "0.12:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"source": {
-						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT 0 as [Trust ID]\n\t\t,[Updated Modality] as [Modality ID]\n       ,[Patient Type ID]\n\t   ,[Tat Type ID]\n\t  ,0 as [Exam ID]\n\t  ,0 as [Exam Urgency]\n\t  ,sum(Case when [Tat Type ID]=12 and [Image-Report Hours]<=4 then 1\n\t\t\twhen [Tat Type ID]=11 and [Image-Report Hours]<=12 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Pass]\n\t  ,sum(Case when [Tat Type ID]=12 or [Tat Type ID]=11 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Report]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8)  and [Image-Report Hours]<=4 then 1\n\t\t\telse null end) as [Image-Report 4H Pass]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8) then 1\n\t\t\telse null end) as [Image-Report 4H Report]\n\t  ,sum(Case when [Tat Type ID]=11  and [Image-Report Hours]<=12 then 1\n\t\t\telse null end) as [Image-Report 12H Pass]\n\t  ,sum(Case when [Tat Type ID]=11  then 1\n\t\t\telse null end) as [Image-Report 12H Report]\n\t  ,sum(Case when [Tat Type ID]=3  and [Image-Report Hours]<=24 then 1\n\t\t\telse null end) as [Image-Report 24H Pass]\n\t  ,sum(Case when [Tat Type ID]=3  then 1\n\t\t\telse null end) as [Image-Report 24H Report]\n\t  ,sum(Case when [Tat Type ID]=7  and [Image-Report Days]<=28 then 1\n\t\t\telse null end) as [Image-Report 28D Pass]\n\t  ,sum(Case when [Tat Type ID]=7   then 1\n\t\t\telse null end) as [Image-Report 28D Report]\n\t  ,sum(Case when [Tat Type ID]=6  and [Image-Report Days]<=3 then 1\n\t\t\telse null end) as [Image-Report 3D Pass]\n\t ,sum(Case when [Tat Type ID]=6  then 1\n\t\t\telse null end) as [Image-Report 3D Report]\n\t  ,sum(Case when [Tat Type ID]=9  and [Image-Report Days]<=7 then 1\n\t\t\telse null end) as [Image-Report 7D Pass]\n\t ,sum(Case when [Tat Type ID]=9  then 1\n\t\t\telse null end) as [Image-Report 7D Report]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Datetime First Verified] is not null\n  Group by [Updated Modality]\n      ,[Patient Type ID]\n\t  ,[Tat Type ID]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]",
-						"queryTimeout": "02:00:00",
-						"partitionOption": "None"
-					},
-					"sink": {
-						"type": "AzureSqlSink",
-						"writeBehavior": "insert",
-						"sqlWriterUseTableLock": false
-					},
-					"enableStaging": false,
-					"translator": {
-						"type": "TabularTranslator",
-						"typeConversion": true,
-						"typeConversionSettings": {
-							"allowDataTruncation": true,
-							"treatBooleanAsNumber": false
-						}
-					}
-				},
-				"inputs": [
-					{
-						"referenceName": "AzureSqlTable11",
-						"type": "DatasetReference"
-					}
-				],
-				"outputs": [
-					{
-						"referenceName": "AzureSqlTable11",
-						"type": "DatasetReference"
-					}
-				]
-			},
-			{
-				"name": "Utility avg",
+				"name": "Utility_Average",
 				"type": "Copy",
 				"dependsOn": [
 					{
@@ -6491,7 +6437,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "select [Trust ID]\n    ,[Updated Modality] as [Modality ID]\n    ,0 as [Exam Room ID]\n    ,[Event Date]\n    ,[Event Hour]\n    ,Avg(cast([Sum] as float)) as [Sum]\n    ,Avg(cast([Sum CT] as float))as[Sum CT]\n    ,Avg(cast([Sum MRI] as float))as[Sum MRI]\n    ,Avg(cast([Sum NOUS] as float))as[Sum NOUS]\n    ,Avg(cast([Sum DEXA] as float))as[Sum DEXA]\n\t,Avg(cast(ConForm2 as float)) as ConForm2\n\tFrom(select 0 as [Trust ID]\n    ,[Updated Modality]\n    ,a.[Exam Room ID]\n    ,[Event Date]\n    ,[Event Hour]\n    ,Sum([Body Parts Activity]) as [Sum]\n    ,Sum(case when [Updated Modality] = 2 then [Body Parts Activity] else 0 end) as [Sum CT]\n    ,Sum(case when [Updated Modality] = 9 then [Body Parts Activity] else 0 end) as [Sum MRI]\n    ,Sum(case when [Updated Modality] = 12 then [Body Parts Activity] else 0 end) as [Sum NOUS]\n    ,Sum(case when [Updated Modality] = 4 then [Body Parts Activity] else 0 end) as [Sum DEXA]\n\t,case when [Updated Modality]= 2 then Sum([Body Parts Activity])-1 else Sum([Body Parts Activity]) end as ConForm2\nFROM [dev].[FYF_ODBC_CORE_v2] as a\nLeft Join dev.Exam_Site_2 as b on a.[Exam Room ID]=b.[Exam room ID]\nWhere [Updated Modality] in (2,9,12,4)\nand [Event Date]>='2024-06-01'\nand [Event Hour] between 8 and 19\nand a.[Updated Modality] = b.[Modality_ID]\nand a.[Exam Room ID] not in (3,11,13,20,32,37,50,112,142,187,192,194,198,199,208,209,258,261,262,294,296,298,304,314,318,342,374,411,429,448,472,478,479,479,480,482,483,484,484,499,500,508,516,517,552,553,556,557,558,560,561,562,564,570,571,583,589,590,601,604,651,683,692,693,697,709,719,734,779,780,797,848,887,891,935,936,938,939,950,964,977,999,1008,1030,1057,1061,1062,1067,1072,1074,1082,1087,1147\n)\ngroup by\n    [Updated Modality]\n\t,a.[Exam Room ID]\n    ,[Event Date]\n    ,[Event Hour]) as CAMRIN\ngroup by\n[Trust ID]\n    ,[Updated Modality]\n    ,[Event Date]\n    ,[Event Hour]\nOrder by     [Updated Modality]\n    ,[Event Date]\n    ,[Event Hour]",
+						"sqlReaderQuery": "select [Trust ID]\n    ,[Updated Modality]\n    ,0 as [Exam Room ID]\n    ,[Event Date]\n    ,[Event Hour]\n    ,Avg(cast([Sum] as float)) as [Sum]\n    ,Avg(cast([Sum CT] as float))as[Sum CT]\n    ,Avg(cast([Sum MRI] as float))as[Sum MRI]\n    ,Avg(cast([Sum NOUS] as float))as[Sum NOUS]\n    ,Avg(cast([Sum DEXA] as float))as[Sum DEXA]\n\t,Avg(cast(ConForm2 as float)) as ConForm2\n\tFrom(select 0 as [Trust ID]\n\t,[Updated Modality]\n    ,Case \n\tWhen isnumeric(b.[Description])=1  then b.[Description]\n\telse a.[Exam Room ID]\n\tend as [Exam Room ID]\n    ,[Event Date]\n    ,[Event Hour]\n    ,Sum([Body Parts Activity]) as [Sum]\n    ,Sum(case when [Updated Modality] = 2 then [Body Parts Activity] else 0 end) as [Sum CT]\n    ,Sum(case when [Updated Modality] = 9 then [Body Parts Activity] else 0 end) as [Sum MRI]\n    ,Sum(case when [Updated Modality] = 12 then [Body Parts Activity] else 0 end) as [Sum NOUS]\n    ,Sum(case when [Updated Modality] = 4 then [Body Parts Activity] else 0 end) as [Sum DEXA]\n\t,case when [Updated Modality]= 2 then Sum([Body Parts Activity])-1 else Sum([Body Parts Activity]) end as ConForm2\nFROM [dev].[FYF_ODBC_CORE_v2] as a\nLeft Join dev.Exam_Site_2 as b on a.[Exam Room ID]=b.[Exam room ID]\nWhere [Event Date]>='2024-06-01'\nand [Event Hour] between 8 and 19\nand a.[Updated Modality] = b.[Modality_ID]\nand a.[Exam Room ID] not in (795,3,11,13,20,32,37,50,112,142,187,192,194,198,199,208,209,258,261,262,294,296,298,304,314,318,342,374,411,429,448,472,478,479,479,480,482,483,484,484,499,500,508,516,517,552,553,556,557,558,560,561,562,564,570,571,583,589,590,601,604,651,683,692,693,697,709,719,734,779,780,797,848,887,891,935,936,938,939,950,964,977,999,1008,1030,1057,1061,1062,1067,1072,1074,1082,1087,1147\n)\ngroup by [Updated Modality]\n    ,Case \n\tWhen isnumeric(b.[Description])=1  then b.[Description]\n\telse a.[Exam Room ID]\n\tend\n    ,[Event Date]\n    ,[Event Hour]) as CAMRIN\ngroup by\n[Trust ID]\n    ,[Updated Modality]\n    ,[Event Date]\n    ,[Event Hour]\nOrder by     [Updated Modality]\n    ,[Event Date]\n    ,[Event Hour]",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
