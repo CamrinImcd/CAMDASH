@@ -8909,7 +8909,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
-								"sqlReaderQuery": "SELECT [Trust ID]\n\t\t,[Modality ID]\n      ,[Tat Type ID]\n\t  ,[Exam ID]\n      ,[Patient Type ID]\n\t  ,[Exam Urgency]\n\t  ,sum(Case when [Tat Type ID]=12 and [Image-Report Hours]<=4 then 1\n\t\t\twhen [Tat Type ID]=11 and [Image-Report Hours]<=12 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Pass]\n\t  ,sum(Case when [Tat Type ID]=12 or [Tat Type ID]=11 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Report]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8)  and [Image-Report Hours]<=4 then 1\n\t\t\telse null end) as [Image-Report 4H Pass]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8) then 1\n\t\t\telse null end) as [Image-Report 4H Report]\n\t  ,sum(Case when [Tat Type ID]=11  and [Image-Report Hours]<=12 then 1\n\t\t\telse null end) as [Image-Report 12H Pass]\n\t  ,sum(Case when [Tat Type ID]=11  then 1\n\t\t\telse null end) as [Image-Report 12H Report]\n\t  ,sum(Case when [Tat Type ID]=3  and [Image-Report Hours]<=24 then 1\n\t\t\telse null end) as [Image-Report 24H Pass]\n\t  ,sum(Case when [Tat Type ID]=3  then 1\n\t\t\telse null end) as [Image-Report 24H Report]\n\t  ,sum(Case when [Tat Type ID]=7  and [Image-Report Days]<=28 then 1\n\t\t\telse null end) as [Image-Report 28D Pass]\n\t  ,sum(Case when [Tat Type ID]=7   then 1\n\t\t\telse null end) as [Image-Report 28D Report]\n\t  ,sum(Case when [Tat Type ID]=6  and [Image-Report Days]<=3 then 1\n\t\t\telse null end) as [Image-Report 3D Pass]\n\t ,sum(Case when [Tat Type ID]=6  then 1\n\t\t\telse null end) as [Image-Report 3D Report]\n\t  ,sum(Case when [Tat Type ID]=9  and [Image-Report Days]<=7 then 1\n\t\t\telse null end) as [Image-Report 7D Pass]\n\t ,sum(Case when [Tat Type ID]=9  then 1\n\t\t\telse null end) as [Image-Report 7D Report]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Datetime First Verified] is not null\n  Group by [Trust ID],[Modality ID]\n      ,[Tat Type ID]\n\t  ,[Exam ID]\n      ,[Patient Type ID]\n\t  ,[Exam Urgency]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]",
+								"sqlReaderQuery": "SELECT [Trust ID]\n\t\t,[Updated Modality] as [Modality ID]\n      ,[Tat Type ID]\n\t  ,[Exam ID]\n      ,[Patient Type ID]\n\t  ,[Exam Urgency]\n\t  ,sum(Case when [Tat Type ID]=12 and [Image-Report Hours]<=4 then 1\n\t\t\twhen [Tat Type ID]=11 and [Image-Report Hours]<=12 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Pass]\n\t  ,sum(Case when [Tat Type ID]=12 or [Tat Type ID]=11 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Report]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8)  and [Image-Report Hours]<=4 then 1\n\t\t\telse null end) as [Image-Report 4H Pass]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8) then 1\n\t\t\telse null end) as [Image-Report 4H Report]\n\t  ,sum(Case when [Tat Type ID]=11  and [Image-Report Hours]<=12 then 1\n\t\t\telse null end) as [Image-Report 12H Pass]\n\t  ,sum(Case when [Tat Type ID]=11  then 1\n\t\t\telse null end) as [Image-Report 12H Report]\n\t  ,sum(Case when [Tat Type ID]=3  and [Image-Report Hours]<=24 then 1\n\t\t\telse null end) as [Image-Report 24H Pass]\n\t  ,sum(Case when [Tat Type ID]=3  then 1\n\t\t\telse null end) as [Image-Report 24H Report]\n\t  ,sum(Case when [Tat Type ID]=7  and [Image-Report Days]<=28 then 1\n\t\t\telse null end) as [Image-Report 28D Pass]\n\t  ,sum(Case when [Tat Type ID]=7   then 1\n\t\t\telse null end) as [Image-Report 28D Report]\n\t  ,sum(Case when [Tat Type ID]=6  and [Image-Report Days]<=3 then 1\n\t\t\telse null end) as [Image-Report 3D Pass]\n\t ,sum(Case when [Tat Type ID]=6  then 1\n\t\t\telse null end) as [Image-Report 3D Report]\n\t  ,sum(Case when [Tat Type ID]=9  and [Image-Report Days]<=7 then 1\n\t\t\telse null end) as [Image-Report 7D Pass]\n\t ,sum(Case when [Tat Type ID]=9  then 1\n\t\t\telse null end) as [Image-Report 7D Report]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Datetime First Verified] is not null\n  Group by [Trust ID] ,[Updated Modality]\n      ,[Tat Type ID]\n\t  ,[Exam ID]\n      ,[Patient Type ID]\n\t  ,[Exam Urgency]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -9757,6 +9757,62 @@
 						"outputs": [
 							{
 								"referenceName": "DQ_Dup",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Report_Table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT 0 as [Trust ID]\n\t\t,[Updated Modality] as [Modality ID]\n       ,[Patient Type ID]\n\t   ,[Tat Type ID]\n\t  ,0 as [Exam ID]\n\t  ,0 as [Exam Urgency]\n\t  ,sum(Case when [Tat Type ID]=12 and [Image-Report Hours]<=4 then 1\n\t\t\twhen [Tat Type ID]=11 and [Image-Report Hours]<=12 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Pass]\n\t  ,sum(Case when [Tat Type ID]=12 or [Tat Type ID]=11 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Report]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8)  and [Image-Report Hours]<=4 then 1\n\t\t\telse null end) as [Image-Report 4H Pass]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8) then 1\n\t\t\telse null end) as [Image-Report 4H Report]\n\t  ,sum(Case when [Tat Type ID]=11  and [Image-Report Hours]<=12 then 1\n\t\t\telse null end) as [Image-Report 12H Pass]\n\t  ,sum(Case when [Tat Type ID]=11  then 1\n\t\t\telse null end) as [Image-Report 12H Report]\n\t  ,sum(Case when [Tat Type ID]=3  and [Image-Report Hours]<=24 then 1\n\t\t\telse null end) as [Image-Report 24H Pass]\n\t  ,sum(Case when [Tat Type ID]=3  then 1\n\t\t\telse null end) as [Image-Report 24H Report]\n\t  ,sum(Case when [Tat Type ID]=7  and [Image-Report Days]<=28 then 1\n\t\t\telse null end) as [Image-Report 28D Pass]\n\t  ,sum(Case when [Tat Type ID]=7   then 1\n\t\t\telse null end) as [Image-Report 28D Report]\n\t  ,sum(Case when [Tat Type ID]=6  and [Image-Report Days]<=3 then 1\n\t\t\telse null end) as [Image-Report 3D Pass]\n\t ,sum(Case when [Tat Type ID]=6  then 1\n\t\t\telse null end) as [Image-Report 3D Report]\n\t  ,sum(Case when [Tat Type ID]=9  and [Image-Report Days]<=7 then 1\n\t\t\telse null end) as [Image-Report 7D Pass]\n\t ,sum(Case when [Tat Type ID]=9  then 1\n\t\t\telse null end) as [Image-Report 7D Report]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Datetime First Verified] is not null\n  Group by [Updated Modality]\n      ,[Patient Type ID]\n\t  ,[Tat Type ID]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSqlTable11",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable11",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
