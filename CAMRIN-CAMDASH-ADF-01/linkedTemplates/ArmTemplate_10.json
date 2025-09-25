@@ -3716,6 +3716,13 @@
 								"type": "DatasetReference"
 							},
 							"name": "source4"
+						},
+						{
+							"dataset": {
+								"referenceName": "Exam_Site",
+								"type": "DatasetReference"
+							},
+							"name": "source5"
 						}
 					],
 					"sinks": [
@@ -3853,6 +3860,17 @@
 						},
 						{
 							"name": "join8"
+						},
+						{
+							"name": "join9"
+						},
+						{
+							"name": "MapDrifted1",
+							"description": "Creates an explicit mapping for each drifted column"
+						},
+						{
+							"name": "MapDrifted2",
+							"description": "Creates an explicit mapping for each drifted column"
 						}
 					],
 					"scriptLines": [
@@ -3984,24 +4002,37 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> source4",
-						"join7 derive(DNA = iif({Status Code}==\"CPDNA\", 1, iif({Status Code}==\"APDNA\", 1, 0))) ~> CreateDNAColumn",
+						"source(output(",
+						"          {Exam Site} as string,",
+						"          {Exam Room} as string,",
+						"          {ExamSite Code} as string,",
+						"          {Exam Room ID} as long,",
+						"          Description as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> source5",
+						"MapDrifted2 derive(DNA = iif({Status Code}==\"CPDNA\", 1, iif({Status Code}==\"APDNA\", 1, 0)),",
+						"          {Trust ID 2} = case(isInteger(Description)==true(),Trust_ID_2,Trust_ID)) ~> CreateDNAColumn",
 						"CreateDNAColumn aggregate(groupBy({Event Date} = toDate({Event Date Time}),",
 						"          {Modality ID},",
-						"          {Trust ID},",
+						"          {Trust ID 2},",
 						"          {Patient Type ID},",
 						"          {Exam Group}),",
 						"     Activity = sum(Activity),",
 						"          DNA = sum(DNA)) ~> GroupbyEvent",
 						"CreateDNAColumn aggregate(groupBy({Request Date} = toDate({Requested Datetime}),",
 						"          {Modality ID},",
-						"          {Trust ID},",
+						"          {Trust ID 2},",
 						"          {Patient Type ID},",
 						"          {Exam Group}),",
 						"     Demand = count(Activity)) ~> GroupbyRequest",
 						"GroupbyRequest select(mapColumn(",
 						"          Date = {Request Date},",
 						"          {Modality ID},",
-						"          {Trust ID},",
+						"          {Trust ID} = {Trust ID 2},",
 						"          Demand,",
 						"          {Patient Type ID},",
 						"          {Exam Group}",
@@ -4011,7 +4042,7 @@
 						"GroupbyEvent select(mapColumn(",
 						"          Date = {Event Date},",
 						"          {Modality ID},",
-						"          {Trust ID},",
+						"          {Trust ID} = {Trust ID 2},",
 						"          Activity,",
 						"          DNA,",
 						"          {Patient Type ID},",
@@ -4250,7 +4281,7 @@
 						"          {Exam Group}),",
 						"     Activity = sum(iif(contains(List,#item=='ATP')==true(),1,0)),",
 						"          DNA = sum(iif(contains(List,#item=='CPDNA')==true(),1,0))) ~> aggregate4",
-						"derivedColumn3, aggregate4 join(derivedColumn3@{Trust ID} == aggregate4@{Trust ID}",
+						"derivedColumn3, aggregate4 join(toInteger(derivedColumn3@{Trust ID}) == aggregate4@{Trust ID}",
 						"     && {Modality ID} == Modality",
 						"     && Date == {Event Date Time}",
 						"     && derivedColumn3@{Patient Type ID} == aggregate4@{Patient Type ID}",
@@ -4284,6 +4315,24 @@
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
 						"     broadcast: 'auto')~> join8",
+						"join7, MapDrifted1 join(Core@{Exam Room ID} == source5@{Exam Room ID},",
+						"     joinType:'left',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join9",
+						"source5 derive(Postcode = toString(byName('Postcode')),",
+						"          CDC = toString(byName('CDC')),",
+						"          Modality_ID = toString(byName('Modality_ID')),",
+						"          Trust_ID = toString(byName('Trust_ID')),",
+						"          Trust_ID_2 = toString(byName('Trust_ID_2'))) ~> MapDrifted1",
+						"join9 derive({Date First Verified} = toDate(byName('Date First Verified')),",
+						"          {Event Date} = toDate(byName('Event Date')),",
+						"          {Request Date} = toDate(byName('Request Date')),",
+						"          Postcode = toString(byName('Postcode')),",
+						"          CDC = toString(byName('CDC')),",
+						"          Modality_ID = toString(byName('Modality_ID')),",
+						"          Trust_ID = toString(byName('Trust_ID')),",
+						"          Trust_ID_2 = toString(byName('Trust_ID_2'))) ~> MapDrifted2",
 						"select4 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
