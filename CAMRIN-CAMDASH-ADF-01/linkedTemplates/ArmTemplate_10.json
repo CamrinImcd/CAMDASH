@@ -4589,6 +4589,15 @@
 						{
 							"name": "MapDrifted2",
 							"description": "Creates an explicit mapping for each drifted column"
+						},
+						{
+							"name": "derivedColumn11"
+						},
+						{
+							"name": "derivedColumn12"
+						},
+						{
+							"name": "derivedColumn13"
 						}
 					],
 					"scriptLines": [
@@ -4754,7 +4763,7 @@
 						"     ),",
 						"     skipDuplicateMapInputs: true,",
 						"     skipDuplicateMapOutputs: true) ~> RenameDate2",
-						"RenameDate1 derive(Date = toDate(toString(Date)),",
+						"derivedColumn11 derive(Date = toDate(toString(Date)),",
 						"          ID = concat(left(toString(Date),10)\r",
 						", concat(toString({Modality ID})\r",
 						", concat(toString(iif(isNull({Trust ID}),'NULL',{Trust ID}))\r",
@@ -4762,7 +4771,7 @@
 						")\r",
 						")\r",
 						")) ~> derivedColumn1",
-						"RenameDate2 derive(Date = toDate(toString(Date)),",
+						"derivedColumn12 derive(Date = toDate(toString(Date)),",
 						"          ID = concat(left(toString(Date),10), concat(toString({Modality ID}), concat(toString(iif(isNull({Trust ID}),'NULL',{Trust ID})), concat(toString({Patient Type ID}),toString(iif(isNull({Exam Group}),'NULL',{Exam Group}))))))) ~> derivedColumn2",
 						"filter2, filter4 join(derivedColumn1@ID == derivedColumn2@ID,",
 						"     joinType:'outer',",
@@ -4774,7 +4783,7 @@
 						"          {Trust ID} = iifNull(RenameDate1@{Trust ID},RenameDate2@{Trust ID}),",
 						"          ID = iifNull(derivedColumn1@ID, derivedColumn2@ID),",
 						"          {Patient Type ID} = iifNull(RenameDate1@{Patient Type ID}, RenameDate2@{Patient Type ID}),",
-						"          {Exam Group} = iifNull(RenameDate1@{Exam Group}, RenameDate2@{Exam Group})) ~> derivedColumn3",
+						"          {Exam Group} = iifNull(derivedColumn11@{Exam Group}, derivedColumn12@{Exam Group})) ~> derivedColumn3",
 						"derivedColumn4 select(mapColumn(",
 						"          Date,",
 						"          {Modality ID},",
@@ -4942,11 +4951,11 @@
 						"          {Exam Group}),",
 						"     Activity = sum(iif(contains(List,#item=='ATP')==true(),1,0)),",
 						"          DNA = sum(iif(contains(List,#item=='CPDNA')==true(),1,0))) ~> aggregate4",
-						"derivedColumn3, aggregate4 join(toInteger(derivedColumn3@{Trust ID}) == aggregate4@{Trust ID}",
+						"derivedColumn3, derivedColumn13 join(toInteger(derivedColumn3@{Trust ID}) == aggregate4@{Trust ID}",
 						"     && {Modality ID} == Modality",
 						"     && Date == {Event Date Time}",
 						"     && derivedColumn3@{Patient Type ID} == aggregate4@{Patient Type ID}",
-						"     && derivedColumn3@{Exam Group} == aggregate4@{Exam Group},",
+						"     && derivedColumn3@{Exam Group} == derivedColumn13@{Exam Group},",
 						"     joinType:'left',",
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
@@ -4994,6 +5003,9 @@
 						"          Modality_ID = toString(byName('Modality_ID')),",
 						"          Trust_ID = toString(byName('Trust_ID')),",
 						"          Trust_ID_2 = toString(byName('Trust_ID_2'))) ~> MapDrifted2",
+						"RenameDate1 derive({Exam Group} = iif(isNull({Exam Group}),'0',{Exam Group})) ~> derivedColumn11",
+						"RenameDate2 derive({Exam Group} = iif(isNull({Exam Group}),'0',{Exam Group})) ~> derivedColumn12",
+						"aggregate4 derive({Exam Group} = iif(isNull({Exam Group}),'0',{Exam Group})) ~> derivedColumn13",
 						"join3 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
