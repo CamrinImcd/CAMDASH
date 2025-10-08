@@ -579,7 +579,7 @@
 				"RenameDate1 derive({Exam Group} = iif(isNull({Exam Group}),'0',{Exam Group})) ~> derivedColumn11",
 				"RenameDate2 derive({Exam Group} = iif(isNull({Exam Group}),'0',{Exam Group})) ~> derivedColumn12",
 				"aggregate4 derive({Exam Group} = iif(isNull({Exam Group}),'0',{Exam Group})) ~> derivedColumn13",
-				"join3 sink(allowSchemaDrift: true,",
+				"select4 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     deletable:false,",
 				"     insertable:true,",
