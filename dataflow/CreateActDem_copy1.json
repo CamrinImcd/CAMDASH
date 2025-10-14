@@ -596,7 +596,32 @@
 				"     upsertable:false,",
 				"     recreate:true,",
 				"     format: 'table',",
-				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+				"     errorHandlingOption: 'stopOnFirstError',",
+				"     mapColumn(",
+				"          Date1 = Date,",
+				"          {Modality ID1} = select1@{Modality ID},",
+				"          {Trust ID1} = select1@{Trust ID},",
+				"          {Patient Type ID1} = select1@{Patient Type ID},",
+				"          {Exam Group1} = select1@{Exam Group},",
+				"          Demand1 = Demand,",
+				"          ID1 = ID,",
+				"          Activity1 = Activity,",
+				"          {Activity - Status1} = {Activity - Status},",
+				"          DNA1 = DNA,",
+				"          {DNA - Status1} = {DNA - Status},",
+				"          Month1 = select1@Month,",
+				"          {Day Name1} = {Day Name},",
+				"          {Modality ID} = select2@{Modality ID},",
+				"          {Trust ID} = select2@{Trust ID},",
+				"          {Patient Type ID} = select2@{Patient Type ID},",
+				"          {Exam Group} = select2@{Exam Group},",
+				"          Month = select2@Month,",
+				"          {Monthly Activity Sum},",
+				"          {Monthly Demand Sum},",
+				"          {Monthly DNA Sum},",
+				"          {Monthly Activity - Status Sum},",
+				"          {Monthly DNA - Status Sum}",
+				"     )) ~> sink1"
 			]
 		}
 	}
