@@ -9917,6 +9917,238 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Irefer1",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "ReferenceLookupsCore",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "Select distinct a.[Event Year Only] as Year -- DID010,HRE010,CCU050,IRE031,IRE032,,IRE034\n, a.[Event Month Number Only] as Month\n, b.[Trust Name Group2] as Trust\n, a.[Exam Urgency]\n, f.[Patient_Type]\n, c.Tests --DID010\n, d.Reports\n, e.Referral\n  FROM [dev].[FYF_ODBC_CORE_v2] as a\n  Left join [dev].[Trust Unique] as b on a.[Trust ID]=b.[Trust ID]\n  Left join [dev].[Patient Type] as f on a.[Patient Type ID]=f.[Patient Type ID]\n  left join (select [Event Year Only] , [Event Month Number Only]  ,[Trust ID],[Exam Urgency],[Patient Type ID], Count(Distinct([Exam Key])) as Tests    FROM [dev].[FYF_ODBC_CORE_v2] Where [Event Date]          is not null and [Event Year Only] =2025 and [Exam Attended]='Y' Group by [Event Month Number Only], [Event Year Only],[Trust ID],[Exam Urgency],[Patient Type ID]) as c on a.[Event Year Only]=c.[Event Year Only]   and a.[Event Month Number Only]=c.[Event Month Number Only]   and a.[Trust ID]=c.[Trust ID] and a.[Exam Urgency]=c.[Exam Urgency] and a.[Patient Type ID]=c.[Patient Type ID]\n  left join (select [Report Year Only], [Report Month Number Only] ,[Trust ID],[Exam Urgency],[Patient Type ID], Count(Distinct([Exam Key])) as Reports  FROM [dev].[FYF_ODBC_CORE_v2] Where [Date First Verified] is not null and [report Year Only]=2025                         Group by [Report Month Number Only], [Report Year Only],[Trust ID],[Exam Urgency],[Patient Type ID])                       as d on a.[Event Year Only]=d.[Report Year Only]  and a.[Event Month Number Only]=d.[Report Month Number Only]  and a.[Trust ID]=d.[Trust ID] and a.[Exam Urgency]=d.[Exam Urgency] and a.[Patient Type ID]=d.[Patient Type ID]\n  left join (select [Request Year Only],[Request Month Number Only],[Trust ID],[Exam Urgency],[Patient Type ID], Count(Distinct([Exam Key])) as Referral FROM [dev].[FYF_ODBC_CORE_v2] Where                                       [Request Year Only]=2025                        Group by [Request Month Number Only], [Request Year Only],[Trust ID],[Exam Urgency],[Patient Type ID])                    as e on a.[Event Year Only]=e.[Request Year Only] and a.[Event Month Number Only]=e.[Request Month Number Only] and a.[Trust ID]=e.[Trust ID] and a.[Exam Urgency]=e.[Exam Urgency] and a.[Patient Type ID]=e.[Patient Type ID]\n  --Group by \n  where a.[Event Year Only]=2025",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Irefer1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Irefer2",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "ReferenceLookupsCore",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "Select Year(a.[Request Date]) as year\n  , Month(a.[Request Date]) as month\n  , Count(Distinct(a.[Exam Key])) as Clinical_Vetted\n  ,a.[Vetting Code]\n  ,c.[Trust Name Group2]\n  ,d.[Referral Source]\n  ,e.[Patient_Type], f.[Type] -- IRE100,IRE101,IRE110,IRE120,IRE130,IRE140,IRE141,IRE143,IRE200,IRE201,IRE210,IRE211,IRE220,IRE221,\n  FROM [dev].[FYF_ODBC_VET] as A\n  left join [dev].[FYF_ODBC_CORE_v2] AS b on a.[Exam Key]=b.[Exam Key]\n  left join [dev].[Trust Unique] AS c on b.[Trust ID]=c.[Trust ID]\n  left join [dev].[Referral Source] AS d on b.[Referral Source ID]=d.[Referral Source ID]\n  left join [dev].[Patient Type] AS e on b.[Patient Type ID]=e.[Patient Type ID]\n  left join [dev].[staff] AS f on a.[userID]=f.[User ID]\n  Group by Year(a.[Request Date]) , Month(a.[Request Date]) ,a.[Vetting Code],c.[Trust Name Group2],d.[Referral Source], e.[Patient_Type],f.[Type]",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Irefer2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "irefer3",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "ReferenceLookupsCore",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT LEFT(a.Accession,3) as trust --IRE170\n\t  ,Month(a.[Status Date]) as Month\n\t  ,Year(a.[Status Date]) as Year\n      ,Avg(DateDiff(day,Cast(convert(Date,[Status Date]) as datetime)+Cast(TIMEFROMPARTS(Convert(int,Left(format([Status Time],'0000'),2)),Convert(int,Right(format([Status Time],'0000'),2)),0,0,0) as datetime),b.[Status Date Time])) as [DateDiff]\n\t  ,d.[Patient_Type]\n      FROM [dev].[FYF_ODBC_STATUSES] as a\n  Inner join (SELECT [Exam Key]\n      ,[Event Key]\n      ,LEFT(Accession,3) as trust\n      ,Max(Cast(convert(Date,[Status Date]) as datetime)+Cast(TIMEFROMPARTS(Convert(int,Left(format([Status Time],'0000'),2)),Convert(int,Right(format([Status Time],'0000'),2)),0,0,0) as datetime)) as [Status Date Time]\n  FROM [dev].[FYF_ODBC_STATUSES]\n Where [Status Code] like ('V%')\n Group by [Exam Key]\n      ,[Event Key],LEFT(Accession,3) ) as b on a.[Exam Key]=b.[Exam Key]\n left join [dev].[FYF_ODBC_CORE_v2] AS c on a.[Exam Key]=c.[Exam Key]\n left join [dev].[Patient Type] AS d on c.[Patient Type ID]=d.[Patient Type ID]\n Where a.[Status Code] like ('RR')\n and DateDiff(day,a.[Status Date],b.[Status Date Time]) >=0 and a.[Status Date] > '12-31-2020'\nGroup by LEFT(a.Accession,3)\n\t  ,Month(a.[Status Date])\n\t  ,Year(a.[Status Date])\n\t  ,d.[Patient_Type]",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSql_STATUSES",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "iRefer3",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "irefer4",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "ReferenceLookupsCore",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT LEFT(a.Accession,3) as trust\n\t  ,Month(a.[Status Date]) as Month\n\t  ,Year(a.[Status Date]) as Year\n\t  ,d.[Patient_Type]\n\t  ,a.[Exam Key]\n\t  ,[Referral Source]\n\t  , a.[Status Code]\n\t  ,a.[Examination Name]\n      FROM [dev].[FYF_ODBC_STATUSES] as a\n left join [dev].[FYF_ODBC_CORE_v2] AS c on a.[Exam Key]=c.[Exam Key]\n left join [dev].[Patient Type] AS d on c.[Patient Type ID]=d.[Patient Type ID]\n Where a.[Exam Key] in (Select [Exam Key] from (\nSELECT [Exam Key]\n            ,STRING_AGG([Examination Name] ,',') as [Examination Names]\n  FROM (SELECT [Exam Key],[Examination Name]\n             FROM [dev].[FYF_ODBC_STATUSES]\n\t\t\t  Where [Status Code] like ('V%') or [Status Code] like ('RR')\n and [Status Date] > '12-31-2020'\n\t\t\t Group by [Exam Key],[Examination Name]\n) as a1\n  group by [Exam Key]) as b1 where [Examination Names] like '%,%')\n\nGroup by LEFT(a.Accession,3)\n\t  ,Month(a.[Status Date])\n\t  ,Year(a.[Status Date])\n\t  ,d.[Patient_Type]\n\t  ,[Referral Source]\n\t  ,a.[Exam Key]\n\t  , a.[Status Code]\n\t  ,a.[Examination Name] \n\t  Order by a.[Exam Key]\t,Year(a.[Status Date])  ,Month(a.[Status Date])",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSql_STATUSES",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "irefer4",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -9982,6 +10214,10 @@
 				"[concat(variables('factoryId'), '/datasets/DQ_Dup')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem_copy1')]",
 				"[concat(variables('factoryId'), '/datasets/AIDFv2')]",
+				"[concat(variables('factoryId'), '/datasets/Irefer1')]",
+				"[concat(variables('factoryId'), '/datasets/Irefer2')]",
+				"[concat(variables('factoryId'), '/datasets/iRefer3')]",
+				"[concat(variables('factoryId'), '/datasets/irefer4')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep2')]"
 			]
 		},
@@ -20069,6 +20305,48 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/Irefer1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "iRefer1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Irefer2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "iRefer2"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Modality')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -24088,6 +24366,48 @@
 				"typeProperties": {
 					"schema": "dev",
 					"table": "Trust Unique"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/iRefer3')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "irefer3"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/irefer4')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "irefer4"
 				}
 			},
 			"dependsOn": [
