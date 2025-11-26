@@ -679,7 +679,7 @@
 				"type": "AzureSqlTable",
 				"schema": [],
 				"typeProperties": {
-					"schema": "dev.",
+					"schema": "dev",
 					"table": "Irefer5"
 				}
 			},
