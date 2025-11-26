@@ -13,6 +13,25 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/NIDC_Workforce_OutsourceVolume')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "NIDC_Workforce_OutsourceVolume"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/NIDC_Workforce_ScreenMedStaff')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -683,48 +702,6 @@
 				"typeProperties": {
 					"schema": "dev",
 					"table": "PRE"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Patient_Type')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "camdashdevtest101",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "Patient_Type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Patient Type ID",
-						"type": "bigint",
-						"precision": 19
-					},
-					{
-						"name": "Patient Type Code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Cerner Patient Type",
-						"type": "nvarchar"
-					}
-				],
-				"typeProperties": {
-					"schema": "dev",
-					"table": "Patient Type"
 				}
 			},
 			"dependsOn": []

@@ -10153,6 +10153,64 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Irefer5",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "irefer4",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [trust]\n      ,[Month]\n      ,[Year]\n      ,[Date]\n      ,[Patient_Type]\n      ,[Exam Key]\n      ,[Referral Source]\n      ,[Examination Name]\n\t  ,ROW_NUMBER() Over (Partition by [trust]\n      ,[Month]\n      ,[Year]\n      ,[Date]\n      ,[Patient_Type]\n      ,[Exam Key]\n      ,[Referral Source]\n\t  order by [Examination Name]) as NUM\n  FROM [dev].[irefer4]\n  Where [Status Code] Like ('V%')\n  Group by [trust]\n      ,[Month]\n      ,[Year]\n      ,[Date]\n      ,[Patient_Type]\n      ,[Exam Key]\n      ,[Referral Source]\n      ,[Examination Name]",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"tableOption": "autoCreate",
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "irefer4",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "Irefer5",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
@@ -10222,6 +10280,7 @@
 				"[concat(variables('factoryId'), '/datasets/Irefer2')]",
 				"[concat(variables('factoryId'), '/datasets/iRefer3')]",
 				"[concat(variables('factoryId'), '/datasets/irefer4')]",
+				"[concat(variables('factoryId'), '/datasets/Irefer5')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep2')]"
 			]
 		},
@@ -20344,6 +20403,27 @@
 				"typeProperties": {
 					"schema": "dev",
 					"table": "iRefer2"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/camdashdevtest101')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Irefer5')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "dev.",
+					"table": "Irefer5"
 				}
 			},
 			"dependsOn": [
