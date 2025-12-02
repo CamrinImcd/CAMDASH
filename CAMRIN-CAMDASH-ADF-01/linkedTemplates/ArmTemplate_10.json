@@ -918,7 +918,7 @@
 							},
 							"sink": {
 								"type": "AzureSqlSink",
-								"preCopyScript": "DROP TABLE [dbo].[NIDC_Asset_IT]",
+								"preCopyScript": "DROP TABLE dbo.NIDC_Asset_IT",
 								"writeBehavior": "insert",
 								"sqlWriterUseTableLock": false,
 								"tableOption": "autoCreate",
@@ -957,7 +957,7 @@
 							{
 								"activity": "Ingest_NIDC_IT",
 								"dependencyConditions": [
-									"Succeeded"
+									"Completed"
 								]
 							}
 						],
@@ -1018,7 +1018,7 @@
 							{
 								"activity": "Ingest_NIDC_MES",
 								"dependencyConditions": [
-									"Succeeded"
+									"Completed"
 								]
 							}
 						],
@@ -1079,7 +1079,7 @@
 							{
 								"activity": "Ingest_NIDC_Asset_Spec",
 								"dependencyConditions": [
-									"Succeeded"
+									"Completed"
 								]
 							}
 						],
@@ -1140,7 +1140,7 @@
 							{
 								"activity": "Ingest_NIDC_Asset_Avail",
 								"dependencyConditions": [
-									"Succeeded"
+									"Completed"
 								]
 							}
 						],
