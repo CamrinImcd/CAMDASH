@@ -6896,6 +6896,234 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "LiverSurv",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "ReferenceLookupsCore",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,[Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,[Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=2164 and [Planned Appointment Date] is null and [Was Planned]='n'",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "drop table [dev].[LiverSurv]",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "FYF_ODBC_CORE_v2",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "LiverSurv",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "CTColon",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "ReferenceLookupsCore",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,[Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,[Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (339,338,89,88) and [Planned Appointment Date] is null and [Was Planned]='n'\n",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "drop table [dev].[CTColon]",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "FYF_ODBC_CORE_v2",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CTColon",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "CTCard",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "ReferenceLookupsCore",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,[Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,[Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (65,71,70,66,21) and [Planned Appointment Date] is null and [Was Planned]='n'\n",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "drop table [dev].[CTCard]",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "FYF_ODBC_CORE_v2",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "CTCard",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "MRCard",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "ReferenceLookupsCore",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,[Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,[Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (1408,1332,1350,1349,1348,1345,1339,1328,1323,1320) and [Planned Appointment Date] is null and [Was Planned]='n'\n",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "drop table [dev].[MRCard]",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"tableOption": "autoCreate",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "FYF_ODBC_CORE_v2",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "MRCard",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"folder": {
