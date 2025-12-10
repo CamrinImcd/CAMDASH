@@ -13,6 +13,243 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/DelimitedText2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "COCH_CAMDASH_CORE_Feb2025.csv",
+						"container": "cochcsv"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "Unique  Identifier for patient",
+						"type": "String"
+					},
+					{
+						"name": "Ref Src",
+						"type": "String"
+					},
+					{
+						"name": "Referring Locat",
+						"type": "String"
+					},
+					{
+						"name": "Referrer",
+						"type": "String"
+					},
+					{
+						"name": "Speciality",
+						"type": "String"
+					},
+					{
+						"name": "GP",
+						"type": "String"
+					},
+					{
+						"name": "Practice",
+						"type": "String"
+					},
+					{
+						"name": "Site",
+						"type": "String"
+					},
+					{
+						"name": "Request Date",
+						"type": "String"
+					},
+					{
+						"name": "Event Date/Time",
+						"type": "String"
+					},
+					{
+						"name": "PT",
+						"type": "String"
+					},
+					{
+						"name": "RC",
+						"type": "String"
+					},
+					{
+						"name": "Examination",
+						"type": "String"
+					},
+					{
+						"name": "Exam Name",
+						"type": "String"
+					},
+					{
+						"name": "Room",
+						"type": "String"
+					},
+					{
+						"name": "Exam Start Date/Time",
+						"type": "String"
+					},
+					{
+						"name": "Exam End Date/Time",
+						"type": "String"
+					},
+					{
+						"name": "Radiographer 1",
+						"type": "String"
+					},
+					{
+						"name": "Radiographer 2",
+						"type": "String"
+					},
+					{
+						"name": "Qty Used",
+						"type": "String"
+					},
+					{
+						"name": "Exam Key",
+						"type": "String"
+					},
+					{
+						"name": "Event Key",
+						"type": "String"
+					},
+					{
+						"name": "Status Code",
+						"type": "String"
+					},
+					{
+						"name": "Booked Date/Time",
+						"type": "String"
+					},
+					{
+						"name": "Attended",
+						"type": "String"
+					},
+					{
+						"name": "Lead Clinician",
+						"type": "String"
+					},
+					{
+						"name": "Urg",
+						"type": "String"
+					},
+					{
+						"name": "Referring Locat Name",
+						"type": "String"
+					},
+					{
+						"name": "Referrer Name",
+						"type": "String"
+					},
+					{
+						"name": "Modality",
+						"type": "String"
+					},
+					{
+						"name": "No of Proc",
+						"type": "String"
+					},
+					{
+						"name": "GP Name",
+						"type": "String"
+					},
+					{
+						"name": "Date/Time First Verified",
+						"type": "String"
+					},
+					{
+						"name": "Reported By",
+						"type": "String"
+					},
+					{
+						"name": "Reported By2",
+						"type": "String"
+					},
+					{
+						"name": "Reported By Name",
+						"type": "String"
+					},
+					{
+						"name": "Reported By2 Name",
+						"type": "String"
+					},
+					{
+						"name": "Time Taken",
+						"type": "String"
+					},
+					{
+						"name": "Was Planned",
+						"type": "String"
+					},
+					{
+						"name": "Was Waiting",
+						"type": "String"
+					},
+					{
+						"name": "CCG",
+						"type": "String"
+					},
+					{
+						"name": "Stat Date",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Exam')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "camdashdevtest101",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [
+					{
+						"name": "Exam Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Exam ID",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Exam Group",
+						"type": "nvarchar"
+					}
+				],
+				"typeProperties": {
+					"schema": "dev",
+					"table": "Exam"
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Exam_Site')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1035,104 +1272,6 @@
 				"type": "Excel",
 				"typeProperties": {
 					"sheetName": "AgencyExternal",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "NIDC_Workforce.xlsx",
-						"container": "nidc-workforce-22"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Trust",
-						"type": "String"
-					},
-					{
-						"name": "Staff Group",
-						"type": "String"
-					},
-					{
-						"name": "Staff Type",
-						"type": "String"
-					},
-					{
-						"name": "Unit Of Payment",
-						"type": "String"
-					},
-					{
-						"name": "Band",
-						"type": "String"
-					},
-					{
-						"name": "Count",
-						"type": "String"
-					},
-					{
-						"name": "Cost",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_AgencyInsource')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "AgencyInsource",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "NIDC_Workforce.xlsx",
-						"container": "nidc-workforce-22"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Trust",
-						"type": "String"
-					},
-					{
-						"name": "Modality",
-						"type": "String"
-					},
-					{
-						"name": "Activity Group",
-						"type": "String"
-					},
-					{
-						"name": "Volume",
-						"type": "String"
-					},
-					{
-						"name": "Cost",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_AgencyInternal')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "AgencyInternal",
 					"location": {
 						"type": "AzureBlobStorageLocation",
 						"fileName": "NIDC_Workforce.xlsx",
