@@ -7132,7 +7132,8 @@
 					{
 						"activity": "Copy_STATUSES",
 						"dependencyConditions": [
-							"Succeeded"
+							"Succeeded",
+							"Completed"
 						]
 					}
 				],
