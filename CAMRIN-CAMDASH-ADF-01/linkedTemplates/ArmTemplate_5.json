@@ -13,6 +13,59 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_AgencyExternal')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Test_AzureBlobStorage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "AgencyExternal",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "NIDC_Workforce.xlsx",
+						"container": "nidc-workforce-22"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": [
+					{
+						"name": "Trust",
+						"type": "String"
+					},
+					{
+						"name": "Staff Group",
+						"type": "String"
+					},
+					{
+						"name": "Staff Type",
+						"type": "String"
+					},
+					{
+						"name": "Unit Of Payment",
+						"type": "String"
+					},
+					{
+						"name": "Band",
+						"type": "String"
+					},
+					{
+						"name": "Count",
+						"type": "String"
+					},
+					{
+						"name": "Cost",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_AgencyInsource')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1142,83 +1195,6 @@
 					},
 					{
 						"name": "staff members moved within the trust",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Excel_NIDC_Workforce_22_SubStaffMedical')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Test_AzureBlobStorage",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "Excel",
-				"typeProperties": {
-					"sheetName": "SubStaffMedical",
-					"location": {
-						"type": "AzureBlobStorageLocation",
-						"fileName": "NIDC_Workforce.xlsx",
-						"container": "nidc-workforce-22"
-					},
-					"firstRowAsHeader": true
-				},
-				"schema": [
-					{
-						"name": "Trust",
-						"type": "String"
-					},
-					{
-						"name": "Staff Type",
-						"type": "String"
-					},
-					{
-						"name": "Headcount",
-						"type": "String"
-					},
-					{
-						"name": "FTE",
-						"type": "String"
-					},
-					{
-						"name": "Pay Costs (£)",
-						"type": "String"
-					},
-					{
-						"name": "Vacancy",
-						"type": "String"
-					},
-					{
-						"name": "DCC - Reporting",
-						"type": "String"
-					},
-					{
-						"name": "DCC - MDT",
-						"type": "String"
-					},
-					{
-						"name": "DCC - Other Clinical Activities",
-						"type": "String"
-					},
-					{
-						"name": "SPA",
-						"type": "String"
-					},
-					{
-						"name": "SPA - Imaging Network",
-						"type": "String"
-					},
-					{
-						"name": "REALM / Governance",
-						"type": "String"
-					},
-					{
-						"name": "Other",
 						"type": "String"
 					}
 				]
