@@ -1,0 +1,16 @@
+{
+	"name": "Report_Text_Flags",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "camdashdevtest101",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "dev",
+			"table": "REP_TXT_FLAG"
+		}
+	}
+}
