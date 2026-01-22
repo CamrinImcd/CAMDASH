@@ -7130,9 +7130,8 @@
 				"type": "Copy",
 				"dependsOn": [
 					{
-						"activity": "Copy_STATUSES",
+						"activity": "Copy_DM01",
 						"dependencyConditions": [
-							"Succeeded",
 							"Completed"
 						]
 					}
