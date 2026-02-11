@@ -7346,9 +7346,8 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Copy_STATUSES",
+								"activity": "Copy_DM01",
 								"dependencyConditions": [
-									"Succeeded",
 									"Completed"
 								]
 							}
@@ -7398,6 +7397,174 @@
 						"outputs": [
 							{
 								"referenceName": "Report_Text_Flags",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Report Table CAMRIN",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Report_Table",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT 0 as [Trust ID]\n\t\t,[Modality ID]\n      ,[Tat Type ID]\n\t  ,[Exam ID]\n      ,[Patient Type ID]\n\t  ,[Exam Urgency]\n\t  ,sum(Case when [Tat Type ID]=12 and [Image-Report Hours]<=4 then 1\n\t\t\twhen [Tat Type ID]=11 and [Image-Report Hours]<=12 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Pass]\n\t  ,sum(Case when [Tat Type ID]=12 or [Tat Type ID]=11 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Report]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8)  and [Image-Report Hours]<=4 then 1\n\t\t\telse null end) as [Image-Report 4H Pass]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8) then 1\n\t\t\telse null end) as [Image-Report 4H Report]\n\t  ,sum(Case when [Tat Type ID]=11  and [Image-Report Hours]<=12 then 1\n\t\t\telse null end) as [Image-Report 12H Pass]\n\t  ,sum(Case when [Tat Type ID]=11  then 1\n\t\t\telse null end) as [Image-Report 12H Report]\n\t  ,sum(Case when [Tat Type ID]=3  and [Image-Report Hours]<=24 then 1\n\t\t\telse null end) as [Image-Report 24H Pass]\n\t  ,sum(Case when [Tat Type ID]=3  then 1\n\t\t\telse null end) as [Image-Report 24H Report]\n\t  ,sum(Case when [Tat Type ID]=7  and [Image-Report Days]<=28 then 1\n\t\t\telse null end) as [Image-Report 28D Pass]\n\t  ,sum(Case when [Tat Type ID]=7   then 1\n\t\t\telse null end) as [Image-Report 28D Report]\n\t  ,sum(Case when [Tat Type ID]=6  and [Image-Report Days]<=3 then 1\n\t\t\telse null end) as [Image-Report 3D Pass]\n\t ,sum(Case when [Tat Type ID]=6  then 1\n\t\t\telse null end) as [Image-Report 3D Report]\n\t  ,sum(Case when [Tat Type ID]=9  and [Image-Report Days]<=7 then 1\n\t\t\telse null end) as [Image-Report 7D Pass]\n\t ,sum(Case when [Tat Type ID]=9  then 1\n\t\t\telse null end) as [Image-Report 7D Report]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Datetime First Verified] is not null and [Report Year Only] >= (YEAR(getdate())-2)\n  Group by [Modality ID]\n      ,[Tat Type ID]\n\t  ,[Exam ID]\n      ,[Patient Type ID]\n\t  ,[Exam Urgency]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable11",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Report table UHG",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Report Table CAMRIN",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT 21 as [Trust ID]\n\t\t,[Modality ID]\n      ,[Tat Type ID]\n\t  ,[Exam ID]\n      ,[Patient Type ID]\n\t  ,[Exam Urgency]\n\t  ,sum(Case when [Tat Type ID]=12 and [Image-Report Hours]<=4 then 1\n\t\t\twhen [Tat Type ID]=11 and [Image-Report Hours]<=12 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Pass]\n\t  ,sum(Case when [Tat Type ID]=12 or [Tat Type ID]=11 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Report]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8)  and [Image-Report Hours]<=4 then 1\n\t\t\telse null end) as [Image-Report 4H Pass]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8) then 1\n\t\t\telse null end) as [Image-Report 4H Report]\n\t  ,sum(Case when [Tat Type ID]=11  and [Image-Report Hours]<=12 then 1\n\t\t\telse null end) as [Image-Report 12H Pass]\n\t  ,sum(Case when [Tat Type ID]=11  then 1\n\t\t\telse null end) as [Image-Report 12H Report]\n\t  ,sum(Case when [Tat Type ID]=3  and [Image-Report Hours]<=24 then 1\n\t\t\telse null end) as [Image-Report 24H Pass]\n\t  ,sum(Case when [Tat Type ID]=3  then 1\n\t\t\telse null end) as [Image-Report 24H Report]\n\t  ,sum(Case when [Tat Type ID]=7  and [Image-Report Days]<=28 then 1\n\t\t\telse null end) as [Image-Report 28D Pass]\n\t  ,sum(Case when [Tat Type ID]=7   then 1\n\t\t\telse null end) as [Image-Report 28D Report]\n\t  ,sum(Case when [Tat Type ID]=6  and [Image-Report Days]<=3 then 1\n\t\t\telse null end) as [Image-Report 3D Pass]\n\t ,sum(Case when [Tat Type ID]=6  then 1\n\t\t\telse null end) as [Image-Report 3D Report]\n\t  ,sum(Case when [Tat Type ID]=9  and [Image-Report Days]<=7 then 1\n\t\t\telse null end) as [Image-Report 7D Pass]\n\t ,sum(Case when [Tat Type ID]=9  then 1\n\t\t\telse null end) as [Image-Report 7D Report]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Datetime First Verified] is not null and [Report Year Only] >= (YEAR(getdate())-2)\n  and [Trust ID] in (6,17,5)\n  Group by [Modality ID]\n      ,[Tat Type ID]\n\t  ,[Exam ID]\n      ,[Patient Type ID]\n\t  ,[Exam Urgency]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable11",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Report Data LAASP",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Report table UHG",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT 22 as [Trust ID]\n\t\t,[Modality ID]\n      ,[Tat Type ID]\n\t  ,[Exam ID]\n      ,[Patient Type ID]\n\t  ,[Exam Urgency]\n\t  ,sum(Case when [Tat Type ID]=12 and [Image-Report Hours]<=4 then 1\n\t\t\twhen [Tat Type ID]=11 and [Image-Report Hours]<=12 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Pass]\n\t  ,sum(Case when [Tat Type ID]=12 or [Tat Type ID]=11 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Report]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8)  and [Image-Report Hours]<=4 then 1\n\t\t\telse null end) as [Image-Report 4H Pass]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8) then 1\n\t\t\telse null end) as [Image-Report 4H Report]\n\t  ,sum(Case when [Tat Type ID]=11  and [Image-Report Hours]<=12 then 1\n\t\t\telse null end) as [Image-Report 12H Pass]\n\t  ,sum(Case when [Tat Type ID]=11  then 1\n\t\t\telse null end) as [Image-Report 12H Report]\n\t  ,sum(Case when [Tat Type ID]=3  and [Image-Report Hours]<=24 then 1\n\t\t\telse null end) as [Image-Report 24H Pass]\n\t  ,sum(Case when [Tat Type ID]=3  then 1\n\t\t\telse null end) as [Image-Report 24H Report]\n\t  ,sum(Case when [Tat Type ID]=7  and [Image-Report Days]<=28 then 1\n\t\t\telse null end) as [Image-Report 28D Pass]\n\t  ,sum(Case when [Tat Type ID]=7   then 1\n\t\t\telse null end) as [Image-Report 28D Report]\n\t  ,sum(Case when [Tat Type ID]=6  and [Image-Report Days]<=3 then 1\n\t\t\telse null end) as [Image-Report 3D Pass]\n\t ,sum(Case when [Tat Type ID]=6  then 1\n\t\t\telse null end) as [Image-Report 3D Report]\n\t  ,sum(Case when [Tat Type ID]=9  and [Image-Report Days]<=7 then 1\n\t\t\telse null end) as [Image-Report 7D Pass]\n\t ,sum(Case when [Tat Type ID]=9  then 1\n\t\t\telse null end) as [Image-Report 7D Report]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Datetime First Verified] is not null and [Report Year Only] >= (YEAR(getdate())-2)\n  and [Trust ID] in (6,17,5,15,4)\n  Group by [Modality ID]\n      ,[Tat Type ID]\n\t  ,[Exam ID]\n      ,[Patient Type ID]\n\t  ,[Exam Urgency]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable11",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
