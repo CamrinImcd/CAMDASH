@@ -8164,6 +8164,171 @@
 						"type": "DatasetReference"
 					}
 				]
+			},
+			{
+				"name": "Referral CAMRIN",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Referral",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT \n\t  CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE) AS StartOfMonth\n      ,0 as [Trust ID]\n      ,[Updated Modality]\n\t  ,[Patient Type ID]\n      ,null as [Referral Source ID]\n\t  ,null as [Exam ID]\n\t  ,Count([Request-Image Days]) as [Count]\n      ,Avg([Request-Image Days]) as [Avg Request-Image Days]\n      ,Avg([Request-Image Hours])  as [Avg Request-Image Hours]\n       FROM [dev].[FYF_ODBC_CORE_v2]\n\t   Where [Request Date] is not null\n\t   and [Request Year Only]>2020\n\t   and [Was Planned]='N' \n\t   and [Patient Type ID] in (1,3,4,6)\n\t   and [Updated Modality] in (2,4,8,9,12,15)\n\t   Group by   CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE)\n\t  ,[Was Planned]\n      ,[Patient Type ID]\n      ,[Updated Modality]\n\t  order by CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE),[Trust ID],[Referral Source ID]",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "FYF_ODBC_CORE_v2",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "AzureSqlTable17",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Referral UHG",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Referral CAMRIN",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT \n\t  CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE) AS StartOfMonth\n      ,21 as [Trust ID]\n      ,[Updated Modality]\n\t  ,[Patient Type ID]\n      ,null as [Referral Source ID]\n\t  ,null as [Exam ID]\n\t  ,Count([Request-Image Days]) as [Count]\n      ,Avg([Request-Image Days]) as [Avg Request-Image Days]\n      ,Avg([Request-Image Hours])  as [Avg Request-Image Hours]\n       FROM [dev].[FYF_ODBC_CORE_v2]\n\t   Where [Request Date] is not null\n\t   and [Request Year Only]>2020\n\t   and [Was Planned]='N' \n\t   and [Patient Type ID] in (1,3,4,6)\n\t   and [Updated Modality] in (2,4,8,9,12,15)\n\t   and [Trust ID] in (6,17,5)\n\t   Group by   CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE)\n\t  ,[Was Planned]\n      ,[Patient Type ID]\n      ,[Updated Modality]\n\t  order by CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE),[Trust ID],[Referral Source ID]",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "FYF_ODBC_CORE_v2",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "AzureSqlTable17",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Referral LAASP",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Referral UHG",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT \n\t  CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE) AS StartOfMonth\n      ,22 as [Trust ID]\n      ,[Updated Modality]\n\t  ,[Patient Type ID]\n      ,null as [Referral Source ID]\n\t  ,null as [Exam ID]\n\t  ,Count([Request-Image Days]) as [Count]\n      ,Avg([Request-Image Days]) as [Avg Request-Image Days]\n      ,Avg([Request-Image Hours])  as [Avg Request-Image Hours]\n       FROM [dev].[FYF_ODBC_CORE_v2]\n\t   Where [Request Date] is not null\n\t   and [Request Year Only]>2020\n\t   and [Was Planned]='N' \n\t   and [Patient Type ID] in (1,3,4,6)\n\t   and [Updated Modality] in (2,4,8,9,12,15)\n\t   and [Trust ID] in (6,17,5,15,4)\n\t   Group by   CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE)\n\t  ,[Was Planned]\n      ,[Patient Type ID]\n      ,[Updated Modality]\n\t  order by CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE),[Trust ID],[Referral Source ID]",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"writeBehavior": "insert",
+						"sqlWriterUseTableLock": false,
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "FYF_ODBC_CORE_v2",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "AzureSqlTable17",
+						"type": "DatasetReference"
+					}
+				]
 			}
 		],
 		"folder": {
