@@ -7569,6 +7569,855 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "MRCard CAMRIN",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "MRCard",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,0 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (1408,1332,1350,1349,1348,1345,1339,1328,1323,1320) and [Planned Appointment Date] is null and [Was Planned]='n') as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "MRCard",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "MRCard UHG",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "MRCard CAMRIN",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,21 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (1408,1332,1350,1349,1348,1345,1339,1328,1323,1320) and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "MRCard",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "MRCard LAASP",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "MRCard UHG",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,22 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (1408,1332,1350,1349,1348,1345,1339,1328,1323,1320) and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5,15,4)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "MRCard",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "CTCard CAMRIN",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "CTCard",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,0 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (65,71,70,66,21) and [Planned Appointment Date] is null and [Was Planned]='n') as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CTCard",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "CTCard UHG",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "CTCard CAMRIN",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,21 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (65,71,70,66,21) and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc\n\n",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CTCard",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "CTCard LAASP",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "CTCard UHG",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,22 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (65,71,70,66,21) and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5,15,4)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc\n\n",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CTCard",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "CTColon CAMRIN",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "CTColon",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "  SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,0 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (339,338,89,88) and [Planned Appointment Date] is null and [Was Planned]='n') as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CTColon",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "CTColon UHG",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "CTColon CAMRIN",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,21 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (339,338,89,88) and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc\n\n",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CTColon",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "CTColon LAASP",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "CTColon UHG",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,22 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (339,338,89,88) and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5,15,4)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc\n\n",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "CTColon",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "LiverSurv CAMRIN",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "LiverSurv",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,0 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=2164 and [Planned Appointment Date] is null and [Was Planned]='n') as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "LiverSurv",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "LiverSurv UHG",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "LiverSurv CAMRIN",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,21 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=2164 and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "LiverSurv",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "LiverSurv LAASP",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "LiverSurv UHG",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,22 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=2164 and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5,15,4)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "LiverSurv",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "MMPMP CAMRIN",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "MMPMP",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "  SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,0 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=1465 and [Planned Appointment Date] is null and [Was Planned]='n') as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable15",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "MMPMP UHG",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "MMPMP CAMRIN",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,21 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=1465 and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc\n\n",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable15",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "MMPMP LAASP",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "MMPMP UHG",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,22 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=1465 and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5,15,4)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc\n\n",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable15",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
 					}
 				],
 				"policy": {
