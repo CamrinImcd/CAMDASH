@@ -7457,13 +7457,13 @@
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
-								"activity": "PopulateNewColumns",
+								"activity": "Copy_REPORT_TAT",
 								"dependencyConditions": [
 									"Succeeded"
 								]
 							},
 							{
-								"activity": "Copy_REPORT_TAT",
+								"activity": "Data flow2",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -7632,58 +7632,6 @@
 								"computeType": "General"
 							},
 							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "PopulateNewColumns",
-						"type": "ExecuteWranglingDataflow",
-						"dependsOn": [
-							{
-								"activity": "DedupeCore",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "PopulateNewColumns",
-								"type": "DataFlowReference",
-								"datasetParameters": {
-									"RequestRecievedStatus": {},
-									"AzureSqlCOREStageStep1": {},
-									"UserQueryAzureSqlCOREStageStep2": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"queries": [
-								{
-									"queryName": "UserQuery",
-									"dataflowSinks": [
-										{
-											"name": "UserQueryAzureSqlCOREStageStep2",
-											"dataset": {
-												"referenceName": "AzureSqlCOREStageStep2",
-												"type": "DatasetReference",
-												"parameters": {}
-											},
-											"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\t{CRIS No} as integer,\n\t\tAccession as string,\n\t\t{Ref Src} as string,\n\t\tSite as string,\n\t\t{Request Date} as date,\n\t\t{Event Date} as date,\n\t\t{Event Time} as string,\n\t\t{On Call} as string,\n\t\tPT as string,\n\t\tExamination as string,\n\t\t{Exam Name} as string,\n\t\tRoom as string,\n\t\t{Start Time} as string,\n\t\t{End Time} as string,\n\t\t{Exam Key} as integer,\n\t\t{Event Key} as integer,\n\t\t{Status Code} as string,\n\t\t{Booked Date} as timestamp,\n\t\t{Booked Time} as string,\n\t\t{Creation Date} as timestamp,\n\t\tAttended as string,\n\t\tUrg as string,\n\t\tModality as string,\n\t\t{No of Proc} as integer,\n\t\t{Planned Appointment Date} as timestamp,\n\t\t{Date First Verified} as timestamp,\n\t\t{Time First Verified} as string,\n\t\t{Was Planned} as string,\n\t\t{Was Scheduled} as string,\n\t\t{Was Waiting} as string,\n\t\t{Stat Date} as timestamp,\n\t\t{Reported By} as string,\n\t\tRank as integer,\n\t\t{Age At Event} as string,\n\t\t{Status Code.2} as string,\n\t\t{Status Date.1} as timestamp,\n\t\t{Status Time} as string,\n\t\tModality2 as string,\n\t\t{Trust Name} as string,\n\t\tPatient_Type as string,\n\t\t{Tat Type} as string,\n\t\t{Activity.1} as integer,\n\t\t{Count of Activty_Demand for Activity.1} as long,\n\t\t{ExamSite Code} as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> UserQueryAzureSqlCOREStageStep2"
-										}
-									]
-								}
-							]
 						}
 					},
 					{
@@ -11875,6 +11823,43 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Data flow2",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "DedupeCore",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow13",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
 					}
 				],
 				"policy": {
@@ -11917,7 +11902,6 @@
 				"[concat(variables('factoryId'), '/dataflows/CreateRefColumnsPTL')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRequestRecieveddataset')]",
-				"[concat(variables('factoryId'), '/dataflows/PopulateNewColumns')]",
 				"[concat(variables('factoryId'), '/dataflows/AIDFDataset')]",
 				"[concat(variables('factoryId'), '/dataflows/CreatePatientWaiting')]",
 				"[concat(variables('factoryId'), '/datasets/CoreUpdateTable')]",
@@ -11952,7 +11936,7 @@
 				"[concat(variables('factoryId'), '/datasets/MRCard')]",
 				"[concat(variables('factoryId'), '/datasets/CRIS_REPORT_TXT')]",
 				"[concat(variables('factoryId'), '/datasets/Report_Text_Flags')]",
-				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep2')]"
+				"[concat(variables('factoryId'), '/dataflows/dataflow13')]"
 			]
 		},
 		{
@@ -13033,7 +13017,178 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [],
+				"schema": [
+					{
+						"name": "CRIS No",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Accession",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Ref Src",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Site",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Request Date",
+						"type": "date"
+					},
+					{
+						"name": "Event Date",
+						"type": "date"
+					},
+					{
+						"name": "Event Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "On Call",
+						"type": "nvarchar"
+					},
+					{
+						"name": "PT",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Examination",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Room",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Start Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "End Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Exam Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Event Key",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Status Code",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Booked Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Booked Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Creation Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Attended",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Urg",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Modality",
+						"type": "nvarchar"
+					},
+					{
+						"name": "No of Proc",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Planned Appointment Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Date First Verified",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Time First Verified",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Was Planned",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Was Scheduled",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Was Waiting",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Stat Date",
+						"type": "datetime2",
+						"scale": 7
+					},
+					{
+						"name": "Reported By",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Rank",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Age At Event",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Status Time",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Modality2",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Trust Name",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Patient_Type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "Tat Type",
+						"type": "nvarchar"
+					},
+					{
+						"name": "ExamSite Code",
+						"type": "nvarchar"
+					}
+				],
 				"typeProperties": {
 					"schema": "dev",
 					"table": "AzureSqlCOREStageStep1"
@@ -29792,6 +29947,48 @@
 						"window1 filter(Rank==1) ~> filter2",
 						"lookup1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     input(",
+						"          {CRIS No} as integer,",
+						"          Accession as string,",
+						"          {Ref Src} as string,",
+						"          Site as string,",
+						"          {Request Date} as date,",
+						"          {Event Date} as date,",
+						"          {Event Time} as string,",
+						"          {On Call} as string,",
+						"          PT as string,",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          Room as string,",
+						"          {Start Time} as string,",
+						"          {End Time} as string,",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          {Status Code} as string,",
+						"          {Booked Date} as timestamp,",
+						"          {Booked Time} as string,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          Urg as string,",
+						"          Modality as string,",
+						"          {No of Proc} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Date First Verified} as timestamp,",
+						"          {Time First Verified} as string,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {Reported By} as string,",
+						"          Rank as integer,",
+						"          {Age At Event} as string,",
+						"          {Status Time} as string,",
+						"          Modality2 as string,",
+						"          {Trust Name} as string,",
+						"          Patient_Type as string,",
+						"          {Tat Type} as string,",
+						"          {ExamSite Code} as string",
+						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",
@@ -30694,6 +30891,145 @@
 				"[concat(variables('factoryId'), '/datasets/Modality')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSqlTable16')]",
 				"[concat(variables('factoryId'), '/datasets/AzureSql_CORE')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow13')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlCOREStageStep1",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "AzureSqlCOREStageStep2",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          {CRIS No} as integer,",
+						"          Accession as string,",
+						"          {Ref Src} as string,",
+						"          Site as string,",
+						"          {Request Date} as date,",
+						"          {Event Date} as date,",
+						"          {Event Time} as string,",
+						"          {On Call} as string,",
+						"          PT as string,",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          Room as string,",
+						"          {Start Time} as string,",
+						"          {End Time} as string,",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          {Status Code} as string,",
+						"          {Booked Date} as timestamp,",
+						"          {Booked Time} as string,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          Urg as string,",
+						"          Modality as string,",
+						"          {No of Proc} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Date First Verified} as timestamp,",
+						"          {Time First Verified} as string,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {Reported By} as string,",
+						"          Rank as integer,",
+						"          {Age At Event} as string,",
+						"          {Status Time} as string,",
+						"          Modality2 as string,",
+						"          {Trust Name} as string,",
+						"          Patient_Type as string,",
+						"          {Tat Type} as string,",
+						"          {ExamSite Code} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT [CRIS No]\\n      ,a.[Accession]\\n      ,[Ref Src]\\n      ,a.[Site]\\n      ,[Request Date]\\n      ,[Event Date]\\n      ,[Event Time]\\n      ,[On Call]\\n      ,[PT]\\n      ,[Examination]\\n      ,[Exam Name]\\n      ,[Room]\\n      ,[Start Time]\\n      ,[End Time]\\n      ,a.[Exam Key]\\n      ,a.[Event Key]\\n      ,a.[Status Code]\\n      ,[Booked Date]\\n      ,[Booked Time]\\n      ,[Creation Date]\\n      ,[Attended]\\n      ,a.[Urg]\\n      ,a.[Modality]\\n      ,[No of Proc]\\n      ,[Planned Appointment Date]\\n      ,[Date First Verified]\\n      ,[Time First Verified]\\n      ,[Was Planned]\\n      ,[Was Scheduled]\\n      ,[Was Waiting]\\n      ,a.[Stat Date]\\n      ,[Reported By]\\n      ,a.[Rank]\\n      ,[Age At Event]\\n      ,CONCAT(a.[Site],[Room]) as [ExamSite Code]\\n      ,b.[Status Code] as [Status Code.2]\\n      ,b.[Status Date] as [Status Date.1]\\n      ,Cast(b.[Status Time] as varchar) as [Status Time]\\n      ,Case When a.[Modality] = \\'R\\' then \\'Plain X-Ray\\'\\n            When a.[Modality] = \\'A\\' then \\'IR\\' \\n            When a.[Modality] = \\'B\\' then \\'Mammo\\' \\n            When a.[Modality] = \\'C\\' then \\'CT\\' \\n            When a.[Modality] = \\'M\\' then \\'MRI\\' \\n            When a.[Modality] = \\'F\\' then \\'Fluoro\\' \\n            When a.[Modality] = \\'U\\' then \\'NOUS\\'  \\n            When a.[Modality] = \\'N\\' then \\'Nuc Med\\' \\n            When a.[Modality] = \\'S\\' then \\'DEXA\\'\\n            When a.[Modality] = \\'Z\\' then \\'Additional Workload\\' \\n            When a.[Modality] = \\'H\\' then \\'Cardio\\' \\n            When a.[Modality] = \\'D\\' then \\'Doppler\\' \\n            When a.[Modality] = \\'E\\' then \\'Endo\\'\\n            When a.[Modality] = \\'Y\\' then \\'Med Phys\\' \\n            When a.[Modality] = \\'O\\' then \\'Obstetrics\\' \\n            else \\'other\\' end  as [Modality2]\\n        ,Case   when a.[Site] = \\'5HA16\\' then \\'LUHFT\\' \\n                When a.[Site] = \\'5NL93\\' then \\'LUHFT\\' \\n                When LEFT(a.[Site],3) = \\'REM\\' then \\'LUHFT\\' \\n                When LEFT(a.[Site],3) = \\'RQ6\\' then \\'LUHFT\\' \\n                When LEFT(a.[Site],3) = \\'RBL\\' then \\'WUTH\\' \\n                When LEFT(a.[Site],3) = \\'RBN\\' then \\'STHK\\' \\n                When LEFT(a.[Site],3) = \\'RBQ\\' then \\'LHCH\\' \\n                When LEFT(a.[Site],3) = \\'RBS\\' then \\'Alder Hey\\' \\n                When LEFT(a.[Site],3) = \\'RBT\\' then \\'MCH\\' \\n                When LEFT(a.[Site],3) = \\'REN\\' then \\'CCC\\' \\n                When LEFT(a.[Site],3) = \\'REP\\' then \\'Womens\\' \\n                When LEFT(a.[Site],3) = \\'RET\\' then \\'TWC\\' \\n                When LEFT(a.[Site],3) = \\'RJR\\' then \\'COCH\\' \\n                When LEFT(a.[Site],3) = \\'RVY\\' then \\'S&O\\' \\n                When LEFT(a.[Site],3) = \\'RWW\\' then \\'WHH\\' \\n        else a.[Site] end as [Trust Name]\\n        ,Case   When a.[PT] = \\'A\\' then \\'In Patient\\' \\n                When a.[PT] = \\'B\\' then \\'Out Patient\\' \\n                When a.[PT] = \\'C\\' then \\'A&E Attender\\' \\n                When a.[PT] = \\'D\\' then \\'Out Patient\\' \\n                When a.[PT] = \\'E\\' then \\'Out Patient\\' \\n                When a.[PT] = \\'F\\' then \\'Other\\' \\n                When a.[PT] = \\'G\\' then \\'GP Direct Access Patient\\'  \\n                When a.[PT] = \\'H\\' then \\'In Patient\\' \\n                When a.[PT] = \\'J\\' then \\'A&E Attender\\' \\n                When a.[PT] = \\'K\\' then \\'Tertiary Referral\\' \\n                When a.[PT] = \\'N\\' then \\'In Patient\\' \\n                When a.[PT] = \\'R\\' then \\'Research\\' \\n                When a.[PT] = \\'T\\' then \\'Dental\\' \\n                When a.[Modality] = \\'X\\' then \\'Other\\' \\n                else \\'Other\\' end as [Patient_Type]\\n        ,Case   When (a.[Modality]=\\'C\\' or a.[Modality]=\\'M\\' or a.[Modality]=\\'F\\' or a.[Modality]=\\'N\\' or a.[Modality]=\\'S\\') and (a.[PT]=\\'A\\' and a.[urg]=\\'5\\') then \\'Urgent Inpatients\\'\\n                When (a.[Modality]=\\'C\\' or a.[Modality]=\\'M\\' or a.[Modality]=\\'F\\' or a.[Modality]=\\'N\\' or a.[Modality]=\\'S\\' or a.[Modality]=\\'R\\') and (a.[PT]=\\'C\\') then \\'Emergency Department\\'\\n                When (a.[Modality]=\\'R\\') and (a.[PT]=\\'C\\') and (Cast([Time First Verified] as int)>=800) and (Cast([Time First Verified] as int)<2000) then \\'Emergency Department\\'\\n                When a.[Modality]=\\'R\\' and a.[PT]=\\'C\\' and (cast([Time First Verified] as int)<800 or cast([Time First Verified]as int)>=2000) then \\'Urgent Inpatients\\'\\n                When (a.[Modality]=\\'C\\' or a.[Modality]=\\'M\\' or a.[Modality]=\\'F\\' or a.[Modality]=\\'N\\' or a.[Modality]=\\'S\\' or a.[Modality]=\\'R\\') and (a.[PT]=\\'A\\' and (a.[urg]<>\\'5\\')) then \\'Non-Urgent Inpatients\\' \\n                When (a.[Modality]=\\'C\\' or a.[Modality]=\\'M\\' or a.[Modality]=\\'R\\' or a.[Modality]=\\'F\\' or a.[Modality]=\\'N\\' or a.[Modality]=\\'S\\') and (a.[PT]=\\'B\\' or a.[PT]=\\'G\\') and a.[urg]=\\'7\\' then \\'Outpatient Faster Diagnosis Standard Cancer Pathway\\'\\n                When (a.[Modality]=\\'C\\' or a.[Modality]=\\'M\\' or a.[Modality]=\\'F\\' or a.[Modality]=\\'N\\' or a.[Modality]=\\'S\\' or a.[Modality]=\\'R\\') and (a.[PT]=\\'B\\' or a.[PT]=\\'G\\' or a.[PT]=\\'D\\') and (a.[urg]=\\'5\\') then \\'Urgent GP and Outpatients\\'\\n                When (a.[Modality]=\\'C\\' or a.[Modality]=\\'M\\' or a.[Modality]=\\'R\\' or a.[Modality]=\\'F\\' or a.[Modality]=\\'N\\' or a.[Modality]=\\'S\\') and (a.[PT]=\\'B\\' or a.[PT]=\\'D\\' or a.[PT]=\\'G\\') and a.[urg]=\\'1\\' then \\'Routine GP and Outpatients\\' \\n                When a.[Modality]=\\'U\\' or a.[Modality]=\\'A\\' then \\'Ultrasound and Interventional Radiology\\' else \\'Other\\' end as [Tat Type]\\n        ,Case   When (a.[Status Code]=\\'ASACK\\' \\n                   or a.[Status Code]=\\'ASRMS\\' \\n                   or a.[Status Code]=\\'ASRQS\\' \\n                   or a.[Status Code]=\\'ATN\\' \\n                   or  a.[Status Code]=\\'ATP\\' \\n                   or a.[Status Code]=\\'CHBU\\' \\n                   or  a.[Status Code]=\\'CHE\\' \\n                   or a.[Status Code]=\\'CHEC\\' \\n                   or a.[Status Code]=\\'CPC\\' \\n                   or a.[Status Code]=\\'CPDNA\\' \\n                   or a.[Status Code]=\\'CPMP\\' \\n                   or a.[Status Code]=\\'CPPG\\' \\n                   or a.[Status Code]=\\'CPPR\\' \\n                   or a.[Status Code]=\\'CPR\\'\\n                   or a.[Status Code]=\\'DVR\\' \\n                   or a.[Status Code]=\\'PRTRPT\\') then 1 else 0 end as [Activity.1]\\n        ,Case   When (a.[Status Code]=\\'ASACK\\' \\n                   or a.[Status Code]=\\'ASRMS\\' \\n                   or a.[Status Code]=\\'ASRQS\\' \\n                   or a.[Status Code]=\\'ATN\\' \\n                   or  a.[Status Code]=\\'ATP\\' \\n                   or a.[Status Code]=\\'CHBU\\' \\n                   or  a.[Status Code]=\\'CHE\\' \\n                   or a.[Status Code]=\\'CHEC\\' \\n                   or a.[Status Code]=\\'CPC\\' \\n                   or a.[Status Code]=\\'CPDNA\\' \\n                   or a.[Status Code]=\\'CPMP\\' \\n                   or a.[Status Code]=\\'CPPG\\' \\n                   or a.[Status Code]=\\'CPPR\\' \\n                   or a.[Status Code]=\\'CPR\\'\\n                   or a.[Status Code]=\\'DVR\\' \\n                   or a.[Status Code]=\\'PRTRPT\\') then 1 else 0 end as [Count of Activty_Demand for Activity.1]\\n  FROM (SELECT [CRIS No]\\n      ,[Accession]\\n      ,[Ref Src]\\n      ,Case\\n      When [Site] is null then \\'NULL\\' else [Site] end as [Site]\\n      ,cast([Request Date] as date) as [Request Date]\\n      ,cast([Event Date] as date) as [Event Date]\\n      ,[Event Time]\\n      ,[On Call]\\n      ,[PT]\\n      ,[Examination]\\n      ,[Exam Name]\\n      ,Case\\n      When [Room] is null then \\'NULL\\' else Room end as [Room]\\n      ,[Start Time]\\n      ,[End Time]\\n      ,[Exam Key]\\n      ,[Event Key]\\n      ,[Status Code]\\n      ,[Booked Date]\\n      ,[Booked Time]\\n      ,[Creation Date]\\n      ,[Attended]\\n      ,[Urg]\\n      ,[Modality]\\n      ,[No of Proc]\\n      ,[Planned Appointment Date]\\n      ,[Date First Verified]\\n      ,[Time First Verified]\\n      ,[Was Planned]\\n      ,[Was Scheduled]\\n      ,[Was Waiting]\\n      ,[Stat Date]\\n      ,[Reported By]\\n      ,[Rank]\\n      ,[Age At Event]\\n  FROM [dev].[AzureSqlCOREStageStep1]\\n  ) as a\\n  left join [dev].[RequestRecievedStatus] as b on a.[Exam Key]=b.[Exam Key]\\n',",
+						"     format: 'query') ~> source1",
+						"source1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {CRIS No} as integer,",
+						"          Accession as string,",
+						"          {Ref Src} as string,",
+						"          Site as string,",
+						"          {Request Date} as date,",
+						"          {Event Date} as date,",
+						"          {Event Time} as string,",
+						"          {On Call} as string,",
+						"          PT as string,",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          Room as string,",
+						"          {Start Time} as string,",
+						"          {End Time} as string,",
+						"          {Exam Key} as integer,",
+						"          {Event Key} as integer,",
+						"          {Status Code} as string,",
+						"          {Booked Date} as timestamp,",
+						"          {Booked Time} as string,",
+						"          {Creation Date} as timestamp,",
+						"          Attended as string,",
+						"          Urg as string,",
+						"          Modality as string,",
+						"          {No of Proc} as integer,",
+						"          {Planned Appointment Date} as timestamp,",
+						"          {Date First Verified} as timestamp,",
+						"          {Time First Verified} as string,",
+						"          {Was Planned} as string,",
+						"          {Was Scheduled} as string,",
+						"          {Was Waiting} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {Reported By} as string,",
+						"          Rank as integer,",
+						"          {Age At Event} as string,",
+						"          {Status Code.2} as string,",
+						"          {Status Date.1} as timestamp,",
+						"          {Status Time} as string,",
+						"          Modality2 as string,",
+						"          {Trust Name} as string,",
+						"          Patient_Type as string,",
+						"          {Tat Type} as string,",
+						"          {Activity.1} as integer,",
+						"          {Count of Activty_Demand for Activity.1} as long,",
+						"          {ExamSite Code} as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     truncate:true,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep1')]",
+				"[concat(variables('factoryId'), '/datasets/AzureSqlCOREStageStep2')]"
 			]
 		},
 		{

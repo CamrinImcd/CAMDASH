@@ -13,6 +13,474 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/update Refs')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "AzureSql_PTL",
+								"type": "DatasetReference"
+							},
+							"name": "AzureSqlPTL"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSql_CORE",
+								"type": "DatasetReference"
+							},
+							"name": "RefSrc"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSql_CORE",
+								"type": "DatasetReference"
+							},
+							"name": "Examination"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSql_STATUSES",
+								"type": "DatasetReference"
+							},
+							"name": "STATUSES"
+						},
+						{
+							"dataset": {
+								"referenceName": "AzureSql_CORE",
+								"type": "DatasetReference"
+							},
+							"name": "SiteRoom"
+						},
+						{
+							"dataset": {
+								"referenceName": "Referral_Source",
+								"type": "DatasetReference"
+							},
+							"name": "ReferralSourceRef"
+						},
+						{
+							"dataset": {
+								"referenceName": "Exam",
+								"type": "DatasetReference"
+							},
+							"name": "ExamRef"
+						},
+						{
+							"dataset": {
+								"referenceName": "Status",
+								"type": "DatasetReference"
+							},
+							"name": "StatusRef"
+						},
+						{
+							"dataset": {
+								"referenceName": "Exam_Site",
+								"type": "DatasetReference"
+							},
+							"name": "SiteRef"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Exam_Site",
+								"type": "DatasetReference"
+							},
+							"name": "SiteRoomOut"
+						},
+						{
+							"dataset": {
+								"referenceName": "Status",
+								"type": "DatasetReference"
+							},
+							"name": "Status"
+						},
+						{
+							"dataset": {
+								"referenceName": "Exam",
+								"type": "DatasetReference"
+							},
+							"name": "Exam"
+						},
+						{
+							"dataset": {
+								"referenceName": "Referral_Source",
+								"type": "DatasetReference"
+							},
+							"name": "ReferralSource"
+						}
+					],
+					"transformations": [
+						{
+							"name": "RenameColumns6"
+						},
+						{
+							"name": "JointColumn6"
+						},
+						{
+							"name": "DeriveColumn4"
+						},
+						{
+							"name": "RenameColumns3"
+						},
+						{
+							"name": "RenameColumns1"
+						},
+						{
+							"name": "RenameColumns9"
+						},
+						{
+							"name": "CombineCOREPTL6"
+						},
+						{
+							"name": "select1"
+						},
+						{
+							"name": "exists1"
+						},
+						{
+							"name": "aggregate2"
+						},
+						{
+							"name": "surrogateKey1"
+						},
+						{
+							"name": "derivedColumn1"
+						},
+						{
+							"name": "join1"
+						},
+						{
+							"name": "sort1"
+						},
+						{
+							"name": "aggregate4"
+						},
+						{
+							"name": "exists2"
+						},
+						{
+							"name": "sort2"
+						},
+						{
+							"name": "surrogateKey2"
+						},
+						{
+							"name": "join2"
+						},
+						{
+							"name": "derivedColumn2"
+						},
+						{
+							"name": "aggregate5"
+						},
+						{
+							"name": "exists3"
+						},
+						{
+							"name": "sort3"
+						},
+						{
+							"name": "surrogateKey3"
+						},
+						{
+							"name": "join3"
+						},
+						{
+							"name": "derivedColumn3"
+						},
+						{
+							"name": "aggregate6"
+						},
+						{
+							"name": "exists4"
+						},
+						{
+							"name": "sort4"
+						},
+						{
+							"name": "surrogateKey4"
+						},
+						{
+							"name": "join4"
+						},
+						{
+							"name": "derivedColumn4"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          Site as string,",
+						"          Room as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT [Site],[Room]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_PTL]\\n  Group by [Site],[Room]',",
+						"     format: 'query') ~> AzureSqlPTL",
+						"source(output(",
+						"          {Ref Src} as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     waterMarkColumn: 'Stat Date',",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT Distinct([Ref Src]) as [Ref Src]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE]\\n  Group by [Ref Src]',",
+						"     format: 'query') ~> RefSrc",
+						"source(output(",
+						"          Examination as string,",
+						"          {Exam Name} as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT [Examination], [Exam Name]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE]\\n  Group by [Examination],[Exam Name]',",
+						"     format: 'query') ~> Examination",
+						"source(output(",
+						"          {Status Code} as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT [Status Code]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_STATUSES]\\n  Group by [Status Code]',",
+						"     format: 'query') ~> STATUSES",
+						"source(output(",
+						"          Site as string,",
+						"          Room as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     query: 'SELECT [Site],[Room]\\n      ,Min([Stat Date]) as [Stat Date]\\n  FROM [dev].[FYF_ODBC_CORE]\\n  Group by [Site],[Room]',",
+						"     format: 'query') ~> SiteRoom",
+						"source(output(",
+						"          {Referral Source} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {Referral Source ID} as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ReferralSourceRef",
+						"source(output(",
+						"          {Exam Name} as string,",
+						"          {Exam Code} as string,",
+						"          {Exam ID} as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> ExamRef",
+						"source(output(",
+						"          {Status Code} as string,",
+						"          {Status ID} as integer,",
+						"          {Status Category} as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> StatusRef",
+						"source(output(",
+						"          {Exam Site} as string,",
+						"          {Exam Room} as string,",
+						"          {ExamSite Code} as string,",
+						"          {Exam Room ID} as long,",
+						"          Description as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> SiteRef",
+						"SiteRoom select(mapColumn(",
+						"          {Exam Site} = Site,",
+						"          {Exam Room} = Room,",
+						"          {Stat Date}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RenameColumns6",
+						"CombineCOREPTL6 derive({ExamSite Code} = iifNull({Exam Site},'NULL')+iifNull({Exam Room},'NULL')) ~> JointColumn6",
+						"derivedColumn3 derive({Status Category} = iif(startsWith({Status Code}, \"AP\"), \"AP\", iif(startsWith({Status Code}, \"AS\"), \"AS\", iif(startsWith({Status Code}, \"AT\"), \"AT\", iif(startsWith({Status Code}, \"C\"), \"C\", iif(startsWith({Status Code}, \"D\"), \"D\", iif(startsWith({Status Code}, \"E\"), \"E\", iif(startsWith({Status Code}, \"P\"), \"P\", iif(startsWith({Status Code}, \"R\"), \"R\", iif(startsWith({Status Code}, \"V\"), \"V\", iif(startsWith({Status Code}, \"W\"), \"W\", iif({Status Code} == \"BHSRAI\", \"ST\", iif({Status Code} == \"ACNCLI\", \"W\", iif({Status Code} == \"SRREPC\", \"ST\", \"0\")))))))))))))) ~> DeriveColumn4",
+						"derivedColumn2 select(mapColumn(",
+						"          {Exam Code} = Examination,",
+						"          {Exam Name},",
+						"          {Stat Date},",
+						"          {Exam ID}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RenameColumns3",
+						"derivedColumn1 select(mapColumn(",
+						"          {Referral Source} = {Ref Src},",
+						"          {Stat Date},",
+						"          {Referral Source ID}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RenameColumns1",
+						"AzureSqlPTL select(mapColumn(",
+						"          {Exam Site} = Site,",
+						"          {Exam Room} = Room,",
+						"          {Stat Date}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> RenameColumns9",
+						"RenameColumns6, RenameColumns9 union(byName: true)~> CombineCOREPTL6",
+						"derivedColumn4 select(mapColumn(",
+						"          {Exam Site},",
+						"          {Exam Room},",
+						"          {ExamSite Code},",
+						"          {Exam Room ID} = {ExamSite Code ID},",
+						"          {Stat Date}",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"RefSrc, ReferralSourceRef exists({Ref Src} == {Referral Source},",
+						"     negate:true,",
+						"     broadcast: 'right')~> exists1",
+						"ReferralSourceRef aggregate(MaxID = max({Referral Source ID})) ~> aggregate2",
+						"sort1 keyGenerate(output(Key as long),",
+						"     startAt: 1L,",
+						"     stepValue: 1L) ~> surrogateKey1",
+						"join1 derive({Referral Source ID} = toInteger(Key+MaxID)) ~> derivedColumn1",
+						"surrogateKey1, aggregate2 join(Key < MaxID,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'right')~> join1",
+						"exists1 sort(asc({Ref Src}, false)) ~> sort1",
+						"ExamRef aggregate(MaxID = max({Exam ID})) ~> aggregate4",
+						"Examination, ExamRef exists(Examination == {Exam Code},",
+						"     negate:true,",
+						"     broadcast: 'right')~> exists2",
+						"exists2 sort(asc(Examination, false)) ~> sort2",
+						"sort2 keyGenerate(output(Key as long),",
+						"     startAt: 1L,",
+						"     stepValue: 1L) ~> surrogateKey2",
+						"surrogateKey2, aggregate4 join(Key < MaxID,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'right')~> join2",
+						"join2 derive({Exam ID} = toInteger(Key+MaxID)) ~> derivedColumn2",
+						"StatusRef aggregate(MaxID = max({Status ID})) ~> aggregate5",
+						"STATUSES, StatusRef exists(STATUSES@{Status Code} == StatusRef@{Status Code},",
+						"     negate:true,",
+						"     broadcast: 'right')~> exists3",
+						"exists3 sort(asc({Status Code}, false)) ~> sort3",
+						"sort3 keyGenerate(output(Key as long),",
+						"     startAt: 1L,",
+						"     stepValue: 1L) ~> surrogateKey3",
+						"surrogateKey3, aggregate5 join(Key < MaxID,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'right')~> join3",
+						"join3 derive({Status ID} = toInteger(Key+MaxID)) ~> derivedColumn3",
+						"SiteRef aggregate(MaxID = max({Exam Room ID})) ~> aggregate6",
+						"JointColumn6, SiteRef exists(JointColumn6@{ExamSite Code} == SiteRef@{ExamSite Code},",
+						"     negate:true,",
+						"     broadcast: 'right')~> exists4",
+						"exists4 sort(asc({ExamSite Code}, true)) ~> sort4",
+						"sort4 keyGenerate(output(Key as long),",
+						"     startAt: 1L,",
+						"     stepValue: 1L) ~> surrogateKey4",
+						"surrogateKey4, aggregate6 join(Key < MaxID,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'right')~> join4",
+						"join4 derive({ExamSite Code ID} = toInteger(Key+MaxID)) ~> derivedColumn4",
+						"select1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {Exam Site} as string,",
+						"          {Exam Room} as string,",
+						"          {ExamSite Code} as string,",
+						"          {Exam Room ID} as long,",
+						"          Description as string,",
+						"          {Stat Date} as timestamp",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          {Exam Site},",
+						"          {Exam Room},",
+						"          {ExamSite Code},",
+						"          {Exam Room ID},",
+						"          {Stat Date}",
+						"     )) ~> SiteRoomOut",
+						"DeriveColumn4 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {Status Code} as string,",
+						"          {Status ID} as integer,",
+						"          {Status Category} as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> Status",
+						"RenameColumns3 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {Exam Code} as string,",
+						"          {Exam Name} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {Exam ID} as integer,",
+						"          {Exam Group} as string",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> Exam",
+						"RenameColumns1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     input(",
+						"          {Referral Source} as string,",
+						"          {Stat Date} as timestamp,",
+						"          {Referral Source ID} as integer",
+						"     ),",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError',",
+						"     mapColumn(",
+						"          {Referral Source},",
+						"          {Stat Date},",
+						"          {Referral Source ID}",
+						"     )) ~> ReferralSource"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/Ingestion_RADFYF')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -4283,13 +4751,13 @@
 						"type": "ExecuteDataFlow",
 						"dependsOn": [
 							{
-								"activity": "PopulateNewColumns",
+								"activity": "Copy_REPORT_TAT",
 								"dependencyConditions": [
 									"Succeeded"
 								]
 							},
 							{
-								"activity": "Copy_REPORT_TAT",
+								"activity": "Data flow2",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -4458,58 +4926,6 @@
 								"computeType": "General"
 							},
 							"traceLevel": "Fine"
-						}
-					},
-					{
-						"name": "PopulateNewColumns",
-						"type": "ExecuteWranglingDataflow",
-						"dependsOn": [
-							{
-								"activity": "DedupeCore",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "PopulateNewColumns",
-								"type": "DataFlowReference",
-								"datasetParameters": {
-									"RequestRecievedStatus": {},
-									"AzureSqlCOREStageStep1": {},
-									"UserQueryAzureSqlCOREStageStep2": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"queries": [
-								{
-									"queryName": "UserQuery",
-									"dataflowSinks": [
-										{
-											"name": "UserQueryAzureSqlCOREStageStep2",
-											"dataset": {
-												"referenceName": "AzureSqlCOREStageStep2",
-												"type": "DatasetReference",
-												"parameters": {}
-											},
-											"script": "sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinput(\n\t\t{CRIS No} as integer,\n\t\tAccession as string,\n\t\t{Ref Src} as string,\n\t\tSite as string,\n\t\t{Request Date} as date,\n\t\t{Event Date} as date,\n\t\t{Event Time} as string,\n\t\t{On Call} as string,\n\t\tPT as string,\n\t\tExamination as string,\n\t\t{Exam Name} as string,\n\t\tRoom as string,\n\t\t{Start Time} as string,\n\t\t{End Time} as string,\n\t\t{Exam Key} as integer,\n\t\t{Event Key} as integer,\n\t\t{Status Code} as string,\n\t\t{Booked Date} as timestamp,\n\t\t{Booked Time} as string,\n\t\t{Creation Date} as timestamp,\n\t\tAttended as string,\n\t\tUrg as string,\n\t\tModality as string,\n\t\t{No of Proc} as integer,\n\t\t{Planned Appointment Date} as timestamp,\n\t\t{Date First Verified} as timestamp,\n\t\t{Time First Verified} as string,\n\t\t{Was Planned} as string,\n\t\t{Was Scheduled} as string,\n\t\t{Was Waiting} as string,\n\t\t{Stat Date} as timestamp,\n\t\t{Reported By} as string,\n\t\tRank as integer,\n\t\t{Age At Event} as string,\n\t\t{Status Code.2} as string,\n\t\t{Status Date.1} as timestamp,\n\t\t{Status Time} as string,\n\t\tModality2 as string,\n\t\t{Trust Name} as string,\n\t\tPatient_Type as string,\n\t\t{Tat Type} as string,\n\t\t{Activity.1} as integer,\n\t\t{Count of Activty_Demand for Activity.1} as long,\n\t\t{ExamSite Code} as string\n\t),\n\tdeletable:false,\n\tinsertable:true,\n\tupdateable:false,\n\tupsertable:false,\n\ttruncate:true,\n\tformat: 'table',\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true,\n\terrorHandlingOption: 'stopOnFirstError') ~> UserQueryAzureSqlCOREStageStep2"
-										}
-									]
-								}
-							]
 						}
 					},
 					{
@@ -8701,6 +9117,43 @@
 								"parameters": {}
 							}
 						]
+					},
+					{
+						"name": "Data flow2",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [
+							{
+								"activity": "DedupeCore",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow13",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
 					}
 				],
 				"policy": {
