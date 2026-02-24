@@ -25,7 +25,8 @@
 						"referenceName": "AzureSqlCOREStageStep1",
 						"type": "DatasetReference"
 					},
-					"name": "AzureSqlCOREStageStep1"
+					"name": "AzureSqlCOREStageStep1",
+					"description": "Export data to AzureSqlCOREStageStep1"
 				}
 			],
 			"transformations": [
