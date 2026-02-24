@@ -24,11 +24,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'RADFYF01_CRIS_PostgreSQL'"
 		},
-		"camdashdevtest101_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'camdashdevtest101'",
-			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=camrinsql101.database.windows.net;Initial Catalog=camdashdevtest101"
-		},
 		"camdashprod101_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'camdashprod101'",
@@ -50,6 +45,14 @@
 		"Test_AzureBlobStorage_properties_typeProperties_serviceEndpoint": {
 			"type": "string",
 			"defaultValue": "https://camdashdatalake.blob.core.windows.net/"
+		},
+		"camdashdevtest101_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "camrinsql101.database.windows.net"
+		},
+		"camdashdevtest101_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "camdashdevtest101"
 		},
 		"camdashprod101_mpep_properties_privateLinkResourceId": {
 			"type": "string",
@@ -104,9 +107,6 @@
 					"RADFYF01_CRIS_PostgreSQL_password": {
 						"value": "[parameters('RADFYF01_CRIS_PostgreSQL_password')]"
 					},
-					"camdashdevtest101_connectionString": {
-						"value": "[parameters('camdashdevtest101_connectionString')]"
-					},
 					"camdashprod101_connectionString": {
 						"value": "[parameters('camdashprod101_connectionString')]"
 					},
@@ -121,6 +121,12 @@
 					},
 					"Test_AzureBlobStorage_properties_typeProperties_serviceEndpoint": {
 						"value": "[parameters('Test_AzureBlobStorage_properties_typeProperties_serviceEndpoint')]"
+					},
+					"camdashdevtest101_properties_typeProperties_server": {
+						"value": "[parameters('camdashdevtest101_properties_typeProperties_server')]"
+					},
+					"camdashdevtest101_properties_typeProperties_database": {
+						"value": "[parameters('camdashdevtest101_properties_typeProperties_database')]"
 					},
 					"camdashprod101_mpep_properties_privateLinkResourceId": {
 						"value": "[parameters('camdashprod101_mpep_properties_privateLinkResourceId')]"

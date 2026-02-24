@@ -24,11 +24,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'RADFYF01_CRIS_PostgreSQL'"
 		},
-		"camdashdevtest101_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'camdashdevtest101'",
-			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=camrinsql101.database.windows.net;Initial Catalog=camdashdevtest101"
-		},
 		"camdashprod101_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'camdashprod101'",
@@ -50,6 +45,14 @@
 		"Test_AzureBlobStorage_properties_typeProperties_serviceEndpoint": {
 			"type": "string",
 			"defaultValue": "https://camdashdatalake.blob.core.windows.net/"
+		},
+		"camdashdevtest101_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "camrinsql101.database.windows.net"
+		},
+		"camdashdevtest101_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "camdashdevtest101"
 		},
 		"camdashprod101_mpep_properties_privateLinkResourceId": {
 			"type": "string",
@@ -9092,7 +9095,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
-								"sqlReaderQuery": "select Case \n\tWhen isnumeric(b.[Description])=1  then b.[Trust_ID_2]\n\telse a.[Trust ID]\n\tend [Trust ID]\n    ,[Updated Modality] as [Modality ID]\n    ,Case \n\tWhen isnumeric(b.[Description])=1  then b.[Description]\n\telse a.[Exam Room ID]\n\tend as [Exam Room ID]\n    ,[Event Date]\n    ,[Event Hour]\n    ,Sum([Body Parts Activity]) as [Sum]\n    ,Sum(case when [Updated Modality] = 2 then [Body Parts Activity] else 0 end) as [Sum CT]\n    ,Sum(case when [Updated Modality] = 9 then [Body Parts Activity] else 0 end) as [Sum MRI]\n    ,Sum(case when [Updated Modality] = 12 then [Body Parts Activity] else 0 end) as [Sum NOUS]\n    ,Sum(case when [Updated Modality] = 4 then [Body Parts Activity] else 0 end) as [Sum DEXA]\n\t,case when [Updated Modality]= 2 then Sum([Body Parts Activity])-1 else Sum([Body Parts Activity]) end as ConForm2\nFROM [dev].[FYF_ODBC_CORE_v2] as a\nLeft Join dev.Exam_Site_2 as b on a.[Exam Room ID]=b.[Exam room ID]\nWhere [Event Date]>='2024-06-01'\n--and [Event Hour] between 8 and 19\nand a.[Updated Modality] = b.[Modality_ID]\nand a.[Exam Room ID] not in (795,3,11,13,20,32,37,50,112,142,187,192,194,198,199,208,209,258,261,262,294,296,298,304,314,318,342,374,411,429,448,472,478,479,479,480,482,483,484,484,499,500,508,516,517,552,553,556,557,558,560,561,562,564,570,571,583,589,590,601,604,651,683,692,693,697,709,719,734,779,780,797,848,887,891,935,936,938,939,950,964,977,999,1008,1030,1057,1061,1062,1067,1072,1074,1082,1087,1147\n)\ngroup by Case \n\tWhen isnumeric(b.[Description])=1  then b.[Trust_ID_2]\n\telse a.[Trust ID]\n\tend\n    ,[Updated Modality]\n    ,Case \n\tWhen isnumeric(b.[Description])=1  then b.[Description]\n\telse a.[Exam Room ID]\n\tend\n    ,[Event Date]\n    ,[Event Hour]",
+								"sqlReaderQuery": "select Case \n\tWhen isnumeric(b.[Description])=1  then b.[Trust_ID_2]\n\telse a.[Trust ID]\n\tend [Trust ID]\n    ,[Updated Modality] as [Modality ID]\n    ,Case \n\tWhen isnumeric(b.[Description])=1  then b.[Description]\n\telse a.[Exam Room ID]\n\tend as [Exam Room ID]\n    ,[Event Date]\n    ,[Event Hour]\n    ,Sum([Body Parts Activity]) as [Sum]\n    ,Sum(case when [Updated Modality] = 2 then [Body Parts Activity] else 0 end) as [Sum CT]\n    ,Sum(case when [Updated Modality] = 9 then [Body Parts Activity] else 0 end) as [Sum MRI]\n    ,Sum(case when [Updated Modality] = 12 then [Body Parts Activity] else 0 end) as [Sum NOUS]\n    ,Sum(case when [Updated Modality] = 4 then [Body Parts Activity] else 0 end) as [Sum DEXA]\n\t,case when [Updated Modality]= 2 then Sum([Body Parts Activity])-1 else Sum([Body Parts Activity]) end as ConForm2\nFROM [dev].[FYF_ODBC_CORE_v2] as a\nLeft Join dev.Exam_Site_2 as b on a.[Exam Room ID]=b.[Exam room ID]\nWhere a.[Event Date] >= DateAdd(month,-12,getdate())\n--and [Event Hour] between 8 and 19\nand a.[Updated Modality] = b.[Modality_ID]\nand a.[Exam Room ID] not in (795,3,11,13,20,32,37,50,112,142,187,192,194,198,199,208,209,258,261,262,294,296,298,304,314,318,342,374,411,429,448,472,478,479,479,480,482,483,484,484,499,500,508,516,517,552,553,556,557,558,560,561,562,564,570,571,583,589,590,601,604,651,683,692,693,697,709,719,734,779,780,797,848,887,891,935,936,938,939,950,964,977,999,1008,1030,1057,1061,1062,1067,1072,1074,1082,1087,1147\n)\ngroup by Case \n\tWhen isnumeric(b.[Description])=1  then b.[Trust_ID_2]\n\telse a.[Trust ID]\n\tend\n    ,[Updated Modality]\n    ,Case \n\tWhen isnumeric(b.[Description])=1  then b.[Description]\n\telse a.[Exam Room ID]\n\tend\n    ,[Event Date]\n    ,[Event Hour]",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -9193,7 +9196,7 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Referral",
+								"activity": "Referral LAASP",
 								"dependencyConditions": [
 									"Succeeded"
 								]
@@ -9769,7 +9772,7 @@
 						]
 					},
 					{
-						"name": "Utility_Average",
+						"name": "Utility CAMRIN",
 						"type": "Copy",
 						"dependsOn": [
 							{
@@ -9790,7 +9793,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
-								"sqlReaderQuery": "select [Trust ID]\n    ,[Updated Modality] as [Modality ID]\n    ,0 as [Exam Room ID]\n    ,[Event Date]\n    ,[Event Hour]\n    ,Avg(cast([Sum] as float)) as [Sum]\n    ,Avg(cast([Sum CT] as float))as[Sum CT]\n    ,Avg(cast([Sum MRI] as float))as[Sum MRI]\n    ,Avg(cast([Sum NOUS] as float))as[Sum NOUS]\n    ,Avg(cast([Sum DEXA] as float))as[Sum DEXA]\n\t,Avg(cast(ConForm2 as float)) as ConForm2\n\tFrom(select 0 as [Trust ID]\n\t,[Updated Modality]\n    ,Case \n\tWhen isnumeric(b.[Description])=1  then b.[Description]\n\telse a.[Exam Room ID]\n\tend as [Exam Room ID]\n    ,[Event Date]\n    ,[Event Hour]\n    ,Sum([Body Parts Activity]) as [Sum]\n    ,Sum(case when [Updated Modality] = 2 then [Body Parts Activity] else 0 end) as [Sum CT]\n    ,Sum(case when [Updated Modality] = 9 then [Body Parts Activity] else 0 end) as [Sum MRI]\n    ,Sum(case when [Updated Modality] = 12 then [Body Parts Activity] else 0 end) as [Sum NOUS]\n    ,Sum(case when [Updated Modality] = 4 then [Body Parts Activity] else 0 end) as [Sum DEXA]\n\t,case when [Updated Modality]= 2 then Sum([Body Parts Activity])-1 else Sum([Body Parts Activity]) end as ConForm2\nFROM [dev].[FYF_ODBC_CORE_v2] as a\nLeft Join dev.Exam_Site_2 as b on a.[Exam Room ID]=b.[Exam room ID]\nWhere [Event Date]>='2024-06-01'\n--and [Event Hour] between 8 and 19\nand a.[Updated Modality] = b.[Modality_ID]\nand a.[Exam Room ID] not in (795,3,11,13,20,32,37,50,112,142,187,192,194,198,199,208,209,258,261,262,294,296,298,304,314,318,342,374,411,429,448,472,478,479,479,480,482,483,484,484,499,500,508,516,517,552,553,556,557,558,560,561,562,564,570,571,583,589,590,601,604,651,683,692,693,697,709,719,734,779,780,797,848,887,891,935,936,938,939,950,964,977,999,1008,1030,1057,1061,1062,1067,1072,1074,1082,1087,1147\n)\ngroup by [Updated Modality]\n    ,Case \n\tWhen isnumeric(b.[Description])=1  then b.[Description]\n\telse a.[Exam Room ID]\n\tend\n    ,[Event Date]\n    ,[Event Hour]) as CAMRIN\ngroup by\n[Trust ID]\n    ,[Updated Modality]\n    ,[Event Date]\n    ,[Event Hour]\nOrder by     [Modality ID]\n    ,[Event Date]\n    ,[Event Hour]",
+								"sqlReaderQuery": "select [Trust ID]\n    ,[Updated Modality] as [Modality ID]\n    ,Null as [Exam Room ID]\n    ,[Event Date]\n    ,[Event Hour]\n    ,Avg(cast([Sum] as float)) as [Sum]\n    ,Avg(cast([Sum CT] as float))as[Sum CT]\n    ,Avg(cast([Sum MRI] as float))as[Sum MRI]\n    ,Avg(cast([Sum NOUS] as float))as[Sum NOUS]\n    ,Avg(cast([Sum DEXA] as float))as[Sum DEXA]\n\t,Avg(cast(ConForm2 as float)) as ConForm2\n\tFrom(\n        select 0 as [Trust ID]\n\t,[Updated Modality]\n    ,Case \n\tWhen isnumeric(b.[Description])=1  then b.[Description]\n\telse a.[Exam Room ID]\n\tend as [Exam Room ID]\n    ,[Event Date]\n    ,[Event Hour]\n    ,Sum([Body Parts Activity]) as [Sum]\n    ,Sum(case when [Updated Modality] = 2 then [Body Parts Activity] else 0 end) as [Sum CT]\n    ,Sum(case when [Updated Modality] = 9 then [Body Parts Activity] else 0 end) as [Sum MRI]\n    ,Sum(case when [Updated Modality] = 12 then [Body Parts Activity] else 0 end) as [Sum NOUS]\n    ,Sum(case when [Updated Modality] = 4 then [Body Parts Activity] else 0 end) as [Sum DEXA]\n\t,case when [Updated Modality]= 2 then Sum([Body Parts Activity])-1 else Sum([Body Parts Activity]) end as ConForm2\nFROM [dev].[FYF_ODBC_CORE_v2] as a\nLeft Join dev.Exam_Site_2 as b on a.[Exam Room ID]=b.[Exam room ID]\nWhere a.[Event Date] >= DateAdd(month,-12,getdate())\n--and [Event Hour] between 8 and 19\nand a.[Updated Modality] = b.[Modality_ID]\nand a.[Exam Room ID] not in (795,3,11,13,20,32,37,50,112,142,187,192,194,198,199,208,209,258,261,262,294,296,298,304,314,318,342,374,411,429,448,472,478,479,479,480,482,483,484,484,499,500,508,516,517,552,553,556,557,558,560,561,562,564,570,571,583,589,590,601,604,651,683,692,693,697,709,719,734,779,780,797,848,887,891,935,936,938,939,950,964,977,999,1008,1030,1057,1061,1062,1067,1072,1074,1082,1087,1147\n)\ngroup by [Updated Modality]\n    ,Case \n\tWhen isnumeric(b.[Description])=1  then b.[Description]\n\telse a.[Exam Room ID]\n\tend\n    ,[Event Date]\n    ,[Event Hour]) as CAMRIN\ngroup by\n[Trust ID]\n    ,[Updated Modality]\n    ,[Event Date]\n    ,[Event Hour]\nOrder by     \n    [Event Date]\n    ,[Event Hour],[Modality ID]",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -10651,7 +10654,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
-								"sqlReaderQuery": "SELECT 21 as [Trust ID]\n\t\t,[Modality ID]\n      ,[Tat Type ID]\n\t  ,[Exam ID]\n      ,[Patient Type ID]\n\t  ,[Exam Urgency]\n\t  ,sum(Case when [Tat Type ID]=12 and [Image-Report Hours]<=4 then 1\n\t\t\twhen [Tat Type ID]=11 and [Image-Report Hours]<=12 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Pass]\n\t  ,sum(Case when [Tat Type ID]=12 or [Tat Type ID]=11 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Report]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8)  and [Image-Report Hours]<=4 then 1\n\t\t\telse null end) as [Image-Report 4H Pass]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8) then 1\n\t\t\telse null end) as [Image-Report 4H Report]\n\t  ,sum(Case when [Tat Type ID]=11  and [Image-Report Hours]<=12 then 1\n\t\t\telse null end) as [Image-Report 12H Pass]\n\t  ,sum(Case when [Tat Type ID]=11  then 1\n\t\t\telse null end) as [Image-Report 12H Report]\n\t  ,sum(Case when [Tat Type ID]=3  and [Image-Report Hours]<=24 then 1\n\t\t\telse null end) as [Image-Report 24H Pass]\n\t  ,sum(Case when [Tat Type ID]=3  then 1\n\t\t\telse null end) as [Image-Report 24H Report]\n\t  ,sum(Case when [Tat Type ID]=7  and [Image-Report Days]<=28 then 1\n\t\t\telse null end) as [Image-Report 28D Pass]\n\t  ,sum(Case when [Tat Type ID]=7   then 1\n\t\t\telse null end) as [Image-Report 28D Report]\n\t  ,sum(Case when [Tat Type ID]=6  and [Image-Report Days]<=3 then 1\n\t\t\telse null end) as [Image-Report 3D Pass]\n\t ,sum(Case when [Tat Type ID]=6  then 1\n\t\t\telse null end) as [Image-Report 3D Report]\n\t  ,sum(Case when [Tat Type ID]=9  and [Image-Report Days]<=7 then 1\n\t\t\telse null end) as [Image-Report 7D Pass]\n\t ,sum(Case when [Tat Type ID]=9  then 1\n\t\t\telse null end) as [Image-Report 7D Report]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Datetime First Verified] is not null and [Report Year Only] >= (YEAR(getdate())-2)\n  and [Trust ID] in (6,17,5)\n  Group by [Modality ID]\n      ,[Tat Type ID]\n\t  ,[Exam ID]\n      ,[Patient Type ID]\n\t  ,[Exam Urgency]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]",
+								"sqlReaderQuery": "SELECT 22 as [Trust ID]\n\t\t,[Modality ID]\n      ,[Tat Type ID]\n\t  ,[Exam ID]\n      ,[Patient Type ID]\n\t  ,[Exam Urgency]\n\t  ,sum(Case when [Tat Type ID]=12 and [Image-Report Hours]<=4 then 1\n\t\t\twhen [Tat Type ID]=11 and [Image-Report Hours]<=12 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Pass]\n\t  ,sum(Case when [Tat Type ID]=12 or [Tat Type ID]=11 then 1 \n\t\t\telse null end) as [Image-Report 4H/12H Report]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8)  and [Image-Report Hours]<=4 then 1\n\t\t\telse null end) as [Image-Report 4H Pass]\n\t  ,sum(Case when ([Tat Type ID]=12 or [Tat Type ID]=8) then 1\n\t\t\telse null end) as [Image-Report 4H Report]\n\t  ,sum(Case when [Tat Type ID]=11  and [Image-Report Hours]<=12 then 1\n\t\t\telse null end) as [Image-Report 12H Pass]\n\t  ,sum(Case when [Tat Type ID]=11  then 1\n\t\t\telse null end) as [Image-Report 12H Report]\n\t  ,sum(Case when [Tat Type ID]=3  and [Image-Report Hours]<=24 then 1\n\t\t\telse null end) as [Image-Report 24H Pass]\n\t  ,sum(Case when [Tat Type ID]=3  then 1\n\t\t\telse null end) as [Image-Report 24H Report]\n\t  ,sum(Case when [Tat Type ID]=7  and [Image-Report Days]<=28 then 1\n\t\t\telse null end) as [Image-Report 28D Pass]\n\t  ,sum(Case when [Tat Type ID]=7   then 1\n\t\t\telse null end) as [Image-Report 28D Report]\n\t  ,sum(Case when [Tat Type ID]=6  and [Image-Report Days]<=3 then 1\n\t\t\telse null end) as [Image-Report 3D Pass]\n\t ,sum(Case when [Tat Type ID]=6  then 1\n\t\t\telse null end) as [Image-Report 3D Report]\n\t  ,sum(Case when [Tat Type ID]=9  and [Image-Report Days]<=7 then 1\n\t\t\telse null end) as [Image-Report 7D Pass]\n\t ,sum(Case when [Tat Type ID]=9  then 1\n\t\t\telse null end) as [Image-Report 7D Report]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Datetime First Verified] is not null and [Report Year Only] >= (YEAR(getdate())-2)\n  and [Trust ID] in (6,17,5)\n  Group by [Modality ID]\n      ,[Tat Type ID]\n\t  ,[Exam ID]\n      ,[Patient Type ID]\n\t  ,[Exam Urgency]\n\t  ,[Report Year Only]\n      ,[Report Month Number Only]\n      ,[Month First Verified]",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
@@ -11585,6 +11588,289 @@
 						"outputs": [
 							{
 								"referenceName": "AzureSqlTable15",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Referral CAMRIN",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Referral",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT \n\t  CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE) AS StartOfMonth\n      ,0 as [Trust ID]\n      ,[Updated Modality]\n\t  ,[Patient Type ID]\n      ,null as [Referral Source ID]\n\t  ,null as [Exam ID]\n\t  ,Count([Request-Image Days]) as [Count]\n      ,Avg([Request-Image Days]) as [Avg Request-Image Days]\n      ,Avg([Request-Image Hours])  as [Avg Request-Image Hours]\n       FROM [dev].[FYF_ODBC_CORE_v2]\n\t   Where [Request Date] is not null\n\t   and [Request Year Only]>2020\n\t   and [Was Planned]='N' \n\t   and [Patient Type ID] in (1,3,4,6)\n\t   and [Updated Modality] in (2,4,8,9,12,15)\n\t   Group by   CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE)\n\t  ,[Was Planned]\n      ,[Patient Type ID]\n      ,[Updated Modality]\n\t  order by CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE),[Trust ID],[Referral Source ID]",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable17",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Referral UHG",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Referral CAMRIN",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT \n\t  CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE) AS StartOfMonth\n      ,21 as [Trust ID]\n      ,[Updated Modality]\n\t  ,[Patient Type ID]\n      ,null as [Referral Source ID]\n\t  ,null as [Exam ID]\n\t  ,Count([Request-Image Days]) as [Count]\n      ,Avg([Request-Image Days]) as [Avg Request-Image Days]\n      ,Avg([Request-Image Hours])  as [Avg Request-Image Hours]\n       FROM [dev].[FYF_ODBC_CORE_v2]\n\t   Where [Request Date] is not null\n\t   and [Request Year Only]>2020\n\t   and [Was Planned]='N' \n\t   and [Patient Type ID] in (1,3,4,6)\n\t   and [Updated Modality] in (2,4,8,9,12,15)\n\t   and [Trust ID] in (6,17,5)\n\t   Group by   CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE)\n\t  ,[Was Planned]\n      ,[Patient Type ID]\n      ,[Updated Modality]\n\t  order by CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE),[Trust ID],[Referral Source ID]",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable17",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Referral LAASP",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Referral UHG",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "SELECT \n\t  CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE) AS StartOfMonth\n      ,22 as [Trust ID]\n      ,[Updated Modality]\n\t  ,[Patient Type ID]\n      ,null as [Referral Source ID]\n\t  ,null as [Exam ID]\n\t  ,Count([Request-Image Days]) as [Count]\n      ,Avg([Request-Image Days]) as [Avg Request-Image Days]\n      ,Avg([Request-Image Hours])  as [Avg Request-Image Hours]\n       FROM [dev].[FYF_ODBC_CORE_v2]\n\t   Where [Request Date] is not null\n\t   and [Request Year Only]>2020\n\t   and [Was Planned]='N' \n\t   and [Patient Type ID] in (1,3,4,6)\n\t   and [Updated Modality] in (2,4,8,9,12,15)\n\t   and [Trust ID] in (6,17,5,15,4)\n\t   Group by   CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE)\n\t  ,[Was Planned]\n      ,[Patient Type ID]\n      ,[Updated Modality]\n\t  order by CAST(FORMAT([Request Date], 'yyyy-MM-01') AS DATE),[Trust ID],[Referral Source ID]",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false,
+								"disableMetricsCollection": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "FYF_ODBC_CORE_v2",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable17",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Utility UHG",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Utility CAMRIN",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "    select [Trust ID]\n    ,[Updated Modality] as [Modality ID]\n    ,Null as [Exam Room ID]\n    ,[Event Date]\n    ,[Event Hour]\n    ,Avg(cast([Sum] as float)) as [Sum]\n    ,Avg(cast([Sum CT] as float))as[Sum CT]\n    ,Avg(cast([Sum MRI] as float))as[Sum MRI]\n    ,Avg(cast([Sum NOUS] as float))as[Sum NOUS]\n    ,Avg(cast([Sum DEXA] as float))as[Sum DEXA]\n\t,Avg(cast(ConForm2 as float)) as ConForm2\n\tFrom(\n        select 21 as [Trust ID]\n\t,[Updated Modality]\n    ,Case \n\tWhen isnumeric(b.[Description])=1  then b.[Description]\n\telse a.[Exam Room ID]\n\tend as [Exam Room ID]\n    ,[Event Date]\n    ,[Event Hour]\n    ,Sum([Body Parts Activity]) as [Sum]\n    ,Sum(case when [Updated Modality] = 2 then [Body Parts Activity] else 0 end) as [Sum CT]\n    ,Sum(case when [Updated Modality] = 9 then [Body Parts Activity] else 0 end) as [Sum MRI]\n    ,Sum(case when [Updated Modality] = 12 then [Body Parts Activity] else 0 end) as [Sum NOUS]\n    ,Sum(case when [Updated Modality] = 4 then [Body Parts Activity] else 0 end) as [Sum DEXA]\n\t,case when [Updated Modality]= 2 then Sum([Body Parts Activity])-1 else Sum([Body Parts Activity]) end as ConForm2\nFROM [dev].[FYF_ODBC_CORE_v2] as a\nLeft Join dev.Exam_Site_2 as b on a.[Exam Room ID]=b.[Exam room ID]\nWhere a.[Event Date] >= DateAdd(month,-12,getdate())\n--and [Event Hour] between 8 and 19\nand a.[Updated Modality] = b.[Modality_ID]\nand a.[Exam Room ID] not in (795,3,11,13,20,32,37,50,112,142,187,192,194,198,199,208,209,258,261,262,294,296,298,304,314,318,342,374,411,429,448,472,478,479,479,480,482,483,484,484,499,500,508,516,517,552,553,556,557,558,560,561,562,564,570,571,583,589,590,601,604,651,683,692,693,697,709,719,734,779,780,797,848,887,891,935,936,938,939,950,964,977,999,1008,1030,1057,1061,1062,1067,1072,1074,1082,1087,1147\n) and [Trust ID] in (6,17,5)\ngroup by [Updated Modality]\n    ,Case \n\tWhen isnumeric(b.[Description])=1  then b.[Description]\n\telse a.[Exam Room ID]\n\tend\n    ,[Event Date]\n    ,[Event Hour]) as CAMRIN\ngroup by\n[Trust ID]\n    ,[Updated Modality]\n    ,[Event Date]\n    ,[Event Hour]\nOrder by     \n    [Event Date]\n    ,[Event Hour],[Modality ID]",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSqlTable14",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable14",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					},
+					{
+						"name": "Utility LAASP",
+						"type": "Copy",
+						"dependsOn": [
+							{
+								"activity": "Utility UHG",
+								"dependencyConditions": [
+									"Succeeded"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "AzureSqlSource",
+								"sqlReaderQuery": "    select [Trust ID]\n    ,[Updated Modality] as [Modality ID]\n    ,Null as [Exam Room ID]\n    ,[Event Date]\n    ,[Event Hour]\n    ,Avg(cast([Sum] as float)) as [Sum]\n    ,Avg(cast([Sum CT] as float))as[Sum CT]\n    ,Avg(cast([Sum MRI] as float))as[Sum MRI]\n    ,Avg(cast([Sum NOUS] as float))as[Sum NOUS]\n    ,Avg(cast([Sum DEXA] as float))as[Sum DEXA]\n\t,Avg(cast(ConForm2 as float)) as ConForm2\n\tFrom(\n        select 22 as [Trust ID]\n\t,[Updated Modality]\n    ,Case \n\tWhen isnumeric(b.[Description])=1  then b.[Description]\n\telse a.[Exam Room ID]\n\tend as [Exam Room ID]\n    ,[Event Date]\n    ,[Event Hour]\n    ,Sum([Body Parts Activity]) as [Sum]\n    ,Sum(case when [Updated Modality] = 2 then [Body Parts Activity] else 0 end) as [Sum CT]\n    ,Sum(case when [Updated Modality] = 9 then [Body Parts Activity] else 0 end) as [Sum MRI]\n    ,Sum(case when [Updated Modality] = 12 then [Body Parts Activity] else 0 end) as [Sum NOUS]\n    ,Sum(case when [Updated Modality] = 4 then [Body Parts Activity] else 0 end) as [Sum DEXA]\n\t,case when [Updated Modality]= 2 then Sum([Body Parts Activity])-1 else Sum([Body Parts Activity]) end as ConForm2\nFROM [dev].[FYF_ODBC_CORE_v2] as a\nLeft Join dev.Exam_Site_2 as b on a.[Exam Room ID]=b.[Exam room ID]\nWhere a.[Event Date] >= DateAdd(month,-12,getdate())\n--and [Event Hour] between 8 and 19\nand a.[Updated Modality] = b.[Modality_ID]\nand a.[Exam Room ID] not in (795,3,11,13,20,32,37,50,112,142,187,192,194,198,199,208,209,258,261,262,294,296,298,304,314,318,342,374,411,429,448,472,478,479,479,480,482,483,484,484,499,500,508,516,517,552,553,556,557,558,560,561,562,564,570,571,583,589,590,601,604,651,683,692,693,697,709,719,734,779,780,797,848,887,891,935,936,938,939,950,964,977,999,1008,1030,1057,1061,1062,1067,1072,1074,1082,1087,1147\n) and [Trust ID] in (6,17,5,15,4)\ngroup by [Updated Modality]\n    ,Case \n\tWhen isnumeric(b.[Description])=1  then b.[Description]\n\telse a.[Exam Room ID]\n\tend\n    ,[Event Date]\n    ,[Event Hour]) as CAMRIN\ngroup by\n[Trust ID]\n    ,[Updated Modality]\n    ,[Event Date]\n    ,[Event Hour]\nOrder by     \n    [Event Date]\n    ,[Event Hour],[Modality ID]",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "AzureSqlSink",
+								"writeBehavior": "insert",
+								"sqlWriterUseTableLock": false
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "AzureSqlTable14",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "AzureSqlTable14",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
@@ -12747,180 +13033,7 @@
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
-				"schema": [
-					{
-						"name": "CRIS No",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Accession",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Ref Src",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Site",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Request Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Event Time",
-						"type": "nvarchar"
-					},
-					{
-						"name": "On Call",
-						"type": "nvarchar"
-					},
-					{
-						"name": "PT",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Examination",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Exam Name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Room",
-						"type": "nvarchar"
-					},
-					{
-						"name": "ExamSite Code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Start Time",
-						"type": "nvarchar"
-					},
-					{
-						"name": "End Time",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Exam Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Event Key",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Status Code",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Booked Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Booked Time",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Creation Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Attended",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Urg",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Modality",
-						"type": "nvarchar"
-					},
-					{
-						"name": "No of Proc",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Planned Appointment Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Date First Verified",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Time First Verified",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Was Planned",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Was Scheduled",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Was Waiting",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Stat Date",
-						"type": "datetime2",
-						"scale": 7
-					},
-					{
-						"name": "Modality2",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Trust Name",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Patient_Type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Tat Type",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Status Time",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Reported By",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Rank",
-						"type": "int",
-						"precision": 10
-					},
-					{
-						"name": "Age At Event",
-						"type": "nvarchar"
-					}
-				],
+				"schema": [],
 				"typeProperties": {
 					"schema": "dev",
 					"table": "AzureSqlCOREStageStep1"
@@ -25768,7 +25881,11 @@
 				"annotations": [],
 				"type": "AzureSqlDatabase",
 				"typeProperties": {
-					"connectionString": "[parameters('camdashdevtest101_connectionString')]"
+					"server": "[parameters('camdashdevtest101_properties_typeProperties_server')]",
+					"database": "[parameters('camdashdevtest101_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SystemAssignedManagedIdentity"
 				},
 				"connectVia": {
 					"referenceName": "AutoResolveAzureIR",
@@ -29556,7 +29673,8 @@
 								"referenceName": "AzureSqlCOREStageStep1",
 								"type": "DatasetReference"
 							},
-							"name": "AzureSqlCOREStageStep1"
+							"name": "AzureSqlCOREStageStep1",
+							"description": "Export data to AzureSqlCOREStageStep1"
 						}
 					],
 					"transformations": [
@@ -29674,48 +29792,6 @@
 						"window1 filter(Rank==1) ~> filter2",
 						"lookup1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
-						"     input(",
-						"          {CRIS No} as integer,",
-						"          Accession as string,",
-						"          {Ref Src} as string,",
-						"          Site as string,",
-						"          {Request Date} as timestamp,",
-						"          {Event Date} as timestamp,",
-						"          {Event Time} as string,",
-						"          {On Call} as string,",
-						"          PT as string,",
-						"          Examination as string,",
-						"          {Exam Name} as string,",
-						"          Room as string,",
-						"          {ExamSite Code} as string,",
-						"          {Start Time} as string,",
-						"          {End Time} as string,",
-						"          {Exam Key} as integer,",
-						"          {Event Key} as integer,",
-						"          {Status Code} as string,",
-						"          {Booked Date} as timestamp,",
-						"          {Booked Time} as string,",
-						"          {Creation Date} as timestamp,",
-						"          Attended as string,",
-						"          Urg as string,",
-						"          Modality as string,",
-						"          {No of Proc} as integer,",
-						"          {Planned Appointment Date} as timestamp,",
-						"          {Date First Verified} as timestamp,",
-						"          {Time First Verified} as string,",
-						"          {Was Planned} as string,",
-						"          {Was Scheduled} as string,",
-						"          {Was Waiting} as string,",
-						"          {Stat Date} as timestamp,",
-						"          Modality2 as string,",
-						"          {Trust Name} as string,",
-						"          Patient_Type as string,",
-						"          {Tat Type} as string,",
-						"          {Status Time} as string,",
-						"          {Reported By} as string,",
-						"          Rank as integer,",
-						"          {Age At Event} as string",
-						"     ),",
 						"     deletable:false,",
 						"     insertable:true,",
 						"     updateable:false,",

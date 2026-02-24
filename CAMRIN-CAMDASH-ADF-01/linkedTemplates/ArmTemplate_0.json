@@ -24,11 +24,6 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'RADFYF01_CRIS_PostgreSQL'"
 		},
-		"camdashdevtest101_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'camdashdevtest101'",
-			"defaultValue": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=camrinsql101.database.windows.net;Initial Catalog=camdashdevtest101"
-		},
 		"camdashprod101_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'camdashprod101'",
@@ -50,6 +45,14 @@
 		"Test_AzureBlobStorage_properties_typeProperties_serviceEndpoint": {
 			"type": "string",
 			"defaultValue": "https://camdashdatalake.blob.core.windows.net/"
+		},
+		"camdashdevtest101_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "camrinsql101.database.windows.net"
+		},
+		"camdashdevtest101_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "camdashdevtest101"
 		},
 		"camdashprod101_mpep_properties_privateLinkResourceId": {
 			"type": "string",
@@ -202,7 +205,11 @@
 				"annotations": [],
 				"type": "AzureSqlDatabase",
 				"typeProperties": {
-					"connectionString": "[parameters('camdashdevtest101_connectionString')]"
+					"server": "[parameters('camdashdevtest101_properties_typeProperties_server')]",
+					"database": "[parameters('camdashdevtest101_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SystemAssignedManagedIdentity"
 				},
 				"connectVia": {
 					"referenceName": "AutoResolveAzureIR",
