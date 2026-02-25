@@ -7323,7 +7323,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,0 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (1408,1332,1350,1349,1348,1345,1339,1328,1323,1320) and [Planned Appointment Date] is null and [Was Planned]='n') as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
+						"sqlReaderQuery": "SELECT [Event Key]\n\t,cast([Request Date] as Date) as [Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,cast([Date First Verified] as Date) as [Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,0 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (1408,1332,1350,1349,1348,1345,1339,1328,1323,1320) and [Planned Appointment Date] is null and [Was Planned]='n') as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -7377,7 +7377,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,21 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (1408,1332,1350,1349,1348,1345,1339,1328,1323,1320) and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
+						"sqlReaderQuery": "SELECT [Event Key]\n\t,cast([Request Date] as Date) as [Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,cast([Date First Verified] as Date) as [Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,21 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (1408,1332,1350,1349,1348,1345,1339,1328,1323,1320) and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -7431,7 +7431,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,22 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (1408,1332,1350,1349,1348,1345,1339,1328,1323,1320) and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5,15,4)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
+						"sqlReaderQuery": "SELECT [Event Key]\n\t,cast([Request Date] as Date) as [Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,cast([Date First Verified] as Date) as [Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,22 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (1408,1332,1350,1349,1348,1345,1339,1328,1323,1320) and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5,15,4)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -7485,7 +7485,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,0 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (65,71,70,66,21) and [Planned Appointment Date] is null and [Was Planned]='n') as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
+						"sqlReaderQuery": "SELECT [Event Key]\n\t,cast([Request Date] as Date) as [Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,cast([Date First Verified] as Date) as [Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,0 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (65,71,70,66,21) and [Planned Appointment Date] is null and [Was Planned]='n') as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -7498,6 +7498,104 @@
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Event Key",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Event Key",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Request Date",
+									"type": "Date",
+									"physicalType": "date"
+								},
+								"sink": {
+									"name": "Request Date",
+									"type": "Date",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "Event Date",
+									"type": "Date",
+									"physicalType": "date"
+								},
+								"sink": {
+									"name": "Event Date",
+									"type": "Date",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "Request-Image Days",
+									"type": "Double",
+									"physicalType": "float"
+								},
+								"sink": {
+									"name": "Request-Image Days",
+									"type": "Double",
+									"physicalType": "float"
+								}
+							},
+							{
+								"source": {
+									"name": "Date First Verified",
+									"type": "Date",
+									"physicalType": "date"
+								},
+								"sink": {
+									"name": "Date First Verified",
+									"type": "Date",
+									"physicalType": "date"
+								}
+							},
+							{
+								"source": {
+									"name": "Image-Report Days",
+									"type": "Double",
+									"physicalType": "float"
+								},
+								"sink": {
+									"name": "Image-Report Days",
+									"type": "Double",
+									"physicalType": "float"
+								}
+							},
+							{
+								"source": {
+									"name": "Activity",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Activity",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							},
+							{
+								"source": {
+									"name": "Trust ID",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Trust ID",
+									"type": "Int32",
+									"physicalType": "int"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
@@ -7540,7 +7638,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,21 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (65,71,70,66,21) and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc\n\n",
+						"sqlReaderQuery": "SELECT [Event Key]\n\t,cast([Request Date] as Date) as [Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,cast([Date First Verified] as Date) as [Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,21 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (65,71,70,66,21) and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc\n\n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -7595,7 +7693,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,22 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (65,71,70,66,21) and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5,15,4)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc\n\n",
+						"sqlReaderQuery": "SELECT [Event Key]\n\t,cast([Request Date] as Date) as [Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,cast([Date First Verified] as Date) as [Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,22 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (65,71,70,66,21) and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5,15,4)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc\n\n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -7650,7 +7748,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "  SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,0 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (339,338,89,88) and [Planned Appointment Date] is null and [Was Planned]='n') as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
+						"sqlReaderQuery": "SELECT [Event Key]\n\t,cast([Request Date] as Date) as [Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,cast([Date First Verified] as Date) as [Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,0 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (339,338,89,88) and [Planned Appointment Date] is null and [Was Planned]='n') as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -7705,7 +7803,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,21 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (339,338,89,88) and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc\n\n",
+						"sqlReaderQuery": "SELECT [Event Key]\n\t,cast([Request Date] as Date) as [Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,cast([Date First Verified] as Date) as [Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,21 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (339,338,89,88) and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc\n\n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -7760,7 +7858,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,22 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (339,338,89,88) and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5,15,4)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc\n\n",
+						"sqlReaderQuery": "SELECT [Event Key]\n\t,cast([Request Date] as Date) as [Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,cast([Date First Verified] as Date) as [Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,22 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID] in (339,338,89,88) and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5,15,4)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc\n\n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -7815,7 +7913,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,0 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=2164 and [Planned Appointment Date] is null and [Was Planned]='n') as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
+						"sqlReaderQuery": "SELECT [Event Key]\n\t,cast([Request Date] as Date) as [Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,cast([Date First Verified] as Date) as [Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,0 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=2164 and [Planned Appointment Date] is null and [Was Planned]='n') as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -7869,7 +7967,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,21 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=2164 and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
+						"sqlReaderQuery": "SELECT [Event Key]\n\t,cast([Request Date] as Date) as [Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,cast([Date First Verified] as Date) as [Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,21 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=2164 and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -7923,7 +8021,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,22 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=2164 and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5,15,4)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
+						"sqlReaderQuery": "SELECT [Event Key]\n\t,cast([Request Date] as Date) as [Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,cast([Date First Verified] as Date) as [Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,22 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=2164 and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5,15,4)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -7977,7 +8075,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "  SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,0 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=1465 and [Planned Appointment Date] is null and [Was Planned]='n') as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
+						"sqlReaderQuery": "SELECT [Event Key]\n\t,cast([Request Date] as Date) as [Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,cast([Date First Verified] as Date) as [Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,0 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=1465 and [Planned Appointment Date] is null and [Was Planned]='n') as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -8032,7 +8130,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,21 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=1465 and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc\n\n",
+						"sqlReaderQuery": "SELECT [Event Key]\n\t,cast([Request Date] as Date) as [Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,cast([Date First Verified] as Date) as [Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,21 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=1465 and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc\n\n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
@@ -8087,7 +8185,7 @@
 				"typeProperties": {
 					"source": {
 						"type": "AzureSqlSource",
-						"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,[Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,22 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=1465 and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5,15,4)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc\n\n",
+						"sqlReaderQuery": "SELECT [Event Key]\n\t,cast([Request Date] as Date) as [Request Date]\n\t,[Event Date]\n\t,Avg([Request-Image Days]) as [Request-Image Days]\n\t,cast([Date First Verified] as Date) as [Date First Verified]\n\t,Avg ([Image-Report Days]) as [Image-Report Days]\n\t,sum(Activity) as Activity\n\t,[Trust ID]\n  FROM (SELECT null as [Event Key]\n\t,null as [Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,null as [Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,22 as [Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=1465 and [Planned Appointment Date] is null and [Was Planned]='n' and [Trust ID] in (6,17,5,15,4)) as a\n Group by \n [Event Key]\n ,[Request Date]\n ,[Event Date]\n ,[Date First Verified]\n ,[Trust ID]\n Order by [Event Date] desc\n\n",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
