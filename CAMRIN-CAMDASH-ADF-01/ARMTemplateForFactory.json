@@ -6961,13 +6961,13 @@
 							{
 								"activity": "Latest stat date report_meta",
 								"dependencyConditions": [
-									"Failed"
+									"Succeeded"
 								]
 							},
 							{
 								"activity": "Prev Latest stat date report_meta",
 								"dependencyConditions": [
-									"Failed"
+									"Succeeded"
 								]
 							}
 						],
@@ -12000,6 +12000,7 @@
 				"[concat(variables('factoryId'), '/dataflows/CreateRefColumns')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRefColumnsPTL')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRequestRecieveddataset')]",
 				"[concat(variables('factoryId'), '/dataflows/AIDFDataset')]",
 				"[concat(variables('factoryId'), '/dataflows/CreatePatientWaiting')]",

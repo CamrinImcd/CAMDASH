@@ -4255,13 +4255,13 @@
 							{
 								"activity": "Latest stat date report_meta",
 								"dependencyConditions": [
-									"Failed"
+									"Succeeded"
 								]
 							},
 							{
 								"activity": "Prev Latest stat date report_meta",
 								"dependencyConditions": [
-									"Failed"
+									"Succeeded"
 								]
 							}
 						],
