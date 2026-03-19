@@ -12000,7 +12000,6 @@
 				"[concat(variables('factoryId'), '/dataflows/CreateRefColumns')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRefColumnsPTL')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
-				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRequestRecieveddataset')]",
 				"[concat(variables('factoryId'), '/dataflows/AIDFDataset')]",
 				"[concat(variables('factoryId'), '/dataflows/CreatePatientWaiting')]",
@@ -18586,7 +18585,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobStorageLocation",
-						"fileName": "COCH_CAMDASH_CORE_Feb2025.csv",
+						"fileName": "COCH_CAMDASH_CORE_Apr2025v2.csv",
 						"container": "cochcsv"
 					},
 					"columnDelimiter": ",",
@@ -27668,6 +27667,9 @@
 						},
 						{
 							"name": "derivedColumn13"
+						},
+						{
+							"name": "filter6"
 						}
 					],
 					"scriptLines": [
@@ -27947,7 +27949,7 @@
 						"select3 filter(isNull(ID)==false()) ~> filter1",
 						"derivedColumn1 filter(isNull(ID)==false()) ~> filter2",
 						"derivedColumn2 filter(isNull(ID)==false()) ~> filter4",
-						"Core, source1 join(Core@{Status ID} == source1@{Status ID},",
+						"filter6, source1 join(Core@{Status ID} == source1@{Status ID},",
 						"     joinType:'left',",
 						"     matchType:'exact',",
 						"     ignoreSpaces: false,",
@@ -28086,6 +28088,31 @@
 						"RenameDate1 derive({Exam Group} = iif(isNull({Exam Group}),'0',{Exam Group})) ~> derivedColumn11",
 						"RenameDate2 derive({Exam Group} = iif(isNull({Exam Group}),'0',{Exam Group})) ~> derivedColumn12",
 						"aggregate4 derive({Exam Group} = iif(isNull({Exam Group}),'0',{Exam Group})) ~> derivedColumn13",
+						"Core filter(!in([267\r",
+						",268\r",
+						",269\r",
+						",270\r",
+						",271\r",
+						",272\r",
+						",273\r",
+						",274\r",
+						",275\r",
+						",276\r",
+						",277\r",
+						",278\r",
+						",279\r",
+						",280\r",
+						",281\r",
+						",282\r",
+						",283\r",
+						",284\r",
+						",285\r",
+						",286\r",
+						",287\r",
+						",288\r",
+						",289\r",
+						",1268\r",
+						",1270],{Exam Room ID})) ~> filter6",
 						"select4 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
