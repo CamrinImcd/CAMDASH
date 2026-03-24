@@ -7179,7 +7179,7 @@
 						"          {Time Taken} = toInteger({Time Taken}),",
 						"          {No of Proc} = toInteger({No of Proc}),",
 						"          {Exam Key} = toInteger({Exam Key}),",
-						"          {Event Key} = toInteger({Event Key}),",
+						"          {Event Key} = iifNull(0,toInteger({Event Key})),",
 						"          {Qty Used} = toDecimal({Qty Used}),",
 						"          {Event Time} = concat(toString(hour(toTimestamp({Event Date},'dd/MM/yyyy HH:mm')),'00'),toString(minute(toTimestamp({Event Date},'dd/MM/yyyy HH:mm')),'00')),",
 						"          {Start Time} = concat(toString(hour(toTimestamp({Start Time},'dd/MM/yyyy HH:mm')),'00'),toString(minute(toTimestamp({Start Time},'dd/MM/yyyy HH:mm')),'00')),",
