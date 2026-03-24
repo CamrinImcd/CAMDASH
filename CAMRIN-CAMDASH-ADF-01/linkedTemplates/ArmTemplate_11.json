@@ -7368,7 +7368,8 @@
 						"          {Was Planned},",
 						"          {Was Waiting},",
 						"          CCG,",
-						"          {Stat Date}",
+						"          {Stat Date},",
+						"          {Event Key2} = {Event Key}",
 						"     )) ~> sink1"
 					]
 				}
