@@ -32,7 +32,7 @@
 		],
 		"typeProperties": {
 			"schema": "dev",
-			"table": "Trust"
+			"table": "Trust Unique"
 		}
 	},
 	"type": "Microsoft.DataFactory/factories/datasets"
