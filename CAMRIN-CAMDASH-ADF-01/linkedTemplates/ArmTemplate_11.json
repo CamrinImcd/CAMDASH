@@ -7040,6 +7040,9 @@
 						},
 						{
 							"name": "lookup3"
+						},
+						{
+							"name": "split1"
 						}
 					],
 					"scriptLines": [
@@ -7123,7 +7126,7 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> source5",
-						"source2 select(mapColumn(",
+						"split1@Nulls select(mapColumn(",
 						"          {CRIS No} = {Unique  Identifier for patient},",
 						"          {Ref Src},",
 						"          {Referring Locat},",
@@ -7254,6 +7257,8 @@
 						"     multiple: true,",
 						"     broadcast: 'auto',",
 						"     pickup: 'any')~> lookup3",
+						"source2 split(isNull({Exam Key}),",
+						"     disjoint: false) ~> split1@(Nulls, NoNulls)",
 						"select2 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     input(",
