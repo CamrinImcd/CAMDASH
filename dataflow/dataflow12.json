@@ -260,7 +260,7 @@
 				"          {Was Planned},",
 				"          {Was Waiting},",
 				"          CCG,",
-				"          {Stat Date} = derivedColumn1@{Stat Date},",
+				"          {Stat Date} = select1@{Stat Date},",
 				"          PT = {Patient Type Code},",
 				"          Modality = source4@Modality,",
 				"          {Time First Verified}",
