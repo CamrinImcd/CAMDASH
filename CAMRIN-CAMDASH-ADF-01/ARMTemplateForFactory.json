@@ -10468,9 +10468,9 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Copy_DM01",
+								"activity": "ReferenceLookupsCore",
 								"dependencyConditions": [
-									"Succeeded"
+									"Completed"
 								]
 							}
 						],
@@ -11998,6 +11998,7 @@
 				"[concat(variables('factoryId'), '/dataflows/Remove_Dupes_Core')]",
 				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveAzureIR')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRefColumns')]",
+				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRefColumnsPTL')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRequestRecieveddataset')]",

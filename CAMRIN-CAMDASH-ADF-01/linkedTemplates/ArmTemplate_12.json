@@ -7762,9 +7762,9 @@
 						"type": "Copy",
 						"dependsOn": [
 							{
-								"activity": "Copy_DM01",
+								"activity": "ReferenceLookupsCore",
 								"dependencyConditions": [
-									"Succeeded"
+									"Completed"
 								]
 							}
 						],
