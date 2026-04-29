@@ -4777,7 +4777,7 @@
 							"source": {
 								"type": "SqlServerSource",
 								"sqlReaderQuery": {
-									"value": "select * from dbo.FYF_ODBC_STATUSES where [Status Date] > '@{activity('Prev Latest stat date statuses').output.firstRow.CoreUpdateValue}' and [Status Date] <= '@{activity('Latest stat date statuses').output.firstRow.CoreUpdateValue}'",
+									"value": "select * from dbo.FYF_ODBC_STATUSES",
 									"type": "Expression"
 								},
 								"queryTimeout": "24:00:00",
@@ -12000,7 +12000,6 @@
 				"[concat(variables('factoryId'), '/dataflows/CreateRefColumns')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRefColumnsPTL')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateActDem')]",
-				"[concat(variables('factoryId'), '/integrationRuntimes/AutoResolveIntegrationRuntime')]",
 				"[concat(variables('factoryId'), '/dataflows/CreateRequestRecieveddataset')]",
 				"[concat(variables('factoryId'), '/dataflows/AIDFDataset')]",
 				"[concat(variables('factoryId'), '/dataflows/CreatePatientWaiting')]",
