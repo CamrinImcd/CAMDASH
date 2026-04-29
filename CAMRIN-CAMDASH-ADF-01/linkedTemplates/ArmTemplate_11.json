@@ -3391,6 +3391,9 @@
 						{
 							"name": "MapDrifted2",
 							"description": "Creates an explicit mapping for each drifted column"
+						},
+						{
+							"name": "filter6"
 						}
 					],
 					"scriptLines": [
@@ -3852,7 +3855,7 @@
 						"          Modality_ID = toString(byName('Modality_ID')),",
 						"          Trust_ID = toString(byName('Trust_ID')),",
 						"          Trust_ID_2 = toString(byName('Trust_ID_2'))) ~> MapDrifted1",
-						"join9 derive({Date First Verified} = toDate(byName('Date First Verified')),",
+						"filter6 derive({Date First Verified} = toDate(byName('Date First Verified')),",
 						"          {Event Date} = toDate(byName('Event Date')),",
 						"          {Request Date} = toDate(byName('Request Date')),",
 						"          Postcode = toString(byName('Postcode')),",
@@ -3860,6 +3863,7 @@
 						"          Modality_ID = toString(byName('Modality_ID')),",
 						"          Trust_ID = toString(byName('Trust_ID')),",
 						"          Trust_ID_2 = toString(byName('Trust_ID_2'))) ~> MapDrifted2",
+						"join9 filter(not(like(source5@{Exam Room},'rbqhqtlH%'))) ~> filter6",
 						"select4 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
