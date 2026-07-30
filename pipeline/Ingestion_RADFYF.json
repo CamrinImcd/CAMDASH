@@ -1581,7 +1581,7 @@
 					"source": {
 						"type": "SqlServerSource",
 						"sqlReaderQuery": {
-							"value": "select * from dbo.FYF_ODBC_STATUSES",
+							"value": "select * from dbo.FYF_ODBC_STATUSES where [Status Date] > '@{activity('Prev Latest stat date statuses').output.firstRow.CoreUpdateValue}' and [Status Date] <= '@{activity('Latest stat date statuses').output.firstRow.CoreUpdateValue}'",
 							"type": "Expression"
 						},
 						"queryTimeout": "24:00:00",
