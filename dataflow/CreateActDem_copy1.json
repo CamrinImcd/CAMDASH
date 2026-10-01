@@ -43,7 +43,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "AzureSqlTable18",
+						"referenceName": "DNA",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"

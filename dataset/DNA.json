@@ -1,5 +1,5 @@
 {
-	"name": "AzureSqlTable18",
+	"name": "DNA",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "camdashdevtest101",
