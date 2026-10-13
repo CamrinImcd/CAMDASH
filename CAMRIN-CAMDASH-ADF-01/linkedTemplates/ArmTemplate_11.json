@@ -3960,7 +3960,7 @@
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "AzureSqlTable18",
+								"referenceName": "DNA",
 								"type": "DatasetReference"
 							},
 							"name": "sink1"
@@ -4216,7 +4216,7 @@
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
 						"     format: 'table') ~> source5",
-						"MapDrifted2 derive(DNA = iif({Status Code}==\"CPDNA\", 1, iif({Status Code}==\"APDNA\", 1, 0)),",
+						"MapDrifted2 derive(DNA = iif({Status Code}==\"CPDNA\", 1, iif({Status Code}==\"APDNA\", 1, iif({Status Code}==\"DNAFA\", 1, 0))),",
 						"          {Trust ID 2} = case(isInteger(Description)==true(),Trust_ID_2,Trust_ID),",
 						"          {Activity (ATP)} = iif({Status Code}==\"ATP\", 1,  0)) ~> CreateDNAColumn",
 						"CreateDNAColumn aggregate(groupBy({Event Date} = toDate({Event Date Time}),",
