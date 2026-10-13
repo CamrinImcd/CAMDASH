@@ -525,7 +525,7 @@
 				"          {Exam Group}),",
 				"     List = collect({Status Code})) ~> aggregate3",
 				"select6 derive({Event Date Time} = toDate(toString({Event Date Time}))) ~> derivedColumn10",
-				"select5 filter(in(['ATP','CPDNA'],{Status Code})) ~> filter5",
+				"select5 filter(in(['ATP','CPDNA','DNAFA'],{Status Code})) ~> filter5",
 				"aggregate3 aggregate(groupBy({Event Date Time},",
 				"          Modality,",
 				"          {Trust ID},",
