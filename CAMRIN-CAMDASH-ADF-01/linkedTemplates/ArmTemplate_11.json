@@ -8012,7 +8012,7 @@
 						"     allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     query: 'Select * \\nFROM [dev].[FYF_ODBC_PTL_v2]\\n  Where [Exam ID] in (21,71,88,89,218,338,339,1320,1323,1328,1332,1345,1348,1349,1350)',",
+						"     query: 'Select * \\nFROM [dev].[FYF_ODBC_PTL_v2]\\n  Where [Exam ID] in (SELECT [Exam ID]\\n  FROM [dev].[Exam]\\n  Where [Exam Group] is not null)',",
 						"     format: 'query') ~> source1",
 						"source(output(",
 						"          {Event Key} as integer,",
