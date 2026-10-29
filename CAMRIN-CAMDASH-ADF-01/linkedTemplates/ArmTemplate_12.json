@@ -7543,7 +7543,7 @@
 						"typeProperties": {
 							"source": {
 								"type": "AzureSqlSource",
-								"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,[Date First Verified]\n\t,[Image-Report Days]\n\t,Activity\n\t,[Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=2164 and [Planned Appointment Date] is null and [Was Planned]='n'",
+								"sqlReaderQuery": "SELECT [Event Key]\n\t,[Request Date]\n\t,[Event Date]\n\t,[Request-Image Days]\n\t,[Date First Verified]\n\t,[Image-Report Days]\n\t,Case\n\twhen [Status ID] in (6) then 1 else 0 end as [Activity]\n\t,Case\n\twhen [Status ID] in (3,27,67) then 1 else 0 end as [DNA]\n\t,[Trust ID]\n  FROM [dev].[FYF_ODBC_CORE_v2]\n  Where [Exam ID]=2164 ",
 								"queryTimeout": "02:00:00",
 								"partitionOption": "None"
 							},
